@@ -4,16 +4,13 @@ import { HealthRecordsService } from '../../../../data-access/services/staff-inf
 import { BaseListComponent } from '@core/components/base-list.component';
 import { MICRO_SERVICE } from '@core/constant/system.constants';
 import { CommonUtils } from '@shared/services/common-utils.service';
-import {Mode, REQUEST_TYPE} from "@shared/constant/common";
-import {UrlConstant as UrlConstantShare} from "@shared/constant/url.class";
-import {ActionSchema, ChildActionSchema} from "@core/models/action.model";
-import {Constant} from "@app/modules/abs/data-access/constant/constant.class";
-import {FunctionCode} from "@shared/enums/enums-constant";
-import {sFormComponent} from "@app/modules/hrm/pages/staff-info/health-records/hrs-form/hrs-form.component";
-import {DataService} from "@shared/services/data.service";
-import {CategoriesService} from "@app/modules/kpi/data-access/other-services/categories.service";
-import {UrlConstant} from "@app/modules/kpi/data-access/constants/url.constant";
-import {Validators} from "@angular/forms";
+import { Mode, REQUEST_TYPE } from '@shared/constant/common';
+import { UrlConstant as UrlConstantShare } from '@shared/constant/url.class';
+import { ActionSchema, ChildActionSchema } from '@core/models/action.model';
+import { FunctionCode } from '@shared/enums/enums-constant';
+import { sFormComponent } from '@app/modules/hrm/pages/staff-info/health-records/hrs-form/hrs-form.component';
+import { CategoriesService } from '@app/modules/kpi/data-access/other-services/categories.service';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-hrs-index',

@@ -1,15 +1,13 @@
-import {Component, Injector, OnInit} from '@angular/core';
-import {FormArray, Validators} from "@angular/forms";
-import {OrgConfigsModel} from "../../../../data-access/models/kpi-configs/org-configs.model";
-import {OrgConfigsService} from "../../../../data-access/services/kpi-configs/org-configs.service";
-import {BaseFormComponent} from "@core/components/base-form.component";
-import {DateValidator} from "@shared/custom-validator/dateValidator.class";
-import {MICRO_SERVICE} from "@core/constant/system.constants";
-import {CommonUtils} from "@shared/services/common-utils.service";
-import {REQUEST_TYPE} from "@shared/constant/common";
-import {Constant} from "@app/modules/crm/data-access/constants/constants";
-import {DataService} from "@shared/services/data.service";
-import {Scopes} from "@core/utils/common-constants";
+import { Component, Injector, OnInit } from '@angular/core';
+import { FormArray, Validators } from '@angular/forms';
+import { OrgConfigsModel } from '../../../../data-access/models/kpi-configs/org-configs.model';
+import { OrgConfigsService } from '../../../../data-access/services/kpi-configs/org-configs.service';
+import { BaseFormComponent } from '@core/components/base-form.component';
+import { MICRO_SERVICE } from '@core/constant/system.constants';
+import { CommonUtils } from '@shared/services/common-utils.service';
+import { REQUEST_TYPE } from '@shared/constant/common';
+import { DataService } from '@shared/services/data.service';
+import { Scopes } from '@core/utils/common-constants';
 import { Utils } from '@core/utils/utils';
 
 @Component({

@@ -20,13 +20,7 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Subscription } from 'rxjs';
 import { PersonalInfoService } from '@shared/services/personal-info.service';
 import { AlertModalChangeService } from '@app/modules/hrm/data-access/services/staff-info/alert-modal-change.service';
-import {
-  GeneralStatisticsModelComponent
-} from "@app/modules/hrm/pages/model-plan/organizations/general-statistics-model/general-statistics-model.component";
-import {NzModalRef, NzModalService} from "ng-zorro-antd/modal";
-import {
-  UserManualInfoComponent
-} from "@app/modules/dashboard/pages/manager/user-manual-info/user-manual-info.component";
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-header',
@@ -128,16 +122,6 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  openManual(){
-    this.modalRef = this.modalService.create({
-      nzWidth: window.innerWidth > 767 ? window.innerWidth / 1.5 > 1100 ? 1100 : window.innerWidth / 1.5 : window.innerWidth,
-      nzTitle: 'TÀI LIỆU HƯỚNG DẪN SỬ DỤNG',
-      nzContent: UserManualInfoComponent,
-      nzComponentParams: {
-      },
-      nzFooter: null
-    });
-  }
 
   getAvatar(employeeId?: number | NzSafeAny) {
     this.subs.push(

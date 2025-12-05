@@ -15,10 +15,6 @@ const routes: Routes = [
     component: UnauthorizedComponent
   },
   {
-    path: 'pytago',
-    loadChildren: () => import('./modules/crm/pages/pytago-managers/pytago/pytago.module').then(m => m.PytagoModule)
-  },
-  {
     path: '',
     component: LayoutComponent,
     loadChildren: () => import('./modules/feature.module').then((m) => m.FeatureModule),
