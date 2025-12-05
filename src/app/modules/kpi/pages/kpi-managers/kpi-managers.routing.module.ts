@@ -11,10 +11,6 @@ const routes: Routes = [
     loadChildren: () => import('../kpi-managers/indicator-conversions/indicator-conversions.module').then(m => m.IndicatorConversionsModule)
   },
   {
-    path: 'indicator-using-scopes',
-    loadChildren: () => import('../kpi-managers/indicator-using-scopes/indicator-using-scopes.module').then(m => m.IndicatorUsingScopesModule)
-  },
-  {
     path: 'indicators',
     loadChildren: () => import('../kpi-managers/indicators/indicators.module').then(m => m.IndicatorsModule)
   }
