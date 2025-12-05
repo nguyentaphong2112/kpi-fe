@@ -9,10 +9,6 @@ const routes: Routes = [
   {
     path: 'job',
     loadChildren: () => import('../model-plan/jobs/jobs.module').then(m => m.JobsModule)
-  },
-  {
-    path: 'position-groups',
-    loadChildren: () => import('../model-plan/position-groups/position-groups.module').then(m => m.PositionGroupsModule)
   }
 ];
 
