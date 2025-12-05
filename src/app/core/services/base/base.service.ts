@@ -46,47 +46,14 @@ export class BaseService {
   static getBaseUrl(serviceName?: string): string {
     let baseUrl = 'N/A';
     switch (serviceName) {
-      case MICRO_SERVICE.DEFAULT:
-        baseUrl = environment.backend.baseUrl;
-        break;
       case MICRO_SERVICE.ADMIN:
         baseUrl = environment.backend.admin;
-        break;
-      case MICRO_SERVICE.LIBRARY:
-        baseUrl = environment.backend.library;
         break;
       case MICRO_SERVICE.HRM:
         baseUrl = environment.backend.hrm;
         break;
       case MICRO_SERVICE.KPI:
         baseUrl = environment.backend.kpi;
-        break;
-      case MICRO_SERVICE.ABS:
-        baseUrl = environment.backend.abs;
-        break;
-      case MICRO_SERVICE.CRM:
-        baseUrl = environment.backend.crm;
-        break;
-      case MICRO_SERVICE.LMS:
-        baseUrl = environment.backend.lms;
-        break;
-      case MICRO_SERVICE.MAT:
-        baseUrl = environment.backend.mat;
-        break;
-      case MICRO_SERVICE.PIT:
-        baseUrl = environment.backend.pit;
-        break;
-      case MICRO_SERVICE.ICN:
-        baseUrl = environment.backend.icn;
-        break;
-      case MICRO_SERVICE.PTX:
-        baseUrl = environment.backend.ptx;
-        break;
-      case MICRO_SERVICE.EXAM:
-        baseUrl = environment.backend.exam;
-        break;
-      case MICRO_SERVICE.SSO:
-        baseUrl = environment.backend.sso;
         break;
       default: baseUrl = '';
     }
