@@ -10,7 +10,6 @@ import {
   ViewChild
 } from '@angular/core';
 import { BaseListComponent } from '@core/components/base-list.component';
-import { BookmarkFormService } from '@app/modules/hrm/data-access/services/staff-research/bookmark-form.service';
 import { SearchFormService } from '@app/modules/hrm/data-access/services/search-form.service';
 import { CommonUtils } from '@shared/services/common-utils.service';
 import { SearchFormComponent } from '../../search-form-common/search-form/search-form.component';
@@ -56,7 +55,6 @@ export class SrcIndexComponent extends BaseListComponent<any> implements OnInit,
 
   constructor(
     injector: Injector,
-    private bookmarkFormService: BookmarkFormService,
     private service: SearchFormService
   ) {
     super(injector);

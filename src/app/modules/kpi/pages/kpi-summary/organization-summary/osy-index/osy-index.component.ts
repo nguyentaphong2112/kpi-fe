@@ -5,9 +5,6 @@ import { Constant } from '@app/modules/kpi/data-access/constants/constants';
 import { UrlConstant } from '@app/modules/kpi/data-access/constants/url.constant';
 import { HTTP_STATUS_CODE, MICRO_SERVICE } from '@core/constant/system.constants';
 import { Scopes } from '@core/utils/common-constants';
-import {
-  EmployeeEvaluationsService
-} from '@app/modules/kpi/data-access/services/kpi-evaluations/employee-evaluations.service';
 import { CategoriesService } from '@app/modules/kpi/data-access/other-services/categories.service';
 import {
   OrganizationEvaluationsService
@@ -15,7 +12,6 @@ import {
 import { CommonUtils } from '@shared/services/common-utils.service';
 import { FormGroup, Validators } from '@angular/forms';
 import { BaseResponse } from '@core/models/base-response';
-import { $e } from 'codelyzer/angular/styles/chars';
 import { REQUEST_TYPE, TABLE_CONFIG_DEFAULT } from '@shared/constant/common';
 import { ActionSchema, ChildActionSchema } from '@core/models/action.model';
 import { HbtTableComponent } from '@shared/component/hbt-table/hbt-table.component';

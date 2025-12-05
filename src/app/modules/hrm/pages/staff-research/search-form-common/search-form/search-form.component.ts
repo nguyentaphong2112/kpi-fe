@@ -14,8 +14,6 @@ import {
 import { ObjectUtil } from '@core/utils/object.util';
 import { BaseListComponent } from '@core/components/base-list.component';
 import { AppFunction } from '@core/models/app-function.interface';
-import { BookmarkFormService } from '@app/modules/hrm/data-access/services/staff-research/bookmark-form.service';
-import { SearchFormService } from '@app/modules/hrm/data-access/services/search-form.service';
 import { parse } from 'date-fns';
 
 @Component({
@@ -53,8 +51,6 @@ export class SearchFormComponent extends BaseListComponent<any> implements OnIni
 
   constructor(
     injector: Injector,
-    private bookmarkFormService: BookmarkFormService,
-    private searchFormService: SearchFormService,
     private searchFormSharedService: SearchFormSharedService
   ) {
     super(injector);
