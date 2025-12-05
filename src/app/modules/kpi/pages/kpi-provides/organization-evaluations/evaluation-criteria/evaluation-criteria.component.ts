@@ -33,12 +33,8 @@ import {
   IndicatorPopupComponent
 } from '@app/modules/kpi/pages/kpi-provides/employee-evaluations/indicator-popup/indicator-popup.component';
 import {
-  AssignmentModalComponent
-} from '@app/modules/kpi/pages/kpi-provides/organization-evaluations/assignment-modal/assignment-modal.component';
-import {
   ViewIndicatorComponent
 } from '@app/modules/kpi/pages/kpi-provides/employee-evaluations/view-indicator/view-indicator.component';
-import { distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-evaluation-criteria',
@@ -304,26 +300,6 @@ export class EvaluationCriteriaComponent extends BaseFormComponent<NzSafeAny> im
   }
 
 
-  openAssignmentPopup = (data: FormGroup) => {
-    const index = this.formArray.controls.findIndex((it: NzSafeAny) => it.value.indicatorId == data.controls['indicatorId'].value);
-    this.modalRef = this.modal.create({
-      nzWidth: window.innerWidth / 1.2 > 1100 ? 1100 : window.innerWidth / 1.5,
-      nzTitle: this.translate.instant('kpi.button.assignment'),
-      nzContent: AssignmentModalComponent,
-      nzComponentParams: {
-        mode: this.modeConst.ADD,
-        data: this.formArray.at(index).value
-      },
-      nzFooter: this.footerTpl
-    });
-    this.modalRef.afterClose.subscribe((result) => {
-        if (result?.data) {
-          this.patchValueAssignment(result.data, index);
-        }
-      }
-    );
-  };
-
   patchValueAssignment(data: NzSafeAny, index: number) {
     this.formArray.at(index).patchValue({
       leaderIds: data.leaderIds || null,
@@ -416,11 +392,6 @@ export class EvaluationCriteriaComponent extends BaseFormComponent<NzSafeAny> im
           function: () => {
             return this.openIndicatorPopup();
           }
-        }),
-        new ChildActionSchema({
-          label: 'kpi.button.assignment',
-          icon: 'aim',
-          function: this.openAssignmentPopup
         }),
         new ChildActionSchema({
           label: 'common.button.delete',

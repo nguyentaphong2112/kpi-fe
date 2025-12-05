@@ -16,18 +16,12 @@ import {
 import {
   EvaluationCriteriaComponent
 } from '@app/modules/kpi/pages/kpi-provides/personal-evaluations/evaluation-criteria/evaluation-criteria.component';
-import {
-  WorkPlanComponent
-} from '@app/modules/kpi/pages/kpi-provides/personal-evaluations/work-plan/work-plan.component';
 import { BaseResponse } from '@core/models/base-response';
 import _ from 'lodash';
-import { firstValueFrom, take } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import {
   WorkPlanningTemplatesService
 } from '@app/modules/kpi/data-access/services/kpi-templates/work-planning-templates.service';
-import {
-  ViewOrgParentComponent
-} from '@app/modules/kpi/pages/kpi-provides/organization-evaluations/view-org-parent/view-org-parent.component';
 import { ScrollSpyDirective } from '@shared/directive/scroll-spy.directive';
 import { MbCollapseComponent } from '@shared/component/hbt-collapse/hbt-collapse.component';
 import { FunctionCode } from '@shared/enums/enums-constant';
@@ -368,59 +362,6 @@ export class PesFormComponent extends BaseFormComponent<NzSafeAny> implements On
     }
   }
 
-  closeTab(index: number): void {
-    this.popupService.showModalConfirmDelete(() => {
-      if (this.tabs[index].employeeWorkPlanningId) {
-        this.empWorkPlanningService.deleteById(this.tabs[index].employeeWorkPlanningId).subscribe(res => {
-          if (res.code === HTTP_STATUS_CODE.SUCCESS) {
-            this.toast.success(
-              this.translate.instant('common.notification.deleteSuccess')
-            );
-            this.patchValue();
-          }
-        });
-      }
-    });
-  }
-
-  onEdit(index: number) {
-    this.title = this.translate.instant('kpi.employeeEvaluations.label.workPlanEdit');
-    this.isSubmittedModal = false;
-    this.isVisible = true;
-    this.valueInput = this.tabs[index].name;
-    this.employeeWorkPlanning = this.tabs[index];
-  }
-
-  openInput() {
-    this.employeeWorkPlanning = null;
-    this.title = this.translate.instant('kpi.employeeEvaluations.label.workPlanAdd');
-    this.valueInput = '';
-    this.isSubmittedModal = false;
-    this.isVisible = true;
-  }
-
-  onSave($event) {
-    if ($event) {
-      this.patchValue();
-    }
-  }
-
-  openOrgParentPopup() {
-    this.modalRef = this.modal.create({
-      nzWidth: window.innerWidth / 1.2 > 1500 ? 1500 : window.innerWidth / 1.2,
-      nzTitle: this.translate.instant('kpi.button.viewOrgParent'),
-      nzContent: ViewOrgParentComponent,
-      nzComponentParams: {
-        mode: this.modeConst.ADD,
-        data: {
-          orgId: null,
-          evaluationPeriodId: this.route.snapshot.queryParams.evaluationPeriodId,
-          empManagerId: this.route.snapshot.queryParams.employeeId
-        }
-      },
-      nzFooter: this.footerTpl
-    });
-  }
 
 
   override save(adjustReason?: string) {

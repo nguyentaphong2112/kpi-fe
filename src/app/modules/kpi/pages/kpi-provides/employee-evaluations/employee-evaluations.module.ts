@@ -11,12 +11,8 @@ import {
   EvaluationCriteriaComponent
 } from '@app/modules/kpi/pages/kpi-provides/employee-evaluations/evaluation-criteria/evaluation-criteria.component';
 import {
-  WorkPlanComponent
-} from '@app/modules/kpi/pages/kpi-provides/employee-evaluations/work-plan/work-plan.component';
-import {
   IndicatorPopupComponent
 } from '@app/modules/kpi/pages/kpi-provides/employee-evaluations/indicator-popup/indicator-popup.component';
-import { StaffInfoModule } from '@app/modules/hrm/pages/staff-info/staff-info.module';
 import {
   OrganizationEvaluationsModule
 } from '@app/modules/kpi/pages/kpi-provides/organization-evaluations/organization-evaluations.module';
@@ -25,13 +21,13 @@ import {
 } from '@app/modules/kpi/pages/kpi-provides/employee-evaluations/view-indicator/view-indicator.component';
 
 export function declaration() {
-  return [EesIndexComponent, EesFormComponent, EvaluationCriteriaComponent, WorkPlanComponent, IndicatorPopupComponent, ViewIndicatorComponent];
+  return [EesIndexComponent, EesFormComponent, EvaluationCriteriaComponent, IndicatorPopupComponent, ViewIndicatorComponent];
 }
 
 @NgModule({
   declarations: declaration(),
   exports: declaration(),
-  imports: [SharedModule, EmployeeEvaluationsRoutingModule, StaffInfoModule, OrganizationEvaluationsModule]
+  imports: [SharedModule, EmployeeEvaluationsRoutingModule, OrganizationEvaluationsModule]
 })
 export class EmployeeEvaluationsModule {
 }

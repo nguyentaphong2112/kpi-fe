@@ -14,18 +14,6 @@
       <nz-tab nzTitle="{{'kpi.employeeEvaluations.label.title' | translate}}">
         <ng-container *ngTemplateOutlet="eesForm"></ng-container>
       </nz-tab>
-      <nz-tab *ngIf="isShowOrgParent" nzTitle="{{'kpi.button.viewOrgParent' | translate}}">
-        <div class="org-parent-content">
-          <app-view-org-parent
-            [data]="{
-            orgId: null,
-            evaluationPeriodId: route.snapshot.queryParams.evaluationPeriodId,
-            empManagerId: route.snapshot.queryParams.employeeId
-          }"
-            [mode]="modeConst.ADD"
-          ></app-view-org-parent>
-        </div>
-      </nz-tab>
     </nz-tabset>
 
     <ng-template #eesForm>

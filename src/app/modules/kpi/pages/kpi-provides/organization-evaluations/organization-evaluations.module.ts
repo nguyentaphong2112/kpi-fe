@@ -12,18 +12,8 @@ import {
 import {
   EvaluationCriteriaComponent
 } from '@app/modules/kpi/pages/kpi-provides/organization-evaluations/evaluation-criteria/evaluation-criteria.component';
-import {
-  WorkPlanComponent
-} from '@app/modules/kpi/pages/kpi-provides/organization-evaluations/work-plan/work-plan.component';
-import {
-  AssignmentModalComponent
-} from '@app/modules/kpi/pages/kpi-provides/organization-evaluations/assignment-modal/assignment-modal.component';
-import {
-  ViewOrgParentComponent
-} from '@app/modules/kpi/pages/kpi-provides/organization-evaluations/view-org-parent/view-org-parent.component';
-
 export function declaration() {
-  return [OesIndexComponent, OesFormComponent, EvaluationCriteriaComponent, WorkPlanComponent, AssignmentModalComponent, ViewOrgParentComponent];
+  return [OesIndexComponent, OesFormComponent, EvaluationCriteriaComponent];
 }
 
 @NgModule({

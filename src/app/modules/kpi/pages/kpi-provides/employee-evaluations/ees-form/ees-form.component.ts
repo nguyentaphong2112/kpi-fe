@@ -25,9 +25,6 @@ import {
 import {
   EvaluationCriteriaComponent
 } from '@app/modules/kpi/pages/kpi-provides/employee-evaluations/evaluation-criteria/evaluation-criteria.component';
-import {
-  WorkPlanComponent
-} from '@app/modules/kpi/pages/kpi-provides/employee-evaluations/work-plan/work-plan.component';
 import { NzTabSetComponent } from 'ng-zorro-antd/tabs';
 import _ from 'lodash';
 import { BaseResponse } from '@core/models/base-response';
@@ -41,7 +38,7 @@ import { ScrollSpyDirective } from '@shared/directive/scroll-spy.directive';
 import { Constant } from '@app/modules/kpi/data-access/constants/constants';
 import { EmployeesService } from '@app/modules/hrm/data-access/services/staff-info/employees.service';
 import { DataService } from '@shared/services/data.service';
-import { FormArray, Validators } from '@angular/forms';
+import { FormArray } from '@angular/forms';
 
 @Component({
   selector: 'pes-form',
@@ -73,9 +70,6 @@ export class EesFormComponent extends BaseFormComponent<NzSafeAny> implements On
   status = null;
   isConcurrent = null;
   employeeId = null;
-  isShowOrgParent = false;
-  percentGV = 100;
-  percentHC = 100;
   codeGV = 'GV';
 
   @ViewChild(NzTabSetComponent) tabSetComponent: NzTabSetComponent;
@@ -435,12 +429,6 @@ export class EesFormComponent extends BaseFormComponent<NzSafeAny> implements On
           }
         );
     }
-  }
-
-  showOrgParent() {
-    this.tabSetComponent.setSelectedIndex(1);
-    this.isShowOrgParent = true;
-    this.renderer.setStyle(document.getElementsByClassName('ant-tabs-nav')[0], 'display', 'flex', RendererStyleFlags2.Important);
   }
 
   isValid() {

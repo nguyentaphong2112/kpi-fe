@@ -11,14 +11,11 @@ import {
   EvaluationCriteriaComponent
 } from '@app/modules/kpi/pages/kpi-provides/personal-evaluations/evaluation-criteria/evaluation-criteria.component';
 import {
-  WorkPlanComponent
-} from '@app/modules/kpi/pages/kpi-provides/personal-evaluations/work-plan/work-plan.component';
-import {
   PersonalEvaluationsRoutingModule
 } from '@app/modules/kpi/pages/kpi-provides/personal-evaluations/personal-evaluations.routing.module';
 
 export function declaration() {
-  return [PesIndexComponent, PesFormComponent, EvaluationCriteriaComponent, WorkPlanComponent];
+  return [PesIndexComponent, PesFormComponent, EvaluationCriteriaComponent];
 }
 
 @NgModule({

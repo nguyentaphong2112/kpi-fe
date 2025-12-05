@@ -28,9 +28,6 @@ import { NzTabSetComponent } from 'ng-zorro-antd/tabs';
 import {
   EvaluationCriteriaComponent
 } from '@app/modules/kpi/pages/kpi-provides/organization-evaluations/evaluation-criteria/evaluation-criteria.component';
-import {
-  WorkPlanComponent
-} from '@app/modules/kpi/pages/kpi-provides/organization-evaluations/work-plan/work-plan.component';
 import _ from 'lodash';
 import { firstValueFrom } from 'rxjs';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -65,7 +62,6 @@ export class OesFormComponent extends BaseFormComponent<OrganizationEvaluationsM
   organizationEvaluationId = null;
   functionCode = Constant.FUNCTION_CODE.ORGANIZATION_EVALUATION;
   dataSelect = [];
-  isShowOrgParent = false;
   employeeCode = null;
   @ViewChild(NzTabSetComponent) tabSetComponent: NzTabSetComponent;
   // @ViewChild(NzTabSetComponent) tabSet: NzTabSetComponent;
@@ -196,12 +192,6 @@ export class OesFormComponent extends BaseFormComponent<OrganizationEvaluationsM
       empManagerCode: [null],
       orgName: [null]
     });
-  }
-
-  showOrgParent() {
-    this.tabSetComponent.setSelectedIndex(1);
-    this.isShowOrgParent = true;
-    this.renderer.setStyle(document.getElementsByClassName('ant-tabs-nav')[0], 'display', 'flex', RendererStyleFlags2.Important);
   }
 
   override save(adjustReason?: string) {

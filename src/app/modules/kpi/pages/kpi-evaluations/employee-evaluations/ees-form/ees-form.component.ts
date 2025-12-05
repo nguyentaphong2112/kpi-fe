@@ -1,13 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  Injector,
-  OnInit,
-  QueryList,
-  TemplateRef,
-  ViewChild,
-  ViewChildren
-} from '@angular/core';
+import { ChangeDetectorRef, Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { EmployeeEvaluationsModel } from '../../../../data-access/models/kpi-evaluations/employee-evaluations.model';
 import {
   EmployeeEvaluationsService
@@ -22,16 +13,13 @@ import {
   EmployeeWorkPlanningsService
 } from '@app/modules/kpi/data-access/services/kpi-evaluations/employee-work-plannings.service';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzTabSetComponent } from 'ng-zorro-antd/tabs';
 import {
   EvaluationCriteriaComponent
 } from '@app/modules/kpi/pages/kpi-evaluations/employee-evaluations/evaluation-criteria/evaluation-criteria.component';
-import {
-  WorkPlanComponent
-} from '@app/modules/kpi/pages/kpi-evaluations/employee-evaluations/work-plan/work-plan.component';
+
 import { BaseResponse } from '@core/models/base-response';
 import _ from 'lodash';
-import { firstValueFrom, take } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { ScrollSpyDirective } from '@shared/directive/scroll-spy.directive';
 import { MbCollapseComponent } from '@shared/component/hbt-collapse/hbt-collapse.component';
 import { FunctionCode } from '@shared/enums/enums-constant';
