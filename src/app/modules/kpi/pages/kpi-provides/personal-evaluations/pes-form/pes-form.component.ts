@@ -19,9 +19,6 @@ import {
 import { BaseResponse } from '@core/models/base-response';
 import _ from 'lodash';
 import { firstValueFrom } from 'rxjs';
-import {
-  WorkPlanningTemplatesService
-} from '@app/modules/kpi/data-access/services/kpi-templates/work-planning-templates.service';
 import { ScrollSpyDirective } from '@shared/directive/scroll-spy.directive';
 import { MbCollapseComponent } from '@shared/component/hbt-collapse/hbt-collapse.component';
 import { FunctionCode } from '@shared/enums/enums-constant';
@@ -77,7 +74,6 @@ export class PesFormComponent extends BaseFormComponent<NzSafeAny> implements On
     private cdr: ChangeDetectorRef,
     private dataService: DataService,
     private readonly empWorkPlanningService: EmployeeWorkPlanningsService,
-    private readonly workPlanningTemplatesService: WorkPlanningTemplatesService,
     injector: Injector
   ) {
     super(injector);

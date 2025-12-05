@@ -29,9 +29,6 @@ import { NzTabSetComponent } from 'ng-zorro-antd/tabs';
 import _ from 'lodash';
 import { BaseResponse } from '@core/models/base-response';
 import { firstValueFrom } from 'rxjs';
-import {
-  WorkPlanningTemplatesService
-} from '@app/modules/kpi/data-access/services/kpi-templates/work-planning-templates.service';
 import { FunctionCode } from '@shared/enums/enums-constant';
 import { MbCollapseComponent } from '@shared/component/hbt-collapse/hbt-collapse.component';
 import { ScrollSpyDirective } from '@shared/directive/scroll-spy.directive';
@@ -84,9 +81,7 @@ export class EesFormComponent extends BaseFormComponent<NzSafeAny> implements On
     private readonly service: EmployeeEvaluationsService,
     private cdr: ChangeDetectorRef,
     private readonly empWorkPlanningService: EmployeeWorkPlanningsService,
-    private readonly workPlanningTemplatesService: WorkPlanningTemplatesService,
     private dataService: DataService,
-    private renderer: Renderer2,
     injector: Injector
   ) {
     super(injector);
