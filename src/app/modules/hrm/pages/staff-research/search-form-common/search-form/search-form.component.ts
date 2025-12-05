@@ -1,26 +1,21 @@
 import { Component, EventEmitter, HostListener, Injector, Input, OnInit, Output } from '@angular/core';
 import { Scopes } from '@core/utils/common-constants';
-import { HTTP_STATUS_CODE, STORAGE_NAME } from '@core/constant/system.constants';
+import { STORAGE_NAME } from '@core/constant/system.constants';
 import { UrlConstant as UrlConstantShare } from '@shared/constant/url.class';
 import { Validators } from '@angular/forms';
 import { UserLogin } from '@shared/model/user-login';
 import { StorageService } from '@core/services/storage.service';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { BaseResponse } from '@core/models/base-response';
 import { SelectCheckAbleModal } from '@shared/component/hbt-select-able/select-able.component';
 import { SEARCH_FORM_ADVANCE, SEARCH_INFO_TYPE } from './search-form.config';
-import * as _ from 'lodash';
 import {
   SearchFormSharedService
 } from '@app/modules/hrm/data-access/services/staff-research/search-form-shared.service';
-import { Utils } from '@core/utils/utils';
 import { ObjectUtil } from '@core/utils/object.util';
 import { BaseListComponent } from '@core/components/base-list.component';
 import { AppFunction } from '@core/models/app-function.interface';
-import { ExtendFieldModel } from '@app/modules/hrm/data-access/models/research/extend-field.model';
 import { BookmarkFormService } from '@app/modules/hrm/data-access/services/staff-research/bookmark-form.service';
 import { SearchFormService } from '@app/modules/hrm/data-access/services/search-form.service';
-import { BookmarkModel, Option } from '@app/modules/hrm/data-access/models/research/bookmark.model';
 import { parse } from 'date-fns';
 
 @Component({
@@ -45,9 +40,9 @@ export class SearchFormComponent extends BaseListComponent<any> implements OnIni
   @Output() isDataSelectReadyEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
   urlConstantShare = UrlConstantShare;
   typeSearchData!: any[];
-  formConfigExtendField: ExtendFieldModel[] = [];
-  listExtendField: ExtendFieldModel[] = [];
-  bookmarks: BookmarkModel[] = [];
+  formConfigExtendField: any[] = [];
+  listExtendField: any[] = [];
+  bookmarks: any[] = [];
   userLogin: UserLogin = new UserLogin();
   saveBookmarkName?: string = '';
   saveBookmarkVisible = false;
@@ -129,7 +124,7 @@ export class SearchFormComponent extends BaseListComponent<any> implements OnIni
   //   });
   // }
 
-  doAddOrRemoveFieldExtend(items: SelectCheckAbleModal, addFormControl: boolean = true, setFormValue?: boolean, itemField?: ExtendFieldModel, option?: Option) {
+  doAddOrRemoveFieldExtend(items: SelectCheckAbleModal, addFormControl: boolean = true, setFormValue?: boolean, itemField?: any, option?: any) {
     if (addFormControl) {
       this.formConfigExtendField = [];
     }
@@ -154,56 +149,8 @@ export class SearchFormComponent extends BaseListComponent<any> implements OnIni
     this.listOldExtentSelect = items.listOfSelected;
   }
 
-  saveBookmark(id?: number) {
-    if (this.saveBookmarkName.trim() !== '') {
-      const bm: BookmarkModel | NzSafeAny = new BookmarkModel();
-      bm.userBookmarkId = id;
-      bm.bookmarkType = this.moduleName;
-      bm.name = id ? (this.saveBookmarkName ?? this.bookmarks.find(b => b.userBookmarkId === id)?.name) : this.saveBookmarkName;
-      bm.listOptions = this.getOptions();
-      const requestApi = bm.userBookmarkId ? this.bookmarkFormService.upDateBookmark(bm) : this.bookmarkFormService.createBookmark(bm);
-      requestApi.subscribe(res => {
-        if (res.code === HTTP_STATUS_CODE.SUCCESS) {
-          // this.getBookmark();
-          this.saveBookmarkName = undefined;
-          this.saveBookmarkVisible = false;
-          this.ref.markForCheck();
-        }
-      });
-    } else {
-      this.toast.error(this.translate.instant('common.validate.required', { param: this.translate.instant('hrm.staffManager.label.saveName') }));
-    }
-  }
 
-  chooseBookmark() {
-    this.formConfigExtendField = [];
-    const fields: NzSafeAny[] = [];
-    const bookmark = this.bookmarks.find(bm => bm.userBookmarkId === this.choseBookmarkId);
-    bookmark?.listOptions?.forEach((option) => {
-      if (option.code === 'listStatus') {
-        this.form.patchValue({ listStatus: option.values });
-        return;
-      } else if (option.code === 'listEmpTypeId') {
-        this.form.patchValue({ listEmpTypeId: option.values });
-        return;
-      } else if (option.code === 'listPositionId') {
-        this.form.patchValue({ listPositionId: option.values });
-        return;
-      } else if (option.code === 'organizationId') {
-        this.f.organizationId.patchValue(option.values[0]);
-      }
-      const itemField = this.listExtendField[this.listExtendField.findIndex(x => x.code === option.code)];
-      if (itemField) {
-        fields.push(itemField.code);
-        this.form.addControl(itemField.code, this.fb.control(null));
-        this.doAddOrRemoveFieldExtend({ listOfSelected: [itemField.code] }, false, true, itemField, option);
-      }
-    });
-    this.form.patchValue({ extendField: fields });
-    this.chooseBookmarkVisible = false;
-  }
-
-  setFormValueChooseBookmark(itemField: ExtendFieldModel, option: Option | NzSafeAny) {
+  setFormValueChooseBookmark(itemField: any, option: NzSafeAny) {
     switch (itemField.inputType) {
       case 'date':
         this.f[itemField.code].setValue([
@@ -233,61 +180,6 @@ export class SearchFormComponent extends BaseListComponent<any> implements OnIni
     }
   }
 
-  deleteBookmark() {
-    this.bookmarkFormService.deleteBookmark(this.choseBookmarkId).subscribe((res: BaseResponse<any>) => {
-      if (res.code === HTTP_STATUS_CODE.SUCCESS) {
-        this.toast.success(this.translate.instant('common.notification.deleteSuccess'));
-        this.choseBookmarkId = undefined;
-        // this.getBookmark();
-      }
-    });
-  }
-
-  getOptions(): Option[] {
-    const options: Option[] = [];
-    const option = new Option();
-    option.code = 'listStatus';
-    option.values = this.f.listStatus.value ? this.f.listStatus.value : [];
-    options.push(_.clone(option));
-    option.code = 'listEmpTypeId';
-    option.values = this.f.listEmpTypeId.value ? this.f.listEmpTypeId.value : [];
-    options.push(_.clone(option));
-    option.code = 'listPositionId';
-    option.values = this.f.listPositionId.value ? this.f.listPositionId.value : [];
-    options.push(_.clone(option));
-    option.code = 'organizationId';
-    option.values = this.f.organizationId.value ? [this.f.organizationId.value] : [];
-    options.push(_.clone(option));
-    this.formConfigExtendField.forEach(field => {
-      const optionConfig: NzSafeAny = new Option();
-      optionConfig.code = field.code;
-      switch (field.inputType) {
-        case 'date':
-          optionConfig.valueFrom = this.f[field.code].value ? Utils.convertDateToSendServer(this.f[field.code].value[0]) : null;
-          optionConfig.valueTo = this.f[field.code].value ? Utils.convertDateToSendServer(this.f[field.code].value[1]) : null;
-          break;
-        case 'number':
-          optionConfig.valueFrom = this.f[field.code].value[0];
-          optionConfig.valueTo = this.f[field.code].value[1];
-          break;
-        case 'text':
-          optionConfig.values = this.f[field.code].value ? [this.f[field.code].value] : [];
-          break;
-        case 'combobox':
-        case 'multi-combobox':
-          optionConfig.values = this.f[field.code].value ? this.f[field.code].value : [];
-          break;
-        case 'checkbox':
-          optionConfig.values = this.f[field.code].value ?? [];
-          break;
-        default:
-          optionConfig.values = [];
-          break;
-      }
-      options.push(optionConfig);
-    });
-    return options;
-  }
 
   validateDate(date: NzSafeAny, code: NzSafeAny) {
     if (date && date[1] && date[0] > date[1]) {

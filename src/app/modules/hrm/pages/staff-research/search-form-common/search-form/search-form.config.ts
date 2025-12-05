@@ -1,4 +1,3 @@
-import { ExtendFieldModel } from '@app/modules/hrm/data-access/models/research/extend-field.model';
 import { Constant } from '@app/modules/hrm/data-access/constant/constant.class';
 import { environment } from '@env/environment';
 
@@ -11,7 +10,7 @@ export const SEARCH_INFO_TYPE = [
   }
 ];
 
-export const SEARCH_FORM_ADVANCE: ExtendFieldModel[] = [
+export const SEARCH_FORM_ADVANCE: any[] = [
   {
     code: 'listDateOfBirth',
     inputType: 'date',

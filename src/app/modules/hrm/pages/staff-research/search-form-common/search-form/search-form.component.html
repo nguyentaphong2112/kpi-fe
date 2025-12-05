@@ -221,39 +221,6 @@
 
       </div>
 
-<!--      <div nz-col [nzXs]="12" [nzLg]="8" style="display: flex; margin-top: 26px">-->
-<!--        <hbt-select-check-able-->
-<!--          [dataSelects]="listExtendField"-->
-<!--          (eventEmit)="doAddOrRemoveFieldExtend($event)"-->
-<!--          keyLabel="inputLabel"-->
-<!--          keyValue="code"-->
-<!--          placeholder="{{'hrm.staffManager.label.addSearchCondition' | translate}}"-->
-<!--          formControlName="extendField"-->
-<!--          style="width: -webkit-fill-available"-->
-<!--        ></hbt-select-check-able>-->
-<!--        <hbt-button-->
-<!--          class="btn-choose__bookmark " buttonIconType="AWESOME" prefixIcon="fas fa-star"-->
-<!--          buttonSize="VERY_LARGE"-->
-<!--          buttonTextColor="#7F85F3"-->
-<!--          nz-popover-->
-<!--          nzPopoverTrigger="click"-->
-<!--          [nzPopoverTitle]="null"-->
-<!--          [(nzPopoverVisible)]="chooseBookmarkVisible"-->
-<!--          [nzPopoverContent]="chooseBookmarkTmpl"-->
-<!--          nzPopoverPlacement="leftBottom"-->
-<!--          buttonBgColor="#FFFFFF"></hbt-button>-->
-<!--        <hbt-button-->
-<!--          class="btn-save__bookmark" buttonIconType="AWESOME" prefixIcon="fas fa-bookmark"-->
-<!--          buttonSize="VERY_LARGE"-->
-<!--          buttonTextColor="#7F85F3"-->
-<!--          nz-popover-->
-<!--          [(nzPopoverVisible)]="saveBookmarkVisible"-->
-<!--          nzPopoverTrigger="click"-->
-<!--          [nzPopoverTitle]="null"-->
-<!--          [nzPopoverContent]="saveBookmarkTmpl"-->
-<!--          nzPopoverPlacement="rightBottom"-->
-<!--          buttonBgColor="#FFFFFF"></hbt-button>-->
-<!--      </div>-->
     </div>
 
     <div nz-row class="btn__row-search" style="margin-top: 10px">
@@ -272,47 +239,7 @@
   </div>
 </form>
 
-<ng-template #saveBookmarkTmpl>
-  <div class="popover__inner">
-    <p><strong>{{ 'hrm.staffManager.label.saveSearchCondition' | translate }}</strong></p>
-    <hbt-input-text [maxLength]="200"
-                    [showFlexEnd]="false"
-                    placeholderText=" {{'hrm.staffManager.label.saveName' | translate}}  "
-                    [(ngModel)]="saveBookmarkName"></hbt-input-text>
-  </div>
-  <div class="popover_footer">
-    <hbt-button buttonAvailableStyle="SAVE"
-                buttonText="{{'hrm.staffManager.label.saveCurrentRecord' | translate}}"
-                *ngIf="choseBookmarkId"
-                (click)="choseBookmarkId ? saveBookmark(choseBookmarkId) : $event.stopPropagation()"
-                class="btn__save"></hbt-button>
-    <hbt-button buttonAvailableStyle="SAVE"
-                buttonText="{{'hrm.staffManager.label.addRecord' | translate}}"
-                (click)="saveBookmark()" class="btn__save"></hbt-button>
-  </div>
-</ng-template>
-<ng-template #chooseBookmarkTmpl>
-  <div class="popover__inner">
-    <p><strong>{{ 'hrm.staffManager.label.selectConditionSave' | translate }}</strong></p>
-    <hbt-select
-      keyValue="userBookmarkId"
-      keyLabel="name"
-      placeholder="{{'hrm.staffManager.label.select' | translate}}"
-      [dataSelects]="bookmarks"
-      [(ngModel)]="choseBookmarkId"
-    ></hbt-select>
-  </div>
-  <div class="popover_footer">
-    <hbt-button buttonAvailableStyle="SAVE"
-                buttonText="{{'hrm.staffManager.label.selectBookmark' | translate}}"
-                (click)="choseBookmarkId ? chooseBookmark() : $event.stopPropagation()"
-                class="btn__choose"></hbt-button>
-    <hbt-button buttonAvailableStyle="REJECT"
-                buttonText="{{'hrm.staffManager.label.deleteBookmark' | translate}}"
-                (click)="choseBookmarkId ? deleteBookmark() : $event.stopPropagation()"
-                class="btn__choose"></hbt-button>
-  </div>
-</ng-template>
+
 <ng-template #footerTmpl>
   <hbt-button
     buttonAvailableStyle="CANCEL"

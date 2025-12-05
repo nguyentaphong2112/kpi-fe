@@ -4,7 +4,6 @@ import { DataService } from '@shared/services/data.service';
 import { CommonUtils } from '@shared/services/common-utils.service';
 import { REQUEST_TYPE } from '@shared/constant/common';
 import { FormArray, Validators } from '@angular/forms';
-import { ContactAddressModels, EmployeesModel } from '@app/modules/hrm/data-access/models/research/employees.model';
 import { PersonalInfoService } from '@app/modules/hrm/data-access/services/staff-research/personal-info.service';
 import { CategoryModel } from '@core/models/category-common.interface';
 import { HTTP_STATUS_CODE } from '@core/constant/system.constants';
@@ -19,7 +18,7 @@ import { environment } from '@env/environment';
   templateUrl: './basic-form.component.html',
   styleUrls: ['./basic-form.component.scss']
 })
-export class BasicFormComponent extends BaseFormComponent<EmployeesModel> implements OnInit {
+export class BasicFormComponent extends BaseFormComponent<any> implements OnInit {
   listProvinces: CategoryModel[] = [];
   listDistricts: CategoryModel[] = [];
   listWards: CategoryModel[] = [];
@@ -37,8 +36,8 @@ export class BasicFormComponent extends BaseFormComponent<EmployeesModel> implem
     this.initForm();
     this.key = 'employeeId';
     this.findOneById = (id) => this.service.findOneById(id);
-    this.createApi = (body: EmployeesModel) => this.service.createOrImport(CommonUtils.convertDataSendToServer(body), REQUEST_TYPE.DEFAULT);
-    this.updateApi = (body: EmployeesModel) => this.service.update(CommonUtils.convertDataSendToServer(body), REQUEST_TYPE.DEFAULT);
+    this.createApi = (body: any) => this.service.createOrImport(CommonUtils.convertDataSendToServer(body), REQUEST_TYPE.DEFAULT);
+    this.updateApi = (body: any) => this.service.update(CommonUtils.convertDataSendToServer(body), REQUEST_TYPE.DEFAULT);
     this.getConfigAttributeApi = () => this.dataService.getAttributeConfig({
       tableName: 'hr_employees',
       functionCode: 'THONG_TIN_CO_BAN'
@@ -235,8 +234,8 @@ export class BasicFormComponent extends BaseFormComponent<EmployeesModel> implem
     this.body.listContactAddresses = this.getContactAddresses();
   }
 
-  getContactAddresses(): ContactAddressModels[] {
-    const addressRequests: ContactAddressModels[] = [];
+  getContactAddresses(): any[] {
+    const addressRequests: any[] = [];
     if (!StringUtils.isNullOrEmpty(this.f.provinceId.value) || !StringUtils.isNullOrEmpty(this.f.villageAddress.value)) {
       addressRequests.push({
         provinceId: this.f.provinceId.value,

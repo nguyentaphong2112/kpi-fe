@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BaseCrudService } from '@core/services/base/base-crud.service';
 import { MICRO_SERVICE } from '@core/constant/system.constants';
-import { EvaluationResultsModel } from '../../models/research/evaluation-results.model';
 import { UrlConstant } from '@app/modules/hrm/data-access/constant/url.class';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EvaluationResultsService extends BaseCrudService<EvaluationResultsModel> {
+export class EvaluationResultsService extends BaseCrudService<any> {
   protected override serviceName = MICRO_SERVICE.HRM;
   protected override urlEndpoint = UrlConstant.API_VERSION + UrlConstant.EVALUATION_RESULTS.PREFIX;
 

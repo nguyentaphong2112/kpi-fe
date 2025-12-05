@@ -1,6 +1,5 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { BaseFormComponent } from '@core/components/base-form.component';
-import { EmployeesModel } from '@app/modules/hrm/data-access/models/research/employees.model';
 import { DataService } from '@shared/services/data.service';
 import { FunctionCode } from '@shared/enums/enums-constant';
 import { Scopes } from '@core/utils/common-constants';
@@ -21,7 +20,7 @@ import { Utils } from '@core/utils/utils';
   templateUrl: './employee-add.component.html',
   styleUrls: ['./employee-add.component.scss']
 })
-export class EmployeeAddComponent extends BaseFormComponent<EmployeesModel> implements OnInit {
+export class EmployeeAddComponent extends BaseFormComponent<any> implements OnInit {
   functionCode = FunctionCode.HR_PERSONAL_INFO;
   scope = Scopes.CREATE;
   listPosition: CategoryModel[] = [];
@@ -34,8 +33,8 @@ export class EmployeeAddComponent extends BaseFormComponent<EmployeesModel> impl
   ) {
     super(injector);
     this.findOneById = (id) => this.perService.findOneById(id);
-    this.createApi = (body: EmployeesModel) => this.service.createOrImport(CommonUtils.convertDataSendToServer(body), REQUEST_TYPE.FORM_DATA);
-    this.updateApi = (body: EmployeesModel) => this.service.createOrImport(CommonUtils.convertDataSendToServer(body), REQUEST_TYPE.FORM_DATA);
+    this.createApi = (body: any) => this.service.createOrImport(CommonUtils.convertDataSendToServer(body), REQUEST_TYPE.FORM_DATA);
+    this.updateApi = (body: any) => this.service.createOrImport(CommonUtils.convertDataSendToServer(body), REQUEST_TYPE.FORM_DATA);
     this.initForm();
     this.key = 'employeeId';
   }
