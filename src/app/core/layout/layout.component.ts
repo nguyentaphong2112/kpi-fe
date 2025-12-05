@@ -13,12 +13,10 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import * as _ from 'lodash';
-import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { NzModalRef } from 'ng-zorro-antd/modal';
 import { Subscription } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { TranslateService } from '@ngx-translate/core';
-import { ToastrService } from 'ngx-toastr';
 import { PersonalInformation } from '@core/models/personal-information';
 import { SessionService } from '@core/services/session.service';
 import { filter, map } from 'rxjs/operators';
@@ -30,12 +28,8 @@ import { StorageService } from '@core/services/storage.service';
 import { _variable } from '@core/global-style/_variable';
 import { IdleUserCheckService } from '@shared/services/idle-user-check.service';
 import { AuthService } from '@shared/services/auth.service';
-import { ConfigPageService } from '@core/services/config-page.service';
-import { UrlConstant } from '@app/modules/admin/data-access/constants/url.constant';
-import { HTTP_STATUS_CODE, MICRO_SERVICE } from '@core/constant/system.constants';
-import { FileService } from '@shared/component/hbt-upload/file.service';
+import { MICRO_SERVICE } from '@core/constant/system.constants';
 import { Mode } from '@shared/constant/common';
-import { DynamicReportService } from '@app/modules/admin/data-access/services/configurations/dynamic-report.service';
 import { FunctionCode } from '@app/shared/enums/enums-constant';
 import { environment } from '@env/environment';
 
@@ -99,18 +93,10 @@ export class LayoutComponent implements OnInit, AfterViewInit, AfterViewChecked,
     private readonly activeRoute: ActivatedRoute,
     private readonly translate: TranslateService,
     private readonly session: SessionService,
-    private readonly toastr: ToastrService,
     private readonly cdRef: ChangeDetectorRef,
-    private readonly http: HttpClient,
-    private readonly modal: NzModalService,
     private readonly idleUserCheckService: IdleUserCheckService,
     private readonly auth: AuthService,
-    private fileService: FileService,
     private sessionService: SessionService,
-    private readonly router: Router,
-    private readonly toast: ToastrService,
-    private readonly configPageService: ConfigPageService,
-    private readonly dynamicReportService: DynamicReportService,
     private el: ElementRef
   ) {
     this.getCurrentUrl(this.route);
