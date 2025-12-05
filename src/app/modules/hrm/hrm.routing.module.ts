@@ -3,16 +3,8 @@ import { NgModule } from '@angular/core';
 
 const routes: Routes = [
   {
-    path: 'log-task',
-    loadChildren: () => import('./pages/log-task/log-task.module').then(m => m.LogTaskModule)
-  },
-  {
     path: 'model-plan',
     loadChildren: () => import('./pages/model-plan/model-plan.module').then(m => m.ModelPlanModule)
-  },
-  {
-    path: 'categories',
-    loadChildren: () => import('./pages/category-manage/category-manage.module').then(m => m.CategoryManageModule)
   },
   {
     path: 'research',
@@ -31,18 +23,6 @@ const routes: Routes = [
     data: {
       notShowPageName: true
     }
-  },
-  {
-    path: 'export-report',
-    loadChildren: () => import('./pages/export-report/export-report.module').then(m => m.ExportReportModule)
-  },
-  {
-    path: 'employee-directory',
-    loadChildren: () => import('./pages/employee-directory/employee-directory.module').then(m => m.EmployeeDirectoryModule)
-  },
-  {
-    path: 'salary-manager',
-    loadChildren: () => import('./pages/salary-manager/salary-manager.module').then(m => m.SalaryManagerModule)
   }
 ];
 

@@ -5,12 +5,10 @@ import { IndicatorsService } from '../../../../data-access/services/kpi-managers
 import { BaseFormComponent } from '@core/components/base-form.component';
 import { MICRO_SERVICE } from '@core/constant/system.constants';
 import { CommonUtils } from '@shared/services/common-utils.service';
-import { Mode, REQUEST_TYPE } from '@shared/constant/common';
+import { REQUEST_TYPE } from '@shared/constant/common';
 import { Scopes } from '@core/utils/common-constants';
 import { Constant } from '@app/modules/kpi/data-access/constants/constants';
-import { ObjectUtil } from '@core/utils/object.util';
 import { distinctUntilChanged } from 'rxjs';
-import { noSpaceValidator } from '@app/modules/admin/pages/configurations/dynamic-reports/drs-form/drs-form.component';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { CustomValidators } from '@core/utils/custom-validations';
 

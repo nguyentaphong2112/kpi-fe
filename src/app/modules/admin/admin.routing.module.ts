@@ -12,22 +12,6 @@ const routes: Routes = [
     path: 'categories',
     loadChildren: () => import('./pages/categories/categories.module').then(m => m.CategoriesModule)
   },
-  {
-    path: 'configurations',
-    data: {
-      functionCode: FunctionCode.SYS_CONFIG_PARAMETER,
-      moduleCode: MICRO_SERVICE.ADMIN
-    },
-    loadChildren: () => import('./pages/configurations/configurations.module').then(m => m.ConfigurationsModule)
-  },
-  {
-    path: 'card-templates',
-    loadChildren: () => import('./pages/card-templates/card-templates.module').then(m => m.CardTemplatesModule)
-  },
-  {
-    path: 'feedbacks',
-    loadChildren: () => import('./pages/feedbacks/feedbacks.module').then(m => m.FeedbacksModule)
-  }
 ];
 
 @NgModule({

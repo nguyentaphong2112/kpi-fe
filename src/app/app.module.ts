@@ -15,7 +15,6 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { CookieService } from 'ngx-cookie-service';
-import { LogTaskModule } from '@app/modules/hrm/pages/log-task/log-task.module';
 
 
 // registerLocaleData(en);

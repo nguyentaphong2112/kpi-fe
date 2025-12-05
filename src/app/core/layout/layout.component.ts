@@ -33,13 +33,11 @@ import { AuthService } from '@shared/services/auth.service';
 import { ConfigPageService } from '@core/services/config-page.service';
 import { UrlConstant } from '@app/modules/admin/data-access/constants/url.constant';
 import { HTTP_STATUS_CODE, MICRO_SERVICE } from '@core/constant/system.constants';
-import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { FileService } from '@shared/component/hbt-upload/file.service';
-import { Mode, REQUEST_TYPE } from '@shared/constant/common';
+import { Mode } from '@shared/constant/common';
 import { DynamicReportService } from '@app/modules/admin/data-access/services/configurations/dynamic-report.service';
 import { FunctionCode } from '@app/shared/enums/enums-constant';
 import { environment } from '@env/environment';
-import { ConfigComponent } from '@core/layout/config/config.component';
 
 export interface IBreadCrumb {
   label: string;
@@ -524,38 +522,6 @@ export class LayoutComponent implements OnInit, AfterViewInit, AfterViewChecked,
     }
   }
 
-  openModal() {
-    this.currentUrl = this.router.url;
-    this.configPageService.getList({ url: this.currentUrl }, UrlConstant.CONFIG_PAGE.CONFIG_URL).subscribe(res => {
-      if (res.code === HTTP_STATUS_CODE.SUCCESS) {
-        if (res.data?.reportConfigs?.length > 0 || res.data?.configObjectAttributes?.length > 0 || res.data?.configParameters?.length > 0) {
-          this.listFile = res.data;
-          this.openViewModal(this.listFile);
-          // this.isVisible = true;
-        }
-      }
-    });
-  }
-
-  openViewModal(data: any) {
-    this.formConfig = {
-      title: 'common.button.configPage',
-      content: ConfigComponent
-    };
-    const mode = this.modeConst.EDIT;
-    this.modalRef = this.modal.create({
-      nzWidth: '60%',
-      nzTitle: this.translate.instant(this.formConfig.title),
-      nzContent: this.formConfig.content,
-      nzMaskClosable: this.formConfig.isCloseModal,
-      nzComponentParams: {
-        mode,
-        data,
-        config: this.formConfig.config
-      },
-      nzFooter: this.footerTpl
-    });
-  }
 
   // openModalEdit(fileData: NzSafeAny) {
   //   this.isVisibleEdit = true;

@@ -153,11 +153,6 @@
                   [routerLink]="breadcrumb.disabled ? null : breadcrumb.url"><span>{{ translates(breadcrumb.label) }}</span></a>
               </nz-breadcrumb-item>
             </div>
-            <div class="icon" *ngIf="objFunctionConfig?.view">
-              <span class="icon-setting" nz-icon nz-tooltip nzTooltipPlacement="left" (click)="openModal()"
-                    nzTooltipTitle=" {{ 'common.button.configPage' | translate }}" nzType="setting"
-                    nzTheme="outline"></span>
-            </div>
           </div>
         </nz-breadcrumb>
         <ng-container *ngIf="activeRouteData && !activeRouteData['notShowPageName'] && activeRouteData['pageName']">
