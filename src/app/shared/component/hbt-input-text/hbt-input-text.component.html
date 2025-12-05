@@ -1,0 +1,141 @@
+<div [class]="inputGroupClass">
+  <div *ngIf="config?.labelText != null" class="input__label" [innerHTML]="config?.labelText"><span
+    *ngIf="required" style="color: red">*</span></div>
+  <div *ngIf="config?.labelText == null && config?.showFlexEnd" class="input__group--no-label"></div>
+  <nz-input-group *ngIf="config?.groupType === 'icon'"
+                  [nzPrefixIcon]="config?.prefixIcon"
+                  [nzPrefix]="config?.prefixTemplate"
+                  [nzSuffix]="config?.suffixTemplate"
+                  [nzSuffixIcon]="config.suffixIcon" [class]="inputGroupGroupClass">
+    <input appSpecialInput [class]="inputTextClass" [disabled]="config?.disable"
+           [autofocus]="config?.autofocus" nz-input
+           [readOnly]="readOnly"
+           [maxLength]="maxLength"
+           [minLength]="minLength"
+           [placeholder]="config?.placeholder"
+           (ngModelChange)="onInputChange($event)"
+           [nzAutocomplete]="autocomplete ?? auto"
+           (blur)="inputBlur($event)" [(ngModel)]="value" />
+  </nz-input-group>
+  <ng-container *ngIf="!defaultInput; else other">
+    <input appSpecialInput
+           *ngIf="config?.groupType === 'noIcon' && inputType == 'text'"
+           [disabled]="config?.disable"
+           [autofocus]="config?.autofocus"
+           [class]="inputTextClass" nz-input
+           [readOnly]="readOnly"
+           [maxLength]="maxLength"
+           [minLength]="minLength"
+           [nzAutocomplete]="autocomplete ?? auto"
+           [placeholder]="config?.placeholder" (ngModelChange)="onInputChange($event)"
+           (blur)="inputBlur($event)" [(ngModel)]="value" />
+
+    <input *ngIf="inputType === 'number' && !isFormatterCurrency"
+           #inputElement
+           type="number"
+           [disabled]="config?.disable"
+           [autofocus]="config?.autofocus"
+           [class]="inputTextClass"
+           nz-input
+           [readOnly]="readOnly"
+           [maxLength]="maxLength"
+           [minLength]="minLength"
+           [nzAutocomplete]="autocomplete ?? auto"
+           [placeholder]="config?.placeholder"
+           (ngModelChange)="onInputChange($event); onChangeValue($event)"
+           (keyup)="inputFill($event)"
+           (paste)="onPaste($event)"
+           (blur)="inputBlur($event); onBlur()"
+           (click)="inputClick($event, value)"
+           [(ngModel)]="value"
+           (keypress)="preventTypeSpecialSymbol($event)"
+           [min]='minNumber'
+           [max]='maxNumber.toString()'
+    />
+
+    <nz-input-number
+      *ngIf="inputType === 'number' && isFormatterCurrency"
+         nz-input
+         appNumberic
+         [num]="integerPart"
+         [decimals]="decimalPart"
+         [nzFormatter]="formatterCurrency"
+         [nzParser]="parserCurrency"
+         [disabled]="config?.disable"
+         [nzAutoFocus]="config?.autofocus === 'autofocus' "
+         [class]="inputTextClass"
+         [nzReadOnly]="readOnly"
+         [nzPlaceHolder]="config?.placeholder ?? ''"
+         (ngModelChange)="onInputChange($event)"
+         (keyup)="inputFill($event)"
+         (paste)="onPaste($event)"
+         (blur)="inputBlur($event)"
+         (click)="inputClick($event, value)"
+         [(ngModel)]="value"
+         (keypress)="preventTypeSpecialSymbol($event)"
+         [nzMin]='+minNumber ?? 0'
+         [nzMax]='maxNumber'
+         [ngClass]="{'remove__icon': !showFlexEnd }"
+    ></nz-input-number>
+
+    <input appSpecialInput
+           *ngIf="config?.groupType === 'noIcon' && inputType == 'password'"
+           type="password"
+           [disabled]="config?.disable"
+           [autofocus]="config?.autofocus"
+           [class]="inputTextClass" nz-input
+           [readOnly]="readOnly"
+           [maxLength]="maxLength"
+           [minLength]="minLength"
+           [nzAutocomplete]="autocomplete ?? auto"
+           [placeholder]="config?.placeholder" (ngModelChange)="onInputChange($event)"
+           (blur)="inputBlur($event)" [(ngModel)]="value" />
+    <textarea appSpecialInput *ngIf="config?.groupType === 'textarea'" [disabled]="config?.disable"
+              [maxLength]="maxLength"
+              [minLength]="minLength"
+              [autofocus]="config?.autofocus" [rows]="config?.rows" [nzAutosize]="config?.autoSize"
+              [ngStyle]="{ 'resize': config?.resize ? 'vertical' : 'none' }"
+              [class]="inputTextClass" nz-input [placeholder]="config?.placeholder"
+              (ngModelChange)="onInputChange($event)"
+              (blur)="inputBlur($event)" [(ngModel)]="value"></textarea>
+  </ng-container>
+  <ng-template #other>
+    <input
+      *ngIf="config?.groupType === 'noIcon' && inputType == 'text'"
+      [disabled]="config?.disable"
+      [autofocus]="config?.autofocus"
+      [class]="inputTextClass" nz-input
+      [readOnly]="readOnly"
+      [maxLength]="maxLength"
+      [minLength]="minLength"
+      [nzAutocomplete]="autocomplete ?? auto"
+      [placeholder]="config?.placeholder" (ngModelChange)="onInputChange($event)"
+      (blur)="inputBlur($event)" [(ngModel)]="value" />
+    <input
+      *ngIf="config?.groupType === 'noIcon' && inputType == 'password'"
+      type="password"
+      [disabled]="config?.disable"
+      [autofocus]="config?.autofocus"
+      [class]="inputTextClass" nz-input
+      [readOnly]="readOnly"
+      [maxLength]="maxLength"
+      [minLength]="minLength"
+      [nzAutocomplete]="autocomplete ?? auto"
+      [placeholder]="config?.placeholder" (ngModelChange)="onInputChange($event)"
+      (blur)="inputBlur($event)" [(ngModel)]="value" />
+    <textarea *ngIf="config?.groupType == 'textarea'" [disabled]="config?.disable"
+              [maxLength]="maxLength"
+              [minLength]="minLength"
+              [autofocus]="config?.autofocus" [rows]="config?.rows" [nzAutosize]="config?.autoSize"
+              [ngStyle]="{ 'resize': config?.resize ? 'vertical' : 'none' }"
+              [class]="inputTextClass" nz-input [placeholder]="config?.placeholder"
+              (ngModelChange)="onInputChange($event)"
+              (blur)="inputBlur($event)" [(ngModel)]="value"></textarea>
+  </ng-template>
+  <div *ngIf="config?.textMessageValue != null && config?.showError" [class]="inputMessageClass">
+    <em *ngIf="config?.showIcon" nz-icon [nzType]="iconType" nzTheme="outline"></em>
+    <span class="text__message">{{ config?.textMessageValue }}</span>
+  </div>
+</div>
+
+<nz-autocomplete #auto [nzDataSource]="filteredOptions"></nz-autocomplete>

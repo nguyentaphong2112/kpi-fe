@@ -1,0 +1,86 @@
+<div class='save-form-kpi'>
+  <form nz-form [formGroup]="form">
+    <div nz-row [nzGutter]='[20,15]'>
+
+      <div nz-col [nzXs]="12" [nzLg]="24">
+        <hbt-input-text formControlName="name" [maxLength]="255"
+                        [type]="isSubmitted && form.controls['name'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['name'].errors != null"
+                        [errors]="form.controls['name'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.evaluationPeriods.table.name' | translate }}]"
+                        placeholderText="{{'kpi.evaluationPeriods.table.name' | translate}}"
+                        labelText="{{'kpi.evaluationPeriods.table.name' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+      <!--Năm đánh giá-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-date-picker formControlName="year"
+                         mode="year"
+                         [type]="isSubmitted && form.controls['year'].errors ? 'error' : 'default'"
+                         [showError]="isSubmitted && form.controls['year'].errors != null"
+                         [errors]="form.controls['year'].errors"
+                         [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.evaluationPeriods.table.year' | translate }}]"
+                         placeholderText="{{'kpi.evaluationPeriods.table.year' | translate}}"
+                         labelText="{{'kpi.evaluationPeriods.table.year' | translate}} <span class='label__required'>*</span>"
+        ></hbt-date-picker>
+      </div>
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [urlLoadData]="getUrlCategory(categoryCode.KPI_LOAI_DANH_GIA)"
+                    [serviceName]="microService.ADMIN"
+                    [type]="isSubmitted && form.controls['evaluationType'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['evaluationType'].errors !== null"
+                    [errors]="form.controls['evaluationType'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.evaluationPeriods.table.evaluationTypeName' | translate }}]"
+                    keyLabel="name"
+                    formControlName="evaluationType"
+                    placeholder="{{'kpi.evaluationPeriods.table.evaluationTypeName' | translate}}"
+                    labelText="{{'kpi.evaluationPeriods.table.evaluationTypeName' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+      <div nz-col [nzXs]='24' [nzLg]='12'>
+        <hbt-date-picker
+          formControlName="startDate"
+          [type]="isSubmitted && form.controls['startDate'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['startDate'].errors !== null"
+          [errors]="form.controls['startDate'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.evaluationPeriods.table.startDate' | translate }}]"
+          labelText="{{ 'kpi.evaluationPeriods.table.startDate' | translate }} <span class='label__required'>*</span>"
+          placeholderText="{{ 'kpi.evaluationPeriods.table.startDate' | translate }}"
+        ></hbt-date-picker>
+      </div>
+      <div nz-col [nzXs]='24' [nzLg]='12'>
+        <hbt-date-picker
+          formControlName="endDate"
+          [type]="(isSubmitted && form.controls['endDate'].errors || form.errors?.rangeDateError) ? 'error' : 'default'"
+          [showError]="(isSubmitted && form.controls['endDate'].errors || form.errors?.rangeDateError) !== null"
+          [errors]="form.errors?.rangeDateError ? form.errors : form.controls['endDate']?.errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.evaluationPeriods.table.endDate' | translate }},
+          { errorName: 'rangeDateError', errorDescription: 'hrm.validate.rangeDate.pareDateMore' | translate:{'fromDate': 'kpi.evaluationPeriods.table.startDate' | translate, 'toDate': 'kpi.evaluationPeriods.table.endDate' | translate}}]"
+          labelText="{{ 'kpi.evaluationPeriods.table.endDate' | translate }}  <span class='label__required'>*</span>"
+          placeholderText="{{ 'kpi.evaluationPeriods.table.endDate' | translate }}"
+        ></hbt-date-picker>
+      </div>
+
+      <ng-container formArrayName="listAttributes">
+        <ng-container *ngFor="let attributes of attributesFormArray.controls; let idx = index" [formGroupName]="idx">
+          <div nz-col [nzXs]="12" [nzLg]="12">
+            <input-attribute-common
+              [controlName]="getAttributeControl(idx, 'attributeValue')"
+              [dataType]="attributes.get('dataType')?.value"
+              [urlLoadData]="attributes.get('urlLoadData')?.value"
+              [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+              [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+              [errors]="attributes.get('attributeValue')?.errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}]"
+              [placeholderText]="attributes.get('attributeName')?.value"
+              [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+            >
+            </input-attribute-common>
+          </div>
+        </ng-container>
+      </ng-container>
+
+    </div>
+  </form>
+</div>
+

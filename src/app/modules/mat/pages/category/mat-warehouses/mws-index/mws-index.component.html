@@ -1,0 +1,157 @@
+<form nz-form [formGroup]="form" class="iss-index">
+  <div class="lms">
+    <div class="search__custom-common {{isShowAdvSearch ? 'add__mr__bt-10' : 'remove__mr__bt-40'}}">
+      <div nz-row class="button__action-left">
+        <hbt-button
+          class="staff__research__btn__search"
+          buttonSize="LARGE"
+          buttonAvailableStyle="ADD"
+          style="margin-right: 20px"
+          buttonText="{{'common.button.add' | translate}}"
+          *ngIf="objFunction?.create"
+          (click)="doOpenForm(modeConst.ADD)"
+        ></hbt-button>
+        <hbt-button
+          style="margin-left: 20px"
+          buttonSize="MEDIUM"
+          buttonType="BORDER"
+          (click)="export()">
+          <img src="/assets/icon/staff-manager/export_excel.svg" alt="" />
+        </hbt-button>
+      </div>
+
+      <div class="search__page-right">
+        <hbt-input-text formControlName='keySearch'
+                        [maxLength]='255'
+                        placeholderText="{{'common.label.keySearch' | translate}}"></hbt-input-text>
+        <hbt-button
+          buttonIconType="AWESOME"
+          [prefixIcon]="isShowAdvSearch ? 'fa fa-angle-double-up' : 'fa fa-angle-double-down'"
+          buttonSize="VERY_LARGE"
+          [buttonTextColor]="_variable.$neutral_100"
+          [buttonBorderColor]="_variable.$purple_800"
+          [buttonBgColor]="_variable.$purple_800"
+          (click)="isShowAdvSearch = !isShowAdvSearch"
+        >
+        </hbt-button>
+      </div>
+    </div>
+    <div *ngIf="isShowAdvSearch" class="content__item content__item--border bg__content--default">
+      <div class="form-search">
+        <div nz-row [nzGutter]='[20,15]'>
+          <div nz-col [nzXs]="24" [nzLg]="6">
+            <hbt-input-text
+              formControlName="code"
+              [type]="isSubmitted && form.controls['code']?.errors ? 'error' : 'default'"
+              [showError]="isSubmitted && form.controls['code']?.errors != null"
+              [errors]="form.controls['code']?.errors"
+              [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+              placeholderText="{{'mat.matWarehouses.table.code' | translate}}"
+              labelText="{{'mat.matWarehouses.table.code' | translate}}"
+            >
+
+            </hbt-input-text>
+          </div>
+          <div nz-col [nzXs]="24" [nzLg]="6">
+            <hbt-input-text
+              formControlName="name"
+              [type]="isSubmitted && form.controls['name']?.errors ? 'error' : 'default'"
+              [showError]="isSubmitted && form.controls['name']?.errors != null"
+              [errors]="form.controls['name']?.errors"
+              [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+              placeholderText="{{'mat.matWarehouses.table.name' | translate}}"
+              labelText="{{'mat.matWarehouses.table.name' | translate}}"
+            >
+            </hbt-input-text>
+          </div>
+          <div nz-col [nzXs]="24" [nzLg]="6">
+            <hbt-select
+              formControlName="type"
+              [urlLoadData]="getUrlCategory(categoryCode.WAREHOUSE_TYPE)"
+              keyLabel="name"
+              placeholder="{{'mat.matWarehouses.table.type' | translate}}"
+              labelText="{{'mat.matWarehouses.table.type' | translate}}"
+            >
+            </hbt-select>
+          </div>
+          <div nz-col [nzXs]="24" [nzLg]="6">
+            <hbt-select
+              formControlName="equipmentTypeId"
+              [urlLoadData]="getUrlCategory(categoryCode.EQUIPMENT_TYPE)"
+              keyLabel="name"
+              placeholder="{{'mat.matWarehouses.table.equipmentTypeId' | translate}}"
+              labelText="{{'mat.matWarehouses.table.equipmentTypeId' | translate}}"
+            >
+            </hbt-select>
+          </div>
+          <div nz-col [nzXs]="24" [nzLg]="6">
+            <hbt-input-text
+              formControlName="equipmentName"
+              [type]="isSubmitted && form.controls['equipmentName']?.errors ? 'error' : 'default'"
+              [showError]="isSubmitted && form.controls['equipmentName']?.errors != null"
+              [errors]="form.controls['equipmentName']?.errors"
+              [errorDefs]="[
+            { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+              placeholderText="{{'mat.matWarehouses.table.equipmentName' | translate}}"
+              labelText="{{'mat.matWarehouses.table.equipmentName' | translate}}"
+            >
+            </hbt-input-text>
+          </div>
+          <div nz-col [nzXs]="24" [nzLg]="24" style="text-align: center">
+            <hbt-button
+              class="staff__research__btn__search"
+              buttonSize="LARGE"
+              buttonAvailableStyle="SEARCH"
+              buttonText="{{'common.button.search' | translate}}"
+              (click)="search()"
+            ></hbt-button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="search__content--group" [ngClass]="{'search__content--group-hidden-header': isShowAdvSearch}">
+      <hbt-table-wrap>
+        <div>
+          <p *ngIf="listId.length > 0" style="margin: 0">
+            {{ 'common.label.selected' | translate }} : {{ listId.length }}
+          </p>
+        </div>
+        <hbt-table-tree
+          (changePageNum)="search($event)"
+          [tableConfig]="tableConfig"
+          [dataList]="tableData"
+          idKeyName="warehouseId"
+        ></hbt-table-tree>
+      </hbt-table-wrap>
+    </div>
+
+    <ng-template #actionTmpl let-data="data">
+      <btn-more-action [model]="[data]" [setting]="actionSchema">
+      </btn-more-action>
+    </ng-template>
+
+    <ng-template #footerTmpl>
+      <hbt-button
+        buttonAvailableStyle="CANCEL"
+        buttonText="{{ 'common.button.cancel' | translate }}"
+        (click)="modalRef.destroy()">
+      </hbt-button>
+      <hbt-button
+        buttonAvailableStyle="SAVE"
+        buttonText="{{ 'common.button.saveS' | translate }}"
+        (click)="modalRef.getContentComponent().save()">
+      </hbt-button>
+    </ng-template>
+
+    <reject-common-template
+      [isReject]="isReject"
+      [listRejectId]="listId"
+      [rejectId]="rejectId"
+      [rejectByListApi]="rejectByListApi"
+      (onCloseModal)="doCloseReject($event)"
+    >
+    </reject-common-template>
+  </div>
+</form>
+

@@ -1,0 +1,50 @@
+@import 'src/app/core/global-style/variable';
+.hbt-import {
+  ::ng-deep .ant-upload-list-item-info {
+    display: none;
+  }
+}
+.cus__button--content--imp {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content__left {
+  align-items: center;
+  display: flex;
+
+  img {
+    margin-right: 5px;
+  }
+
+  em {
+    padding: 0 5px;
+    font-size: 1rem;
+    color: $primary-500;
+  }
+}
+
+::ng-deep .cus__button--w100 .button__class {
+  width: 100%;
+}
+
+::ng-deep .cus__button--no-margin .button__class {
+  margin-left: 0;
+}
+
+.import-file-btn {
+  ::ng-deep {
+    button {
+      margin-left: 0px;
+    }
+  }
+}
+
+.upload-file-text{
+  max-width: 100%;
+  margin-bottom: 0;
+  white-space: pre-wrap;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}

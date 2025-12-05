@@ -1,0 +1,61 @@
+<div class="select__group select__group--icon select__custom {{customIconSearch ? 'custom__search-icon' : ''}} {{(showAddCategory && !disable) ? 'custom__add-category' : ''}}">
+  <div *ngIf="labelText != null" class="input__label" [innerHTML]="labelText"></div>
+  <div [class]="inputGroupGroupClass">
+    <em *ngIf="showAddCategory && !disable"
+        nz-icon [nzType]="'plus'"
+        nzTheme="outline"
+        class="custom__icon-add"
+        (click)="openAddCategory()"
+        nz-tooltip
+        nzTooltipPlacement="top"
+        nzTooltipTitle="{{'common.label.categoryType' | translate}}"
+    ></em>
+    <ng-container *ngTemplateOutlet="customIconSearch"></ng-container>
+    <nz-select class="select__select {{selectIcon != null ? 'include__icon' : 'no__icon'}}" nzMode="multiple" style="width: 100%" [nzMaxTagCount]="maxTagCount" [nzShowSearch]="showSearch"
+               nzAllowClear [nzPlaceHolder]="placeholder" [nzOptionHeightPx]="optionHeightPx" [nzOptionOverflowSize]="optionOverflowSize"
+               [(ngModel)]="listOfSelectedValue" (ngModelChange)="selectItem($event)" [(nzOpen)]="isOpenOptions"
+               [nzDisabled]="disable" (nzOnSearch)="onSearch($event)"
+               (nzScrollToBottom)="isLoadMore ? loadMore() : null" [nzDropdownRender]="isLoadMore ? renderTemplate : null"
+               (nzOpenChange)="focusIn($event)"
+    >
+      <nz-option *ngIf="showCheckAll || showAction" class="select__option" nzDisabled nzCustomContent nzLabel="ALL" [nzValue]="checkAllKey">
+        <div class="select__group-action">
+          <div *ngIf="showCheckAll" class="select__check-all">
+            <label nz-checkbox (nzCheckedChange)="checkAll($event)"
+                   [nzChecked]="listOfSelectedValue?.length === dataSelects?.length"></label>
+          </div>
+          <div *ngIf="showAction" class="select__action">
+            <button nz-button nzType="default" (click)="cancel()">Hủy</button>
+            <button nz-button nzType="primary" (click)="submit()">Áp dụng</button>
+          </div>
+        </div>
+      </nz-option>
+      <nz-option class="select__option" nzCustomContent *ngFor="let dataSelect of dataSelects" [nzLabel]="dataSelect[keyLabel]" [nzDisabled]="dataSelect['disable']"
+                 [nzValue]="keyValueStringType ? (dataSelect[keyValue]+'') : dataSelect[keyValue]">
+        <label nz-checkbox (nzCheckedChange)="checkItem($event, dataSelect)"
+               [nzChecked]="listOfSelectedValue?.indexOf(dataSelect[keyValue]) != null && listOfSelectedValue?.indexOf(dataSelect[keyValue]) > -1"></label>
+        <span class="select__option-text">{{dataSelect[keyLabel]}}</span>
+      </nz-option>
+    </nz-select>
+    <ng-template #renderTemplate>
+      <nz-spin *ngIf="isLoadMoreLoading"></nz-spin>
+    </ng-template>
+  </div>
+  <div *ngIf="textMessageValue != null && showError" [class]="inputMessageClass">
+    <em *ngIf="showIconMessage" nz-icon [nzType]="iconType" nzTheme="outline"></em>
+    <span class="text__message">{{textMessageValue}}</span>
+  </div>
+</div>
+
+<ng-template #footerTmpl>
+  <hbt-button
+    buttonAvailableStyle="CANCEL"
+    buttonText="{{ 'common.button.cancel' | translate }}"
+    (click)="modalRef.destroy()">
+  </hbt-button>
+  <hbt-button
+    buttonAvailableStyle="SAVE"
+    buttonText="{{ 'common.button.save' | translate }}"
+    (click)="modalRef.getContentComponent().save()">
+  </hbt-button>
+</ng-template>

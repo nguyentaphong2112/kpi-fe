@@ -1,0 +1,28 @@
+@import "src/app/core/global-style/variable";
+
+#play-pause-button {
+  margin:0 10px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  border: 1px solid $primary-400;
+  border-radius: 25px;
+  color: white;
+  background-color: $info-700;
+  transition: background-color 250ms;
+}
+
+#play-pause-button:hover {
+  background-color: $primary-600;
+}
+
+#play-range {
+  transform: translateY(2.5px);
+  width: calc(100% - 90px);
+  background: $neutral-100;
+  cursor: pointer;
+}
+
+.model__plan {
+  min-height: 500px;
+}

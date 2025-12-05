@@ -1,0 +1,204 @@
+<div [ngClass]="{'app-card' : isPage}" class="salary-rank">
+  <div class="content" *ngIf="isPage">
+    <hbt-button buttonType="NO_BORDER" (click)="save()" buttonAvailableStyle="SAVE"
+                buttonText="{{'common.button.save' | translate}}" type='SUBMIT'></hbt-button>
+  </div>
+  <form nz-form [formGroup]="form">
+    <div class="app-row" nz-row [nzGutter]='[20,15]'>
+      <div nz-col nzXs="24" nzLg="12">
+        <hbt-input-text formControlName="code" [maxLength]="255"
+                        [type]="isSubmitted && form.controls['code'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['code'].errors !== null"
+                        [errors]="form.controls['code'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': '255' }},
+                        { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.categoryManage.salaryRanks.label.code' | translate }}]"
+                        placeholderText="{{'hrm.staffManager.categoryManage.salaryRanks.label.code' | translate}}"
+                        labelText="{{'hrm.staffManager.categoryManage.salaryRanks.label.code' | translate}} <span class='label__required'>*</span>">
+        </hbt-input-text>
+      </div>
+      <div nz-col nzXs="24" nzLg="12">
+        <hbt-input-text formControlName="name" [maxLength]="255"
+                        [type]="isSubmitted && form.controls['name'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['name'].errors !== null"
+                        [errors]="form.controls['name'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': '255' }},
+                        { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.categoryManage.salaryRanks.label.name' | translate }}]"
+                        placeholderText="{{'hrm.staffManager.categoryManage.salaryRanks.label.name' | translate}}"
+                        labelText="{{'hrm.staffManager.categoryManage.salaryRanks.label.name' | translate}} <span class='label__required'>*</span>">
+        </hbt-input-text>
+      </div>
+      <div nz-col [nzXs]='24' [nzLg]='12'>
+        <hbt-date-picker
+          formControlName="startDate"
+          [type]="isSubmitted && form.controls['startDate'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['startDate'].errors !== null"
+          [errors]="form.controls['startDate'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.categoryManage.salaryRanks.label.startDate' | translate }}]"
+          labelText="{{ 'hrm.staffManager.categoryManage.salaryRanks.label.startDate' | translate }} <span class='label__required'>*</span>"
+          placeholderText="{{ 'hrm.staffManager.categoryManage.salaryRanks.label.startDate' | translate }}"
+        ></hbt-date-picker>
+      </div>
+      <div nz-col [nzXs]='24' [nzLg]='12'>
+        <hbt-date-picker
+          formControlName="endDate"
+          [type]="(form.controls['endDate'].errors || form.errors?.rangeDateError) ? 'error' : 'default'"
+          [showError]="(form.controls['endDate'].errors || form.errors?.rangeDateError) !== null"
+          [errors]="form.errors?.rangeDateError ? form.errors : form.controls['endDate'].errors"
+          [errorDefs]="[{ errorName: 'rangeDateError', errorDescription: 'hrm.validate.rangeDate.pareDateMore' | translate:{'fromDate': 'hrm.staffManager.categoryManage.salaryRanks.label.startDate' | translate, 'toDate': 'hrm.staffManager.categoryManage.salaryRanks.label.endDate' | translate}}]"
+          labelText="{{ 'hrm.staffManager.categoryManage.salaryRanks.label.endDate' | translate }}"
+          placeholderText="{{ 'hrm.staffManager.categoryManage.salaryRanks.label.endDate' | translate }}"
+        ></hbt-date-picker>
+      </div>
+      <div nz-col nzXs="24" nzLg="12">
+        <hbt-select formControlName="salaryType"
+                    [urlLoadData]="getUrlCategory(categoryCode.LOAI_NGACH_LUONG)"
+                    keyLabel="name"
+                    [type]="isSubmitted && form.controls['salaryType'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['salaryType'].errors !== null"
+                    [errors]="form.controls['salaryType'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.categoryManage.salaryRanks.label.salaryType' | translate }}]"
+                    labelText="{{'hrm.staffManager.categoryManage.salaryRanks.label.salaryType' | translate}} <span class='label__required'>*</span>"
+                    placeholder="{{'hrm.staffManager.categoryManage.salaryRanks.label.salaryType' | translate}}"
+        >
+        </hbt-select>
+      </div>
+      <div nz-col nzXs="24" nzLg="12">
+        <hbt-input-text formControlName="orderNumber"
+                        [maxLength]="10"
+                        appNumberInput
+                        placeholderText="{{'hrm.staffManager.categoryManage.salaryRanks.label.orderNumber' | translate}}"
+                        labelText="{{'hrm.staffManager.categoryManage.salaryRanks.label.orderNumber' | translate}}">
+        </hbt-input-text>
+      </div>
+      <ng-container formArrayName="listAttributes">
+        <ng-container *ngFor="let attributes of attributesFormArray.controls; let idx = index" [formGroupName]="idx">
+          <div nz-col [nzXs]="12" [nzLg]="12">
+            <input-attribute-common
+              [controlName]="getAttributeControl(idx, 'attributeValue')"
+              [dataType]="attributes.get('dataType')?.value"
+              [urlLoadData]="attributes.get('urlLoadData')?.value"
+              [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+              [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+              [errors]="attributes.get('attributeValue')?.errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}]"
+              [placeholderText]="attributes.get('attributeName')?.value"
+              [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+            >
+            </input-attribute-common>
+          </div>
+        </ng-container>
+      </ng-container>
+      <div nz-col nzXs="24" nzLg="24">
+        <nz-table
+          nzBordered
+          [nzData]="[1]"
+          [nzShowPagination]="false"
+        >
+          <thead>
+          <tr>
+            <th nzWidth='5%'>{{ 'hrm.staffManager.categoryManage.salaryRanks.label.stt' | translate }}</th>
+            <th nzWidth='20%'>{{ 'hrm.staffManager.categoryManage.salaryRanks.label.salaryName' | translate }} <span
+              class='label__required'>*</span></th>
+            <th nzWidth='25%'>{{ 'hrm.staffManager.categoryManage.salaryRanks.label.amount' | translate }} <span
+              class='label__required'>*</span></th>
+            <th nzWidth='25%'>{{ 'hrm.staffManager.categoryManage.salaryRanks.label.duration' | translate }}</th>
+            <th nzWidth='20%'>{{ 'hrm.staffManager.categoryManage.salaryRanks.label.note' | translate }}</th>
+            <th nzWidth='5%'></th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container [formArrayName]="FORM_ARRAY_NAME">
+            <ng-container *ngFor="let attribute of grades.controls; let i = index" [formGroupName]="i">
+              <tr>
+                <td style="text-align: center">
+                  {{ i + 1 }}
+                </td>
+                <td>
+                  <hbt-input-text formControlName="name" [maxLength]="255"
+                                  [defaultInput]="true"
+                                  [type]="isSubmitted && attribute.get('name')?.errors ? 'error' : 'default'"
+                                  [showError]="isSubmitted && attribute.get('name')?.errors !== null"
+                                  [errors]="attribute.get('name')?.errors"
+                                  [errorDefs]="[{ errorName: 'nameDuplicate', errorDescription: 'common.validate.duplicate' | translate: {'param': 'hrm.staffManager.categoryManage.salaryRanks.label.salaryName' | translate }},
+                                    { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.categoryManage.salaryRanks.label.salaryName' | translate }}
+                                  ]"
+                                  placeholderText="{{'hrm.staffManager.categoryManage.salaryRanks.label.salaryName' | translate}}">
+
+                  </hbt-input-text>
+                </td>
+                <td>
+                  <hbt-input-text formControlName="amount"
+                                  [isFormatterCurrency]="true"
+                                  [integerPart]="14"
+                                  [decimalPart]="2"
+                                  [inputType]="'number'"
+                                  [showFlexEnd]="false"
+                                  [type]="isSubmitted && attribute.get('amount')?.errors ? 'error' : 'default'"
+                                  [showError]="isSubmitted && attribute.get('amount')?.errors !== null"
+                                  [errors]="attribute.get('amount')?.errors"
+                                  [errorDefs]="[{ errorName: 'amountDuplicate', errorDescription: 'common.validate.duplicate' | translate: {'param': 'hrm.staffManager.categoryManage.salaryRanks.label.amount' | translate }},
+                                  { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.categoryManage.salaryRanks.label.amount' | translate }}]"
+                                  placeholderText="{{'hrm.staffManager.categoryManage.salaryRanks.label.amount' | translate}}">
+                  </hbt-input-text>
+                </td>
+                <td>
+                  <hbt-input-text formControlName="duration"
+                                  appNumberInput
+                                  maxLength="5"
+                                  [type]="isSubmitted && attribute.get('duration')?.errors ? 'error' : 'default'"
+                                  [showError]="isSubmitted && attribute.get('duration')?.errors !== null"
+                                  [errors]="attribute.get('duration')?.errors"
+                                  [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': '5' }}]"
+                                  placeholderText="{{'hrm.staffManager.categoryManage.salaryRanks.label.duration' | translate}}">
+                  </hbt-input-text>
+                </td>
+                <td>
+                  <hbt-input-text formControlName="note" [maxLength]="500"
+                                  [defaultInput]="true"
+                                  [isTextAre]="true"
+                                  placeholderText="{{'hrm.staffManager.categoryManage.salaryRanks.label.note' | translate}}">
+                  </hbt-input-text>
+                </td>
+                <td class="text-center">
+                  <em class="menu__item--btn1" nz-icon nzType="plus-circle" nzTheme="outline"
+                      nzTooltipTitle="{{'common.title.add' | translate}}" (click)="addNewAttributes()"
+                      nzTooltipPlacement="left" nz-button nz-tooltip></em>
+                  <em class="menu__item--btn" nz-icon nzType="delete" nzTheme="outline"
+                      nzTooltipTitle="{{'common.title.delete' | translate}}"
+                      nzTooltipPlacement="right" nz-button nz-tooltip (click)="onDeleteAttributesClick(i)"></em></td>
+              </tr>
+            </ng-container>
+          </ng-container>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+    <div class="app-row" nz-row [nzGutter]='[20,15]'>
+      <div nz-col nzXs="24" nzLg="12" class="hbt-select">
+        <hbt-select keyLabel="name"
+                    keyValue="jobId"
+                    [dataSelects]="listJobData"
+                    formControlName="jobData"
+                    labelText="{{'hrm.staffManager.categoryManage.salaryRanks.label.salaryJob' | translate}}"
+                    placeholder="{{'hrm.staffManager.categoryManage.salaryRanks.label.salaryJob' | translate}}"
+                    (ngModelChange)="getValueTable($event)">
+        </hbt-select>
+      </div>
+      <div nz-col nzXs="24" nzLg="24">
+        <div class='search__content--group'>
+          <hbt-table-wrap>
+            <hbt-table
+              [tableConfig]="tableConfig" [dataList]="tableData"></hbt-table>
+          </hbt-table-wrap>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<ng-template #actionTmpl let-id='jobId'>
+  <em class="menu__item--btn" nz-icon nzType="delete" nzTheme="outline"
+      nzTooltipTitle="{{ 'common.title.delete' | translate }}"
+      nzTooltipPlacement="top" nz-button nz-tooltip (click)="deleteJob(id)"></em>
+</ng-template>

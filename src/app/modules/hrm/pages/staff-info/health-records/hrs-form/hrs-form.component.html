@@ -1,0 +1,114 @@
+<div class='save-form-hrm'>
+  <form nz-form [formGroup]="form" style="margin-top: 20px">
+    <div nz-row [nzGutter]="[20,15]">
+      <!--id nhân viên-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <employee-data-picker status='WORKING'
+          formControlName="employeeId"
+          [type]="isSubmitted && form.controls['employeeId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['employeeId'].errors != null"
+          [errors]="form.controls['employeeId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'common.label.employeeName' | translate }}]"
+          labelText="{{'hrm.healthRecords.table.employeeName' | translate}} <span class='label__required'>*</span> "
+        >
+        </employee-data-picker>
+      </div>
+
+      <!--mã-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="patientId"
+                        [type]="isSubmitted && form.controls['patientId'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['patientId'].errors != null"
+                        [errors]="form.controls['patientId'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.healthRecords.table.patientId' | translate }},
+          { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+                        placeholderText="{{'hrm.healthRecords.table.patientId' | translate}}"
+                        labelText="{{'hrm.healthRecords.table.patientId' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--Đợt khám-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select
+          formControlName="examinationPeriodId"
+          [urlLoadData]="getUrlCategory(categoryCode.HRM_DOT_KHAM_SUC_KHOE)"
+          [serviceName]="microService.ADMIN"
+          keyLabel="name"
+          keyValue="value"
+          [type]="isSubmitted && form.controls['examinationPeriodId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['examinationPeriodId'].errors != null"
+          [errors]="form.controls['examinationPeriodId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.healthRecords.table.examinationPeriod' | translate }}]"
+          placeholder="{{'hrm.healthRecords.table.examinationPeriod' | translate}}"
+          labelText="{{'hrm.healthRecords.table.examinationPeriod' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <!--Ngày khám-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-date-picker
+          [type]="isSubmitted && form.controls['examinationDate'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['examinationDate'].errors != null"
+          [errors]="form.controls['examinationDate'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.healthRecords.table.examinationDate' | translate }}]"
+          placeholderText="{{'hrm.healthRecords.table.examinationDate' | translate}}"
+          labelText="{{'hrm.healthRecords.table.examinationDate' | translate}} <span class='label__required'>*</span>"
+          formControlName="examinationDate"></hbt-date-picker>
+      </div>
+
+      <!--Kết quả-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select
+          formControlName="resultId"
+          [urlLoadData]="getUrlCategory(categoryCode.HRM_XEP_LOAI_SUC_KHOE)"
+          keyLabel="name"
+          keyValue="value"
+          [serviceName]="microService.ADMIN"
+          [type]="isSubmitted && form.controls['resultId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['resultId'].errors != null"
+          [errors]="form.controls['resultId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.healthRecords.table.result' | translate }}]"
+          placeholder="{{'hrm.healthRecords.table.result' | translate}}"
+          labelText="{{'hrm.healthRecords.table.result' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <!--Bệnh gặp phải-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select-check-able
+          formControlName="diseaseIds"
+          [urlLoadData]="getUrlCategory(categoryCode.HRM_BENH_GAP_PHAI)"
+          keyLabel="name"
+          keyValue="value"
+          [serviceName]="microService.ADMIN"
+          [type]="isSubmitted && form.controls['diseaseIds'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['diseaseIds'].errors != null"
+          [errors]="form.controls['diseaseIds'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.healthRecords.table.disease' | translate }}]"
+          placeholder="{{'hrm.healthRecords.table.disease' | translate}}"
+          labelText="{{'hrm.healthRecords.table.disease' | translate}}"
+        ></hbt-select-check-able>
+      </div>
+
+      <ng-container formArrayName="listAttributes">
+        <ng-container *ngFor="let attributes of attributesFormArray.controls; let idx = index" [formGroupName]="idx">
+          <div nz-col [nzXs]="12" [nzLg]="12">
+            <input-attribute-common
+              [controlName]="getAttributeControl(idx, 'attributeValue')"
+              [dataType]="attributes.get('dataType')?.value"
+              [urlLoadData]="attributes.get('urlLoadData')?.value"
+              [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+              [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+              [errors]="attributes.get('attributeValue')?.errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}]"
+              [placeholderText]="attributes.get('attributeName')?.value"
+              [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+            >
+            </input-attribute-common>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </form>
+</div>
+

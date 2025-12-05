@@ -1,0 +1,83 @@
+<search-form
+  #searchForm
+  [functionCode]="functionCode"
+  [objFunction]="objFunction"
+  [moduleName]='moduleName'
+  (submitEventSearch)='doSearch(1)'
+  (submitEventExport)='doExportData()'
+  (submitEventImport)='doImportData()'
+  [formConfig]="formConfig"
+  [formConfigCustom]="formConfigCustom"
+  [isShowBtnAdd]="isShowBtnAdd"
+  [isShowBtnImport]="isShowBtnImport"
+  [isShowBtnAddCustom]="isShowBtnAddCustom"
+  [addWidth]="addWidth"
+></search-form>
+
+<div class="search__content--group">
+  <hbt-table-wrap>
+    <hbt-table
+               (changePageNum)="doSearch($event)"
+               [tableConfig]="tableConfig"
+               [dataList]="tableData"
+    ></hbt-table>
+  </hbt-table-wrap>
+</div>
+
+<ng-template #actionTmpl let-data="data">
+  <btn-action-by-id
+    [showViewDetail]="true"
+    [showEdit]="true"
+    [showDelete]="showBtnDelete && true"
+    (doViewDetail)="doOpenFormDetail(data)"
+    (doEdit)="doOpenFormEdit(data)"
+    (doDelete)="deleteItem(data)"
+  >
+  </btn-action-by-id>
+</ng-template>
+
+
+<hbt-import-file *ngIf="isShowBtnImport"
+                 [showContent]='isImportData'
+                 (onCloseModal)='doCloseImport($event)'
+                 [importApi]='importApi'
+                 [formImport]="formImport"
+                 title="{{'common.label.import' | translate}}"
+                 [downLoadTemplateApi]="downLoadTemplateApi"
+                 [fileTemplateName]="fileTemplateName"
+                 [nzWidth]="nzWidth"
+                 [doDownloadFileByNameApi]='doDownloadFileByNameApi'
+                 (isSubmittedImport)="changeSubmittedImport($event)">
+  <div class="formImport" style="margin-bottom: 30px;">
+    <form nz-form [formGroup]="formImport">
+      <div nz-row [nzGutter]='[20,15]' *ngIf="isShowInput">
+        <ng-container *ngTemplateOutlet="formHrm; context: {$implicit: formImport, isSubmittedImport}"></ng-container>
+        <div nz-col [nzXs]='24' [nzLg]='24' *ngIf="isForce">
+          <hbt-select formControlName="isForceUpdate"
+                      [dataSelects]="listForceUpdate"
+                      [type]="isSubmittedImport && formImport?.controls['isForceUpdate']?.errors ? 'error' : 'default'"
+                      [showError]="isSubmittedImport && formImport?.controls['isForceUpdate']?.errors !== null"
+                      [errors]="formImport?.controls['isForceUpdate']?.errors"
+                      [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.insuranceSalaryProcess.label.isForceUpdate' | translate }}]"
+                      labelText="{{'hrm.staffManager.insuranceSalaryProcess.label.isForceUpdate' | translate}} <span class='label__required'>*</span>"
+                      placeholder="{{'hrm.staffManager.insuranceSalaryProcess.label.isForceUpdate' | translate}}"
+          >
+          </hbt-select>
+        </div>
+      </div>
+    </form>
+  </div>
+</hbt-import-file>
+
+<ng-template #footerTmpl>
+  <hbt-button
+    buttonAvailableStyle="CANCEL"
+    buttonText="{{ 'common.button.cancel' | translate }}"
+    (click)="modalRef.destroy()">
+  </hbt-button>
+  <hbt-button
+    buttonAvailableStyle="SAVE"
+    buttonText="{{ 'common.button.save' | translate }}"
+    (click)="modalRef.getContentComponent().save()">
+  </hbt-button>
+</ng-template>

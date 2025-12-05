@@ -1,0 +1,85 @@
+<ng-container *ngIf="title">
+  <nz-card [nzBordered]="false" class="step-card">
+    <div class="step-card__header">
+      <div></div>
+      {{ title }}
+    </div>
+    <div class="step-card__description">
+      {{ description }}
+    </div>
+
+    <ng-container *ngIf="_steps">
+      <nz-steps nzType="navigation" [nzCurrent]="currentStep">
+        <ng-container *ngFor="let step of _steps; let i = index">
+          <ng-container *ngIf="i < currentStep">
+            <nz-step [nzIcon]="iconDoneTmpl" [nzTitle]="step.stepName" [nzSubtitle]="step.timeAction"
+                     [nzDescription]="step.description"></nz-step>
+          </ng-container>
+          <ng-container *ngIf="i === currentStep">
+            <nz-step [nzIcon]="iconProcessTmpl" [nzTitle]="step.stepName" [nzSubtitle]="step.timeAction"
+                     [nzDescription]="step.description"></nz-step>
+          </ng-container>
+          <ng-container *ngIf="i > currentStep">
+            <nz-step [nzIcon]="isSuccessAll ? iconDoneTmpl : iconTodoTmpl"
+                     [nzTitle]="step.stepName" [nzSubtitle]="step.timeAction"
+                     [nzDescription]="step.description"></nz-step>
+          </ng-container>
+          <ng-template #iconProcessTmpl>
+  <span nz-icon nzType="iconCustom:process" style="font-size: 36px">
+    <span class="step-index-process">{{ i + 1 }}</span>
+  </span>
+          </ng-template>
+
+          <ng-template #iconTodoTmpl>
+  <span nz-icon nzType="iconCustom:ellipse" style="font-size: 36px">
+    <span class="step-index-ellipse">{{ i + 1 }}</span>
+  </span>
+          </ng-template>
+        </ng-container>
+      </nz-steps>
+    </ng-container>
+
+    <ng-content></ng-content>
+
+  </nz-card>
+</ng-container>
+<ng-container *ngIf="!title">
+
+  <div class="step-card" style="padding: 0; background: #fff">
+    <ng-container *ngIf="_steps">
+      <nz-steps nzType="navigation" [nzCurrent]="currentStep">
+        <ng-container *ngFor="let step of _steps; let i = index">
+          <ng-container *ngIf="i < currentStep">
+            <nz-step [nzIcon]="iconDoneTmpl" [nzTitle]="step.stepName" [nzSubtitle]="step.timeAction"
+                     [nzDescription]="step.description"></nz-step>
+          </ng-container>
+          <ng-container *ngIf="i === currentStep">
+            <nz-step [nzIcon]="iconProcessTmpl" [nzTitle]="step.stepName" [nzSubtitle]="step.timeAction"
+                     [nzDescription]="step.description"></nz-step>
+          </ng-container>
+          <ng-container *ngIf="i > currentStep">
+            <nz-step [nzIcon]="isSuccessAll ? iconDoneTmpl : iconTodoTmpl"
+                     [nzTitle]="step.stepName" [nzSubtitle]="step.timeAction"
+                     [nzDescription]="step.description"></nz-step>
+          </ng-container>
+          <ng-template #iconProcessTmpl>
+  <span nz-icon nzType="iconCustom:process" style="font-size: 36px">
+    <span class="step-index-process">{{ i + 1 }}</span>
+  </span>
+          </ng-template>
+
+          <ng-template #iconTodoTmpl>
+  <span nz-icon nzType="iconCustom:ellipse" style="font-size: 36px">
+    <span class="step-index-ellipse">{{ i + 1 }}</span>
+  </span>
+          </ng-template>
+        </ng-container>
+      </nz-steps>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-template #iconDoneTmpl>
+  <span nz-icon nzType="iconCustom:done" style="font-size: 36px"></span>
+</ng-template>
+

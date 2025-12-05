@@ -1,0 +1,118 @@
+<form [formGroup]="form" class="book__layout">
+  <div nz-row [nzGutter]='[20,15]' class="content__home">
+    <div nz-col [nzXs]="5" [nzLg]="5" class="item__home item__home--left">
+      <div class="content__item content__item--border bg__content--default">
+        <div>
+          <h2 class="book__type-header">
+          <span nz-icon [nzType]="showIconCaretDown? 'caret-down' :'caret-right'" nzTheme="outline"
+                (click)="showIconCaretDown = !showIconCaretDown"
+                class="icon__caret-down"
+          ></span>
+            <span>{{ 'library.books.label.genreId' | translate }}</span>
+          </h2>
+        </div>
+        <div [ngClass]="{'display__none-tree' : !showIconCaretDown}">
+          <hbt-tree-view
+            #orgTree
+            (onClickNode)="selectNode($event)"
+            [urlLoadDataNode]="urlLoadNodeBook"
+            [serviceName]="serviceLibrary"
+            keyValue="nodeId"
+            keyLabel="name"
+            [dataConfig]="dataConfig"
+          ></hbt-tree-view>
+        </div>
+        <div style="margin-top: 30px">
+          <label nz-checkbox
+                 formControlName='favourite'
+                 [nzChecked] = "isChecked"
+                 (nzCheckedChange)="search()"><span (click)="checkLabel()">{{ 'library.books.label.favouriteBook' | translate }}</span></label>
+        </div>
+        <div style="margin-top: 30px">
+          <hbt-select-check-able
+            [urlLoadData]="urlLoadNodeAuthor"
+            [serviceName]="serviceAdmin"
+            [isLoadMore]="true"
+            [showAction]="false"
+            keyValue="value"
+            keyLabel="name"
+            labelText="{{ 'library.books.label.author' | translate }}"
+            placeholder="{{ 'library.books.label.author' | translate }}"
+            formControlName="authorIds"
+            (eventEmit)="search()"
+          ></hbt-select-check-able>
+        </div>
+
+        <div style="margin-top: 20px">
+          <hbt-select-check-able
+            [urlLoadData]="urlLoadNodeTranslator"
+            [serviceName]="serviceAdmin"
+            [isLoadMore]="true"
+            [showAction]="false"
+            keyValue="value"
+            keyLabel="name"
+            labelText="{{ 'library.books.label.translator' | translate }}"
+            placeholder="{{ 'library.books.label.translator' | translate }}"
+            formControlName="translatorIds"
+            (eventEmit)="search()"
+          ></hbt-select-check-able>
+        </div>
+
+        <div style="margin-top: 20px">
+          <hbt-select-check-able
+            [urlLoadData]="urlLoadNodeLanguage"
+            [serviceName]="serviceAdmin"
+            [isLoadMore]="true"
+            [showAction]="false"
+            keyValue="value"
+            keyLabel="name"
+            labelText="{{ 'library.books.label.language' | translate }}"
+            placeholder="{{ 'library.books.label.language' | translate }}"
+            formControlName="languageIds"
+            (eventEmit)="search()"
+          ></hbt-select-check-able>
+        </div>
+
+        <div style="margin-top: 20px">
+          <hbt-select-check-able
+            [dataSelects]="listTypeBook"
+            [isLoadMore]="false"
+            [showAction]="false"
+            labelText="{{ 'library.books.label.typeBook' | translate }}"
+            placeholder="{{ 'library.books.label.typeBook' | translate }}"
+            formControlName="types"
+            (eventEmit)="search()"
+          ></hbt-select-check-able>
+        </div>
+      </div>
+    </div>
+    <div nz-col [nzXs]="19" [nzLg]="19">
+      <div class="content__item content__item--border bg__content--default">
+        <div nz-col [nzXs]='24' [nzLg]='24'>
+          <hbt-button
+            *ngIf="indexActive === 0"
+            class="costume__search"
+            buttonSize="MEDIUM"
+            (click)="navigateToAddPage()"
+            buttonAvailableStyle="ADD"
+            buttonText="{{'common.button.add' | translate}}"
+          ></hbt-button>
+          <nz-tabset [nzType]="'card'" [nzSize]="'large'" (nzSelectedIndexChange)="selectedIndexChange($event)">
+            <nz-tab nzTitle="{{'library.books.label.book' | translate}}">
+              <app-book-index *ngIf="indexActive === 0" [params]="params" (emitParams)="emitParams($event)"></app-book-index>
+            </nz-tab>
+            <nz-tab nzTitle="{{'library.books.label.genre' | translate}}">
+              <app-book-category *ngIf="indexActive === 1" [type]="type" [params]="params"></app-book-category>
+            </nz-tab>
+            <nz-tab nzTitle="{{'library.books.label.author' | translate}}">
+              <app-book-category *ngIf="indexActive === 2" [type]="type" [params]="params"></app-book-category>
+            </nz-tab>
+            <nz-tab nzTitle="{{'library.books.label.translator' | translate}}">
+              <app-book-category *ngIf="indexActive === 3" [type]="type" [params]="params"></app-book-category>
+            </nz-tab>
+          </nz-tabset>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

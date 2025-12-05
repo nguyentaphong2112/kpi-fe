@@ -1,0 +1,184 @@
+<div class="list-evaluation">
+  <div [class]="isNotPageName ? 'btn__across-no-page' : 'btn__across-page'">
+    <hbt-button buttonType="NO_BORDER" (click)="save()" buttonAvailableStyle="SAVE"
+                buttonText="{{'common.button.save' | translate}}" type='SUBMIT'></hbt-button>
+    <hbt-button
+      buttonAvailableStyle="DEFAULT"
+      buttonText="{{ 'common.button.back' | translate }}"
+      (click)="back()">
+    </hbt-button>
+  </div>
+  <div class="content__item content__item--border bg__content--default">
+    <div nz-row [nzGutter]='[20,15]'>
+      <div nz-col [nzXs]='24' [nzLg]='24'>
+        <nz-table [nzBordered]="true" [nzData]="[1]" nzSize="small"
+                  [nzScroll]="{ x: '1000px', y: '60vh' }"
+                  [nzWidthConfig]="nzWidthConfig"
+        >
+          <thead>
+          <tr>
+            <th rowSpan="3" nzLeft class="text-center">{{ 'kpi.kpiEvaluations.organizations.table.kpi' | translate }}
+            </th>
+            <th rowSpan="3"
+                class="text-center">{{ 'kpi.kpiEvaluations.organizations.table.weight' | translate }}
+            </th>
+            <th rowSpan="3"
+                class="text-center">{{ 'kpi.kpiEvaluations.organizations.table.target' | translate }}
+            </th>
+            <ng-container *ngFor="let data of listAllData?.listEmp">
+              <th colSpan="4" class="text-center">{{ data.employeeName }}
+              </th>
+            </ng-container>
+            <th [colSpan]="listConversion.length > 0 ? listConversion.length : 1"
+                [rowSpan]="listConversion.length > 0 ? 2 : 3"
+                class="text-center">{{ 'kpi.kpiEvaluations.organizations.table.levelOfCompletion' | translate }}
+            </th>
+            <th rowSpan="3"
+                class="text-center">{{ 'kpi.kpiEvaluations.organizations.table.measureUnit' | translate }}
+            </th>
+          </tr>
+          <tr>
+            <ng-container *ngFor="let data of listAllData?.listEmp">
+              <th colSpan="2"
+                  class="text-center">{{ 'kpi.employeeEvaluations.label.selfPointPer' | translate }}
+              </th>
+              <th colSpan="2"
+                  class="text-center">{{ 'kpi.employeeEvaluations.label.managerPoint' | translate }}
+              </th>
+            </ng-container>
+          </tr>
+          <tr>
+            <ng-container *ngFor="let data of listAllData?.listEmp">
+              <th
+                class="text-center">{{ 'kpi.kpiEvaluations.organizations.label.point' | translate }}
+                <span class='label__required'>*</span>
+              </th>
+              <th
+                class="text-center">{{ 'kpi.kpiEvaluations.organizations.label.resultManage' | translate }}
+              </th>
+              <th
+                class="text-center">{{ 'kpi.kpiEvaluations.organizations.label.point' | translate }}
+                <span class='label__required'>*</span>
+              </th>
+              <th
+                class="text-center">{{ 'kpi.kpiEvaluations.organizations.label.resultManage' | translate }}
+              </th>
+            </ng-container>
+            <th *ngFor="let column of listConversion"
+                class="text-center">{{ column.name }}
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr style="font-weight: bold;">
+            <td [nzLeft]="true">{{ 'kpi.employeeEvaluations.label.total' | translate }}</td>
+            <td></td>
+            <td></td>
+            <ng-container *ngFor="let emp of listAllData?.listEmp">
+              <td></td>
+              <td style="text-align: right">{{ getTotalSelfPoint(emp) }}</td>
+              <td></td>
+              <td style="text-align: right">{{ getTotalManagePoint(emp) }}</td>
+            </ng-container>
+            <ng-container *ngIf="listConversion.length > 0">
+              <td *ngFor="let column of listConversion">
+              </td>
+            </ng-container>
+            <td></td>
+          </tr>
+          <ng-container *ngFor="let data of listAllData?.listData">
+            <tr>
+              <td nzLeft>{{ data.indicatorName }}</td>
+              <td style="text-align: right">{{ data.percent }}</td>
+              <td>{{ data.target }}</td>
+              <ng-container *ngFor="let emp of listAllData?.listEmp">
+                <ng-container *ngIf="checkExistEmp(data.listEmp, emp) as empExist; else notRegistered">
+                  <td [style]="!data.isSelected  ? 'text-align: right' : null">
+                    <hbt-select [dataSelects]="data.dataSelect"
+                                *ngIf="data.isSelected && checkIsEvaluate(dataValues.get(empExist.employeeIndicatorId))"
+                                dropdownClassName="data-select-pane-custom"
+                                [(ngModel)]="dataValues.get(empExist.employeeIndicatorId).result"
+                                (ngModelChange)="updateResultManage($event, data, 'selfPoint', emp)"
+                                placeholder="{{'kpi.kpiEvaluations.organizations.label.point' | translate}}"
+                                [type]="isSubmitted && !dataValues.get(empExist.employeeIndicatorId).result ? 'error' : 'default'"
+                                [showError]="isSubmitted && !dataValues.get(empExist.employeeIndicatorId).result"
+                                [errors]="{required: true}"
+                                [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.kpiEvaluations.organizations.label.point' | translate }}]"
+                    >
+                    </hbt-select>
+                    <span
+                      *ngIf="data.isSelected && !checkIsEvaluate(dataValues.get(empExist.employeeIndicatorId))">{{ dataValues.get(checkExistEmp(data.listEmp, emp).employeeIndicatorId).result ? getValueSelect(data.dataSelect, dataValues.get(checkExistEmp(data.listEmp, emp).employeeIndicatorId).result) : '-' }}</span>
+                    <hbt-input-text
+                      [(ngModel)]="dataValues.get(empExist.employeeIndicatorId).result"
+                      (ngModelChange)="updateResultManage($event, data, 'selfPoint', emp)"
+                      class="eca-input" [maxLength]="21"
+                      appNumberic
+                      [num]="18"
+                      [decimals]="2"
+                      *ngIf="!data.isSelected && checkIsEvaluate(dataValues.get(empExist.employeeIndicatorId))"
+                      placeholderText="{{'kpi.kpiEvaluations.organizations.label.point' | translate}}"
+                      [type]="isSubmitted && !dataValues.get(empExist.employeeIndicatorId).result ? 'error' : 'default'"
+                      [showError]="isSubmitted && !dataValues.get(empExist.employeeIndicatorId).result"
+                      [errors]="{required: true}"
+                      [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.kpiEvaluations.organizations.label.point' | translate }}]">
+                    </hbt-input-text>
+                    <span
+                      *ngIf="!data.isSelected && !checkIsEvaluate(dataValues.get(empExist.employeeIndicatorId))">{{ dataValues.get(checkExistEmp(data.listEmp, emp).employeeIndicatorId).result ? dataValues.get(checkExistEmp(data.listEmp, emp).employeeIndicatorId).result : '-' }}</span>
+                  </td>
+                  <td style="text-align: right">
+                    <span>{{ dataValues.get(checkExistEmp(data.listEmp, emp).employeeIndicatorId).selfPoint || '0' }}</span>
+                  </td>
+                  <td [style]="!data.isSelected  ? 'text-align: right' : null">
+                    <hbt-select [dataSelects]="data.dataSelect"
+                                *ngIf="data.isSelected && checkIsEvaluateManage(dataValues.get(empExist.employeeIndicatorId))"
+                                dropdownClassName="data-select-pane-custom"
+                                [(ngModel)]="dataValues.get(empExist.employeeIndicatorId).resultManage"
+                                (ngModelChange)="updateResultManage($event, data, 'managePoint', emp)"
+                                placeholder="{{'kpi.kpiEvaluations.organizations.label.point' | translate}}"
+                                [type]="isSubmitted && !dataValues.get(empExist.employeeIndicatorId).resultManage ? 'error' : 'default'"
+                                [showError]="isSubmitted && !dataValues.get(empExist.employeeIndicatorId).resultManage"
+                                [errors]="{required: true}"
+                                [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.kpiEvaluations.organizations.label.point' | translate }}]"
+                    >
+                    </hbt-select>
+                    <span
+                      *ngIf="data.isSelected && !checkIsEvaluateManage(dataValues.get(empExist.employeeIndicatorId))">{{ dataValues.get(checkExistEmp(data.listEmp, emp).employeeIndicatorId).resultManage ? getValueSelect(data.dataSelect, dataValues.get(checkExistEmp(data.listEmp, emp).employeeIndicatorId).resultManage) : '-' }}</span>
+                    <hbt-input-text
+                      [(ngModel)]="dataValues.get(empExist.employeeIndicatorId).resultManage"
+                      (ngModelChange)="updateResultManage($event, data, 'managePoint', emp)"
+                      class="eca-input" [maxLength]="21"
+                      appNumberic
+                      [num]="18"
+                      [decimals]="2"
+                      *ngIf="!data.isSelected && checkIsEvaluateManage(dataValues.get(empExist.employeeIndicatorId))"
+                      placeholderText="{{'kpi.kpiEvaluations.organizations.label.point' | translate}}"
+                      [type]="isSubmitted && !dataValues.get(empExist.employeeIndicatorId).resultManage ? 'error' : 'default'"
+                      [showError]="isSubmitted && !dataValues.get(empExist.employeeIndicatorId).resultManage"
+                      [errors]="{required: true}"
+                      [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.kpiEvaluations.organizations.label.point' | translate }}]">
+                    </hbt-input-text>
+                    <span
+                      *ngIf="!data.isSelected && !checkIsEvaluateManage(dataValues.get(empExist.employeeIndicatorId))">{{ dataValues.get(checkExistEmp(data.listEmp, emp).employeeIndicatorId).resultManage ? dataValues.get(checkExistEmp(data.listEmp, emp).employeeIndicatorId).resultManage : '-' }}</span>
+                  </td>
+                  <td style="text-align: right">
+                    <span>{{ dataValues.get(checkExistEmp(data.listEmp, emp).employeeIndicatorId).managePoint || '0' }}</span>
+                  </td>
+                </ng-container>
+                <ng-template #notRegistered>
+                  <td [colSpan]="4" style="text-align: center">Không đăng ký</td>
+                </ng-template>
+              </ng-container>
+              <ng-container *ngIf="listConversion.length > 0">
+                <td style="text-align: center" *ngFor="let column of listConversion">
+                  {{ getConversion(data.conversions, column.value) }}
+                </td>
+              </ng-container>
+              <td>{{ data.unitName }}</td>
+            </tr>
+          </ng-container>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </div>
+</div>

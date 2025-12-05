@@ -1,0 +1,13 @@
+@import "../../../../../../../core/global-style/variable";
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: $neutral-600;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.delete-btn:hover {
+  color: $neutral-700;
+}

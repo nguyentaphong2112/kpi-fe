@@ -1,0 +1,132 @@
+
+@import "src/app/core/global-style/variable";
+::ng-deep .item-selected {
+  background-color: $primary-200;
+  &:hover {
+    td {
+      background-color: $primary-200 !important;
+    }
+  }
+}
+
+.input__search--pn--group {
+  display: flex;
+}
+
+.input__employee-code {
+  width: 100%;
+}
+
+::ng-deep .employee__data__picker--btnSearch > button {
+  margin-left: 2px !important;
+}
+
+::ng-deep .emp__picker--view--all .button__class {
+  width: 100%;
+  margin-left: 0 !important;
+}
+
+nz-auto-option.ant-select-item.ant-select-item-option.autocomplete__item {
+  padding: 0 !important;
+}
+
+.load__more {
+  width: 100%;
+  text-align: center;
+  padding: 1rem;
+}
+
+::ng-deep .hbt__org--modal {
+  .item__home--left .ant-card-body {
+    padding-left: 15px;
+  }
+
+  ::ng-deep .ant-card-head-title {
+    font-family: 'avertaB', sans-serif;
+    font-size: 16px;
+    line-height: 22px;
+    word-wrap: break-word;
+  }
+
+  ::ng-deep .ant-card-body {
+    max-height: 750px;
+    min-height: 650px;
+    overflow: hidden;
+    overflow-y: scroll;
+  }
+}
+
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.main-job-card__row {
+  margin-bottom: 20px;
+}
+.main-job-card__row {
+  margin-top: 20px !important;
+}
+
+::ng-deep .btn__search-org .button__class {
+  margin: 0;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  &__icon {
+    display: flex;
+  }
+  &__table-info {
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+    &--text {
+      white-space: normal;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 150%;
+    }
+  }
+}
+
+::ng-deep .ant-table-expanded-row-fixed {
+  width: unset !important;
+}
+
+.employee__data__picker--hbt__figure {
+  margin: 0;
+}
+
+.employee__data__picker--figure__avt {
+  width: 60px;
+  height: 60px;
+  padding: 2px;
+  border-radius: 50%;
+  position: relative;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  ::ng-deep .icon__loading--avt {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+  }
+}
+
+::ng-deep .ant-input-affix-wrapper-disabled em.icon__close {
+  display: none;
+}
+
+.tr-for-class {
+  cursor: pointer;
+}

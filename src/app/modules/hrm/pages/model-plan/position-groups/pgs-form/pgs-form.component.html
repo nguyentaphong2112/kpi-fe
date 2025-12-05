@@ -1,0 +1,133 @@
+<div [ngClass]="{'app-card' : isPage}" class="pgs-form">
+  <div class="content" *ngIf="isPage">
+    <hbt-button buttonType="NO_BORDER" (click)="save()" buttonAvailableStyle="SAVE"
+                buttonText="{{'common.button.save' | translate}}" type='SUBMIT'></hbt-button>
+  </div>
+  <form nz-form [formGroup]="form">
+    <div class="app-row" nz-row [nzGutter]='[20,15]'>
+      <div nz-col nzXs="24" nzLg="12">
+        <hbt-input-text formControlName="code" [maxLength]="255"
+                        uppercase
+                        [type]="isSubmitted && form.controls['code'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['code'].errors !== null"
+                        [errors]="form.controls['code'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.modelPlan.positionGroups.label.code' | translate }}]"
+                        placeholderText="{{'hrm.modelPlan.positionGroups.label.code' | translate}}"
+                        labelText="{{'hrm.modelPlan.positionGroups.label.code' | translate}} <span class='label__required'>*</span>">
+        </hbt-input-text>
+      </div>
+      <div nz-col nzXs="24" nzLg="12">
+        <hbt-input-text formControlName="name" [maxLength]="255"
+                        [type]="isSubmitted && form.controls['name'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['name'].errors !== null"
+                        [errors]="form.controls['name'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.modelPlan.positionGroups.label.name' | translate }}]"
+                        placeholderText="{{'hrm.modelPlan.positionGroups.label.name' | translate}}"
+                        labelText="{{'hrm.modelPlan.positionGroups.label.name' | translate}} <span class='label__required'>*</span>">
+        </hbt-input-text>
+      </div>
+      <div nz-col nzXs="24" nzLg="12">
+        <hbt-select formControlName="groupTypeId"
+                    [urlLoadData]="urlLoadGroupType"
+                    [serviceName]="serviceName"
+                    [type]="isSubmitted && form.controls['groupTypeId'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['groupTypeId'].errors !== null"
+                    [errors]="form.controls['groupTypeId'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.modelPlan.positionGroups.label.groupType' | translate }}]"
+                    keyLabel="name"
+                    labelText="{{'hrm.modelPlan.positionGroups.label.groupType' | translate}} <span class='label__required'>*</span>"
+                    placeholder="{{'hrm.modelPlan.positionGroups.label.groupType' | translate}}"
+        >
+        </hbt-select>
+      </div>
+      <ng-container formArrayName="listAttributes">
+        <ng-container *ngFor="let attributes of attributesFormArray.controls; let idx = index" [formGroupName]="idx">
+          <div nz-col [nzXs]="12" [nzLg]="12">
+            <input-attribute-common
+              [controlName]="getAttributeControl(idx, 'attributeValue')"
+              [dataType]="attributes.get('dataType')?.value"
+              [urlLoadData]="attributes.get('urlLoadData')?.value"
+              [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+              [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+              [errors]="attributes.get('attributeValue')?.errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}]"
+              [placeholderText]="attributes.get('attributeName')?.value"
+              [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+            >
+            </input-attribute-common>
+          </div>
+        </ng-container>
+      </ng-container>
+      <div nz-col nzXs="24" nzLg="24">
+        <nz-table
+          nzBordered
+          [nzData]="[1]"
+          [nzShowPagination]="false"
+        >
+          <thead>
+          <tr>
+            <th nzWidth='5%'>{{ 'hrm.modelPlan.positionGroups.label.stt' | translate }}</th>
+            <th [nzWidth]='getWidth()'>{{ 'hrm.modelPlan.positionGroups.label.org' | translate }} <span
+              class='label__required'>*</span></th>
+            <th [nzWidth]='getWidth()'>{{ 'hrm.modelPlan.positionGroups.label.orgTypeId' | translate }}</th>
+            <th [nzWidth]='getWidth()'>{{ 'hrm.modelPlan.positionGroups.label.scope' | translate }}</th>
+            <th nzWidth='5%'></th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container [formArrayName]="FORM_ARRAY_NAME">
+            <ng-container *ngFor="let attribute of configs.controls; let i = index" [formGroupName]="i">
+              <tr>
+                <td style="text-align: center">
+                  {{ i + 1 }}
+                </td>
+                <td>
+                  <tree-data-picker
+          [isExpand]="true"
+                    placeholder="{{'hrm.modelPlan.positionGroups.label.org' | translate}}"
+                    formControlName="organizationId"
+                    [type]="isSubmitted && attribute.get('organizationId')?.errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && attribute.get('organizationId')?.errors !== null"
+                    [errors]="attribute.get('organizationId')?.errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param':'hrm.modelPlan.organizations.org' | translate }}]"
+                    [functionCode]="functionCode"
+                    [scope]="scope"
+                  >
+                  </tree-data-picker>
+                </td>
+                <td>
+                  <hbt-select
+                    [urlLoadData]="getUrlCategory(categoryCode.LOAI_HINH_DON_VI)"
+                    [serviceName]="microService.ADMIN"
+                    keyLabel="name"
+                    placeholder="{{  'hrm.modelPlan.positionGroups.label.orgTypeId'| translate }}"
+                    formControlName="orgTypeId"
+                  ></hbt-select>
+                </td>
+                <td>
+                  <hbt-select-check-able
+                    [dataSelects]="jobList"
+                    [isLoadMore]="false"
+                    [showAction]="false"
+                    keyLabel="name"
+                    keyValue="jobId"
+                    placeholder="{{ 'hrm.modelPlan.positionGroups.label.scope' | translate }}"
+                    formControlName="jobIds"
+                  ></hbt-select-check-able>
+                </td>
+                <td class="text-center">
+                  <em class="menu__item--btn1" nz-icon nzType="plus-circle" nzTheme="outline"
+                      nzTooltipTitle="{{'common.title.add' | translate}}" (click)="addNewConfigs()"
+                      nzTooltipPlacement="left" nz-button nz-tooltip></em>
+                  <em class="menu__item--btn" nz-icon nzType="delete" nzTheme="outline"
+                      nzTooltipTitle="{{'common.title.delete' | translate}}"
+                      nzTooltipPlacement="right" nz-button nz-tooltip (click)="onDeleteConfigsClick(i)"></em></td>
+              </tr>
+            </ng-container>
+          </ng-container>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </form>
+</div>

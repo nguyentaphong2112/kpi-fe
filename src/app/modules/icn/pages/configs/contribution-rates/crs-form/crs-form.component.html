@@ -1,0 +1,164 @@
+<div class='save-form-icn'>
+  <form nz-form [formGroup]="form" style="margin-top: 20px">
+    <div nz-row [nzGutter]="[30,30]">
+      <!--diện đối tượng-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select
+          [urlLoadData]="urlConstantShare.GET_EMP_TYPE"
+          [serviceName]="microService.HRM"
+          formControlName="empTypeCode"
+          keyLabel="name"
+          keyValue="code"
+          [type]="isSubmitted && form.controls['empTypeCode']?.errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['empTypeCode']?.errors != null"
+          [errors]="form.controls['empTypeCode']?.errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'icn.contributionRates.table.empTypeCode' | translate }}]"
+          placeholder="{{'icn.contributionRates.table.empTypeCode' | translate}}"
+          labelText="{{'icn.contributionRates.table.empTypeCode' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <div nz-col [nzXs]="12" [nzLg]="12">
+
+      </div>
+
+      <!--Từ tháng-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-date-picker
+          mode="month"
+          format="MM/yyyy"
+          placeholderText="{{'icn.contributionRates.table.startDate' | translate}}"
+          labelText="{{'icn.contributionRates.table.startDate' | translate}} <span class='label__required'>*</span>"
+          [type]="isSubmitted && (form?.errors || form.controls['startDate']?.errors) ? 'error' : 'default'"
+          [showError]="isSubmitted && (form?.errors || form.controls['startDate']?.errors ) != null"
+          [errors]="form?.errors?.rangeDateError ? form?.errors : form.controls['startDate']?.errors"
+          [errorDefs]="[{ errorName: 'rangeDateError', errorDescription: 'common.validate.rangeDate.pareDate' | translate:
+        {'fromDate': 'icn.contributionRates.table.startDate' | translate, 'toDate': 'icn.contributionRates.table.endDate' | translate}},
+             { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'icn.contributionRates.table.startDate' | translate }}
+          ]"
+          formControlName="startDate"></hbt-date-picker>
+      </div>
+
+      <!--Đến tháng-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-date-picker
+          mode="month"
+          format="MM/yyyy"
+          placeholderText="{{'icn.contributionRates.table.endDate' | translate}}"
+          labelText="{{'icn.contributionRates.table.endDate' | translate}}"
+          formControlName="endDate"></hbt-date-picker>
+      </div>
+
+      <!--tỷ lệ BHXH đơn vị-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="unitSocialPercent" appNumberic [num]="3"
+                        [type]="isSubmitted && form.controls['unitSocialPercent']?.errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['unitSocialPercent']?.errors != null"
+                        [errors]="form.controls['unitSocialPercent']?.errors"
+                        [errorDefs]="[
+          { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'icn.contributionRates.table.unitSocialPercent' | translate }},
+            { errorName: 'max', errorDescription: 'common.validate.maxValue' | translate: { 'maxValue': 100} }
+          ]"
+                        placeholderText="{{'icn.contributionRates.table.unitSocialPercent' | translate}}"
+                        labelText="{{'icn.contributionRates.table.unitSocialPercent' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--tỷ lệ BHXH cá nhân-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="perSocialPercent" maxLength="5" appNumberic [num]="3"
+                        [type]="isSubmitted && form.controls['perSocialPercent']?.errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['perSocialPercent']?.errors != null"
+                        [errors]="form.controls['perSocialPercent']?.errors"
+                        [errorDefs]="[
+          { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'icn.contributionRates.table.perSocialPercent' | translate }},
+          { errorName: 'max', errorDescription: 'common.validate.maxValue' | translate: { 'maxValue': 100}}
+          ]"
+                        placeholderText="{{'icn.contributionRates.table.perSocialPercent' | translate}}"
+                        labelText="{{'icn.contributionRates.table.perSocialPercent' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--tỷ lệ BHYT đơn vị-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="unitMedicalPercent" maxLength="5" appNumberic [num]="3"
+                        [type]="isSubmitted && form.controls['unitMedicalPercent']?.errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['unitMedicalPercent']?.errors != null"
+                        [errors]="form.controls['unitMedicalPercent']?.errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'icn.contributionRates.table.unitMedicalPercent' | translate }},
+                        { errorName: 'max', errorDescription: 'common.validate.maxValue' | translate: { 'maxValue': 100}}]"
+                        placeholderText="{{'icn.contributionRates.table.unitMedicalPercent' | translate}}"
+                        labelText="{{'icn.contributionRates.table.unitMedicalPercent' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--tỷ lệ BHYT cá nhân-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="perMedicalPercent" maxLength="5" appNumberic [num]="3"
+                        [type]="isSubmitted && form.controls['perMedicalPercent']?.errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['perMedicalPercent']?.errors != null"
+                        [errors]="form.controls['perMedicalPercent']?.errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'icn.contributionRates.table.perMedicalPercent' | translate }},
+                        { errorName: 'max', errorDescription: 'common.validate.maxValue' | translate: { 'maxValue': 100}}]"
+                        placeholderText="{{'icn.contributionRates.table.perMedicalPercent' | translate}}"
+                        labelText="{{'icn.contributionRates.table.perMedicalPercent' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--tỷ lệ BHTN đơn vị-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="unitUnempPercent" maxLength="5" appNumberic [num]="3"
+                        [type]="isSubmitted && form.controls['unitUnempPercent']?.errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['unitUnempPercent']?.errors != null"
+                        [errors]="form.controls['unitUnempPercent']?.errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'icn.contributionRates.table.unitUnempPercent' | translate }},
+                        { errorName: 'max', errorDescription: 'common.validate.maxValue' | translate: { 'maxValue': 100}}]"
+                        placeholderText="{{'icn.contributionRates.table.unitUnempPercent' | translate}}"
+                        labelText="{{'icn.contributionRates.table.unitUnempPercent' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--tỷ lệ BHTN cá nhân-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="perUnempPercent" maxLength="5" appNumberic [num]="3"
+                        [type]="isSubmitted && form.controls['perUnempPercent']?.errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['perUnempPercent']?.errors != null"
+                        [errors]="form.controls['perUnempPercent']?.errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'icn.contributionRates.table.perUnempPercent' | translate }},
+                        { errorName: 'max', errorDescription: 'common.validate.maxValue' | translate: { 'maxValue': 100}}]"
+                        placeholderText="{{'icn.contributionRates.table.perUnempPercent' | translate}}"
+                        labelText="{{'icn.contributionRates.table.perUnempPercent' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--tỷ lệ kinh phí công đoàn-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="unitUnionPercent" maxLength="5" appNumberic [num]="3"
+                        [type]="isSubmitted && form.controls['unitUnionPercent']?.errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['unitUnionPercent']?.errors != null"
+                        [errors]="form.controls['unitUnionPercent']?.errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'icn.contributionRates.table.unitUnionPercent' | translate }},
+                        { errorName: 'max', errorDescription: 'common.validate.maxValue' | translate: { 'maxValue': 100}}]"
+                        placeholderText="{{'icn.contributionRates.table.unitUnionPercent' | translate}}"
+                        labelText="{{'icn.contributionRates.table.unitUnionPercent' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--tỷ lệ đoàn phí công đoàn-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="perUnionPercent" maxLength="5" appNumberic [num]="3"
+                        [type]="isSubmitted && form.controls['perUnionPercent']?.errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['perUnionPercent']?.errors != null"
+                        [errors]="form.controls['perUnionPercent']?.errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'icn.contributionRates.table.perUnionPercent' | translate }},
+                        { errorName: 'max', errorDescription: 'common.validate.maxValue' | translate: { 'maxValue': 100}}]"
+                        placeholderText="{{'icn.contributionRates.table.perUnionPercent' | translate}}"
+                        labelText="{{'icn.contributionRates.table.perUnionPercent' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+
+    </div>
+  </form>
+</div>
+

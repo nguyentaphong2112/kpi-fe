@@ -1,0 +1,22 @@
+<div class="numberic-range-input">
+  <div *ngIf='labelText != null' class='input__label' [innerHTML]='labelText'></div>
+  <div style='display: flex; gap: 20px;'>
+    <hbt-input-text appNumberic [num]='maxNumOfMin' [decimals]='maxDecimalOfMin' [disable]='disable'
+                    [placeholderText]="placeholderMin"
+                    [(ngModel)]='value[0]' (ngModelChange)='onInputChange($event, "MIN")'
+                    [type]="showError ? 'error' : 'default'"
+                    style="flex: 1"
+    ></hbt-input-text>
+
+    <hbt-input-text appNumberic [num]='maxNumOfMax' [decimals]='maxDecimalOfMax' [disable]='disable'
+                    [placeholderText]="placeholderMax"
+                    [(ngModel)]='value[1]' (ngModelChange)='onInputChange($event, "MAX")'
+                    [type]="showError ? 'error' : 'default'"
+                    style="flex: 1"
+    ></hbt-input-text>
+  </div>
+  <div *ngIf='textMessageValue != null && showError' [class]='inputMessageClass'>
+    <em *ngIf='showIconMessage' nz-icon [nzType]='iconType' nzTheme='outline'></em>
+    <span class='text__message'>{{textMessageValue}}</span>
+  </div>
+</div>

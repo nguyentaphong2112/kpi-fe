@@ -1,0 +1,379 @@
+<div class='rps-form'>
+  <form nz-form [formGroup]="form">
+    <div nz-row [nzGutter]='[20,15]'>
+      <!--Tên đề tài-->
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <hbt-input-text formControlName="title" [maxLength]="255"
+                        [type]="isSubmitted && form.controls['title'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['title'].errors != null"
+                        [errors]="form.controls['title'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.researchProjects.table.title' | translate }}]"
+                        placeholderText="{{'med.researchProjects.table.title' | translate}}"
+                        labelText="{{'med.researchProjects.table.title' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--Nội dung đề tài-->
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <hbt-input-text formControlName="content" isTextAre
+                        [maxLength]="2000"
+                        [type]="isSubmitted && form.controls['content'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['content'].errors != null"
+                        [errors]="form.controls['content'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.researchProjects.table.content' | translate }}]"
+                        placeholderText="{{'med.researchProjects.table.content' | translate}}"
+                        labelText="{{'med.researchProjects.table.content' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--Mục tiêu thực hiện đề tài-->
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <hbt-input-text formControlName="target" isTextAre
+                        [maxLength]="500"
+                        [type]="isSubmitted && form.controls['target'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['target'].errors != null"
+                        [errors]="form.controls['target'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.researchProjects.table.target' | translate }}]"
+                        placeholderText="{{'med.researchProjects.table.target' | translate}}"
+                        labelText="{{'med.researchProjects.table.target' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--Phân loại (category_type = 'NCKH_PHAN_LOAI_DE_TAI')-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [urlLoadData]="getUrlCategory(categoryCode.NCKH_PHAN_LOAI_DE_TAI)"
+                    [serviceName]="microService.ADMIN"
+                    keyLabel="name"
+                    formControlName="projectTypeId"
+                    [type]="isSubmitted && form.controls['projectTypeId'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['projectTypeId'].errors != null"
+                    [errors]="form.controls['projectTypeId'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.researchProjects.table.projectType' | translate }}]"
+                    placeholder="{{'med.researchProjects.table.projectType' | translate}}"
+                    labelText="{{'med.researchProjects.table.projectType' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <!--id đơn vị-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <tree-data-picker
+          [isExpand]="true"
+          formControlName="organizationId"
+          [scope]="scope"
+          [functionCode]="functionCode"
+          [type]="isSubmitted && form.controls['organizationId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['organizationId'].errors != null"
+          [errors]="form.controls['organizationId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.researchProjects.table.organization' | translate }}]"
+          labelText="{{'med.researchProjects.table.organization' | translate}} <span class='label__required'>*</span>"
+          placeholder="{{'med.researchProjects.table.organization' | translate}}"
+        >
+        </tree-data-picker>
+      </div>
+
+      <!--Cấp nghiên cứu (category_type = 'NCKH_CAP_NGHIEN_CUU')-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [urlLoadData]="getUrlCategory(categoryCode.NCKH_CAP_NGHIEN_CUU)"
+                    [serviceName]="microService.ADMIN"
+                    formControlName="researchLevelId"
+                    keyLabel="name"
+                    [type]="isSubmitted && form.controls['researchLevelId'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['researchLevelId'].errors != null"
+                    [errors]="form.controls['researchLevelId'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.researchProjects.table.researchLevel' | translate }}]"
+                    placeholder="{{'med.researchProjects.table.researchLevel' | translate}}"
+                    labelText="{{'med.researchProjects.table.researchLevel' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <!--Hệ nghiên cứu-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [urlLoadData]="getUrlCategory(categoryCode.NCKH_HE_NGHIEN_CUU)"
+                    [serviceName]="microService.ADMIN"
+                    formControlName="researchTopicId"
+                    keyLabel="name"
+                    [type]="isSubmitted && form.controls['researchTopicId'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['researchTopicId'].errors != null"
+                    [errors]="form.controls['researchTopicId'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.researchProjects.table.researchTopic' | translate }}]"
+                    placeholder="{{'med.researchProjects.table.researchTopic' | translate}}"
+                    labelText="{{'med.researchProjects.table.researchTopic' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <!--Thời gian nghiên cứu-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="duration" [maxLength]="7"
+                        appNumberic
+                        [num]="4"
+                        [decimals]="2"
+                        [type]="isSubmitted && form.controls['duration'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['duration'].errors != null"
+                        [errors]="form.controls['duration'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.researchProjects.table.duration' | translate }},
+                        { errorName: 'greaterThanZero', errorDescription: 'common.validate.minValue' | translate: {'minValue': 0 }}]"
+                        placeholderText="{{'med.researchProjects.table.duration' | translate}}"
+                        labelText="{{'med.researchProjects.table.duration' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--Kinh phí dự kiến-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="estimatedBudget" [maxLength]="20"
+                        [isFormatterCurrency]="true"
+                        [integerPart]="20"
+                        [decimalPart]="0"
+                        [inputType]="'number'"
+                        [showFlexEnd]="false"
+                        [type]="isSubmitted && form.controls['estimatedBudget'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['estimatedBudget'].errors != null"
+                        [errors]="form.controls['estimatedBudget'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.researchProjects.table.estimatedBudget' | translate }}]"
+                        placeholderText="{{'med.researchProjects.table.estimatedBudget' | translate}}"
+                        labelText="{{'med.researchProjects.table.estimatedBudget' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <ng-container formArrayName="listAttributes">
+        <ng-container *ngFor="let attributes of attributesFormArray.controls; let idx = index" [formGroupName]="idx">
+          <div nz-col [nzXs]="12" [nzLg]="12">
+            <input-attribute-common
+              [controlName]="getAttributeControl(idx, 'attributeValue')"
+              [dataType]="attributes.get('dataType')?.value"
+              [urlLoadData]="attributes.get('urlLoadData')?.value"
+              [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+              [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+              [errors]="attributes.get('attributeValue')?.errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}]"
+              [placeholderText]="attributes.get('attributeName')?.value"
+              [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+            >
+            </input-attribute-common>
+          </div>
+        </ng-container>
+      </ng-container>
+
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [dataSelects]="listStatus"
+                    formControlName="statusId"
+                    keyLabel="name"
+                    [type]="isSubmitted && form.controls['statusId'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['statusId'].errors != null"
+                    [errors]="form.controls['statusId'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.researchProjects.table.status' | translate }}]"
+                    placeholder="{{'med.researchProjects.table.status' | translate}}"
+                    labelText="{{'med.researchProjects.table.status' | translate}} <span class='label__required'>*</span>"
+                    (ngModelChange)="viewTab($event)"
+        ></hbt-select>
+      </div>
+      <div class="divider"></div>
+      <div nz-col [nzXs]='24' [nzLg]='24'>
+        <div class="title">{{ 'med.researchProjects.table.employeeTitle' | translate }}</div>
+        <nz-table nzBordered [nzData]="[1]" nzSize="small" [nzShowPagination]="false">
+          <thead>
+          <tr>
+            <th nzWidth='5%' class="text-center">STT</th>
+            <th nzWidth="30%"
+                class="text-center">{{ 'med.researchProjects.table.member' | translate }} <span class='label__required'>*</span>
+            </th>
+            <th nzWidth="30%"
+                class="text-center">{{ 'med.researchProjects.table.role' | translate }}
+              <span class='label__required'>*</span>
+            </th>
+            <th nzWidth="30%"
+                class="text-center">{{ 'med.researchProjects.table.note' | translate }}
+            </th>
+            <th nzWidth="5%" *ngIf="mode !== modeConst.VIEW"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container [formArrayName]="FORM_ARRAY_NAME">
+            <ng-container *ngFor="let item of members.controls; let i = index" [formGroupName]="i">
+              <tr>
+                <td style="text-align: center; font-weight: bold; width: 5%">
+                  {{ (i + 1) }}
+                </td>
+                <td style="width: 30%">
+                  <employee-data-picker [isExpand]="true"
+                                        formControlName="employeeId"
+                                        [scope]="scope" [functionCode]="functionCodeEmployee"
+                                        [type]="(isSubmitted || isSubmitted2) && item.get('employeeId')?.errors ? 'error' : 'default'"
+                                        [showError]="(isSubmitted || isSubmitted2) && item.get('employeeId')?.errors !== null"
+                                        [errors]="item.get('employeeId')?.errors"
+                                        [errorDefs]="[
+                                          { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.researchProjects.table.employee' | translate }},
+                                          {errorName: 'duplicate', errorDescription: 'hrm.validate.duplicatePosition' | translate: {'param': 'med.researchProjects.table.employeeRole' | translate}}
+                                        ]"
+                                        placeholder="{{'med.researchProjects.table.employee' | translate}}"></employee-data-picker>
+                </td>
+                <td style="width: 30%;">
+                  <hbt-select formControlName="roleId"
+                              [dataSelects]="listRole"
+                              keyLabel="name"
+                              [type]="(isSubmitted || isSubmitted2) && item.get('roleId')?.errors ? 'error' : 'default'"
+                              [showError]="(isSubmitted || isSubmitted2) && item.get('roleId')?.errors !== null"
+                              [errors]="item.get('roleId')?.errors"
+                              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.researchProjects.table.role' | translate }}]"
+                              placeholder="{{'med.researchProjects.table.role' | translate}}"
+                  >
+                  </hbt-select>
+                </td>
+                <td style="width: 30%;">
+                  <hbt-input-text formControlName="note"
+                                  [maxLength]="255"
+                                  [isTextAre]="true" [config]="{ rows: 3, resize: true }"
+                                  placeholderText="{{'med.researchProjects.table.note' | translate}}"
+                  ></hbt-input-text>
+                </td>
+                <td style="width: 5%" class="text-center" *ngIf="mode !== modeConst.VIEW">
+                  <btn-more-action [model]="[{key: i}]" [setting]="actionSchema">
+                  </btn-more-action>
+                </td>
+              </tr>
+            </ng-container>
+          </ng-container>
+          </tbody>
+        </nz-table>
+      </div>
+      <div nz-col [nzXs]='24' [nzLg]='24'>
+        <nz-tabset [nzType]="'card'" [nzSize]="'large'">
+          <ng-container [formArrayName]="FORM_ARRAY_LIFECYCLE">
+            <ng-container *ngFor="let item of lifecycles.controls; let in = index" [formGroupName]="in">
+              <nz-tab [nzTitle]="listTitle.get(item.get('type').value)">
+                <div nz-row [nzGutter]='[20,15]'>
+                  <div nz-col [nzXs]='12' [nzLg]='12'>
+                    <hbt-input-text formControlName="documentNo"
+                                    [maxLength]="50"
+                                    [type]="isSubmitted && item.get('documentNo')?.errors ? 'error' : 'default'"
+                                    [showError]="isSubmitted && item.get('documentNo')?.errors !== null"
+                                    [errors]="item.get('documentNo')?.errors"
+                                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.researchProjects.table.documentNo' | translate }}]"
+                                    labelText="{{'med.researchProjects.table.documentNo' | translate}} <span class='label__required'>*</span>"
+                                    placeholderText="{{'med.researchProjects.table.documentNo' | translate}}"
+                    ></hbt-input-text>
+                  </div>
+                  <div nz-col [nzXs]="12" [nzLg]="12">
+                    <hbt-date-picker
+                      labelText="{{'med.researchProjects.table.documentSignedDate' | translate}} <span class='label__required'>*</span>"
+                      placeholderText="{{'med.researchProjects.table.documentSignedDate' | translate}}"
+                      formControlName="documentSignedDate"
+                      [type]="isSubmitted && item.get('documentSignedDate')?.errors ? 'error' : 'default'"
+                      [showError]="isSubmitted && item.get('documentSignedDate')?.errors !== null"
+                      [errors]="item.get('documentSignedDate')?.errors"
+                      [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.researchProjects.table.documentSignedDate' | translate }}]"
+                    ></hbt-date-picker>
+                  </div>
+                  <ng-container formArrayName="listAttributes">
+                    <ng-container
+                      *ngFor="let attributes of mapAttributes?.get(item.get('type').value)?.controls; let idx = index"
+                      [formGroupName]="idx">
+                      <div nz-col [nzXs]="12" [nzLg]="12">
+                        <input-attribute-common
+                          [controlName]="getAttributeChildControl(idx, 'attributeValue', item.get('type').value)"
+                          [dataType]="attributes.get('dataType')?.value"
+                          [urlLoadData]="attributes.get('urlLoadData')?.value"
+                          [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+                          [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+                          [errors]="attributes.get('attributeValue')?.errors"
+                          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}]"
+                          [placeholderText]="attributes.get('attributeName')?.value"
+                          [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+                        >
+                        </input-attribute-common>
+                      </div>
+                    </ng-container>
+                  </ng-container>
+                  <div nz-col [nzXs]='24' [nzLg]='24' *ngIf="item.get('type').value == constantType.NGHIEM_THU_DE_TAI ||
+                                    item.get('type').value == constantType.PHE_DUYET_DE_TAI">
+                    <div class="title2">{{ 'med.researchProjects.table.boardEmployee' | translate }}</div>
+                    <nz-table nzBordered [nzData]="[1]" nzSize="small" [nzShowPagination]="false">
+                      <thead>
+                      <tr>
+                        <th nzWidth='5%' class="text-center">STT</th>
+                        <th nzWidth="30%"
+                            class="text-center">{{ 'med.researchProjects.table.member' | translate }} <span
+                          class='label__required'>*</span>
+                        </th>
+                        <th nzWidth="30%"
+                            class="text-center">{{ 'med.researchProjects.table.role' | translate }}
+                          <span class='label__required'>*</span>
+                        </th>
+                        <th nzWidth="30%"
+                            class="text-center">{{ 'med.researchProjects.table.note' | translate }}
+                        </th>
+                        <th nzWidth="5%" *ngIf="mode !== modeConst.VIEW"></th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <ng-container [formArrayName]="FORM_ARRAY_NAME">
+                        <ng-container *ngFor="let itemChild of item.get('listMembers').controls; let i = index"
+                                      [formGroupName]="i">
+                          <tr>
+                            <td style="text-align: center; font-weight: bold; width: 5%">
+                              {{ (i + 1) }}
+                            </td>
+                            <td style="width: 30%">
+                              <employee-data-picker [isExpand]="true"
+                                                    formControlName="employeeId"
+                                                    [scope]="scope" [functionCode]="functionCodeEmployee"
+                                                    [type]="(isSubmitted || isSubmitted3) && itemChild.get('employeeId')?.errors ? 'error' : 'default'"
+                                                    [showError]="(isSubmitted || isSubmitted3) && itemChild.get('employeeId')?.errors !== null"
+                                                    [errors]="itemChild.get('employeeId')?.errors"
+                                                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.researchProjects.table.employee' | translate }},
+                                                    {errorName: 'duplicate', errorDescription: 'hrm.validate.duplicatePosition' | translate: {'param': 'med.researchProjects.table.employeeRole' | translate}},]"
+                                                    placeholder="{{'med.researchProjects.table.employee' | translate}}"></employee-data-picker>
+                            </td>
+                            <td style="width: 30%;">
+                              <hbt-select formControlName="roleId"
+                                          [dataSelects]="listRole"
+                                          keyLabel="name"
+                                          [type]="(isSubmitted || isSubmitted3) && itemChild.get('roleId')?.errors ? 'error' : 'default'"
+                                          [showError]="(isSubmitted || isSubmitted3) && itemChild.get('roleId')?.errors !== null"
+                                          [errors]="itemChild.get('roleId')?.errors"
+                                          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.researchProjects.table.role' | translate }}]"
+                                          placeholder="{{'med.researchProjects.table.role' | translate}}"
+                              >
+                              </hbt-select>
+                            </td>
+                            <td style="width: 30%;">
+                              <hbt-input-text formControlName="note"
+                                              [maxLength]="255"
+                                              [isTextAre]="true" [config]="{ rows: 3, resize: true }"
+                                              placeholderText="{{'med.researchProjects.table.note' | translate}}"
+                              ></hbt-input-text>
+                            </td>
+                            <td style="width: 5%" class="text-center" *ngIf="mode !== modeConst.VIEW">
+                              <btn-more-action [model]="[{key: i, parentIndex: in, type: item.get('type').value}]"
+                                               [setting]="actionSchemaChild">
+                              </btn-more-action>
+                            </td>
+                          </tr>
+                        </ng-container>
+                      </ng-container>
+                      </tbody>
+                    </nz-table>
+                  </div>
+                  <div nz-col [nzXs]='24' [nzLg]='24'>
+                    <hbt-upload
+                      [fileList]="item.get('listFileAttachments').value"
+                      [(docIdsDelete)]="item.get('attachmentDeleteIds').value"
+                      [typeFileAvailable]="['png', 'pdf', 'doc', 'docx']"
+                      [multiple]="true"
+                      [maxSize]="20"
+                      labelText="{{'common.label.attachFile' | translate}}"
+                      (fileListChange)="changeFile($event, in, true)"
+                      (docIdsDeleteChange)="removeFileChild($event, in)"
+                      [serviceName]='serviceName'
+                      [disable]="mode === modeConst.VIEW"
+                    ></hbt-upload>
+                  </div>
+                </div>
+              </nz-tab>
+            </ng-container>
+          </ng-container>
+        </nz-tabset>
+      </div>
+    </div>
+  </form>
+</div>
+

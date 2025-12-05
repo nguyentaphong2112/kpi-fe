@@ -1,0 +1,63 @@
+<div class='save-form-abs'>
+  <form nz-form [formGroup]="form" style="margin-top: 20px">
+    <div nz-row [nzGutter]='[20,15]'>
+      <!--mã-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="code" maxLength="255" uppercase (blur)="blur('code')"
+          [type]="isSubmitted && form.controls['code'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['code'].errors != null"
+          [errors]="form.controls['code'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'abs.reasonTypes.table.code' | translate }},
+          { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+          placeholderText="{{'abs.reasonTypes.table.code' | translate}}"
+          labelText="{{'abs.reasonTypes.table.code' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--tên-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="name" maxLength="255"
+          [type]="isSubmitted && form.controls['name'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['name'].errors != null"
+          [errors]="form.controls['name'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'abs.reasonTypes.table.name' | translate }},
+          { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+          placeholderText="{{'abs.reasonTypes.table.name' | translate}}"
+          labelText="{{'abs.reasonTypes.table.name' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--ký hiệu chấm công-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select
+          [dataSelects]="workdayType"
+          keyLabel="code"
+          keyValue="workdayTypeId"
+          formControlName="workdayTypeId"
+          [type]="isSubmitted && form.controls['workdayTypeId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['workdayTypeId'].errors != null"
+          [errors]="form.controls['workdayTypeId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'abs.reasonTypes.table.workdayType' | translate }}]"
+          placeholder="{{'abs.reasonTypes.table.workdayType' | translate}}"
+          labelText="{{'abs.reasonTypes.table.workdayType' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <!--có tính nghỉ tại ngày lễ-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select formControlName="isOverHoliday"
+                    [dataSelects]="chooseYesNo"
+                    keyLabel="name"
+                    [type]="isSubmitted && form.controls['isOverHoliday'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['isOverHoliday'].errors != null"
+                    [errors]="form.controls['isOverHoliday'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'abs.reasonTypes.table.isOverHoliday' | translate }},
+                    { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 1}}]"
+                    placeholder="{{'abs.reasonTypes.table.isOverHoliday' | translate}}"
+                    labelText="{{'abs.reasonTypes.table.isOverHoliday' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>      
+    </div>
+  </form>
+</div>
+

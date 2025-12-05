@@ -1,0 +1,127 @@
+@import 'src/app/core/global-style/variable';
+
+.figure__avt {
+  width: 120px;
+  height: 120px;
+  padding: 6px;
+  border-radius: 50%;
+  background: $info-100;
+  position: relative;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .avatar__change1 {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 24px;
+    height: 24px;
+    background: $primary-900;
+    border-radius: 50%;
+    display: none;
+  }
+
+  &:hover {
+    .avatar__change1 {
+      display: inline-block;
+    }
+  }
+
+  .avatar__change--save {
+    display: inline-block !important;
+    top: 75px !important;
+  }
+
+  ::ng-deep .icon__upload--avt .button__class--only-icon {
+    color: $bg-form-default;
+    margin-left: 1px;
+    font-size: 11px;
+  }
+
+  ::ng-deep .icon__loading--avt {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 25px;
+    color: $primary-900;
+  }
+
+  .avatar__change1.avatar__change--delete {
+    top: 44px !important;
+    background: $error-500 !important;
+  }
+}
+
+.brief__des--item {
+
+  ::ng-deep .input__group {
+    width: 75%;
+  }
+}
+
+.text-position {
+  white-space: break-spaces;
+}
+
+@media screen and (max-width: 767px) {
+  .brief__des--items--avatar {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+}
+
+.sub-title {
+  font-size: 22px;
+  font-weight: 300;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.icon-header {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.avt-flex {
+  justify-content: center;
+  display: flex;
+}
+
+.status {
+  margin: 0 !important;
+}
+
+
+.position-title {
+  font-size: 16px;
+  color: $black-500;
+}
+
+::ng-deep .btn-confirm .ant-btn {
+  margin-bottom: 10px;
+  margin-left: 0 !important;
+}
+
+.download-info {
+  color: $text-primary;
+  margin-left: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: underline;
+  font-style: italic;
+}

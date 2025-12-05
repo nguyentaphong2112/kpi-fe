@@ -1,0 +1,266 @@
+<div class="work-plan">
+  <div class="right">
+    <span (click)="openSelect()" *ngIf="!isDetail"
+          class="select-plan">{{ 'kpi.kpiEvaluations.orgWorkPlanning.label.selectWorkPlan' | translate }}</span>
+    <!--    <hbt-button buttonType="NO_BORDER" *ngIf="!isDetail || isEvaluate" (click)="save()" buttonAvailableStyle="SAVE"-->
+    <!--                buttonText="{{'common.button.save' | translate}}" type='SUBMIT'></hbt-button>-->
+  </div>
+  <form nz-form [formGroup]="form" style="margin-top: 20px">
+    <div nz-row [nzGutter]='[20,15]'>
+      <div nz-col [nzXs]='24' [nzLg]='24' class="input__group">
+        <nz-table nzBordered [nzData]="[1]" nzSize="small" [nzShowPagination]="false" [nzScroll]="{y: '60vh'}"
+                  class="data-table"
+                  [nzWidthConfig]="['5%', '20%', '6%', '7%', '7%', '7%', '5%', '7%', '5%', '7%', '10%']">
+          <thead>
+          <tr>
+            <th rowSpan="2" class="text-center">STT</th>
+            <th rowSpan="2"
+                class="text-center">{{ 'kpi.kpiEvaluations.organizations.table.description' | translate }}
+              <span class='label__required'>*</span>
+            </th>
+            <th rowSpan="2"
+                class="text-center">{{ 'kpi.kpiEvaluations.organizations.table.measureUnit2' | translate }}
+            </th>
+            <th colSpan="3"
+                class="text-center">{{ 'kpi.kpiEvaluations.organizations.table.workPlan' | translate }}
+            </th>
+            <th colSpan="2"
+                class="text-center">{{ 'kpi.employeeEvaluations.label.selfPointPer' | translate }}
+              <span class='label__required'>*</span>
+            </th>
+            <th colSpan="2"
+                class="text-center">{{ 'kpi.employeeEvaluations.label.managerPoint' | translate }}
+              <span class='label__required' *ngIf="isEvaluateManage">*</span>
+            </th>
+            <th rowSpan="2" class="text-center">{{ 'kpi.workPlanningTemplates.table.note' | translate }}
+            </th>
+            <th rowSpan="2" *ngIf="!isDetail"></th>
+          </tr>
+          <tr>
+            <th class="text-center">{{ 'kpi.kpiEvaluations.organizations.table.semester1' | translate }}
+            </th>
+            <th class="text-center">{{ 'kpi.kpiEvaluations.organizations.table.semester2' | translate }}
+            </th>
+            <th class="text-center">{{ 'kpi.kpiEvaluations.organizations.table.allYear' | translate }}
+            </th>
+            <th
+                class="text-center">{{ 'kpi.label.action' | translate }}
+              <span class='label__required'>*</span>
+            </th>
+            <th
+                class="text-center">{{ 'kpi.label.result' | translate }}
+            </th>
+            <th
+                class="text-center">{{ 'kpi.label.action' | translate }}
+              <span class='label__required' *ngIf="isEvaluateManage">*</span>
+            </th>
+            <th
+                class="text-center">{{ 'kpi.label.result' | translate }}
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container [formArrayName]="FORM_ARRAY_NAME">
+            <ng-container *ngFor="let item of formArray.controls; let i = index" [formGroupName]="i">
+              <tr>
+                <td class="text-center"
+                    style="font-weight: bold"> {{ item.get('level').value > 2 ? item.get('level').value > 3 ? (item.get('level').value > 4 ? '-' : '+') : getKeyByIndex(item.get('key').value) : item.get('key').value }}
+                </td>
+                <td
+                  [attr.colspan]="map.get(item.get('key').value) == null || map.get(item.get('key').value) === 0 ? '1' : '10'">
+                  <hbt-input-text formControlName="param" class="wpn-input" [maxLength]="2000"
+                                  *ngIf="!isDetail"
+                                  [isTextAre]="true" [config]="{ rows: 1, autoSize: true }"
+                                  placeholderText="{{'kpi.kpiEvaluations.organizations.table.description' | translate}}"
+                                  [type]="isSubmitted && item.get('param')?.errors ? 'error' : 'default'"
+                                  [showError]="isSubmitted && item.get('param')?.errors !== null"
+                                  [errors]="item.get('param')?.errors"
+                                  [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.kpiEvaluations.organizations.table.description' | translate }}]">
+                  </hbt-input-text>
+                  <span
+                    *ngIf="isDetail">{{ item.get('param').value ? item.get('param').value : '-' }}</span>
+                </td>
+                <ng-container *ngIf="map.get(item.get('key').value) == null || map.get(item.get('key').value) === 0">
+                  <td>
+                    <hbt-select formControlName="unit" class="wpn-input"
+                                *ngIf="!isDetail"
+                                keyLabel="name"
+                                keyValue="value"
+                                [dataSelects]="listDataSelect"
+                                placeholder="{{'kpi.workPlanningTemplates.table.unit' | translate}}">
+                    </hbt-select>
+                    <span
+                      *ngIf="isDetail">{{ item.get('unit').value ? getValueSelect(listDataSelect, item.get('unit').value, value, name) : '-' }}</span>
+                  </td>
+                  <td>
+                    <hbt-input-text formControlName="stepOne" class="wpn-input" [maxLength]="255"
+                                    *ngIf="!isDetail"
+                                    [isTextAre]="true" [config]="{ rows: 1, autoSize: true }"
+                                    placeholderText="{{'kpi.kpiEvaluations.organizations.table.semester1' | translate}}">
+                    </hbt-input-text>
+                    <span
+                      *ngIf="isDetail">{{ item.get('stepOne').value ? item.get('stepOne').value : '-' }}</span>
+                  </td>
+                  <td>
+                    <hbt-input-text formControlName="stepTwo" class="wpn-input" [maxLength]="255"
+                                    *ngIf="!isDetail"
+                                    [isTextAre]="true" [config]="{ rows: 1, autoSize: true }"
+                                    placeholderText="{{'kpi.kpiEvaluations.organizations.table.semester2' | translate}}">
+                    </hbt-input-text>
+                    <span
+                      *ngIf="isDetail">{{ item.get('stepTwo').value ? item.get('stepTwo').value : '-' }}</span>
+                  </td>
+                  <td>
+                    <hbt-input-text formControlName="fullYear" class="wpn-input" [maxLength]="255"
+                                    *ngIf="!isDetail"
+                                    [isTextAre]="true" [config]="{ rows: 1, autoSize: true }"
+                                    placeholderText="{{'kpi.kpiEvaluations.organizations.table.allYear' | translate}}">
+                    </hbt-input-text>
+                    <span
+                      *ngIf="isDetail">{{ item.get('fullYear').value ? item.get('fullYear').value : '-' }}</span>
+                  </td>
+                  <td style="text-align: right">
+                    <hbt-input-text formControlName="result" class="wpn-input" [maxLength]="21"
+                                    appNumberic
+                                    *ngIf="!isEvaluateManage && !isEvaluateDetail"
+                                    [num]="18"
+                                    [decimals]="5"
+                                    placeholderText="{{'kpi.label.action' | translate}}"
+                                    [type]="isSubmitted && item.get('result')?.errors ? 'error' : 'default'"
+                                    [showError]="isSubmitted && item.get('result')?.errors !== null"
+                                    [errors]="item.get('result')?.errors"
+                                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.label.action' | translate }}]"
+                    >
+                    </hbt-input-text>
+                    <!--                    <hbt-input-text formControlName="result" class="wpn-input"-->
+                    <!--                                    *ngIf="!item.get('isNumber').value && !isEvaluateManage && !isEvaluateDetail"-->
+                    <!--                                    placeholderText="{{'kpi.label.action' | translate}}"-->
+                    <!--                                    [type]="isSubmitted && item.get('result')?.errors ? 'error' : 'default'"-->
+                    <!--                                    [showError]="isSubmitted && item.get('result')?.errors !== null"-->
+                    <!--                                    [errors]="item.get('result')?.errors"-->
+                    <!--                                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.label.action' | translate }}]"-->
+                    <!--                    >-->
+                    <!--                    </hbt-input-text>-->
+                    <span
+                      *ngIf="isEvaluateManage || isEvaluateDetail">{{ item.get('result').value ? item.get('result').value : '-' }}</span>
+                  </td>
+                  <td style="text-align: right">
+                    <!--                    <hbt-select formControlName="selfPoint" class="wpn-input"-->
+                    <!--                                dropdownClassName="data-select-pane-custom"-->
+                    <!--                                keyLabel="name"-->
+                    <!--                                *ngIf="!isEvaluateManage && !isEvaluateDetail"-->
+                    <!--                                [dataSelects]="listDataLevel"-->
+                    <!--                                placeholder="{{'kpi.label.result' | translate}}"-->
+                    <!--                                [type]="isSubmitted && item.get('selfPoint')?.errors ? 'error' : 'default'"-->
+                    <!--                                [showError]="isSubmitted && item.get('selfPoint')?.errors !== null"-->
+                    <!--                                [errors]="item.get('selfPoint')?.errors"-->
+                    <!--                                [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.label.result' | translate }}]"-->
+                    <!--                    >-->
+                    <!--                    </hbt-select>-->
+                    <!--                    <span-->
+                    <!--                      *ngIf="isEvaluateManage || isEvaluateDetail">{{ item.get('selfPoint').value ? getValueSelect(listDataLevel, item.get('selfPoint').value, value, name) : '-' }}</span>-->
+
+                    <span>{{ item.get('selfPoint').value }}</span>
+                  </td>
+                  <td style="text-align: right">
+                    <hbt-input-text formControlName="resultManage" class="wpn-input" [maxLength]="21"
+                                    *ngIf="isEvaluateManage && !isEvaluateDetail"
+                                    appNumberic
+                                    [num]="18"
+                                    [decimals]="5"
+                                    placeholderText="{{'kpi.label.action' | translate}}"
+                                    [type]="isSubmitted && item.get('resultManage')?.errors ? 'error' : 'default'"
+                                    [showError]="isSubmitted && item.get('resultManage')?.errors !== null"
+                                    [errors]="item.get('resultManage')?.errors"
+                                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.label.action' | translate }}]">
+                    </hbt-input-text>
+                    <!--                    <hbt-input-text formControlName="resultManage" class="wpn-input"-->
+                    <!--                                    *ngIf="!item.get('isNumber').value && isEvaluateManage && !isEvaluateDetail"-->
+                    <!--                                    placeholderText="{{'kpi.label.action' | translate}}"-->
+                    <!--                                    [type]="isSubmitted && item.get('resultManage')?.errors ? 'error' : 'default'"-->
+                    <!--                                    [showError]="isSubmitted && item.get('resultManage')?.errors !== null"-->
+                    <!--                                    [errors]="item.get('resultManage')?.errors"-->
+                    <!--                                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.label.action' | translate }}]">-->
+                    <!--                    </hbt-input-text>-->
+                    <span
+                      *ngIf="!isEvaluateManage || isEvaluateDetail">{{ item.get('resultManage').value ? item.get('resultManage').value : '-' }}</span>
+                  </td>
+
+                  <td style="text-align: right">
+                    <!--                    <hbt-select formControlName="managePoint" class="wpn-input"-->
+                    <!--                                dropdownClassName="data-select-pane-custom"-->
+                    <!--                                keyLabel="name"-->
+                    <!--                                *ngIf="isEvaluateManage && !isEvaluateDetail"-->
+                    <!--                                [dataSelects]="listDataLevel"-->
+                    <!--                                placeholder="{{'kpi.label.result' | translate}}"-->
+                    <!--                                [type]="isSubmitted && item.get('managePoint')?.errors ? 'error' : 'default'"-->
+                    <!--                                [showError]="isSubmitted && item.get('managePoint')?.errors !== null"-->
+                    <!--                                [errors]="item.get('managePoint')?.errors"-->
+                    <!--                                [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.label.result' | translate }}]"-->
+                    <!--                    >-->
+                    <!--                    </hbt-select>-->
+                    <!--                    <span-->
+                    <!--                      *ngIf="!isEvaluateManage || isEvaluateDetail">{{ item.get('managePoint').value ? getValueSelect(listDataLevel, item.get('managePoint').value, value, name) : '-' }}</span>-->
+
+                    <span>{{ item.get('managePoint').value }}</span>
+                  </td>
+                  <td>
+                    <hbt-input-text formControlName="note" class="wpn-input"
+                                    *ngIf="!isEvaluateDetail"
+                                    [defaultInput]="true"
+                                    [type]="isSubmitted && item.get('note')?.errors ? 'error' : 'default'"
+                                    [isTextAre]="true" [config]="{ rows: 1, autoSize: true }"
+                                    [showError]="isSubmitted && item.get('note')?.errors !== null"
+                                    [errors]="item.get('note')?.errors"
+                                    [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': '255' }},
+             { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.workPlanningTemplates.table.note' | translate }}]"
+                                    placeholderText="{{'kpi.workPlanningTemplates.table.note' | translate}}">
+                    </hbt-input-text>
+                    <span
+                      *ngIf="isEvaluateDetail">{{ item.get('note').value ? item.get('note').value : '-' }}</span>
+                  </td>
+                </ng-container>
+                <td class="text-center" *ngIf="!isDetail">
+                  <btn-more-action [model]="[item, {key: i}]" [setting]="actionSchema">
+                  </btn-more-action>
+                </td>
+              </tr>
+            </ng-container>
+          </ng-container>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="'kpi.kpiEvaluations.orgWorkPlanning.label.selectWorkPlan' | translate"
+          (nzOnCancel)="handleCancel()">
+  <ng-container *nzModalContent>
+    <div>
+      <hbt-select
+        [urlLoadData]="urlLoadData"
+        [serviceName]="serviceName"
+        keyValue="content"
+        keyLabel="name"
+        [isLoadMore]="true"
+        [(ngModel)]="valueSelect"
+        labelText="{{'kpi.kpiEvaluations.orgWorkPlanning.label.selectWorkPlan' | translate}}"
+        placeholder="{{'kpi.kpiEvaluations.orgWorkPlanning.label.selectWorkPlan' | translate}}">
+      </hbt-select>
+    </div>
+  </ng-container>
+  <ng-template [nzModalFooter]>
+    <hbt-button
+      buttonAvailableStyle="CANCEL"
+      buttonText="{{ 'common.button.cancel' | translate }}"
+      (click)="handleCancel()">
+    </hbt-button>
+    <hbt-button
+      buttonAvailableStyle="SAVE"
+      buttonText="{{ 'common.button.confirm' | translate }}"
+      (click)="handleOk()">
+    </hbt-button>
+  </ng-template>
+</nz-modal>

@@ -1,0 +1,70 @@
+<div class='save-form-crm'>
+  <form nz-form [formGroup]="form" style="margin-top: 20px">
+    <div nz-row [nzGutter]='[20,15]'>
+      <!--chỉ số-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="indexNo" maxLength="20"
+          [type]="isSubmitted && form.controls['indexNo'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['indexNo'].errors != null"
+          [errors]="form.controls['indexNo'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 20}}]"
+          placeholderText="{{'crm.pytagoValues.table.indexNo' | translate}}"
+          labelText="{{'crm.pytagoValues.table.indexNo' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--giá trị-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="value" maxLength="10"
+          [type]="isSubmitted && form.controls['value'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['value'].errors != null"
+          [errors]="form.controls['value'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 10}}]"
+          placeholderText="{{'crm.pytagoValues.table.value' | translate}}"
+          labelText="{{'crm.pytagoValues.table.value' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--id bản ghi-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [dataSelects]="[]"
+          formControlName="objectId"
+          [type]="isSubmitted && form.controls['objectId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['objectId'].errors != null"
+          [errors]="form.controls['objectId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.pytagoValues.table.objectId' | translate }}]"
+          placeholder="{{'crm.pytagoValues.table.objectId' | translate}}"
+          labelText="{{'crm.pytagoValues.table.objectId' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <!--tên bảng-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="tableName" maxLength="20"
+          [type]="isSubmitted && form.controls['tableName'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['tableName'].errors != null"
+          [errors]="form.controls['tableName'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 20}}]"
+          placeholderText="{{'crm.pytagoValues.table.tableName' | translate}}"
+          labelText="{{'crm.pytagoValues.table.tableName' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <div nz-col [nzXs]='24' [nzLg]='24' class="input__group">
+        <hbt-upload
+          [(docIdsDelete)]="docIdsDelete"
+          [typeFileAvailable]="['jpeg', 'jpg', 'png', 'pdf', 'doc', 'docx']"
+          [multiple]="true"
+          labelText="{{'common.label.attachFile' | translate}}"
+          [required]="true"
+          (fileListChange)="onFileListChange($event, 'fileList', true)"
+          (docIdsDeleteChange)="removeFile($event, 'fileList')"
+          [serviceName]='serviceName'
+          [showError]="isSubmitted"
+        ></hbt-upload>
+      </div>
+
+    </div>
+  </form>
+</div>
+

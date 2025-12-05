@@ -1,0 +1,124 @@
+<div class='dss-form' style="margin-top: 70px">
+  <div class="head-table">
+    <div class="head-text">Kết quả tìm kiếm</div>
+    <div>
+      <hbt-button buttonType="NO_BORDER" (click)="save()" buttonAvailableStyle="SAVE"
+                  buttonText="{{'common.button.save' | translate}}" type='SUBMIT'></hbt-button>
+    </div>
+  </div>
+  <form nz-form [formGroup]="form" *ngIf="responseSearch?.listData" style="margin-top: 20px">
+    <div nz-row [nzGutter]='[20,15]'>
+      <div nz-col [nzXs]='24' [nzLg]='24' class="input__group">
+        <nz-table [nzBordered]="true" [nzData]="array" nzSize="small" [nzShowPagination]="true"
+                  [nzScroll]="{ x: '1000px', y: '60vh' }"
+                  [nzPageSize]="responseSearch.pageSize"
+                  [nzPageIndex]="responseSearch.pageIndex"
+                  (nzPageIndexChange)="onPageIndexChange($event)">
+          <thead>
+          <tr>
+            <th nzWidth='50px' nzLeft class="text-center">STT</th>
+            <th nzLeft nzWidth='200px' class="text-center">{{ 'abs.dutySchedules.table.org' | translate }}
+              <span class='label__required'>*</span>
+            </th>
+            <ng-container *ngFor="let date of dates; let i = index">
+              <th nzWidth='250px' class="text-center {{(i == 6 || i == 5) ? 'text-red' : ''}}">
+                {{ date }}
+                <ng-container *ngIf="i != 6">
+                  <div>{{ '(T' + (i + 2) + ')' }}
+                    <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu"
+                       title="{{'abs.label.copyCalendar'| translate}}">
+                      <i nz-icon nzType="copy" nzTheme="outline"
+                         class="text-center {{(i == 6 || i == 5) ? 'text-red' : 'text-normal'}}"></i>
+                    </a>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="i == 6">
+                  <div>{{ '(CN)' }}
+                    <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu"
+                       title="{{'abs.label.copyCalendar'| translate}}">
+                      <i nz-icon nzType="copy" nzTheme="outline"
+                         class="text-center {{(i == 6 || i == 5) ? 'text-red' : 'text-normal'}}"></i>
+                    </a></div>
+                </ng-container>
+                <nz-dropdown-menu #menu="nzDropdownMenu">
+                  <ul nz-menu>
+                    <li nz-menu-item (click)="copyValue(dateCopy, i, date)"
+                        *ngFor="let dateCopy of getListDate(date)">{{ dateCopy.slice(0, -5) }}
+                    </li>
+                  </ul>
+                </nz-dropdown-menu>
+              </th>
+            </ng-container>
+            <th nzWidth="50px" nzRight></th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container [formArrayName]="FORM_ARRAY_NAME">
+            <ng-container *ngFor="let item of formArray.controls; let i = index" [formGroupName]="i">
+              <tr>
+                <td style="text-align: center; font-weight: bold; width: 50px" nzLeft>
+                  {{ item.get('organizationName')?.value ? (map.get(item.get('organizationName')?.value) + 1) : '' }}
+                </td>
+                <td style="width: 200px" nzLeft>
+                  <ng-container *ngIf="item.get('organizationName')?.value != null">
+                    <span>{{ item.get('organizationName')?.value ? item.get('organizationName')?.value : '-' }}</span>
+                  </ng-container>
+                  <ng-container *ngIf="item.get('organizationName')?.value == null">
+                    <hbt-select formControlName="dutyPositionId"
+                                [dataSelects]="positionList"
+                                [keyLabel]="'name'"
+                                [type]="item.get('dutyPositionId').errors ? 'error' : 'default'"
+                                [showError]="item.get('dutyPositionId').errors !== null"
+                                [errors]="item.get('dutyPositionId').errors"
+                                [errorDefs]="[{ errorName: 'duplicate', errorDescription: 'abs.validate.duplicate' | translate: {'param': 'abs.dutySchedules.label.dutyPosition' | translate }}]"
+                                placeholder="{{'abs.dutySchedules.label.dutyPosition' | translate}}"
+                    ></hbt-select>
+                  </ng-container>
+                </td>
+                <ng-container *ngIf="item.get('organizationName')?.value != null">
+                  <td [attr.colspan]="8">
+
+                  </td>
+                </ng-container>
+                <ng-container *ngIf="item.get('organizationName')?.value == null">
+                  <ng-container *ngFor="let date of dates; let i = index">
+                    <td style="width: 250px"
+                        (click)="item.get('isFirst' + i).setValue(false)">
+                      <employee-data-picker *ngIf="!item.get('isFirst' + i).value"
+                                            [isExpand]="true"
+                                            [isMulti]="true"
+                                            [isSearchAfterAction]="true"
+                                            [isLoadData]="mapCopy.get(item.get('organizationId')?.value + item.get('dutyPositionId')?.value + 'employeeId' + i) ? mapCopy.get(item.get('organizationId')?.value + item.get('dutyPositionId')?.value + 'employeeId' + i) : false"
+                                            [isChoose]="true"
+                                            [isIcon]="true"
+                                            [dataSelect]="item.get('dataSelect' + i).value"
+                                            [formControlName]="'employeeId' + i"
+                                            [type]="isSubmitted && item.get('employeeId' + i)?.errors ? 'error' : 'default'"
+                                            [showError]="isSubmitted && item.get('employeeId' + i)?.errors != null"
+                                            [errors]="item.get('employeeId' + i)?.errors"
+                                            [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'common.label.employeeName' | translate }}]">
+                      </employee-data-picker>
+                      <div *ngIf="item.get('isFirst' + i).value">
+                        {{ getLabelData(item.get('dataSelect' + i).value) }}
+                      </div>
+                    </td>
+                  </ng-container>
+                  <td style="width: 50px" class="text-center" nzRight>
+                    <em class="menu__item--btn1" nz-icon nzType="plus-circle" nzTheme="outline"
+                        nzTooltipTitle="{{'common.title.add' | translate}}" (click)="add(item)"
+                        nzTooltipPlacement="left" nz-button nz-tooltip></em>
+                    <em class="menu__item--btn2" nz-icon nzType="delete" nzTheme="outline"
+                        nzTooltipTitle="{{'common.title.delete' | translate}}"
+                        nzTooltipPlacement="left" nz-button nz-tooltip (click)="onDelete(item, i)"></em>
+                  </td>
+                </ng-container>
+              </tr>
+            </ng-container>
+          </ng-container>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </form>
+</div>
+

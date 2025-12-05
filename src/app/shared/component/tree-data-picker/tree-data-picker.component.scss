@@ -1,0 +1,78 @@
+@import "src/app/core/global-style/variable";
+::ng-deep .cus__org--modal {
+  ::ng-deep .ant-modal-body {
+    padding: 0px;
+  }
+
+  ::ng-deep .ant-card-head-title {
+    color: $black-900;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 22px;
+    word-wrap: break-word;
+  }
+
+
+  ::ng-deep .ant-card-body {
+    height: 620px;
+    overflow: hidden;
+    overflow-y: scroll;
+    margin-left: 5px;
+  }
+}
+
+
+
+.autocomplete__item {
+  padding: 5px;
+}
+
+
+::ng-deep .autocomplete__item .ant-list-item-meta-title {
+  font-size: 15px;
+}
+
+::ng-deep .emp__picker--view--all {
+  display: block;
+  text-align: center;
+  margin: 10px 0 10px 0;
+
+  .ant-btn {
+    margin: 0 !important;
+  }
+}
+
+
+.autocomplete__panel {
+  background: #ffffff;
+}
+
+::ng-deep .hbt__org--modal .ant-card-body {
+  margin-left: 10px;
+}
+
+
+.icon__search, .icon__close {
+  padding: 5px;
+
+  &:hover {
+    background-color: $black-400;
+    color: #ffffff !important;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+  }
+}
+
+
+.tr-for-class {
+  cursor: pointer;
+}
+
+::ng-deep .item__home--left .ant-card-body {
+  padding-left: 0;
+}
+
+::ng-deep .input__search--pn--group .ant-select-selector {
+  padding-left: 11px;
+}

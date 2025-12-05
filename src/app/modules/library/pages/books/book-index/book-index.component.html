@@ -1,0 +1,45 @@
+<div class="book-index">
+  <form nz-form [formGroup]="form">
+    <div nz-row [nzGutter]='[45, 45]'>
+      <div nz-col [nzXs]='12' [nzLg]='12'>
+        <hbt-input-text formControlName='keySearch'
+                        [maxLength]='255'
+                        placeholderText="{{'library.books.label.keySearch' | translate}}"
+                        labelText="{{'library.books.label.keySearch' | translate}}"></hbt-input-text>
+      </div>
+      <div nz-col [nzXs]='12' [nzLg]='12'>
+        <div>
+          <hbt-button
+            class="staff__research__btn__search"
+            buttonSize="MEDIUM"
+            buttonAvailableStyle="SEARCH"
+            buttonText="{{'common.button.search' | translate}}"
+            (click)="search()"
+          ></hbt-button>
+        </div>
+      </div>
+      <ng-container *ngFor="let data of data">
+        <div nz-col [nzXs]="6" [nzLg]="6" class="item__home item__home--left">
+          <nz-card nzHoverable [nzCover]="coverTemplate" (click)="openDetail(data.bookId)">
+            <nz-card-meta [nzTitle]="data.title" [nzDescription]="'(' + data.authorName + ')'"></nz-card-meta>
+          </nz-card>
+          <ng-template #coverTemplate>
+            <img class="book-img" alt="example" [src]="data.avatar" *ngIf="data.avatar" />
+            <img class="book-img" alt="example" src="./assets/images/book/default-avatar.png" *ngIf="!data.avatar" />
+          </ng-template>
+        </div>
+      </ng-container>
+    </div>
+  </form>
+  <div nz-col [nzXs]="24" [nzLg]="24" class="flex" *ngIf="data?.length > 0">
+    <div class="group__total--table">
+      <img style="margin-right: 5px" src="assets/icon/common/light.svg"
+           alt=""> {{ 'common.paging.rangePage' | translate: { 'result': dataAll?.total } }} {{ range[0] }}
+      - {{ range[1] }}
+    </div>
+    <div>
+      <nz-pagination [nzPageIndex]="1" [nzTotal]="dataAll?.total" [nzPageSize]="12"
+                     (nzPageIndexChange)="search($event)" nzShowQuickJumper></nz-pagination>
+    </div>
+  </div>
+</div>

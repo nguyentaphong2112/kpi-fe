@@ -1,0 +1,183 @@
+<form nz-form [formGroup]="form" class="employee-evaluations">
+
+  <div class="search__custom-common {{isShowAdvSearch ? 'add__mr__bt-10' : 'remove__mr__bt-40'}}">
+    <div nz-row class="button__action-left">
+      <div *ngIf="listId && listId.length > 0">
+        <!--        <hbt-button-->
+        <!--          *ngIf="objFunction.edit"-->
+        <!--          buttonSize="MEDIUM"-->
+        <!--          buttonAvailableStyle="APPROVE"-->
+        <!--          buttonText="{{'common.button.evaluate2' | translate}}"-->
+        <!--          (click)="navigateEvaluation(listId)"-->
+        <!--        ></hbt-button>-->
+        <hbt-button
+          *ngIf="objFunction.review && listStatusCode.includes('QLTT_DANH_GIA')"
+          buttonSize="MEDIUM"
+          buttonAvailableStyle="APPROVE"
+          buttonText="{{'common.button.confirmResult' | translate}}"
+          (click)="confirmResult({listId: listId})"
+        ></hbt-button>
+      </div>
+      <hbt-button
+        *ngIf="objFunction.review && listId.length == 0"
+        buttonSize="MEDIUM"
+        buttonAvailableStyle="APPROVE"
+        buttonText="{{'common.button.confirmResultAll' | translate}}"
+        (click)="confirmResult()"
+      ></hbt-button>
+      <hbt-button
+        style="margin-left: 20px"
+        buttonSize="MEDIUM"
+        buttonType="BORDER"
+        (click)="export()">
+        <img src="/assets/icon/staff-manager/export_excel.svg" alt="" />
+      </hbt-button>
+    </div>
+
+    <div class="search__page-right">
+      <hbt-select formControlName="evaluationPeriodId"
+                  [dataSelects]="listPeriod"
+                  keyValue="evaluationPeriodId"
+                  keyLabel="name"
+                  placeholder="{{'kpi.kpiEvaluations.organizations.label.period' | translate}}"
+      >
+      </hbt-select>
+      <hbt-input-text style="margin-left: 20px" formControlName='keySearch'
+                      [maxLength]='255'
+                      placeholderText="{{'kpi.employeeEvaluations.label.keySearch' | translate}}"></hbt-input-text>
+      <hbt-button
+        buttonIconType="AWESOME"
+        [prefixIcon]="isShowAdvSearch ? 'fa fa-angle-double-up' : 'fa fa-angle-double-down'"
+        buttonSize="VERY_LARGE"
+        [buttonTextColor]="_variable.$neutral_100"
+        [buttonBorderColor]="_variable.$purple_800"
+        [buttonBgColor]="_variable.$purple_800"
+        (click)="isShowAdvSearch = !isShowAdvSearch"
+      >
+      </hbt-button>
+    </div>
+  </div>
+
+  <div *ngIf="isShowAdvSearch" class="content__item content__item--border bg__content--default">
+    <div class="form-search">
+      <div nz-row [nzGutter]='[20,15]'>
+        <div nz-col [nzXs]="12" [nzLg]="8">
+          <tree-data-picker
+            [isExpand]="true"
+            labelText="{{'kpi.kpiEvaluations.organizations.label.org' | translate}}"
+            placeholder="{{'kpi.kpiEvaluations.organizations.label.org' | translate}}"
+            formControlName="organizationId"
+            [functionCode]="functionCode"
+            [scope]="scope">
+          </tree-data-picker>
+        </div>
+        <div nz-col [nzXs]="12" [nzLg]="8">
+          <employee-data-picker [isExpand]="true"
+                                [scope]="scope"
+                                labelText="{{'kpi.employeeEvaluations.label.employee' | translate}}"
+                                formControlName="employeeId"
+                                [functionCode]="functionCode"></employee-data-picker>
+        </div>
+        <div nz-col [nzXs]="12" [nzLg]="8">
+          <hbt-select-check-able
+            [dataSelects]="statusCodeList"
+            keyValue="code"
+            keyLabel="name"
+            labelText="{{'kpi.kpiEvaluations.organizations.table.status' | translate}}"
+            placeholder="{{'kpi.kpiEvaluations.organizations.table.status' | translate}}"
+            formControlName="statusList">
+          </hbt-select-check-able>
+        </div>
+        <div nz-col [nzXs]="24" class="text-center">
+          <hbt-button
+            buttonSize="MEDIUM"
+            buttonAvailableStyle="SEARCH"
+            buttonText="{{'common.button.search' | translate}}"
+            (click)="search()"
+          ></hbt-button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='search__content--group' [ngClass]="{'search__content--group-hidden-header': isShowAdvSearch}">
+    <hbt-table-wrap>
+      <hbt-table
+        #tableTmpl
+        (changePageNum)="search($event)"
+        [tableConfig]="tableConfig" [dataList]="tableData"
+        (amountSelectedRowsChange)="listId = $event"
+        (changeMapData)="checkChangeMapData($event)"
+      ></hbt-table>
+    </hbt-table-wrap>
+  </div>
+
+  <ng-template #actionTmpl let-data="data">
+    <btn-more-action [model]="[data]" [setting]="actionSchema">
+    </btn-more-action>
+  </ng-template>
+
+  <ng-template #footerTmpl>
+    <hbt-button
+      buttonAvailableStyle="CANCEL"
+      buttonText="{{ 'common.button.cancel' | translate }}"
+      (click)="modalRef.destroy()">
+    </hbt-button>
+    <hbt-button
+      buttonAvailableStyle="SAVE"
+      buttonText="{{ 'common.button.save' | translate }}"
+      (click)="modalRef.getContentComponent().save()">
+    </hbt-button>
+  </ng-template>
+</form>
+
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="{{'kpi.employeeEvaluations.label.reason' | translate}}"
+          (nzOnCancel)="handleCancel()">
+  <ng-container *nzModalContent>
+    <div>
+      <hbt-input-text
+        [maxLength]="1000"
+        isTextAre
+        [defaultInput]="true"
+        [config]="{ rows: 3 }"
+        labelText="{{'kpi.employeeEvaluations.label.reason' | translate}} <span class='label__required'>*</span>"
+        placeholderText="{{'kpi.employeeEvaluations.label.reason' | translate}}"
+        [type]="valueInput == '' && isSubmitted ? 'error' : 'default'"
+        [showError]="isSubmitted && valueInput == ''"
+        [errors]="{required: true}"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'kpi.validates.required' | translate: {'param': 'kpi.employeeEvaluations.label.reason' | translate }}]"
+        [(ngModel)]="valueInput"
+      ></hbt-input-text>
+    </div>
+  </ng-container>
+  <ng-template [nzModalFooter]>
+    <hbt-button
+      buttonAvailableStyle="CANCEL"
+      buttonText="{{ 'common.button.cancel' | translate }}"
+      (click)="handleCancel()">
+    </hbt-button>
+    <hbt-button
+      buttonAvailableStyle="SAVE"
+      buttonText="{{'common.button.save' | translate}}"
+      (click)="handleOk()">
+    </hbt-button>
+  </ng-template>
+</nz-modal>
+
+
+<ng-template #statusTmpl let-statusCode='status'>
+  <ng-container *ngFor='let item of statusCodeList'>
+    <nz-tag [nzColor]="item.bgColor" [ngStyle]="{'color': item.color, width: '170px', 'text-align': 'center'}"
+            *ngIf='statusCode === item.code'>{{ item.name }}
+    </nz-tag>
+  </ng-container>
+</ng-template>
+
+<reject-common-template
+  msgSuccess="kpi.employeeEvaluations.label.msgSuccess"
+  [isReject]="isReject"
+  [listRejectId]="listId"
+  [rejectId]='rejectId'
+  [rejectByListApi]='rejectByListApi'
+  (onCloseModal)="doCloseReject($event)">
+</reject-common-template>

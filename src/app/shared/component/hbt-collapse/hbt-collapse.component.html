@@ -1,0 +1,31 @@
+<nz-collapse>
+  <nz-collapse-panel
+    *ngFor="let panel of panels"
+    #p [nzHeader]="header"
+    [id]="panel.id"
+    [nzActive]="panel.active"
+    [nzExtra]="nzExtra"
+    (nzActiveChange)="_activeChange($event)"
+  >
+    <!-- Header -->
+    <ng-template #header>
+      <nz-space>
+        <p *nzSpaceItem class="ant__collapse__header">{{ panel.name | translate }}</p>
+        <em *nzSpaceItem nz-icon nzType="caret-down" nzTheme="outline" class="ant__collapse__icon"
+            [nzRotate]="p.nzActive ? 180 : 0"></em>
+      </nz-space>
+    </ng-template>
+
+    <ng-template #nzExtra>
+      <ng-container *ngIf="panel.extraMode; else empty">
+        <ng-container *ngTemplateOutlet="extra;context: {$implicit: panel}"></ng-container>
+      </ng-container>
+      <ng-template #empty></ng-template>
+    </ng-template>
+
+    <!-- Panel -->
+    <ng-container (attached)="setReference($event, panel.id)"
+                  [cdkPortalOutlet]="panel.panelComponentPortal"
+    ></ng-container>
+  </nz-collapse-panel>
+</nz-collapse>

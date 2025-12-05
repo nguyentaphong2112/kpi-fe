@@ -1,0 +1,21 @@
+<div class="datepicker__group datepicker__group--icon">
+  <div *ngIf="labelText != null" class="input__label" [innerHTML]="labelText">
+  </div>
+  <div [class]="inputGroupGroupClass">
+    <em *ngIf="datePickerIcon != null" nz-icon [nzType]="datePickerIcon" nzTheme="outline"></em>
+    <nz-date-picker maskDate nzAllowClear nzBackdrop
+                    [nzAutoFocus]="autofocus" [nzDisabled]="disabled" [nzInputReadOnly]="inputReadOnly"
+                    [nzMode]="mode" [nzPlaceHolder]="placeholderText" [nzSuffixIcon]="suffixIcon"
+                    [nzInline]="inline"
+                    [nzDisabledDate]="disabledDate" [(ngModel)]="value" [nzShowToday]="showToday"
+                    [nzShowTime]="showTime"
+                    [nzDisabledTime]="disabledTime" [nzDateRender]="dateRender"
+                    [nzRenderExtraFooter]="renderExtraFooter"
+                    (nzOnOpenChange)="openChange($event)" (nzOnOk)="_onOk($event)"
+                    (ngModelChange)="onInputChange($event)"></nz-date-picker>
+  </div>
+  <div *ngIf="textMessageValue != null && showError" [class]="inputMessageClass">
+    <em *ngIf="showIconMessage" nz-icon [nzType]="iconType" nzTheme="outline"></em>
+    <span class="text__message">{{textMessageValue}}</span>
+  </div>
+</div>

@@ -1,0 +1,84 @@
+<div class='save-form-pit'>
+  <form nz-form [formGroup]="form" style="margin-top: 20px">
+    <div nz-row [nzGutter]="[30,30]">
+      <!--id nhân viên-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <employee-data-picker status='WORKING' hbtCanText
+          formControlName="employeeId"
+          [type]="isSubmitted && form.controls['employeeId']?.errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['employeeId']?.errors != null"
+          [errors]="form.controls['employeeId']?.errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'common.label.employeeName' | translate }}]"
+          labelText="{{'pit.taxCommitments.table.employee' | translate}} <span class='label__required'>*</span>"
+        >
+        </employee-data-picker>
+      </div>
+
+      <!--mức cam kết thu nhập-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="incomeAmount"
+          [maxLength]="20" [inputType]="'number'" [isFormatterCurrency]="true"
+          [type]="isSubmitted && form.controls['incomeAmount']?.errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['incomeAmount']?.errors != null"
+          [errors]="form.controls['incomeAmount']?.errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 20}},
+          { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'pit.taxCommitments.table.incomeAmount' | translate }}]"
+          placeholderText="{{'pit.taxCommitments.table.incomeAmount' | translate}}"
+          labelText="{{'pit.taxCommitments.table.incomeAmount' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--từ kỳ-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-date-picker
+          placeholderText="{{'pit.taxCommitments.table.startDate' | translate}}"
+          labelText="{{'pit.taxCommitments.table.startDate' | translate}} <span class='label__required'>*</span>"
+          [type]="isSubmitted && (form?.errors || form.controls['startDate']?.errors) ? 'error' : 'default'"
+          [showError]="isSubmitted && (form?.errors || form.controls['startDate']?.errors ) != null"
+          [errors]="form?.errors?.rangeDateError ? form?.errors : form.controls['startDate']?.errors"
+          [errorDefs]="[{ errorName: 'rangeDateError', errorDescription: 'pit.validate.rangeDate.pareDate' | translate:
+        {'fromDate': 'pit.taxCommitments.table.startDate' | translate, 'toDate': 'pit.taxCommitments.table.endDate' | translate}},
+             { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'pit.taxCommitments.table.startDate' | translate }}
+          ]"
+          mode="month"
+          formControlName="startDate"
+        ></hbt-date-picker>
+      </div>
+
+      <!--đến kỳ-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-date-picker
+          placeholderText="{{'pit.taxCommitments.table.endDate' | translate}}"
+          labelText="{{'pit.taxCommitments.table.endDate' | translate}}"
+          mode="month"
+          formControlName="endDate"></hbt-date-picker>
+      </div>
+
+      <!--Ghi chú-->
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <hbt-input-text formControlName="description" [isTextAre]
+          [maxLength]="500"
+          placeholderText="{{'pit.taxCommitments.table.description' | translate}}"
+          labelText="{{'pit.taxCommitments.table.description' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <div nz-col [nzXs]='24' [nzLg]='24' class="input__group">
+        <hbt-upload
+          [(docIdsDelete)]="docIdsDelete"
+          [fileList]="f['fileList'].value"
+          [typeFileAvailable]="['jpg', 'png', 'pdf', 'doc', 'docx']"
+          [multiple]="false"
+          labelText="{{'common.label.attachFile' | translate}}"
+          [required]="true"
+          (fileListChange)="onFileListChange($event, 'fileList', true)"
+          (docIdsDeleteChange)="removeFile($event, 'fileList')"
+          [serviceName]='serviceName'
+          [showError]="isSubmitted"
+        ></hbt-upload>
+      </div>
+
+    </div>
+  </form>
+</div>
+

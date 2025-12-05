@@ -1,0 +1,59 @@
+<form nz-form [formGroup]="form">
+  <div class="app-row" nz-row [nzGutter]='[20,15]'>
+    <div nz-col nzXs="12" nzLg="8">
+      <hbt-text-label labelText="{{'admin.feedbacks.employee' | translate }}" [labelValue]="data.employeeCode + ' - ' + data.fullName"></hbt-text-label>
+    </div>
+
+    <div nz-col nzXs="12" nzLg="8">
+      <hbt-text-label labelText="{{'admin.feedbacks.jobName' | translate }}" [labelValue]="data.jobName"></hbt-text-label>
+    </div>
+
+    <div nz-col nzXs="12" nzLg="8">
+      <hbt-text-label labelText="{{'admin.feedbacks.orgName' | translate }}" [labelValue]="data.orgName"></hbt-text-label>
+    </div>
+
+    <div nz-col nzXs="12" nzLg="8">
+      <hbt-text-label labelText="{{'admin.common.createdTime' | translate }}" [labelValue]="data.createdTime"></hbt-text-label>
+    </div>
+
+    <div nz-col nzXs="12" nzLg="8">
+      <hbt-text-label labelText="{{'admin.feedbacks.status' | translate }}" [labelValue]="data.statusName"></hbt-text-label>
+    </div>
+
+    <div nz-col nzXs="12" nzLg="8">
+      <hbt-text-label labelText="{{'admin.feedbacks.type' | translate }}" [labelValue]="data.typeName"></hbt-text-label>
+    </div>
+
+    <div nz-col nzXs="24" nzLg="24">
+      <hbt-text-label class="content__feedback" labelText="{{'admin.feedbacks.content' | translate }}" [labelValue]="data.content"></hbt-text-label>
+    </div>
+
+    <div nz-col nzXs="24" nzLg="24" *ngIf="data.comments?.length > 0">
+      <span class="label__text">{{'admin.feedbacks.comment' | translate}}</span>
+      <hr />
+      <div class="message-list">
+        <div *ngFor="let msg of data.comments"
+             [ngClass]="{'message': true, 'user': msg.createdBy !== data.loginName, 'staff': msg.createdBy === data.loginName}">
+          <div class="text">{{ msg.content }}</div>
+          <div class="time">{{ msg.createdTime }}</div>
+        </div>
+      </div>
+      <hr/>
+    </div>
+
+    <div nz-col [nzXs]='24' [nzLg]='24' class="input__group" *ngIf="f['files'].value?.length > 0">
+      <hbt-upload
+        [fileList]="f['files'].value"
+        [(docIdsDelete)]="docIdsDelete"
+        [typeFileAvailable]="['jpeg', 'jpg', 'png', 'pdf', 'doc', 'docx']"
+        [multiple]="true"
+        labelText="{{'common.label.attachFile' | translate}}"
+        (fileListChange)="onFileListChange($event, 'files', true)"
+        (docIdsDeleteChange)="removeFile($event, 'files')"
+        [serviceName]='microService.ADMIN'
+        [showError]="isSubmitted"
+        [disable]="mode === modeConst.VIEW"
+      ></hbt-upload>
+    </div>
+  </div>
+</form>

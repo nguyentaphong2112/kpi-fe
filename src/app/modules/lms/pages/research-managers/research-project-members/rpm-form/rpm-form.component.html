@@ -1,0 +1,96 @@
+<div class='save-form-med'>
+  <form nz-form [formGroup]="form" style="margin-top: 20px">
+    <div nz-row [nzGutter]='[20,15]'>
+      <!--id đề tài-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [dataSelects]="[]"
+          formControlName="researchProjectId"
+          [type]="isSubmitted && form.controls['researchProjectId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['researchProjectId'].errors != null"
+          [errors]="form.controls['researchProjectId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.researchProjectMembers.table.researchProjectId' | translate }}]"
+          placeholder="{{'med.researchProjectMembers.table.researchProjectId' | translate}}"
+          labelText="{{'med.researchProjectMembers.table.researchProjectId' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <!--Vai trò tham gia-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [dataSelects]="[]"
+          formControlName="roleId"
+          [type]="isSubmitted && form.controls['roleId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['roleId'].errors != null"
+          [errors]="form.controls['roleId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.researchProjectMembers.table.roleId' | translate }}]"
+          placeholder="{{'med.researchProjectMembers.table.roleId' | translate}}"
+          labelText="{{'med.researchProjectMembers.table.roleId' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <!--Thành viên-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <employee-data-picker status='WORKING'
+          formControlName="employeeId"
+          [type]="isSubmitted && form.controls['employeeId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['employeeId'].errors != null"
+          [errors]="form.controls['employeeId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'common.label.employeeName' | translate }}]"
+          labelText="{{'med.researchProjectMembers.table.employeeId' | translate}} "
+        >
+        </employee-data-picker>
+      </div>
+
+      <!--Thứ tự sắp xếp-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="orderNumber" maxLength="10"
+          [type]="isSubmitted && form.controls['orderNumber'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['orderNumber'].errors != null"
+          [errors]="form.controls['orderNumber'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 10}}]"
+          placeholderText="{{'med.researchProjectMembers.table.orderNumber' | translate}}"
+          labelText="{{'med.researchProjectMembers.table.orderNumber' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--Ghi chú-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="note" maxLength="255"
+          [type]="isSubmitted && form.controls['note'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['note'].errors != null"
+          [errors]="form.controls['note'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+          placeholderText="{{'med.researchProjectMembers.table.note' | translate}}"
+          labelText="{{'med.researchProjectMembers.table.note' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--loại DANG_KY_DE_TAI, PHE_DUYET_DE_TAI, NGHIEM_THU_DE_TAI, -->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="type" maxLength="20"
+          [type]="isSubmitted && form.controls['type'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['type'].errors != null"
+          [errors]="form.controls['type'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 20}}]"
+          placeholderText="{{'med.researchProjectMembers.table.type' | translate}}"
+          labelText="{{'med.researchProjectMembers.table.type' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <div nz-col [nzXs]='24' [nzLg]='24' class="input__group">
+        <hbt-upload
+          [(docIdsDelete)]="docIdsDelete"
+          [typeFileAvailable]="['jpeg', 'jpg', 'png', 'pdf', 'doc', 'docx']"
+          [multiple]="true"
+          labelText="{{'common.label.attachFile' | translate}}"
+          [required]="true"
+          (fileListChange)="onFileListChange($event, 'fileList', true)"
+          (docIdsDeleteChange)="removeFile($event, 'fileList')"
+          [serviceName]='serviceName'
+          [showError]="isSubmitted"
+        ></hbt-upload>
+      </div>
+
+    </div>
+  </form>
+</div>
+

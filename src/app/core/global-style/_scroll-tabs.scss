@@ -1,0 +1,56 @@
+@import "variable";
+
+:host(.scroll__tab--sticky) {
+  .scroll__tab {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+  }
+}
+
+.scroll__tab {
+  .scroll__tab--title {
+    font-family: avertaB, sans-serif;
+    font-weight: 600;
+    line-height: 150%;
+    font-size: 1rem;
+    padding: 1rem;
+
+    &:hover, &:active {
+      border-bottom: 3px solid $bd-scrollbar-active;
+      color: $bd-scrollbar-active;
+    }
+  }
+
+  .ant-menu-item {
+    &:hover::after, &:active::after {
+      border-bottom: none;
+    }
+  }
+
+  .ant-menu-item-selected {
+    border-bottom: 3px solid $bd-scrollbar-active;
+    color: $bd-scrollbar-active;
+
+    &:after {
+      border-bottom: none;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .scroll__tab {
+    display: flex;
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .scroll__tab--title {
+      padding: 10px;
+    }
+  }
+}

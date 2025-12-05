@@ -1,0 +1,9 @@
+@import "../../../../../../core/global-style/variable";
+
+::ng-deep .label__required {
+  color: $error-default-color;
+}
+
+.text-center {
+  text-align: center;
+}

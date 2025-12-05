@@ -1,0 +1,42 @@
+<div [class]="inputGroupClass">
+  <div *ngIf="config?.labelText != null" class="input__label" [innerHTML]="config?.labelText"></div>
+  <div *ngIf="config?.labelText == null && config?.showFlexEnd" class="input__group--no-label"></div>
+  <form [formGroup]="formInput">
+    <div class="group__phone_numbes" [formArrayName]="groupName">
+      <div *ngFor="let phoneNumber of formInput.get(groupName)['controls']; let i = index"
+           [formGroupName]="i">
+        <div class="input__group--compacts {{doOpenFormArray ? 'input__group--compacts--flex' : ''}}">
+          <nz-input-group [class]="getInputGroupGroupClass(i)" [nzSuffix]="suffixTemplate">
+            <nz-select style="min-width: 75px" class="select__group select__group--compact"
+                       [nzOptionHeightPx]="optionHeightPx" [nzOptionOverflowSize]="optionOverflowSize"
+                       [formControlName]="selectControlName">
+              <nz-option class="select__option" *ngFor="let dataSelect of dataSelects" [nzLabel]="dataSelect[keyLabel]"
+                         [nzValue]="dataSelect[keyValue]"></nz-option>
+            </nz-select>
+            <input appNumberInput [class]="inputTextClass" [disabled]="config?.disable"
+                   [autofocus]="config?.autofocus" nz-input
+                   [placeholder]="config?.placeholder" [formControlName]="inputControlName"/>
+          </nz-input-group>
+          <div *ngIf="doOpenFormArray" class="group__action--form-array">
+            <hbt-button buttonIconType="AWESOME" prefixIcon="far fa-plus-circle" buttonSize="VERY_LARGE"
+                        buttonTextColor="#fff" buttonType="NO_BORDER" (click)="addPhoneNumbersFormGroup()"
+                        [buttonBgColor]="_variable.$purple_800"></hbt-button>
+            <hbt-button buttonIconType="AWESOME" prefixIcon="far fa-trash-alt" buttonSize="VERY_LARGE"
+                        buttonTextColor="#fff" buttonType="NO_BORDER" (click)="removeOrClearPhoneNumbers(i)"
+                        buttonBgColor="#FA0B0B"></hbt-button>
+          </div>
+          <ng-template #suffixTemplate>
+            <nz-radio-group *ngIf="showRadio" formControlName="index" [(ngModel)]="radioValue"
+                            [ngModelOptions]="{standalone: true}">
+              <label nz-radio [nzValue]="i"></label>
+            </nz-radio-group>
+          </ng-template>
+        </div>
+        <div *ngIf="getShowError(i)" class="input__message input__message--error">
+          <em *ngIf="getShowIcon(i)" nz-icon nzType="warning" nzTheme="outline"></em>
+          <span class="text__message">{{getMessageValue(i)}}</span>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,168 @@
+@import "variable";
+
+.datepicker__group {
+  ::ng-deep.ant-picker-range .ant-picker-clear {
+    right: 0;
+  }
+
+  div.input__label {
+    color: $input-label-color;
+    font-size: 14px;
+    font-family: avertaB, sans-serif;
+    margin-bottom: 4px;
+
+    ::ng-deep .label__required {
+      color: $error-default-color;
+    }
+  }
+
+  .ant-picker {
+    width: 100%;
+
+    .ant-picker-clear {
+      right: 0;
+    }
+  }
+
+  .datepicker__message {
+    font-size: 12px;
+    margin-top: 8px;
+    color: $input-label-color;
+
+    em {
+      margin-right: 8px;
+    }
+
+    .text__message {
+      font-family: avertaL, sans-serif;
+    }
+  }
+
+  .datepicker__message--warning {
+
+    em, span {
+      color: $bg-warning-default;
+    }
+  }
+
+  .datepicker__message--error {
+
+    em, span {
+      color: $error-default-color;
+    }
+  }
+
+  .datepicker__message--success {
+
+    em, span {
+      color: $bg-success-default;
+    }
+  }
+
+  .ant-picker-input input {
+    font-size: 14px;
+    color: $input-body-color;
+    outline: none;
+    box-shadow: none;
+
+    @include placeholder {
+      color: $input-placeholder-color;
+      font-size: 14px;
+    }
+
+    &:active, &:focus {
+      &:enabled {
+        @include placeholder {
+          color: $bd-default;
+        }
+      }
+    }
+  }
+}
+
+//datepicker icon
+.datepicker__group.datepicker__group--icon {
+
+  .datepicker__group--group .ant-picker {
+    border: 1px solid;
+    padding: 10px 8px 10px 8px;
+    border-radius: 8px;
+    outline: none;
+    box-shadow: none;
+    align-items: center;
+
+    ::ng-deep i {
+      color: $input-body-color;
+      font-size: 1.1rem;
+      margin-right: 1rem;
+    }
+  }
+
+  //Default
+  .datepicker__group--group--default .ant-picker {
+    border-color: $bd-default;
+
+    &:hover, &:focus {
+      border-color: $bd-default-hover;
+    }
+
+    &:disabled {
+      background: $bg-default-disabled;
+
+      &:hover, &:focus {
+        border-color: $bd-default-disabled-hover;
+      }
+    }
+  }
+
+  //Warning
+  .datepicker__group--group--warning .ant-picker {
+    border-color: $bd-warning;
+
+    &:hover, &:focus {
+      border-color: $bd-warning-hover;
+    }
+
+    &:disabled {
+      background: $bg-warning-disabled;
+
+      &:hover, &:focus {
+        border-color: $bd-warning-disabled-hover;
+      }
+    }
+  }
+
+  //Error
+  .datepicker__group--group--error .ant-picker {
+    border-color: $bd-error;
+
+    &:hover, &:focus {
+      border-color: $bd-error-hover;
+    }
+
+    &:disabled {
+      background: $bg-error-disabled;
+
+      &:hover, &:focus {
+        border-color: $bd-error-disabled-hover;
+      }
+    }
+  }
+
+  //Success
+  .datepicker__group--group--success .ant-picker {
+    border-color: $bd-success;
+
+    &:hover, &:focus {
+      border-color: $bd-success-hover;
+    }
+
+    &:disabled {
+      background: $bg-success-disabled;
+
+      &:hover, &:focus {
+        border-color: $bd-success-disabled-hover;
+      }
+    }
+  }
+}

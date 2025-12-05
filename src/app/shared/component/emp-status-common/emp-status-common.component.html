@@ -1,0 +1,6 @@
+<nz-tag class="suspenseStatus" [nzColor]="tagSuspenseColor"
+        *ngIf='empStatus.toString() === constant.STATUSES_EMPLOYEE[1].value'>{{ getEmpStatus(empStatus)}}</nz-tag>
+<nz-tag class="isWorkingStatus" [nzColor]="tagIsWorkingColor"
+        *ngIf='empStatus.toString() === constant.STATUSES_EMPLOYEE[0].value'>{{ getEmpStatus(empStatus) }}</nz-tag>
+<nz-tag class="retiredStatus" [nzColor]="tagRetiredColor"
+        *ngIf='empStatus.toString() === constant.STATUSES_EMPLOYEE[2].value'>{{ getEmpStatus(empStatus) }}</nz-tag>

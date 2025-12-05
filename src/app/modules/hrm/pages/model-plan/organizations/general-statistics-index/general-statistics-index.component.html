@@ -1,0 +1,38 @@
+<div class="color_black-100 general__statistics">
+  <div nz-row [nzGutter]="8">
+    <div nz-col [nzXs]="24" [nzMd]="24" [nzLg]="24" [nzXl]="12" class="chart__left">
+      <nz-card [nzTitle]="titleTemplate" [nzExtra]="extraTemplate">
+        <ng-container *ngFor="let item of listChartTag; index as i">
+          <div [id]="chartBarId + i" [ngStyle]="(typeValue !== item.value || listDataChart[i]?.length === 0) ? {display: 'none'} : ''"></div>
+          <ng-container *ngIf="listDataChart[i]?.length === 0 && typeValue === item.value">
+            <nz-empty></nz-empty>
+          </ng-container>
+        </ng-container>
+      </nz-card>
+      <ng-template #titleTemplate>
+        <div>
+          <span nz-icon nzType="pie-chart" nzTheme="outline" class="color_success-600"></span>
+          {{'hrm.modelPlan.label.chartPieTitle' | translate}}
+        </div>
+      </ng-template>
+      <ng-template #extraTemplate>
+        <div style="display: flex;">
+          <ng-container *ngFor="let item of listChartTag; index as i">
+            <div (click)="onTagClick(item.value, i)" class="chart__tag" [class.active--button]="selectedButtons[i]">{{item.label | translate}}</div>
+          </ng-container>
+        </div>
+      </ng-template>
+    </div>
+    <div nz-col [nzXs]="24" [nzMd]="24" [nzLg]="24" [nzXl]="12">
+      <nz-card [nzTitle]="titleTemplate1">
+        <div [id]="'chart-column'"></div>
+      </nz-card>
+      <ng-template #titleTemplate1>
+        <div>
+          <span nz-icon nzType="bar-chart" nzTheme="outline" style="color: #1dc9b7"></span>
+          {{'hrm.modelPlan.label.chartColumTitle' | translate}}
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

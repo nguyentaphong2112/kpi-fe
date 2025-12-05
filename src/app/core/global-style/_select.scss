@@ -1,0 +1,249 @@
+@import "variable";
+
+::ng-deep .custom__search-icon .ant-select-clear {
+  margin-right: 20px ;
+}
+
+::ng-deep .select__custom {
+  em.icon__search {
+    position: absolute;
+    right: 8px;
+    cursor: pointer;
+    z-index: 1;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    padding-top: 4px;
+    padding-left: 3px;
+    background-color: #fff;
+    &:hover {
+      background-color: $black-400;
+      border-radius: 20px;
+    }
+  }
+
+  .ant-select-selector {
+    padding-right: 15px !important;
+  }
+}
+
+.select__group-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+::ng-deep .ant-select-dropdown {
+  border-bottom-left-radius: 16px;
+  margin-top: 2px;
+  padding: 0;
+}
+
+::ng-deep .ant-select-item {
+  padding: 16.5px;
+  border-bottom: 1px solid $primary-100;
+}
+
+::ng-deep .ant-select-item-option-disabled {
+  cursor: auto;
+}
+
+::ng-deep .ant-checkbox-inner {
+  border-color: $neutral-300;
+  border-width: 2px;
+}
+
+::ng-deep .ant-select-item-option-state {
+  flex: none;
+  display: none;
+}
+
+::ng-deep .ant-select-arrow .anticon.anticon-loading {
+  color: $bg-default;
+  font-size: 18px;
+}
+
+.select__option-text {
+  border-color: $neutral-700;
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+::ng-deep .ant-select-disabled .ant-select-selection-item {
+  color: $input-body-color;
+}
+
+.select__group {
+
+  .input__label {
+    color: $neutral-600;
+    font-size: 14px;
+    font-family: avertaB, sans-serif;
+    margin-bottom: 4px;
+
+    ::ng-deep .label__required {
+      color: $error-default-color;
+    }
+  }
+
+  .select__message {
+    font-size: 12px;
+    margin-top: 8px;
+    color: $neutral-600;
+
+    em {
+      margin-right: 8px;
+    }
+
+    .text__message {
+      font-family: avertaL, sans-serif;
+    }
+  }
+
+  .select__message--warning {
+
+    em, span {
+      color: $bg-warning-default;
+    }
+  }
+
+  .select__message--error {
+
+    em, span {
+      color: $error-default-color;
+    }
+  }
+
+  .select__message--success {
+
+    em, span {
+      color: $bg-success-default;
+    }
+  }
+}
+
+.select__group--icon {
+
+  ::ng-deep .select__group--group {
+    position: relative;
+
+    ::ng-deep .ant-select.select__select.include__icon .ant-select-selector {
+      padding: 7px 0 7px 32px;
+    }
+
+    ::ng-deep .ant-select.select__select.no__icon .ant-select-selector {
+      padding: 7px 0 7px 8px;
+    }
+
+    ::ng-deep .ant-select.select__select.no__icon .ant-select-selection-placeholder {
+      left: 8px;
+    }
+
+    ::ng-deep .ant-select.select__select .ant-select-selector {
+      border: 1px solid;
+      border-radius: 8px;
+    }
+
+    ::ng-deep .ant-select.select__select--one .ant-select-selector {
+      height: 44px;
+
+      ::ng-deep .ant-select-selection-search-input {
+        height: 44px;
+      }
+    }
+
+    ::ng-deep .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+      box-shadow: none;
+      //border-right-width: unset;
+      outline: none;
+    }
+
+    ::ng-deep .ant-select.select__select .ant-select-selection-placeholder {
+      left: 32px;
+      color: $input-placeholder-color;
+    }
+
+    ::ng-deep .ant-select.select__select .ant-select-selection-search {
+      margin-top: 0;
+      margin-bottom: 0;
+      margin-left: 0;
+      left: 8px;
+    }
+
+    ::ng-deep .ant-select.ant-select-multiple.select__select .ant-select-selection-search {
+      left: 0;
+    }
+
+    ::ng-deep > i {
+      color: $neutral-800;
+      font-size: 17px;
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      z-index: 1;
+      transform: translateY(-50%);
+    }
+
+  }
+
+  ::ng-deep .select__group--group--default {
+
+    ::ng-deep .ant-select.select__select .ant-select-selector {
+      border-color: $bd-default;
+
+      &:hover, &:focus, &:active {
+        border-color: $bd-default-hover;
+      }
+    }
+
+    ::ng-deep .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+      border-color: $bd-default-hover;
+    }
+  }
+
+  ::ng-deep .select__group--group--warning {
+
+    ::ng-deep .ant-select.select__select .ant-select-selector {
+      border-color: $bd-warning;
+
+      &:hover, &:focus, &:active {
+        border-color: $bd-warning-hover;
+      }
+    }
+
+    ::ng-deep .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+      border-color: $bd-warning-disabled-hover;
+    }
+  }
+
+  ::ng-deep .select__group--group--error {
+
+    ::ng-deep .ant-select.select__select .ant-select-selector {
+      border-color: $bd-error;
+
+      &:hover, &:focus, &:active {
+        border-color: $bd-error-hover;
+      }
+    }
+
+    ::ng-deep .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+      border-color: $bd-error-disabled-hover;
+    }
+  }
+
+  ::ng-deep .select__group--group--success {
+
+    ::ng-deep .ant-select.select__select .ant-select-selector {
+      border-color: $bd-success;
+
+      &:hover, &:focus, &:active {
+        border-color: $bd-success-hover;
+      }
+    }
+
+    ::ng-deep .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+      border-color: $bd-success-hover;
+    }
+  }
+}

@@ -1,0 +1,219 @@
+<div>
+  <form nz-form [formGroup]="form">
+    <div nz-row [nzGutter]='[20,15]'>
+      <!--id nhân viên-->
+      <div nz-col [nzXs]="12" [nzLg]="12" *ngIf="!hiddenEmp">
+        <employee-data-picker [isExpand]="true"
+          [functionCode]="functionCode"
+          [scope]="scope"
+          [status]='mode !== modeConst.ADD ? "ALL" : "ACTIVE"'
+          [formMode]="mode"
+          formControlName="employeeId"
+          [disable]="mode !== modeConst.ADD"
+          [type]="isSubmitted && form.controls['employeeId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['employeeId'].errors != null"
+          [errors]="form.controls['employeeId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'common.label.employeeName' | translate }}]"
+          labelText="{{'hrm.staffManager.staffResearch.relatives.table.employee' | translate}} <span class='label__required'>*</span>"
+        >
+        </employee-data-picker>
+      </div>
+
+      <!--mối quan hệ-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select
+          [urlLoadData]="getUrlCategory(categoryCode.MOI_QUAN_HE_TN)"
+          [serviceName]="microService.ADMIN"
+          keyLabel="name"
+          formControlName="relationTypeId"
+          [type]="isSubmitted && form.controls['relationTypeId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['relationTypeId'].errors != null"
+          [errors]="form.controls['relationTypeId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.staffResearch.relatives.table.relationTypeCode' | translate }}]"
+          placeholder="{{'hrm.staffManager.staffResearch.relatives.table.relationTypeCode' | translate}}"
+          labelText="{{'hrm.staffManager.staffResearch.relatives.table.relationTypeCode' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <!--tên thân nhân-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text
+          formControlName="fullName" maxLength="255"
+          [type]="isSubmitted && form.controls['fullName'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['fullName'].errors != null"
+          [errors]="form.controls['fullName'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255} },
+            { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.staffResearch.relatives.table.fullName' | translate }}
+          ]"
+          placeholderText="{{'hrm.staffManager.staffResearch.relatives.table.fullName' | translate}}"
+          labelText="{{'hrm.staffManager.staffResearch.relatives.table.fullName' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--Tình trạng thân nhân-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select
+          [urlLoadData]="getUrlCategory(categoryCode.TINH_TRANG_TN)"
+          [serviceName]="microService.ADMIN"
+          keyLabel="name"
+          formControlName="relationStatusId"
+          [type]="isSubmitted && form.controls['relationStatusId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['relationStatusId'].errors != null"
+          [errors]="form.controls['relationStatusId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.staffResearch.relatives.table.relationStatusCode' | translate }}]"
+          placeholder="{{'hrm.staffManager.staffResearch.relatives.table.relationStatusCode' | translate}}"
+          labelText="{{'hrm.staffManager.staffResearch.relatives.table.relationStatusCode' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <!--đối tượng chính sách-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select
+          [urlLoadData]="getUrlCategory(categoryCode.DOI_TUONG_CHINH_SACH)"
+          [serviceName]="microService.ADMIN"
+          keyLabel="name"
+          formControlName="policyTypeId"
+          [type]="isSubmitted && form.controls['policyTypeId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['policyTypeId'].errors != null"
+          [errors]="form.controls['policyTypeId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.staffResearch.relatives.table.policyTypeCode' | translate }}]"
+          placeholder="{{'hrm.staffManager.staffResearch.relatives.table.policyTypeCode' | translate}}"
+          labelText="{{'hrm.staffManager.staffResearch.relatives.table.policyTypeCode' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <!--số cmt, căn cước công dân-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text
+          [maxLength]="20"
+          formControlName="personalIdNo"
+          [type]="isSubmitted && form.controls['personalIdNo'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['personalIdNo'].errors != null"
+          [errors]="form.controls['personalIdNo'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.staffResearch.relatives.table.personalIdNo' | translate }}]"
+          placeholderText="{{'hrm.staffManager.staffResearch.relatives.table.personalIdNumber' | translate}}"
+          labelText="{{'hrm.staffManager.staffResearch.relatives.table.personalIdNumber' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <div nz-row [nzGutter]='[5,0]'>
+          <div nz-col [nzXs]="8" [nzLg]="6">
+            <hbt-select
+              [showAddCategory]="false"
+              [dataSelects]="listTypeDate"
+              keyLabel="name"
+              formControlName="typeDateOfBirth"
+              [type]="isSubmitted && form.controls['typeDateOfBirth'].errors ? 'error' : 'default'"
+              [showError]="isSubmitted && form.controls['typeDateOfBirth'].errors != null"
+              [errors]="form.controls['typeDateOfBirth'].errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.staffResearch.relatives.table.typeDateOfBirth' | translate }}]"
+              placeholder="{{'hrm.staffManager.staffResearch.relatives.table.typeDateOfBirth' | translate}}"
+              labelText="{{'hrm.staffManager.staffResearch.relatives.table.dateOfBirth' | translate}}"
+            ></hbt-select>
+          </div>
+          <div nz-col [nzXs]="16" [nzLg]="18" style="margin-top: 26px">
+            <hbt-date-picker
+              *ngIf="!f.typeDateOfBirth.value || f.typeDateOfBirth.value.toUpperCase() === 'DATE'"
+              placeholderText="{{'hrm.staffManager.staffResearch.relatives.table.dateOfBirth' | translate}}"
+              formControlName="dateOfBirth"
+            >
+            </hbt-date-picker>
+
+            <hbt-date-picker
+              *ngIf="f.typeDateOfBirth.value?.toUpperCase() === 'MONTH'"
+              mode="month"
+              format="MM/YYYY"
+              placeholderText="{{'hrm.staffManager.staffResearch.relatives.table.monthOfBirth' | translate}}"
+              formControlName="dateOfBirth"
+            >
+            </hbt-date-picker>
+
+            <hbt-date-picker
+              *ngIf="f.typeDateOfBirth.value?.toUpperCase() === 'YEAR'"
+              mode="year"
+              format="YYYY"
+              placeholderText="{{'hrm.staffManager.staffResearch.relatives.table.yearOfBirth' | translate}}"
+              formControlName="dateOfBirth"
+            >
+            </hbt-date-picker>
+          </div>
+        </div>
+      </div>
+
+      <!--số điện thoại-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text
+          formControlName="mobileNumber"
+          maxLength="10"
+          appNumberInput
+          [type]="isSubmitted && form.controls['mobileNumber'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['mobileNumber'].errors != null"
+          [errors]="form.controls['mobileNumber'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 50}}]"
+          placeholderText="{{'hrm.staffManager.staffResearch.relatives.table.phoneNumber' | translate}}"
+          labelText="{{'hrm.staffManager.staffResearch.relatives.table.phoneNumber' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--nghề nghiệp-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text
+          formControlName="job" maxLength="255"
+          [type]="isSubmitted && form.controls['job'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['job'].errors != null"
+          [errors]="form.controls['job'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+          placeholderText="{{'hrm.staffManager.staffResearch.relatives.table.job' | translate}}"
+          labelText="{{'hrm.staffManager.staffResearch.relatives.table.job' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--đơn vị công tác-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text
+          formControlName="organizationAddress" maxLength="255"
+          [type]="isSubmitted && form.controls['organizationAddress'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['organizationAddress'].errors != null"
+          [errors]="form.controls['organizationAddress'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+          placeholderText="{{'hrm.staffManager.staffResearch.relatives.table.workOrganization' | translate}}"
+          labelText="{{'hrm.staffManager.staffResearch.relatives.table.workOrganization' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--địa chỉ hiện tại-->
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <hbt-input-text
+          formControlName="currentAddress" maxLength="255"
+          [type]="isSubmitted && form.controls['currentAddress'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['currentAddress'].errors != null"
+          [errors]="form.controls['currentAddress'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+          placeholderText="{{'hrm.staffManager.staffResearch.relatives.table.currentAddress' | translate}}"
+          labelText="{{'hrm.staffManager.staffResearch.relatives.table.currentAddress' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <ng-container formArrayName="listAttributes">
+        <ng-container *ngFor="let attributes of attributesFormArray.controls; let idx = index" [formGroupName]="idx">
+          <div nz-col [nzXs]="12" [nzLg]="12">
+            <input-attribute-common
+              [controlName]="getAttributeControl(idx, 'attributeValue')"
+              [dataType]="attributes.get('dataType')?.value"
+              [urlLoadData]="attributes.get('urlLoadData')?.value"
+              [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+              [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+              [errors]="attributes.get('attributeValue')?.errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}]"
+              [placeholderText]="attributes.get('attributeName')?.value"
+              [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+            >
+            </input-attribute-common>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </form>
+</div>
+

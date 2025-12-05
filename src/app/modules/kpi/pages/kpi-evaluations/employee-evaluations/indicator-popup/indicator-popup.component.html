@@ -1,0 +1,86 @@
+<form nz-form [formGroup]="form" class="indicator-popup">
+  <div nz-row [nzGutter]='[20,15]'>
+    <ng-container *ngIf="!org">
+      <div nz-col [nzXs]="12" [nzLg]="6">
+        <tree-data-picker
+            [isExpand]="true"
+            labelText="{{'kpi.kpiEvaluations.organizations.label.org' | translate}} <span class='label__required'>*</span>"
+            placeholder="{{'kpi.kpiEvaluations.organizations.label.org' | translate}}"
+            [type]="isSubmitted && form.controls['organizationId'].errors ? 'error' : 'default'"
+            [showError]="isSubmitted && form.controls['organizationId'].errors !== null"
+            [errors]="form.controls['organizationId'].errors"
+            [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.kpiEvaluations.organizations.label.org' | translate }}]"
+            formControlName="organizationId">
+          </tree-data-picker>
+      </div>
+      <div nz-col [nzXs]="12" [nzLg]="6">
+        <hbt-select formControlName="jobId"
+                    [dataSelects]="listJob"
+                    keyValue="jobId"
+                    keyLabel="name"
+                    [type]="isSubmitted && form.controls['jobId'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['jobId'].errors !== null"
+                    [errors]="form.controls['jobId'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.kpiEvaluations.organizations.label.job' | translate }}]"
+                    labelText="{{'kpi.kpiEvaluations.organizations.label.job' | translate}} <span class='label__required'>*</span>"
+                    placeholder="{{'kpi.kpiEvaluations.organizations.label.job' | translate}}">
+        </hbt-select>
+      </div>
+    </ng-container>
+    <ng-container>
+      <div nz-col [nzXs]="12" [nzLg]="6">
+        <hbt-input-text formControlName='name'
+                        [maxLength]='255'
+                        placeholderText="{{'kpi.indicators.table.name' | translate}}"
+                        labelText="{{'kpi.indicators.table.name' | translate}}"
+        ></hbt-input-text>
+      </div>
+    </ng-container>
+    <div nz-col [nzXs]="12" [nzLg]="6" style="display: flex; align-items: center">
+      <hbt-button
+        style="padding-top: 20px"
+        buttonSize="MEDIUM"
+        buttonAvailableStyle="SEARCH"
+        buttonText="{{'common.button.search' | translate}}"
+        (click)="search()"
+      ></hbt-button>
+    </div>
+    <div nz-col [nzXs]="24" [nzLg]="24">
+      <hbt-table-wrap [tableConfig]="tableConfig" [extra]="false">
+        <hbt-table
+          (changePageNum)="search($event)" [showExtra]="false" [selectedRowsId]="data"
+          [tableConfig]="tableConfig" [dataList]="tableData"
+          (amountSelectedRowsChange)="listId = $event">
+        </hbt-table>
+      </hbt-table-wrap>
+    </div>
+  </div>
+
+  <ng-template #relatedNameTpl let-relatedNames='relatedNames'>
+    <ng-container *ngFor="let data of (relatedNames?.split('\n') ?? [])">
+      <div [innerHTML]="strReplaceSpace(data)"></div>
+    </ng-container>
+  </ng-template>
+
+  <ng-template #scopeNameTpl let-scopeNames='scopeNames'>
+    <ng-container *ngFor="let data of (scopeNames?.split('\n') ?? [])">
+      <div [innerHTML]="strReplaceSpace(data)"></div>
+    </ng-container>
+  </ng-template>
+
+  <ng-template #significanceTpl let-significance='significance'>
+    <ng-container *ngFor="let data of (significance?.split('\n') ?? [])">
+      <div [innerHTML]="strReplaceSpace(data)"></div>
+    </ng-container>
+  </ng-template>
+  <ng-template #measurementTpl let-measurement='measurement'>
+    <ng-container *ngFor="let data of (measurement?.split('\n') ?? [])">
+      <div [innerHTML]="strReplaceSpace(data)"></div>
+    </ng-container>
+  </ng-template>
+  <ng-template #systemInfoTpl let-systemInfo='systemInfo'>
+    <ng-container *ngFor="let data of (systemInfo?.split('\n') ?? [])">
+      <div [innerHTML]="strReplaceSpace(data)"></div>
+    </ng-container>
+  </ng-template>
+</form>

@@ -1,0 +1,111 @@
+<div class='save-form-abs'>
+  <form nz-form [formGroup]="form" style="margin-top: 20px">
+    <div nz-row [nzGutter]="[20,15]">
+      <!--id nhân viên-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <employee-data-picker status='WORKING'
+          formControlName="employeeId"
+          [type]="isSubmitted && form.controls['employeeId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['employeeId'].errors != null"
+          [errors]="form.controls['employeeId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'common.label.employeeName' | translate }}]"
+          labelText="{{'abs.overtimeRecords.table.employee' | translate}} "
+          [disable]="this.mode === modeConst.EDIT"
+        >
+        </employee-data-picker>
+      </div>
+
+      <!--ngày chấm công-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-date-picker
+          placeholderText="{{'abs.overtimeRecords.table.dateTimekeeping' | translate}}"
+          labelText="{{'abs.overtimeRecords.table.dateTimekeeping' | translate}} <span class='label__required'>*</span>"
+          formControlName="dateTimekeeping"
+          [type]="isSubmitted && form.controls['dateTimekeeping'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['dateTimekeeping'].errors != null"
+          [errors]="form.controls['dateTimekeeping'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'abs.overtimeRecords.table.dateTimekeeping' | translate }}]"
+
+        ></hbt-date-picker>
+      </div>
+
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <ng-container formArrayName="listRecords">
+          <ng-container *ngFor="let record of records.controls; let i = index; let first = first">
+            <div nz-row [nzGutter]='[20,15]' class="direct__managers" [formGroupName]="i">
+              <div nz-col [nzXs]="24" [nzLg]="6">
+                <hbt-select [urlLoadData]="getUrlCategory(categoryCode.ABS_LOAI_DK_LAM_THEM)"
+                            keyLabel="name"
+                            formControlName="overtimeTypeId"
+                            [type]="isSubmitted && record.get('overtimeTypeId')?.errors ? 'error' : 'default'"
+                            [showError]="isSubmitted && record.get('overtimeTypeId')?.errors != null"
+                            [errors]="record.get('overtimeTypeId')?.errors"
+                            [errorDefs]="[
+                      { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'abs.overtimeRecords.table.overtimeTypeId' | translate }}]"
+                            placeholder="{{'abs.overtimeRecords.table.overtimeTypeId' | translate}}"
+                            [labelText]="first ? ('abs.overtimeRecords.table.overtimeTypeId' | translate) + ' <span class=\'label__required\'>*</span>' : null"
+                ></hbt-select>
+              </div>
+              <div nz-col [nzXs]="24" [nzLg]="3">
+                <hbt-time-picker
+                  format="HH:mm"
+                  placeholderText="{{'abs.overtimeRecords.table.startTime' | translate}}"
+                  [labelText]="first ? ('abs.overtimeRecords.table.startTime' | translate) + ' <span class=\'label__required\'>*</span>' : null"
+                  formControlName="startTime"
+                  [type]="isSubmitted && record.get('startTime')?.errors ? 'error' : 'default'"
+                  [showError]="isSubmitted && record.get('startTime')?.errors != null"
+                  [errors]="record.get('startTime')?.errors"
+                  [errorDefs]="[
+                      { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'abs.overtimeRecords.table.startTime' | translate }}]"
+                ></hbt-time-picker>
+              </div>
+              <div nz-col [nzXs]="24" [nzLg]="3">
+                <hbt-time-picker
+                  format="HH:mm"
+                  placeholderText="{{'abs.overtimeRecords.table.endTime' | translate}}"
+                  [labelText]="first ? ('abs.overtimeRecords.table.endTime' | translate) + ' <span class=\'label__required\'>*</span>' : null"
+                  formControlName="endTime"
+                  [type]="isSubmitted && record.get('endTime')?.errors ? 'error' : 'default'"
+                  [showError]="isSubmitted && record.get('endTime')?.errors != null"
+                  [errors]="record.get('endTime')?.errors"
+                  [errorDefs]="[
+                      { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'abs.overtimeRecords.table.endTime' | translate }}]"
+                ></hbt-time-picker>
+              </div>
+              <div nz-col [nzXs]="24" [nzLg]="8">
+                <hbt-input-text
+                  isTextAre
+                  placeholderText="{{'abs.overtimeRecords.table.content' | translate}}"
+                  [labelText]="first ? ('abs.overtimeRecords.table.content' | translate) + ' <span class=\'label__required\'>*</span>' : null"
+                  formControlName="content"
+                  [type]="isSubmitted && record.get('content')?.errors ? 'error' : 'default'"
+                  [showError]="isSubmitted && record.get('content')?.errors != null"
+                  [errors]="record.get('content')?.errors"
+                  [errorDefs]="[
+                      { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'abs.overtimeRecords.table.content' | translate }}]"
+                ></hbt-input-text>
+              </div>
+              <div nz-col [nzXs]="24" [nzLg]="4" class="area-action" *ngIf="mode !== Mode.VIEW">
+                <em nz-button nz-icon nzType="plus-circle" nzTheme="outline"
+                    nz-tooltip
+                    nzTooltipTitle="{{'common.button.add' | translate}}"
+                    nzTooltipPlacement="left"
+                    class="btn-create"
+                    (click)="addRecord()"></em>
+                <em nz-button nz-icon nzType="delete" nzTheme="outline"
+                    nz-tooltip
+                    nzTooltipTitle="{{'common.button.delete' | translate}}"
+                    nzTooltipPlacement="right"
+                    class="btn-removed"
+                    (click)="removeRecord(i)"></em>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+
+
+    </div>
+  </form>
+</div>
+

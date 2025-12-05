@@ -1,0 +1,88 @@
+<nz-modal [nzVisible]='showContent' [nzFooter]='null' (nzOnCancel)='doClose()'
+          nzTitle="{{'abs.label.downloadData'|translate}}" [nzWidth]='nzWidth'
+          [nzCentered]='true'>
+  <ng-container *nzModalContent style='padding: 0'>
+    <div nz-row [nzGutter]='[20,15]'>
+      <!-- Vùng tải template import -->
+      <hbt-button buttonType='BORDER' class='mb__button--w100 mb__button--no-margin' nz-col nzXs='24' nzLg='24'
+        (click)='doDownloadTemplate()'>
+        <div class='mb__button--content--imp'>
+          <div class='content__left'>
+            <img alt="" src='/assets/icon/button/zip.png'>
+            <span>{{'common.label.downloadTemplate'|translate}}</span>
+          </div>
+          <div class='content__right'><img alt="" src='/assets/icon/button/file.png'></div>
+        </div>
+      </hbt-button>
+
+      <!-- File import -->
+      <!-- <label class="input__label">File import</label> -->
+      <nz-upload nz-col [nzXs]='24' [nzLg]='24' nzType='drag' [nzMultiple]='false' [(nzFileList)]='fileList'
+        [nzBeforeUpload]='beforeUpload' [nzRemove]='doRemoveFile'>
+        <div *ngIf="!isExistFileImport">
+          <p class='ant-upload-drag-icon'>
+            <img alt="" src='/assets/icon/staff-manager/import.svg'>
+          </p>
+          <p class='ant-upload-text'>
+            {{'abs.timekeepingManagement.uploadExportFile' | translate}}
+          </p>
+          <p class='ant-upload-hint'>
+            {{'common.upload.supportExcelxlsx'|translate}}
+          </p>
+        </div>
+        <div *ngIf="isExistFileImport" class="nz__upload--content">
+          <p class='ant-upload-drag-icon'>
+            <img style="width: 30px; margin-bottom: -10px" alt="" src='/assets/icon/staff-manager/export_excel.svg' />
+          </p>
+          <p class='ant-upload-text'>{{fileImportName}}</p>
+          <p class='ant-upload-hint'>
+            {{fileImportSize}} MB
+          </p>
+        </div>
+      </nz-upload>
+    </div>
+
+    <!-- Thao tác -->
+    <div nz-row [nzGutter]='[10,10]' *ngIf='isExistFileImport'>
+      <hbt-button buttonType='BORDER' buttonSize='SMALL' buttonText="{{'common.button.cancel'|translate }}"
+        class='mb__button--w100 mb__button--no-margin' nz-col [nzXs]='24' [nzLg]='12' buttonAvailableStyle='DEFAULT'
+        (click)='doClose()'></hbt-button>
+      <hbt-button buttonType='BORDER' buttonSize='SMALL' buttonAvailableStyle='SAVE'
+        buttonText="{{'common.upload.upload' | translate }}" class='mb__button--w100 mb__button--no-margin' nz-col [nzXs]='24'
+        [nzLg]='12' (click)='doImportFile()'></hbt-button>
+    </div>
+  </ng-container>
+</nz-modal>
+
+<nz-modal (nzOnCancel)='doCloseModal()' [nzCentered]='true' [nzVisible]='isModalError'
+          nzTitle="{{'common.error.list'|translate}}" [nzWidth]='nzWidthError'>
+  <div *nzModalContent>
+    <nz-table [nzScroll]="{y: '300px' }" [nzData]='errorList' nzBordered='true' nzSize='small' nzShowPagination='false'>
+      <thead>
+      <tr>
+        <th scope="col" nzAlign='center' nzWidth='40px'>#</th>
+        <th scope="col" nzWidth='60px'>{{'common.table.row'|translate}}</th>
+        <th scope="col" nzWidth='60px'>{{'common.table.column'|translate}}</th>
+        <th scope="col">{{'common.error.description'|translate}}</th>
+        <th scope="col" nzWidth='100px'>{{'common.error.value'|translate}}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor='let data of errorList; let i = index'>
+        <td nzAlign='center'>{{ i + 1 }}</td>
+        <td nzAlign='center'>{{ data?.row }}</td>
+        <td nzAlign='center'>{{ data?.columnLabel }}</td>
+        <td><span [innerHtml]='data?.description'></span></td>
+        <td><span [innerHtml]='data?.content'></span></td>
+      </tr>
+      </tbody>
+    </nz-table>
+<!--    <div class='linkDownload' style='margin-top: 10px'>-->
+<!--      <a (click)='doDownloadFile()'>{{'common.error.downloadFile' | translate}}</a>-->
+<!--    </div>-->
+  </div>
+  <div *nzModalFooter>
+    <hbt-button (click)='doCloseModal()' buttonSize='MEDIUM' prefixIcon='close-circle'
+               buttonText="{{'common.button.close'|translate}}" buttonAvailableStyle='CANCEL'></hbt-button>
+  </div>
+</nz-modal>

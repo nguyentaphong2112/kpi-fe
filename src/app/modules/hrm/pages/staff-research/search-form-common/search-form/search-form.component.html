@@ -1,0 +1,327 @@
+<form nz-form [formGroup]="form">
+  <div class="search__custom-common {{isShowAdvSearch ? 'add__mr__bt-10' : 'remove__mr__bt-40'}}">
+    <div nz-row class="button__action-left">
+      <hbt-button
+        *ngIf="isShowBtnAdd"
+        buttonSize="LARGE"
+        buttonAvailableStyle="ADD"
+        buttonText="{{'common.button.add' | translate}}"
+        (click)="doOpenForm(modeConst.ADD, {})"
+      ></hbt-button>
+
+      <hbt-button
+        *ngIf="isShowBtnAddCustom"
+        buttonSize="LARGE"
+        buttonAvailableStyle="ADD"
+        buttonText="{{'common.button.add' | translate}}"
+        (click)="doOpenFormCustom()"
+      ></hbt-button>
+
+      <hbt-button
+        style="margin-left: 20px"
+        buttonSize="MEDIUM"
+        buttonType="BORDER"
+        (click)="doExport()">
+        <img src="/assets/icon/staff-manager/export_excel.svg" alt="" />
+      </hbt-button>
+
+<!--      <hbt-button buttonSize="LARGE"-->
+<!--                  style="margin-left: 20px"-->
+<!--                  class="staff__research__btn__search"-->
+<!--                  buttonText="{{'common.label.import' | translate}}"-->
+<!--                  *ngIf="isShowBtnImport"-->
+<!--                  [buttonTextColor]="_variable.$purple_800" (click)="doImportData()"></hbt-button>-->
+    </div>
+    <div class="search__page-right">
+<!--      <hbt-select-->
+<!--        [showClear]="false"-->
+<!--        (ngModelChange)="changeTypeSearch($event)"-->
+<!--        formControlName="typeSearch"-->
+<!--        labelText=""-->
+<!--        placeholder="{{'hrm.staffManager.label.infoSearchType' | translate}}"-->
+<!--        [dataSelects]="typeSearchData"-->
+<!--        [type]="isSubmitted && form.controls['typeSearch'].errors ? 'error' : 'default'"-->
+<!--        [showError]="isSubmitted && form.controls['typeSearch'].errors !== null"-->
+<!--        [errors]="form.controls['typeSearch'].errors"-->
+<!--        [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.staffManager.label.infoSearchType' | translate }}]"-->
+<!--      ></hbt-select>-->
+
+      <hbt-input-text
+        formControlName="keySearch" [maxLength]="200"
+        placeholderText="{{'hrm.staffManager.label.keySearch' | translate}}"
+      ></hbt-input-text>
+
+      <hbt-button
+        buttonIconType="AWESOME"
+        [prefixIcon]="isShowAdvSearch ? 'fa fa-angle-double-up' : 'fa fa-angle-double-down'"
+        buttonSize="VERY_LARGE"
+        [buttonTextColor]="_variable.$neutral_100"
+        [buttonBorderColor]="_variable.$purple_800"
+        [buttonBgColor]="_variable.$purple_800"
+        (click)="isShowAdvSearch = !isShowAdvSearch"
+      >
+      </hbt-button>
+    </div>
+  </div>
+
+  <div *ngIf="isShowAdvSearch" class="content__item content__item--border bg__content--default">
+    <div nz-row [nzGutter]='[20,15]'>
+      <!-- Trạng thái -->
+<!--      <div nz-col [nzXs]="12" [nzLg]="8">-->
+<!--        <hbt-select-check-able-->
+<!--          [urlLoadData]="getUrlCategory(categoryCode.TRANG_THAI_NV)"-->
+<!--          [serviceName]="microService.ADMIN"-->
+<!--          keyLabel="name"-->
+<!--          placeholder="{{'hrm.staffManager.label.status' | translate }}"-->
+<!--          labelText="{{'hrm.staffManager.label.status' | translate}}"-->
+<!--          formControlName="listStatus"-->
+<!--        ></hbt-select-check-able>-->
+<!--      </div>-->
+
+      <!-- Đơn vị -->
+      <div nz-col [nzXs]="12" [nzLg]="8">
+        <tree-data-picker
+          [isExpand]="true"
+          formControlName="organizationId"
+          [scope]="scope"
+          [functionCode]="functionCode"
+          labelText="{{'hrm.staffManager.label.organization' | translate}}"
+          placeholder="{{'hrm.staffManager.label.organization' | translate}}"
+        >
+        </tree-data-picker>
+      </div>
+
+      <!-- Đối tượng -->
+<!--      <div nz-col [nzXs]="12" [nzLg]="8">-->
+<!--        <hbt-select-check-able-->
+<!--          [urlLoadData]="urlConstantShare.GET_EMP_TYPE"-->
+<!--          [serviceName]="microService.HRM"-->
+<!--          keyValue="empTypeId"-->
+<!--          keyLabel="name"-->
+<!--          placeholder="{{'hrm.staffManager.label.employeeType' | translate}}"-->
+<!--          labelText="{{'hrm.staffManager.label.employeeType' | translate}}"-->
+<!--          formControlName="listEmpTypeId"></hbt-select-check-able>-->
+<!--      </div>-->
+
+      <!-- Chức danh -->
+      <div nz-col [nzXs]="12" [nzLg]="8">
+        <hbt-select-check-able
+          [urlLoadData]="urlConstantShare.GET_JOBS"
+          [serviceName]="microService.HRM"
+          keyLabel="name"
+          keyValue="jobId"
+          placeholder="{{'hrm.staffManager.label.positionName' | translate}}"
+          labelText="{{'hrm.staffManager.label.positionName' | translate}}"
+          formControlName="listPositionId"
+        ></hbt-select-check-able>
+      </div>
+
+
+      <div nz-col [nzXs]="12" class="form__search" [nzLg]="8" *ngFor="let item of formConfigExtendField">
+        <ng-container [ngSwitch]="item.inputType">
+          <hbt-input-text
+            *ngSwitchCase="'text'" [maxLength]="200"
+            placeholderText=" {{ item.inputPlaceholder ?? item.inputLabel }} "
+            [labelText]="item.inputLabel" [formControlName]="item.code"
+          ></hbt-input-text>
+
+          <ng-container *ngSwitchCase="'number'" [ngSwitch]="item.code">
+            <hbt-numberic-range-input
+              *jrSwitchCases='["listYearOfBirth", "listIssueYear", "listYear"]'
+              [maxNumOfMax]="3000" [maxNumOfMin]="1900"
+              [type]="form.controls[item.code].errors ? 'error' : 'default'"
+              [showError]="form.controls[item.code].errors !== null"
+              [errors]="form.controls[item.code].errors"
+              [errorDefs]="[
+                { errorName: item.code, errorDescription: 'hrm.validate.rangeDate.pareDate' | translate:{'fromDate': 'hrm.staffManager.table.fromYear' | translate, 'toDate': 'hrm.staffManager.table.toYear' | translate}}
+              ]"
+              [labelText]="item.inputLabel"
+              [formControlName]="item.code"
+              (ngModelChange)="validateDateNumber($event, item.code)"
+            ></hbt-numberic-range-input>
+
+            <hbt-numberic-range-input
+              *jrSwitchCases='["listMonthOfBirth", "listMonthDependent"]'
+              [maxNumOfMax]="8" [maxNumOfMin]="1"
+              [type]="form.controls[item.code].errors ? 'error' : 'default'"
+              [showError]="form.controls[item.code].errors !== null"
+              [errors]="form.controls[item.code].errors"
+              [errorDefs]="[
+                { errorName: item.code, errorDescription: 'hrm.validate.rangeDate.pareDate' | translate:{'fromDate': 'hrm.staffManager.table.fromMonth' | translate, 'toDate': 'hrm.staffManager.table.toMonth' | translate}}
+              ]"
+              [labelText]="item.inputLabel"
+              [formControlName]="item.code"
+              (ngModelChange)="validateDateNumber($event, item.code)"
+            ></hbt-numberic-range-input>
+
+            <hbt-numberic-range-input
+              *jrSwitchCases='["date", "day"]'
+              [maxNumOfMax]="31" [maxNumOfMin]="1"
+              [type]="form.controls[item.code].errors ? 'error' : 'default'"
+              [showError]="form.controls[item.code].errors !== null"
+              [errors]="form.controls[item.code].errors"
+              [errorDefs]="[
+                { errorName: item.code, errorDescription: 'hrm.validate.rangeDate.pareDate' | translate:{'fromDate': 'hrm.staffManager.table.fromDate' | translate, 'toDate': 'hrm.staffManager.table.toDate' | translate}}
+              ]"
+              [labelText]="item.inputLabel"
+              [formControlName]="item.code"
+              (ngModelChange)="validateDateNumber($event, item.code)"
+            ></hbt-numberic-range-input>
+
+            <hbt-numberic-range-input
+              *ngSwitchDefault
+              [type]="form.controls[item.code].errors ? 'error' : 'default'"
+              [showError]="form.controls[item.code].errors !== null"
+              [errors]="form.controls[item.code].errors"
+              [errorDefs]="[
+                { errorName: item.code, errorDescription: 'hrm.validate.rangeDate.pareDate' | translate:{'fromDate': 'hrm.staffManager.table.fromDate' | translate, 'toDate': 'hrm.staffManager.table.toDate' | translate}}
+              ]"
+              [labelText]="item.inputLabel"
+              [formControlName]="item.code"
+              (ngModelChange)="validateDateNumber($event, item.code)"
+            ></hbt-numberic-range-input>
+
+          </ng-container>
+
+          <hbt-select
+            *jrSwitchCases="['combobox', 'radiobox']"
+            [keyValueStringType]="!item.valueIsNumber"
+            placeholder=" {{ item.inputPlaceholder ?? item.inputLabel }}"
+            keyLabel="name"
+            [keyValue]="item.keyValue ?? 'value'"
+            [urlLoadData]="item.dataSourceValue"
+            [serviceName]="''"
+            [labelText]="item.inputLabel" [formControlName]="item.code"
+          ></hbt-select>
+
+          <hbt-select-check-able
+            *jrSwitchCases="['multi-combobox', 'checkbox']"
+            [keyValueStringType]="!item.valueIsNumber"
+            placeholder=" {{ item.inputPlaceholder ?? item.inputLabel }} "
+            keyLabel="name"
+            [keyValue]="item.keyValue ?? 'value'"
+            [urlLoadData]="item.dataSourceValue"
+            [serviceName]="''"
+            [labelText]="item.inputLabel" [formControlName]="item.code"
+          ></hbt-select-check-able>
+
+          <hbt-rang-date-picker
+            *ngSwitchCase="'date'"
+            [type]="form.controls[item.code].errors ? 'error' : 'default'"
+            [showError]="form.controls[item.code].errors !== null"
+            [errors]="form.controls[item.code].errors"
+            [errorDefs]="[
+              { errorName: item.code, errorDescription: 'hrm.validate.rangeDate.pareDate' | translate:{'fromDate': 'hrm.staffManager.table.fromDate' | translate, 'toDate': 'hrm.staffManager.table.toDate' | translate}}
+            ]"
+            [labelText]="item.inputLabel"
+            [formControlName]="item.code"
+            (ngModelChange)="validateDate($event, item.code)"
+          ></hbt-rang-date-picker>
+        </ng-container>
+
+      </div>
+
+<!--      <div nz-col [nzXs]="12" [nzLg]="8" style="display: flex; margin-top: 26px">-->
+<!--        <hbt-select-check-able-->
+<!--          [dataSelects]="listExtendField"-->
+<!--          (eventEmit)="doAddOrRemoveFieldExtend($event)"-->
+<!--          keyLabel="inputLabel"-->
+<!--          keyValue="code"-->
+<!--          placeholder="{{'hrm.staffManager.label.addSearchCondition' | translate}}"-->
+<!--          formControlName="extendField"-->
+<!--          style="width: -webkit-fill-available"-->
+<!--        ></hbt-select-check-able>-->
+<!--        <hbt-button-->
+<!--          class="btn-choose__bookmark " buttonIconType="AWESOME" prefixIcon="fas fa-star"-->
+<!--          buttonSize="VERY_LARGE"-->
+<!--          buttonTextColor="#7F85F3"-->
+<!--          nz-popover-->
+<!--          nzPopoverTrigger="click"-->
+<!--          [nzPopoverTitle]="null"-->
+<!--          [(nzPopoverVisible)]="chooseBookmarkVisible"-->
+<!--          [nzPopoverContent]="chooseBookmarkTmpl"-->
+<!--          nzPopoverPlacement="leftBottom"-->
+<!--          buttonBgColor="#FFFFFF"></hbt-button>-->
+<!--        <hbt-button-->
+<!--          class="btn-save__bookmark" buttonIconType="AWESOME" prefixIcon="fas fa-bookmark"-->
+<!--          buttonSize="VERY_LARGE"-->
+<!--          buttonTextColor="#7F85F3"-->
+<!--          nz-popover-->
+<!--          [(nzPopoverVisible)]="saveBookmarkVisible"-->
+<!--          nzPopoverTrigger="click"-->
+<!--          [nzPopoverTitle]="null"-->
+<!--          [nzPopoverContent]="saveBookmarkTmpl"-->
+<!--          nzPopoverPlacement="rightBottom"-->
+<!--          buttonBgColor="#FFFFFF"></hbt-button>-->
+<!--      </div>-->
+    </div>
+
+    <div nz-row class="btn__row-search" style="margin-top: 10px">
+      <div nz-col nzSpan="24">
+        <div style="text-align: center">
+          <hbt-button
+            class="staff__research__btn__search"
+            buttonSize="LARGE"
+            buttonAvailableStyle="SEARCH"
+            buttonText="{{'common.button.search' | translate}}"
+            (click)="submitSearch()"
+          ></hbt-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<ng-template #saveBookmarkTmpl>
+  <div class="popover__inner">
+    <p><strong>{{ 'hrm.staffManager.label.saveSearchCondition' | translate }}</strong></p>
+    <hbt-input-text [maxLength]="200"
+                    [showFlexEnd]="false"
+                    placeholderText=" {{'hrm.staffManager.label.saveName' | translate}}  "
+                    [(ngModel)]="saveBookmarkName"></hbt-input-text>
+  </div>
+  <div class="popover_footer">
+    <hbt-button buttonAvailableStyle="SAVE"
+                buttonText="{{'hrm.staffManager.label.saveCurrentRecord' | translate}}"
+                *ngIf="choseBookmarkId"
+                (click)="choseBookmarkId ? saveBookmark(choseBookmarkId) : $event.stopPropagation()"
+                class="btn__save"></hbt-button>
+    <hbt-button buttonAvailableStyle="SAVE"
+                buttonText="{{'hrm.staffManager.label.addRecord' | translate}}"
+                (click)="saveBookmark()" class="btn__save"></hbt-button>
+  </div>
+</ng-template>
+<ng-template #chooseBookmarkTmpl>
+  <div class="popover__inner">
+    <p><strong>{{ 'hrm.staffManager.label.selectConditionSave' | translate }}</strong></p>
+    <hbt-select
+      keyValue="userBookmarkId"
+      keyLabel="name"
+      placeholder="{{'hrm.staffManager.label.select' | translate}}"
+      [dataSelects]="bookmarks"
+      [(ngModel)]="choseBookmarkId"
+    ></hbt-select>
+  </div>
+  <div class="popover_footer">
+    <hbt-button buttonAvailableStyle="SAVE"
+                buttonText="{{'hrm.staffManager.label.selectBookmark' | translate}}"
+                (click)="choseBookmarkId ? chooseBookmark() : $event.stopPropagation()"
+                class="btn__choose"></hbt-button>
+    <hbt-button buttonAvailableStyle="REJECT"
+                buttonText="{{'hrm.staffManager.label.deleteBookmark' | translate}}"
+                (click)="choseBookmarkId ? deleteBookmark() : $event.stopPropagation()"
+                class="btn__choose"></hbt-button>
+  </div>
+</ng-template>
+<ng-template #footerTmpl>
+  <hbt-button
+    buttonAvailableStyle="CANCEL"
+    buttonText="{{ 'common.button.cancel' | translate }}"
+    (click)="modalRef.destroy()">
+  </hbt-button>
+  <hbt-button
+    buttonAvailableStyle="SAVE"
+    buttonText="{{ 'common.button.save' | translate }}"
+    (click)="modalRef.getContentComponent().save()">
+  </hbt-button>
+</ng-template>

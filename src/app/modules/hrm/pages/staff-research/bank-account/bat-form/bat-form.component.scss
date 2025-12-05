@@ -1,0 +1,13 @@
+@import "src/app/core/global-style/variable";
+
+::ng-deep .btnDeleteItem > span {
+  margin-left: 0 !important;
+}
+
+::ng-deep .ant-checkbox-disabled.ant-checkbox-checked .ant-checkbox-inner::after {
+  border-color: $neutral-100;
+}
+
+.ant-checkbox-isMain{
+  color: $neutral-600 !important;
+}

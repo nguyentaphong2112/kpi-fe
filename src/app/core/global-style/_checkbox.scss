@@ -1,0 +1,46 @@
+@import "variable";
+
+.ant-checkbox-wrapper {
+  color: $input-label-color;
+  font-size: 14px;
+  font-family: avertaL, sans-serif;
+
+  .ant-checkbox {
+    &:hover, &:focus {
+      input {
+        border-color: $bg-checkbox-inner;
+      }
+    }
+  }
+}
+
+.ant-checkbox-wrapper-checked {
+  font-family: avertaB, sans-serif;
+
+  .ant-checkbox-checked {
+    .ant-checkbox-inner {
+      background-color: $bg-checkbox-inner;
+      border-color: $bg-checkbox-inner;
+    }
+
+    &::after, &:hover {
+      border-color: $bg-checkbox-inner;
+    }
+  }
+
+  .ant-checkbox {
+    &:hover input {
+      border-color: $bg-checkbox-inner;
+    }
+  }
+}
+
+.ant-checkbox-indeterminate .ant-checkbox-inner::after {
+  background-color: $bg-checkbox-inner;
+}
+
+.checkbox__label--bold {
+  .ant-checkbox-wrapper {
+    font-family: avertaB, sans-serif;
+  }
+}

@@ -1,0 +1,93 @@
+<form nz-form [formGroup]="form" class="employees-index">
+  <div class="search__custom-common {{isShowAdvSearch ? 'add__mr__bt-10' : 'remove__mr__bt-40'}}">
+    <div nz-row class="button__action-left">
+      <hbt-button
+        class="staff__research__btn__search"
+        buttonSize="LARGE"
+        buttonAvailableStyle="ADD"
+        style="margin-right: 20px"
+        *ngIf="objFunction.create"
+        buttonText="{{'common.button.add' | translate}}"
+        (click)="doOpenForm(modeConst.ADD)"
+      ></hbt-button>
+      <hbt-button
+        buttonSize="MEDIUM"
+        buttonType="BORDER"
+        (click)="export()">
+        <img src="/assets/icon/staff-manager/export_excel.svg" alt="" />
+      </hbt-button>
+    </div>
+
+    <div class="search__page-right">
+      <hbt-input-text formControlName='fullName' maxLength='200'
+                      placeholderText="{{'crm.employees.table.fullName' | translate}}"></hbt-input-text>
+      <hbt-button
+        buttonIconType="AWESOME"
+        [prefixIcon]="isShowAdvSearch ? 'fa fa-angle-double-up' : 'fa fa-angle-double-down'"
+        buttonSize="VERY_LARGE"
+        [buttonTextColor]="_variable.$neutral_100"
+        [buttonBorderColor]="_variable.$purple_800"
+        [buttonBgColor]="_variable.$purple_800"
+        (click)="isShowAdvSearch = !isShowAdvSearch"
+      >
+      </hbt-button>
+    </div>
+  </div>
+  <div *ngIf="isShowAdvSearch" class="content__item content__item--border bg__content--default">
+    <div class="form-search">
+      <div nz-row [nzGutter]='[20,15]'>
+
+        <div nz-col [nzXs]='12' [nzLg]='8'>
+          <hbt-date-picker
+            formControlName="dateOfBirth"
+            placeholderText="{{'crm.employees.table.dateOfBirth' | translate}}"
+            labelText="{{'crm.employees.table.dateOfBirth' | translate}} "
+          ></hbt-date-picker>
+        </div>
+        <!--Tên nhân viên-->
+        <div nz-col [nzXs]='12' [nzLg]='8'>
+          <hbt-input-text formControlName='mobileNumber' maxLength='200'
+                          placeholderText="{{'crm.employees.table.mobileNumber' | translate}}"
+                          labelText="{{'crm.employees.table.mobileNumber' | translate}}"></hbt-input-text>
+        </div>
+        <div nz-col [nzXs]="24" [nzLg]="24" style="text-align: center">
+          <hbt-button
+            class="staff__research__btn__search"
+            buttonSize="LARGE"
+            buttonAvailableStyle="SEARCH"
+            buttonText="{{'common.button.search' | translate}}"
+            (click)="search()"
+          ></hbt-button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--End Form tìm kiếm-->
+
+  <div class='search__content--group' [ngClass]="{'search__content--group-hidden-header': isShowAdvSearch}">
+    <hbt-table-wrap>
+      <hbt-table
+        (changePageNum)='search($event)'
+        [tableConfig]='tableConfig' [dataList]="tableData" (amountSelectedRowsChange)="listId = $event"
+      ></hbt-table>
+    </hbt-table-wrap>
+  </div>
+
+  <ng-template #actionTmpl let-data="data">
+    <btn-more-action [model]="[data]" [setting]="actionSchema">
+    </btn-more-action>
+  </ng-template>
+
+  <ng-template #footerTmpl>
+    <hbt-button
+      buttonAvailableStyle="CANCEL"
+      buttonText="{{ 'common.button.cancel' | translate }}"
+      (click)="modalRef.destroy()">
+    </hbt-button>
+    <hbt-button
+      buttonAvailableStyle="SAVE"
+      buttonText="{{ 'common.button.save' | translate }}"
+      (click)="modalRef.getContentComponent().save()">
+    </hbt-button>
+  </ng-template>
+</form>

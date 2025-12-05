@@ -1,0 +1,28 @@
+@import "../../../../../../core/global-style/variable";
+
+::ng-deep .users-role .ant-card-head {
+  display: none;
+}
+
+.users-role .add-role {
+  margin-bottom: 30px;
+}
+
+.menu__item--btn {
+  font-size: 16px;
+  padding: 3px;
+  color: $bg-default;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.add-scope {
+  color: $info-600;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+

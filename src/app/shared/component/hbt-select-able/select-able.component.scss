@@ -1,0 +1,51 @@
+@import "app/core/global-style/variable";
+::ng-deep .select__custom {
+  em.icon__search {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    z-index: 1;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    padding-top: 4px;
+    padding-left: 2px;
+    &:hover {
+      background-color: $black-300;
+      border-radius: 18px;
+    }
+  }
+
+  .ant-select-selector {
+    padding-right: 15px !important;
+  }
+
+  .ant-select-clear {
+    //margin-right: 20px ;
+  }
+}
+::ng-deep em.custom__icon-add {
+  position: absolute;
+  right: 8px;
+  cursor: pointer;
+  z-index: 1;
+  color: $info-600;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  padding-top: 2px;
+  background-color: #fff;
+  &:hover {
+    background-color: $black-200;
+    border-radius: 20px;
+  }
+}
+
+::ng-deep .custom__add-category {
+  .ant-select-arrow, .ant-select-clear {
+    margin-right: 20px;
+  }
+}
+

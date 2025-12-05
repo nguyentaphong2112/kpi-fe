@@ -1,0 +1,47 @@
+<div class='save-form-crm'>
+  <form nz-form [formGroup]="form" style="margin-top: 20px">
+    <div nz-row [nzGutter]="[20,15]">
+      <!-- Chọn nhân viên chăm sóc -->
+      <div nz-col [nzXs]="12" [nzLg]="24">
+        <hbt-select [dataSelects]="employeesInfo?.length ? employeesInfo : []" keyLabel="fullName" keyValue="employeeId"
+          formControlName="caringEmpId"
+          [type]="isSubmitted && form.controls['caringEmpId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['caringEmpId'].errors != null"
+          [errors]="form.controls['caringEmpId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.customerCareRecords.table.caringEmpId' | translate }}]"
+          placeholder="{{'crm.customerCareRecords.table.caringEmpId' | translate}}"
+          labelText="{{'crm.customerCareRecords.table.caringEmpId' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <!-- Ghi chú -->
+      <div nz-col [nzXs]="12" [nzLg]="24">
+        <hbt-input-text formControlName="note" maxLength="255"
+          [type]="isSubmitted && form.controls['note'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['note'].errors != null"
+          [errors]="form.controls['note'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+          placeholderText="{{'crm.customerCareRecords.table.note' | translate}}"
+          labelText="{{'crm.customerCareRecords.table.note' | translate}}"
+          [isTextAre]="true"
+        ></hbt-input-text>
+      </div>
+
+      <div nz-col [nzXs]="12" [nzLg]="24" class="button__action-right">
+        <hbt-button
+                buttonAvailableStyle="CANCEL"
+                buttonText="{{ 'common.button.cancel' | translate }}"
+                (click)="modalRef.destroy()">
+        </hbt-button>
+        <hbt-button
+                buttonAvailableStyle="SAVE"
+                buttonText="{{ 'crm.button.saveCare' | translate }}"
+                (click)="onSubmit()">
+        </hbt-button>
+      </div>
+
+    </div>
+  </form>
+
+</div>
+

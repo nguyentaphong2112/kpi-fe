@@ -1,0 +1,68 @@
+<div class="oes-form">
+  <div [class]="isNotPageName ? 'btn__across-no-page' : 'btn__across-page'">
+    <hbt-button buttonType="NO_BORDER" *ngIf="!isEvaluateDetail" (click)="save()" buttonAvailableStyle="SAVE"
+                buttonText="{{'common.button.save' | translate}}" type='SUBMIT'></hbt-button>
+    <hbt-button
+      buttonAvailableStyle="DEFAULT"
+      buttonText="{{ 'common.button.back' | translate }}"
+      (click)="back()">
+    </hbt-button>
+  </div>
+
+  <div class='save-form-kpi' id="oes-form" scrollSpy>
+    <div class="content__item content__item--border bg__content--default">
+      <form nz-form [formGroup]="form">
+        <div nz-row [nzGutter]='[20,15]'>
+          <!--id đơn vị-->
+          <div nz-col [nzXs]="24" [nzLg]="8">
+            <tree-data-picker
+              [disable]="true"
+              *ngIf="!isDetail"
+              [isExpand]="true"
+              labelText="{{'kpi.kpiEvaluations.organizations.label.org' | translate}}"
+              placeholder="{{'kpi.kpiEvaluations.organizations.label.org' | translate}}"
+              formControlName="organizationId"
+              [scope]="scope">
+            </tree-data-picker>
+            <div *ngIf="isDetail">
+              <label class="label-text">{{ 'kpi.kpiEvaluations.organizations.label.org' | translate }}</label>
+              <div class="text-head">{{ form.get('orgName')?.value }}</div>
+            </div>
+          </div>
+          <div nz-col [nzXs]="24" [nzLg]="8">
+            <!--            <employee-data-picker [isExpand]="true"-->
+            <!--                                  *ngIf="!isDetail"-->
+            <!--                                  [disable]="isDetail"-->
+            <!--                                  formControlName="empManagerId"-->
+            <!--                                  [type]="isSubmitted && form.controls['empManagerId'].errors ? 'error' : 'default'"-->
+            <!--                                  [showError]="isSubmitted && form.controls['empManagerId'].errors != null"-->
+            <!--                                  [errors]="form.controls['empManagerId'].errors"-->
+            <!--                                  [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.kpiEvaluations.organizations.label.empManager' | translate }}]"-->
+            <!--                                  labelText="{{'kpi.kpiEvaluations.organizations.label.empManager' | translate}} <span class='label__required'>*</span>"-->
+            <!--                                  placeholder="{{'kpi.kpiEvaluations.organizations.label.empManager' | translate}}"-->
+            <!--            >-->
+            <!--            </employee-data-picker>-->
+            <div>
+              <label class="label-text">{{ 'kpi.kpiEvaluations.organizations.label.empManager' | translate }}</label>
+              <div class="text-head">{{ form.get('empManagerName')?.value }}</div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="content__item content__item--border bg__content--default remove-margin-collapse">
+      <div nz-col [nzXs]='24' [nzLg]='24'>
+        <hbt-scroll-tabs [isShowInfoChange]="true" [sticky]="true" [tabs]="scrollTabs"></hbt-scroll-tabs>
+        <hbt-collapse #collapse [panels]="panels"></hbt-collapse>
+        <!--      <nz-tabset [nzType]="'card'" [nzSize]="'large'">-->
+        <!--        <nz-tab nzTitle="{{'kpi.kpiEvaluations.organizations.label.evaluationCriteria' | translate}}">-->
+        <!--          <app-evaluation-criteria [formParent]="form" [(isSubmittedParent)]="isSubmitted"></app-evaluation-criteria>-->
+        <!--        </nz-tab>-->
+        <!--        <nz-tab nzTitle="{{'kpi.kpiEvaluations.organizations.label.workPlan' | translate}}">-->
+        <!--          <app-work-plan [formParent]="form" [(isSubmittedParent)]="isSubmitted"></app-work-plan>-->
+        <!--        </nz-tab>-->
+        <!--      </nz-tabset>-->
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,171 @@
+<div [class]="isNotPageName ? 'btn__across-no-page' : 'btn__across-page'">
+  <hbt-button buttonSize="MEDIUM" buttonText="{{'common.button.uploadFile' | translate}}"
+              [buttonTextColor]="_variable.$purple_800" (click)="doImportData()"></hbt-button>
+  <hbt-button
+    buttonType="NO_BORDER"
+    buttonSize="LARGE"
+    (click)="doOpenForm(modeConst.ADD)"
+    buttonText="{{ 'common.button.add' | translate }}"
+    buttonAvailableStyle="ADD">
+  </hbt-button>
+</div>
+<div class='kpi'>
+  <!--Form tìm kiếm-->
+  <form nz-form [formGroup]='form' (ngSubmit)="search()">
+    <div nz-row [nzGutter]='[20,15]'>
+
+      <!--Đơn vị-->
+      <div nz-col [nzXs]='12' [nzLg]='6'>
+        <tree-data-picker
+          [isExpand]="true"
+          labelText="{{'common.organization.org' | translate}}"
+          formControlName='orgId'
+
+        >
+        </tree-data-picker>
+      </div>
+
+      <!--Đối tượng-->
+      <div nz-col [nzXs]='12' [nzLg]='6'>
+        <hbt-select-check-able
+          [urlLoadData]="urlConstantShare.GET_EMP_TYPE"
+          [serviceName]="microService.HRM"
+          placeholder="{{'common.label.empTypeName' | translate}}"
+          labelText="{{'common.label.empTypeName' | translate}}"
+          formControlName='listEmpTypeCode'></hbt-select-check-able>
+      </div>
+
+      <!--Chức danh-->
+      <div nz-col [nzXs]='12' [nzLg]='6'>
+        <hbt-select-check-able
+          placeholder="{{'common.label.positionName' | translate}}"
+          [urlLoadData]="urlConstantShare.GET_JOBS"
+          [serviceName]="microService.HRM"
+          labelText="{{'common.label.positionName' | translate}}"
+          formControlName='listPositionId'></hbt-select-check-able>
+      </div>
+
+      <!--Mã nhân viên-->
+      <div nz-col [nzXs]='12' [nzLg]='6'>
+        <hbt-input-text formControlName='empCode' maxLength='200'
+                        placeholderText="{{'common.label.employeeCode' | translate}}"
+                        labelText="{{'common.label.employeeCode' | translate}}"></hbt-input-text>
+      </div>
+
+      <!--Tên nhân viên-->
+      <div nz-col [nzXs]='12' [nzLg]='6'>
+        <hbt-input-text formControlName='empName' maxLength='200'
+                        placeholderText="{{'common.label.employeeName' | translate}}"
+                        labelText="{{'common.label.employeeName' | translate}}"></hbt-input-text>
+      </div>
+
+      <!--Trạng thái làm việc-->
+      <div nz-col [nzXs]='12' [nzLg]='6'>
+        <hbt-select-check-able formControlName='listEmpStatus'
+                               [urlLoadData]="''"
+                               [serviceName]="''"
+                               placeholder="{{'common.label.statusEmployee' | translate }}"
+                               labelText="{{'common.label.statusEmployee' | translate}}"></hbt-select-check-able>
+      </div>
+
+      <!--Trạng thái đăng ký-->
+      <div nz-col [nzXs]='12' [nzLg]='6'>
+        <hbt-select-check-able formControlName='listStatus'
+                               [urlLoadData]="''"
+                               [serviceName]="''"
+                               placeholder="{{'common.label.statusName' | translate }}"
+                               labelText="{{'common.label.statusName' | translate}}"></hbt-select-check-able>
+      </div>
+
+    </div>
+    <div nz-row style="margin-top: 25px">
+      <div nz-col nzSpan="8"></div>
+      <div nz-col nzSpan="8">
+        <div style="text-align: center">
+          <hbt-button type="SUBMIT" buttonSize='SMALL' buttonAvailableStyle='INFO'
+                      buttonText="{{'common.button.search' | translate}}"></hbt-button>
+          <!-- Button xuất danh sách -->
+          <hbt-button buttonSize="MEDIUM"
+                      buttonType="BORDER" (click)="export()">
+            <img src="/src/assets/icon/staff-manager/export_excel.svg" alt=""/>
+          </hbt-button>
+          <!--End: Button xuất danh sách -->
+        </div>
+      </div>
+      <div nz-col nzSpan="8"></div>
+    </div>
+    <div nz-row [nzGutter]='[20,15]'>
+      <div nz-col [nzXs]='24' [nzLg]='24'>
+        <ng-content select='.btn'></ng-content>
+      </div>
+    </div>
+  </form>
+  <!--End Form tìm kiếm-->
+
+  <div class='search__content--group'>
+    <hbt-table-wrap>
+      <div>
+        <p *ngIf="listId.length > 0" style="margin: 0">{{'common.label.selected' | translate}}
+          : {{listId.length}}</p>
+      </div>
+      <hbt-table
+        (changePageNum)='search($event)'
+        [tableConfig]='tableConfig' [dataList]="tableData" (amountSelectedRowsChange)="listId = $event"
+      ></hbt-table>
+    </hbt-table-wrap>
+  </div>
+
+
+  <ng-template #actionTmpl let-data="data">
+    <btn-action-by-id
+      [showApprove]="true"
+      [disabledEdit]="false"
+      [disabledDelete]="false"
+      [disabledApprove]="false"
+      [disabledReject]="false"
+      (doViewDetail)="doOpenFormDetail(data)"
+      (doEdit)="doOpenFormEdit(data)"
+      (doDelete)="deleteItem(data)"
+      (doApprove)="doApproveById(data)"
+      (doReject)="doRejectById(data)"
+    >
+    </btn-action-by-id>
+  </ng-template>
+
+
+  <ng-template #footerTmpl>
+    <hbt-button
+      buttonAvailableStyle="DEFAULT"
+      buttonText="{{ 'common.button.cancel' | translate }}"
+      (click)="modalRef.destroy()">
+    </hbt-button>
+    <hbt-button
+      buttonAvailableStyle="ADD"
+      buttonText="{{ 'common.button.save' | translate }}"
+      (click)="modalRef.getContentComponent().save()">
+    </hbt-button>
+  </ng-template>
+
+  <hbt-import-file [showContent]='isImportData'
+                   (onCloseModal)='doCloseImport($event)'
+                   [importApi]='importApi'
+                   [downLoadTemplateApi]="downLoadTemplateApi"
+                   [fileTemplateName]="fileTemplateName"
+                   [doDownloadFileByNameApi]='doDownloadFileByNameApi'>
+  </hbt-import-file>
+
+  <reject-common-template
+    [isReject]="isReject"
+    [listRejectId]="listId"
+    [rejectId]='rejectId'
+    [rejectByListApi]='rejectByListApi'
+    (onCloseModal)="doCloseReject($event)">
+  </reject-common-template>
+
+  <ng-template #attachFileTmpl let-attachFileList='attachFileList'>
+    <div *ngFor="let file of attachFileList">
+      <a class="attach-file" (click)="doDownLoadFile(file); $event.stopPropagation();">{{file.fileName}}</a>
+    </div>
+  </ng-template>
+</div>
+

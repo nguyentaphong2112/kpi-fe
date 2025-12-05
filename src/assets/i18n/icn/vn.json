@@ -1,0 +1,237 @@
+{
+  "insuranceRetractions": {
+    "label": {
+      "makeList": "Lập danh sách",
+      "orgId": "Đơn vị",
+      "unitName": "Tên đơn vị",
+      "periodDate": "Kỳ",
+      "keySearch": "Mã/tên/email",
+      "empTypeCode": "Đối tượng",
+      "type": "Loại danh sách",
+      "status": "Trạng thái",
+      "classify": "Phân loại",
+      "startDate": "Từ tháng",
+      "endDate": "Đến tháng"
+    },
+    "table": {
+      "numberOrder": "STT",
+      "employeeCode": "Mã NV",
+      "fullName": "Tên nhân viên",
+      "periodDate": "Kỳ",
+      "retroPeriodDate": "Đã truy thu/truy lĩnh tại kỳ",
+      "totalSalaryContributions": "Tổng lương làm căn cứ trích nộp",
+      "contractSalary": "Lương cấp bậc",
+      "reserveSalary": "Lương chênh lệch bảo lưu",
+      "posAllowanceSalary": "Phụ cấp chức vụ",
+      "senioritySalary": "PC thâm niên vượt khung",
+      "posSenioritySalary": "PC thâm niên nghề",
+      "social": "BHXH bắt buộc",
+      "perSocialAmount": "Cá nhân",
+      "unitSocialAmount": "Đơn vị",
+      "medical": "Bảo hiểm y tế",
+      "perMedicalAmount": "Cá nhân",
+      "unitMedicalAmount": "Đơn vị",
+      "unemp": "Bảo hiểm thất nghiệp",
+      "perUnempAmount": "Cá nhân",
+      "unitUnempAmount": "Đơn vị",
+      "totalAmount": "Tổng đóng BH",
+      "empTypeCode": "Đối tượng",
+      "jobName": "Chức danh",
+      "orgName": "Đơn vị",
+      "status": "Trạng thái",
+      "reason": "Lý do"
+    }
+  },
+  "employeeChanges": {
+    "title": "Rà soát dữ liệu",
+    "label": {
+      "orgId": "Đơn vị",
+      "unitName": "Tên đơn vị",
+      "periodDate": "Kỳ",
+      "keySearch": "Mã/tên/email",
+      "changeType": "Loại thay đổi",
+      "contributionType": "Trạng thái trích nộp",
+      "status": "Trạng thái phê duyệt",
+      "makeList": "Lập danh sách",
+      "approve": "Phê duyệt",
+      "undoApprove": "Hủy phê duyệt"
+    },
+    "table": {
+      "numberOrder": "STT",
+      "employeeCode": "Mã nhân viên",
+      "fullName": "Tên nhân viên",
+      "jobName": "Chức danh",
+      "orgName": "Đơn vị",
+      "changeDate": "Ngày thay đổi",
+      "changeType": "Loại thay đổi",
+      "contributionType": "Trạng thái trích nộp",
+      "status": "Trạng thái phê duyệt"
+    }
+  },
+  "report": {
+    "title": "Báo cáo",
+    "label": {
+      "reportType": "Loại báo cáo",
+      "periodType": "Loại kỳ",
+      "startDate": "Từ",
+      "endDate": "Đến",
+      "startYear": "Từ năm",
+      "endYear": "Đến năm",
+      "year": "Năm",
+      "quarter": "Quý",
+      "locationJoin": "Nơi tham gia BHXH",
+      "format": "Định dạng",
+      "status": "Trạng thái"
+    }
+  },
+  "contributionRates": {
+    "title": "Cấu hình tỷ lệ trích nộp bảo hiểm",
+    "table": {
+      "numberOrder": "STT",
+      "empTypeCode": "Đối tượng",
+      "startDate": "Từ tháng",
+      "endDate": "Đến tháng",
+      "unitSocialPercent": "% trích nộp BHXH (đơn vị)",
+      "perSocialPercent": "% trích nộp BHXH (cá nhân)",
+      "unitMedicalPercent": "% trích nộp BHYT (đơn vị)",
+      "perMedicalPercent": "% trích nộp BHYT (cá nhân)",
+      "unitUnempPercent": "% trích nộp BHTN (đơn vị)",
+      "perUnempPercent": "% trích nộp BHTN (cá nhân)",
+      "unitUnionPercent": "% trích nộp KPCĐ (đơn vị)",
+      "perUnionPercent": "% trích CĐ phí (cá nhân)",
+      "description": "Ghi chú",
+      "usedTime": "Thời gian áp dụng"
+    },
+    "label": {
+      "startDate": "Từ tháng",
+      "endDate": "Đến tháng",
+      "empTypeCode": "Đối tượng"
+    }
+  },
+  "icnContribution": {
+    "calculate": {
+      "title": "Tính trích nộp bảo hiểm",
+      "titleExport": "Xuất excel",
+      "titleArrearsPrePeriod": "Bổ sung truy thu BHXH",
+      "titleArrearsPreMedical": "Bổ sung truy thu BHYT",
+      "titleChangeList": "Đổi danh sách",
+      "titleEmployeeInfo": "Thông tin nhân viên",
+      "employeeInfo": {
+        "titleGeneralInformation": "Thông tin chung",
+        "titleWorkInformation": "Thông tin công tác",
+        "titleContractInformation": "Thông tin hợp đồng",
+        "titleInsuranceCoefficientInformation": "Thông tin hệ số bảo hiểm",
+        "titleAllowanceInformation": "Thông tin phụ cấp",
+        "titleDependentInformation": "Thông tin người phụ thuộc",
+        "workProcessInformation": {
+          "numberOrder": "STT",
+          "startDate": "Từ ngày",
+          "endDate": "Đến ngày",
+          "documentTypeName": "Loại quyết định",
+          "documentNo": "Số quyết định",
+          "jobName": "Chức danh",
+          "orgName": "Đơn vị"
+        },
+        "contractInformation": {
+          "numberOrder": "STT",
+          "startDate": "Từ ngày",
+          "endDate": "Đến ngày",
+          "contractTypeName": "Loại HĐ",
+          "duration": "Thời hạn HĐ",
+          "empTypeName": "Đối tượng",
+          "armyRank": "Cấp bậc",
+          "documentNo": "Số Quyết định"
+        },
+        "insuranceCoefficientInformation": {
+          "numberOrder": "STT",
+          "startDate": "Từ ngày",
+          "endDate": "Đến ngày",
+          "insuranceFactor": "Hệ số",
+          "insuranceBaseSalary": "Mức lương",
+          "reserveFactor": "Hệ số chênh lệch bảo lưu",
+          "seniorityPercent": "Thâm niên vượt khung(%)"
+        },
+        "allowanceInformation": {
+          "numberOrder": "STT",
+          "startDate": "Từ ngày",
+          "endDate": "Đến ngày",
+          "insuranceFactor": "Loại phụ cấp,",
+          "insuranceBaseSalary": "Hệ số Phụ cấp,",
+          "reserveFactor":  "Mức phụ cấp"
+        },
+        "dependentInformation": {
+          "numberOrder": "STT",
+          "relationTypeName": "Thân nhân",
+          "fullName": "Họ tên NPT",
+          "taxNumber": "Mã số thuế NPT",
+          "startDate": "Tháng giảm trừ",
+          "endDate": "Tháng kết thúc"
+        }
+      },
+      "action": {
+        "makeList": "Lập danh sách",
+        "approve": "Phê duyệt",
+        "undoApprove": "Hủy phê duyệt",
+        "select": "Chọn",
+        "selectAll": "Chọn tất cả",
+        "changeList": "Đổi danh sách",
+        "arrearsPrePeriod": "Bổ sung truy thu BHXH",
+        "arrearsPreMedical": "Bổ sung truy thu BHYT",
+        "save": "Ghi lại"
+      },
+      "arrearsPrePeriod": {
+        "type": "Loại",
+        "keySearch": "Mã/tên/email",
+        "fromPeriodDate": "Từ kỳ",
+        "toPeriodDate": "Đến kỳ",
+        "isIndividuals": "Cá nhân đóng",
+        "isUnitPayed": "Đơn vị đóng",
+        "validate": {
+          "invalidUncompleteDate": "Không được nhỏ hơn từ kỳ"
+        }
+      },
+      "search": {
+        "orgId": "Đơn vị",
+        "unitName": "Tên đơn vị",
+        "periodDate": "Kỳ",
+        "keySearch": "Mã/tên/email",
+        "empTypeCode": "Đối tượng",
+        "type": "Loại danh sách",
+        "status": "Trạng thái",
+        "classify": "Phân loại"
+      },
+      "model": {
+        "numberOrder": "STT",
+        "employeeCode": "Mã NV",
+        "fullName": "Tên nhân viên",
+        "type": "Loại danh sách",
+        "periodDate": "Kỳ",
+        "retroPeriodDate": "Đã truy thu/truy lĩnh tại kỳ",
+        "totalSalaryContributions": "Tổng lương làm căn cứ trích nộp",
+        "contractSalary": "Lương cấp bậc",
+        "reserveSalary": "Lương chênh lệch bảo lưu",
+        "posAllowanceSalary": "Phụ cấp chức vụ",
+        "senioritySalary": "PC thâm niên vượt khung",
+        "posSenioritySalary": "PC thâm niên nghề",
+        "social": "BHXH bắt buộc",
+        "perSocialAmount": "Cá nhân",
+        "unitSocialAmount": "Đơn vị",
+        "medical": "Bảo hiểm y tế",
+        "perMedicalAmount": "Cá nhân",
+        "unitMedicalAmount": "Đơn vị",
+        "unemp": "Bảo hiểm thất nghiệp",
+        "perUnempAmount": "Cá nhân",
+        "unitUnempAmount": "Đơn vị",
+        "totalAmount": "Tổng đóng BH",
+        "empTypeCode": "Đối tượng",
+        "jobName": "Chức danh",
+        "orgName": "Đơn vị",
+        "status": "Trạng thái",
+        "reason": "Lý do",
+        "insuranceAgency": "Nơi tham gia BHXH",
+        "inputType": "Kiểu nhập liệu",
+        "labourType": "Phân loại LĐ"
+      }
+    }
+  }
+}

@@ -1,0 +1,322 @@
+<div class="org-evaluation-criteria">
+  <div class="flex">
+    <!--    <hbt-select *ngIf="!isDetail"-->
+    <!--                style="width: 30%"-->
+    <!--                [(ngModel)]="dataAdd"-->
+    <!--                [dataSelects]="listDataSelect"-->
+    <!--                keyValue="indicatorConversionId"-->
+    <!--                keyLabel="name"-->
+    <!--                placeholder="{{'kpi.kpiEvaluations.organizations.label.addKpi' | translate}}"-->
+    <!--                (ngModelChange)="addData($event)">-->
+    <!--    </hbt-select>-->
+    <span class="text" *ngIf="!isDetail"
+          (click)="openIndicatorPopup()">{{ 'kpi.kpiEvaluations.organizations.label.addIndicator' | translate }}</span>
+    <!--    <hbt-button buttonType="NO_BORDER" *ngIf="!isDetail || isEvaluate" (click)="isAdjust ? openModal() : save()"-->
+    <!--                buttonAvailableStyle="SAVE"-->
+    <!--                buttonText="{{'common.button.save' | translate}}" type='SUBMIT'></hbt-button>-->
+  </div>
+
+  <form nz-form [formGroup]="form" style="margin-top: 20px">
+    <div nz-row [nzGutter]='[20,15]'>
+      <div nz-col [nzXs]='24' [nzLg]='24' class="input__group">
+        <nz-table nzBordered [nzData]="[1]" nzSize="small" [nzShowPagination]="false"
+                  [nzScroll]="{ x: 1110 + listConversion.length * 100 + listTarget.length * 200 + 'px', y: '60vh' }"
+                  [nzWidthConfig]="['50px', '350px', '70px','200px', '200px', '70px', '200px', '70px', '100px', '100px', '100px', '100px', '100px', '100px']">
+          <thead>
+          <tr>
+            <th rowSpan="2" [ngStyle]="{width: '50px'}" class="text-center" nzLeft>STT</th>
+            <th rowSpan="2" [ngStyle]="{width: '350px'}" nzLeft
+                class="text-center">{{ 'kpi.kpiEvaluations.organizations.table.kpi' | translate }}
+              <span class='label__required'>*</span>
+            </th>
+            <th rowSpan="2" [ngStyle]="{width: '70px'}"
+                class="text-center">{{ 'kpi.kpiEvaluations.organizations.table.weight' | translate }}
+              <span class='label__required'>*</span>
+            </th>
+            <th rowSpan="2"
+                class="text-center">{{ 'kpi.kpiEvaluations.organizations.table.target' | translate }}
+              <span class='label__required'>*</span>
+            </th>
+            <th colSpan="2" [ngStyle]="{width: '270px'}" *ngIf="isEvaluate"
+                class="text-center">{{ (dataValid?.orgLevelManage == 3 ? 'kpi.kpiEvaluations.organizations.label.selfPoint3' : 'kpi.kpiEvaluations.organizations.label.selfPoint') | translate }}
+              <span class='label__required'>*</span>
+            </th>
+            <th colSpan="2" [ngStyle]="{width: '270px'}" *ngIf="isEvaluate"
+                class="text-center">{{ (dataValid?.orgLevelManage == 3 ? 'kpi.kpiEvaluations.organizations.label.managerPoint3' : 'kpi.kpiEvaluations.organizations.label.managerPoint') | translate }}
+              <span class='label__required' *ngIf="isEvaluateManage">*</span>
+            </th>
+            <th [colSpan]="listConversion.length > 0 ? listConversion.length : 1"
+                [rowSpan]="listConversion.length > 0 ? 1 : 2"
+                [ngStyle]="{width: listConversion.length * 100 + 'px'}"
+                class="text-center">{{ 'kpi.kpiEvaluations.organizations.table.levelOfCompletion' | translate }}
+            </th>
+            <th rowSpan="2" [ngStyle]="{width: '100px'}"
+                class="text-center">{{ 'kpi.kpiEvaluations.organizations.table.measureUnit' | translate }}
+            </th>
+            <th rowSpan="2" [ngStyle]="{width: '50px'}" *ngIf="!isDetail" nzRight></th>
+          </tr>
+          <tr>
+            <th [ngStyle]="{width: '200px'}" *ngIf="isEvaluate"
+                class="text-center">{{ 'kpi.kpiEvaluations.organizations.label.point' | translate }}
+              <span class='label__required'>*</span>
+            </th>
+            <th [ngStyle]="{width: '70px'}" *ngIf="isEvaluate"
+                class="text-center">{{ 'kpi.kpiEvaluations.organizations.label.resultManage' | translate }}
+            </th>
+            <th [ngStyle]="{width: '200px'}" *ngIf="isEvaluate"
+                class="text-center">{{ 'kpi.kpiEvaluations.organizations.label.point' | translate }}
+              <span class='label__required' *ngIf="isEvaluateManage">*</span>
+            </th>
+            <th [ngStyle]="{width: '70px'}" *ngIf="isEvaluate"
+                class="text-center">{{ 'kpi.kpiEvaluations.organizations.label.resultManage' | translate }}
+            </th>
+            <th *ngFor="let column of listConversion" [ngStyle]="{width: '100px'}"
+                class="text-center">{{ column.name }}
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr style="font-weight: bold;" *ngIf="isEvaluate">
+            <td [nzLeft]="true" colspan="2">{{ 'kpi.employeeEvaluations.label.total' | translate }}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td style="text-align: right">{{ getTotalSelfPoint() }}</td>
+            <td></td>
+            <td style="text-align: right">{{ getTotalManagePoint() }}</td>
+            <ng-container *ngIf="listConversion.length > 0">
+              <td *ngFor="let column of listConversion">
+              </td>
+            </ng-container>
+            <td></td>
+            <td class="text-center" *ngIf="!isDetail">
+            </td>
+          </tr>
+          <ng-container [formArrayName]="FORM_ARRAY_NAME">
+            <ng-container *ngFor="let item of formArray.controls; let i = index" [formGroupName]="i">
+              <tr [style]="(orgId == 1 && item.get('isChildren').value) ? 'font-weight: bold' : null">
+                <td style="text-align: center; font-weight: bold" nzLeft>
+                  {{ orgId == 1 ? item.get('key').value : (i + 1) }}
+                </td>
+                <td nzLeft>
+                  <!--                  <hbt-select formControlName="indicatorConversionId" class="eca-input"-->
+                  <!--                              [dataSelects]="listDataSelect"-->
+                  <!--                              [disable]="isDetail"-->
+                  <!--                              keyValue="indicatorConversionId"-->
+                  <!--                              keyLabel="name"-->
+                  <!--                              placeholder="{{'kpi.kpiEvaluations.organizations.table.kpi' | translate}}"-->
+                  <!--                              [type]="isSubmitted && item.get('indicatorConversionId')?.errors ? 'error' : 'default'"-->
+                  <!--                              [showError]="isSubmitted && item.get('indicatorConversionId')?.errors !== null"-->
+                  <!--                              [errors]="item.get('indicatorConversionId')?.errors"-->
+                  <!--                              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.kpiEvaluations.organizations.table.kpi' | translate }}]"-->
+                  <!--                              (eventEmit)="getData($event, i)">-->
+                  <!--                  </hbt-select>-->
+                  <span>{{ item.get('indicatorName').value ? item.get('indicatorName').value : '-' }}</span>
+                </td>
+                <td style="text-align: right">
+                  <hbt-input-text formControlName="percent" class="eca-input" [maxLength]="6"
+                                  placeholderText="{{'kpi.kpiEvaluations.organizations.table.weight' | translate}}"
+                                  appNumberic
+                                  *ngIf="!isDetail"
+                                  [num]="3"
+                                  [decimals]="2"
+                                  [type]="isSubmitted && (item.get('percent')?.errors || formArray.errors?.totalPercentExceeded) ? 'error' : 'default'"
+                                  [showError]="isSubmitted && (item.get('percent')?.errors || formArray.errors?.totalPercentExceeded) !== null"
+                                  [errors]="formArray.errors?.totalPercentExceeded ? formArray.errors : item.get('percent')?.errors"
+                                  [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.kpiEvaluations.organizations.table.weight' | translate }},
+                                  { errorName: 'totalPercentExceeded', errorDescription: 'kpi.validates.totalPercentExceeded' | translate }]">
+                  </hbt-input-text>
+                  <span *ngIf="isDetail">{{ item.get('percent').value ? item.get('percent').value : '0' }}</span>
+                </td>
+                <ng-container *ngIf="(orgId == 1 && item.get('isChildren').value)">
+                  <td [colSpan]="listTarget.length + listConversion.length + 5"></td>
+                </ng-container>
+                <ng-container *ngIf="!(orgId == 1 && item.get('isChildren').value)">
+                  <td>
+                    <hbt-select [dataSelects]="item.get('dataSelect').value"
+                                *ngIf="item.get('isSelected').value && !isDetail"
+                                dropdownClassName="data-select-pane-custom"
+                                formControlName="target"
+                                placeholder="{{'kpi.kpiEvaluations.organizations.table.target' | translate}}"
+                                [type]="isSubmitted && item.get('target')?.errors ? 'error' : 'default'"
+                                [showError]="isSubmitted && item.get('target')?.errors !== null"
+                                [errors]="item.get('target')?.errors"
+                                [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.kpiEvaluations.organizations.table.target' | translate }}]">
+
+                    </hbt-select>
+                    <span
+                      *ngIf="item.get('isSelected').value && isDetail">{{ item.get('target').value ? getValueSelect(item.get('dataSelect').value, item.get('target').value) : '-' }}</span>
+                    <hbt-input-text formControlName="target" class="eca-input" [maxLength]="255"
+                                    *ngIf="!item.get('isSelected').value && !isDetail"
+                                    appExpression
+                                    [decimals]="5"
+                                    [num]="8"
+                                    [defaultInput]="true"
+                                    placeholderText="{{'kpi.kpiEvaluations.organizations.table.target' | translate}}"
+                                    [type]="isSubmitted && item.get('target')?.errors ? 'error' : 'default'"
+                                    [showError]="isSubmitted && item.get('target')?.errors !== null"
+                                    [errors]="item.get('target')?.errors"
+                                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.kpiEvaluations.organizations.table.target' | translate }}]">
+                    </hbt-input-text>
+                    <span
+                      *ngIf="!item.get('isSelected').value && isDetail">{{ item.get('target').value ? item.get('target').value : '-' }}</span>
+                  </td>
+                  <!--                <ng-container *ngIf="listTarget.length == 0">-->
+                  <!--                  <td>-->
+                  <!--                    <hbt-input-text formControlName="target" class="eca-input" [maxLength]="255"-->
+                  <!--                                    [disable]="isDetail"-->
+                  <!--                                    placeholderText="{{'kpi.kpiEvaluations.organizations.table.target' | translate}}"-->
+                  <!--                                    [type]="isSubmitted && item.get('target')?.errors ? 'error' : 'default'"-->
+                  <!--                                    [showError]="isSubmitted && item.get('target')?.errors !== null"-->
+                  <!--                                    [errors]="item.get('target')?.errors"-->
+                  <!--                                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.kpiEvaluations.organizations.table.target' | translate }}]">-->
+                  <!--                    </hbt-input-text>-->
+                  <!--                  </td>-->
+                  <!--                </ng-container>-->
+                  <td *ngIf="isEvaluate" [style]="!item.get('isSelected').value ? 'text-align: right' : null">
+                    <hbt-select [dataSelects]="item.get('dataSelect').value"
+                                *ngIf="item.get('isSelected').value && !isEvaluateManage && !isEvaluateDetail"
+                                dropdownClassName="data-select-pane-custom"
+                                formControlName="result"
+                                placeholder="{{'kpi.kpiEvaluations.organizations.label.point' | translate}}"
+                                [type]="isSubmitted && item.get('result')?.errors ? 'error' : 'default'"
+                                [showError]="isSubmitted && item.get('result')?.errors !== null"
+                                [errors]="item.get('result')?.errors"
+                                [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.kpiEvaluations.organizations.label.point' | translate }}]">
+
+                    </hbt-select>
+                    <span
+                      *ngIf="item.get('isSelected').value && (isEvaluateManage || isEvaluateDetail)">{{ item.get('result').value ? getValueSelect(item.get('dataSelect').value, item.get('result').value) : '-' }}</span>
+                    <hbt-input-text formControlName="result" class="eca-input" [maxLength]="21"
+                                    appNumberic
+                                    [num]="18"
+                                    [decimals]="2"
+                                    [disable]="item.get('isWorkPlanningIndex').value == 'Y'"
+                                    *ngIf="!item.get('isSelected').value && !isEvaluateManage && !isEvaluateDetail"
+                                    placeholderText="{{'kpi.kpiEvaluations.organizations.label.point' | translate}}"
+                                    [type]="isSubmitted && item.get('result')?.errors ? 'error' : 'default'"
+                                    [showError]="isSubmitted && item.get('result')?.errors !== null"
+                                    [errors]="item.get('result')?.errors"
+                                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.kpiEvaluations.organizations.label.point' | translate }}]">
+                    </hbt-input-text>
+                    <span
+                      *ngIf="!item.get('isSelected').value && (isEvaluateManage || isEvaluateDetail)">{{ item.get('result').value ? item.get('result').value : '-' }}</span>
+                  </td>
+                  <td *ngIf="isEvaluate" style="text-align: right">
+                    <!--                  <hbt-input-text formControlName="selfPoint" class="eca-input" [maxLength]="21"-->
+                    <!--                                  appNumberic-->
+                    <!--                                  [disable]="true"-->
+                    <!--                                  [num]="18"-->
+                    <!--                                  [decimals]="2"-->
+                    <!--                                  placeholderText="{{'kpi.kpiEvaluations.organizations.label.resultManage' | translate}}">-->
+                    <!--                  </hbt-input-text>-->
+                    <span>{{ item.get('selfPoint').value ? item.get('selfPoint').value : '0' }}</span>
+                  </td>
+                  <td *ngIf="isEvaluate" [style]="!item.get('isSelected').value ? 'text-align: right' : null">
+                    <hbt-select [dataSelects]="item.get('dataSelect').value"
+                                *ngIf="item.get('isSelected').value && isEvaluateManage && !isEvaluateDetail"
+                                dropdownClassName="data-select-pane-custom"
+                                formControlName="resultManage"
+                                placeholder="{{'kpi.kpiEvaluations.organizations.label.point' | translate}}"
+                                [type]="isSubmitted && item.get('resultManage')?.errors ? 'error' : 'default'"
+                                [showError]="isSubmitted && item.get('resultManage')?.errors !== null"
+                                [errors]="item.get('resultManage')?.errors"
+                                [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.kpiEvaluations.organizations.label.point' | translate }}]">
+                    </hbt-select>
+                    <span
+                      *ngIf="item.get('isSelected').value && (!isEvaluateManage || isEvaluateDetail)">{{ item.get('resultManage').value ? getValueSelect(item.get('dataSelect').value, item.get('resultManage').value) : '-' }}</span>
+                    <hbt-input-text formControlName="resultManage" class="eca-input" [maxLength]="21"
+                                    appNumberic
+                                    [num]="18"
+                                    [decimals]="2"
+                                    [disable]="item.get('isWorkPlanningIndex').value == 'Y'"
+                                    *ngIf="!item.get('isSelected').value && isEvaluateManage && !isEvaluateDetail"
+                                    placeholderText="{{'kpi.kpiEvaluations.organizations.label.point' | translate}}"
+                                    [type]="isSubmitted && item.get('resultManage')?.errors ? 'error' : 'default'"
+                                    [showError]="isSubmitted && item.get('resultManage')?.errors !== null"
+                                    [errors]="item.get('resultManage')?.errors"
+                                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.kpiEvaluations.organizations.label.point' | translate }}]">
+                    </hbt-input-text>
+                    <span
+                      *ngIf="!item.get('isSelected').value && (!isEvaluateManage || isEvaluateDetail)">{{ item.get('resultManage').value ? item.get('resultManage').value : '-' }}</span>
+                  </td>
+
+                  <td *ngIf="isEvaluate" style="text-align: right">
+                    <!--                  <hbt-input-text formControlName="managePoint" class="eca-input" [maxLength]="21"-->
+                    <!--                                  appNumberic-->
+                    <!--                                  [num]="18"-->
+                    <!--                                  [decimals]="2"-->
+                    <!--                                  [disable]="true"-->
+                    <!--                                  placeholderText="{{'kpi.kpiEvaluations.organizations.label.resultManage' | translate}}">-->
+                    <!--                  </hbt-input-text>-->
+                    <span>{{ item.get('managePoint').value ? item.get('managePoint').value : '0' }}</span>
+                  </td>
+                  <ng-container *ngIf="listConversion.length > 0">
+                    <td style="text-align: center" *ngFor="let column of listConversion">
+                      <span>{{ item.get(column.value).value ? item.get(column.value).value : '-' }}</span>
+                    </td>
+                  </ng-container>
+                  <ng-container *ngIf="listConversion.length == 0">
+                    <td style="text-align: center">
+                      <span>-</span>
+                    </td>
+                  </ng-container>
+                  <td style="text-align: center">
+                    <span>{{ item.get('measureUnit').value ? item.get('measureUnit').value : '-' }}</span>
+                  </td>
+                  <td class="text-center" *ngIf="!isDetail">
+                    <btn-more-action [model]="[item, {key: i}]" [setting]="actionSchema">
+                    </btn-more-action>
+                  </td>
+                </ng-container>
+              </tr>
+            </ng-container>
+          </ng-container>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </form>
+  <ng-template #footerTmpl>
+    <hbt-button
+      buttonAvailableStyle="CANCEL"
+      buttonText="{{ 'common.button.cancel' | translate }}"
+      (click)="modalRef.destroy()">
+    </hbt-button>
+    <hbt-button
+      buttonAvailableStyle="SAVE"
+      buttonText="{{ 'common.button.select' | translate }}"
+      (click)="modalRef.getContentComponent().save()">
+    </hbt-button>
+  </ng-template>
+
+  <nz-modal [(nzVisible)]="isVisible" nzTitle="{{'kpi.kpiEvaluations.organizations.label.adjustReason' | translate}}"
+            (nzOnCancel)="handleCancel()">
+    <ng-container *nzModalContent>
+      <div>
+        <hbt-input-text
+          isTextAre
+          labelText="{{'kpi.kpiEvaluations.organizations.label.adjustReason' | translate}} <span class='label__required'>*</span>"
+          placeholderText="{{'kpi.kpiEvaluations.organizations.label.adjustReason' | translate}}"
+          [type]="(valueInput == '' && isSubmittedModal) ? 'error' : 'default'"
+          [showError]="(isSubmittedModal && valueInput == '')"
+          [errors]="{required: true}"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'kpi.validates.required' | translate: {'param': 'kpi.kpiEvaluations.organizations.label.adjustReason' | translate }}]"
+          [(ngModel)]="valueInput"
+        ></hbt-input-text>
+      </div>
+    </ng-container>
+    <ng-template [nzModalFooter]>
+      <hbt-button
+        buttonAvailableStyle="CANCEL"
+        buttonText="{{ 'common.button.cancel' | translate }}"
+        (click)="handleCancel()">
+      </hbt-button>
+      <hbt-button
+        buttonAvailableStyle="SAVE"
+        buttonText="{{'common.button.save' | translate}}"
+        (click)="handleOk()">
+      </hbt-button>
+    </ng-template>
+  </nz-modal>
+</div>

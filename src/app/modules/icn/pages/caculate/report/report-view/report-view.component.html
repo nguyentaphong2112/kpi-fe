@@ -1,0 +1,159 @@
+<div class="report-view-index">
+  <div class="content__item content__item--border bg__content--default">
+    <div class="form-search">
+      <form nz-form [formGroup]="form">
+        <div class="app-row" nz-row [nzGutter]='[20,15]'>
+          <div nz-col nzXs="24" nzLg="12">
+            <hbt-select formControlName="reportType"
+                        [urlLoadData]="getUrlCategory(CATEGORY_CODE.ICN_LOAI_BAO_CAO)"
+                        [serviceName]="MICRO_SERVICE.ADMIN"
+                        keyValue="value"
+                        keyLabel="name"
+                        [type]="isSubmitted && form.controls['reportType'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['reportType'].errors !== null"
+                        [errors]="form.controls['reportType'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'icn.report.label.reportType' | translate }}]"
+                        labelText="{{'icn.report.label.reportType' | translate}} <span class='label__required'>*</span>"
+                        placeholder="{{'icn.report.label.reportType' | translate}}"
+            >
+            </hbt-select>
+          </div>
+          <div nz-col nzXs="24" nzLg="12">
+            <hbt-select formControlName='periodType'
+                        (ngModelChange)="changeReportPeriodType($event)"
+                        [dataSelects]="listReportPeriodType"
+                        [type]="isSubmitted && form.controls['periodType'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['periodType'].errors !== null"
+                        [errors]="form.controls['periodType'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'icn.report.label.periodType' | translate }}]"
+                        placeholder="{{'icn.report.label.periodType' | translate }}"
+                        labelText="{{'icn.report.label.periodType' | translate}} <span class='label__required'>*</span>">
+            </hbt-select>
+          </div>
+
+          <div nz-col nzXs="24" nzLg="12" *ngIf="form.controls['periodType'].value === 'MONTH'">
+            <hbt-date-picker
+              formControlName="startDate"
+              mode="month"
+              format="MM/yyyy"
+              [type]="isSubmitted && form.controls['startDate'].errors ? 'error' : 'default'"
+              [showError]="isSubmitted && form.controls['startDate'].errors !== null"
+              [errors]="form.controls['startDate'].errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configurations.parameters.label.startMonth' | translate }}]"
+              labelText="{{ 'icn.report.label.startDate' | translate }} <span class='label__required'>*</span>"
+              placeholderText="{{ 'icn.report.label.startDate' | translate }}"
+            ></hbt-date-picker>
+          </div>
+
+          <div nz-col nzXs="24" nzLg="12" *ngIf="form.controls['periodType'].value === 'YEAR'">
+            <hbt-date-picker
+              formControlName="startDate"
+              mode="year"
+              format="yyyy"
+              [type]="isSubmitted && form.controls['startDate'].errors ? 'error' : 'default'"
+              [showError]="isSubmitted && form.controls['startDate'].errors !== null"
+              [errors]="form.controls['startDate'].errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'icn.report.label.startYear' | translate }}]"
+              labelText="{{ 'icn.report.label.startYear' | translate }} <span class='label__required'>*</span>"
+              placeholderText="{{ 'icn.report.label.startYear' | translate }}"
+            ></hbt-date-picker>
+          </div>
+
+          <div nz-col nzXs="24" nzLg="12" *ngIf="form.controls['periodType'].value === 'QUARTER'">
+              <hbt-select formControlName='quarter'
+                          [dataSelects]="listReportQuarter"
+                          [type]="isSubmitted && form.controls['quarter'].errors ? 'error' : 'default'"
+                          [showError]="isSubmitted && form.controls['quarter'].errors !== null"
+                          [errors]="form.controls['quarter'].errors"
+                          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'icn.report.label.quarter' | translate }}]"
+                          placeholder="{{'icn.report.label.quarter' | translate }}"
+                          labelText="{{'icn.report.label.quarter' | translate}} <span class='label__required'>*</span>">
+              </hbt-select>
+          </div>
+
+
+          <div nz-col nzXs="24" nzLg="12" *ngIf="form.controls['periodType'].value === 'MONTH'">
+            <hbt-date-picker
+              formControlName="endDate"
+              mode="month"
+              format="MM/yyyy"
+              [type]="(form.controls['endDate'].errors || form.errors?.rangeDateError) ? 'error' : 'default'"
+              [showError]="(form.controls['endDate'].errors || form.errors?.rangeDateError) !== null"
+              [errors]="form.errors?.rangeDateError ? form.errors : form.controls['endDate']?.errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configurations.parameters.label.endMonth' | translate }},
+              { errorName: 'rangeDateError', errorDescription: 'hrm.validate.rangeDate.pareDateMore' | translate:{'fromDate': 'admin.configurations.parameters.label.startMonth' | translate, 'toDate': 'admin.configurations.parameters.label.endMonth' | translate}}]"
+              labelText="{{ 'icn.report.label.endDate' | translate }} <span class='label__required'>*</span>"
+              placeholderText="{{ 'icn.report.label.endDate' | translate }}"
+            ></hbt-date-picker>
+          </div>
+
+          <div nz-col nzXs="24" nzLg="12" *ngIf="form.controls['periodType'].value === 'YEAR'">
+            <hbt-date-picker
+              formControlName="endDate"
+              mode="year"
+              format="yyyy"
+              [type]="(form.controls['endDate'].errors || form.errors?.rangeDateError) ? 'error' : 'default'"
+              [showError]="(form.controls['endDate'].errors || form.errors?.rangeDateError) !== null"
+              [errors]="form.errors?.rangeDateError ? form.errors : form.controls['endDate']?.errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'icn.report.label.endYear' | translate }},
+              { errorName: 'rangeDateError', errorDescription: 'hrm.validate.rangeDate.pareDateMore' | translate:{'fromDate': 'icn.report.label.startYear' | translate, 'toDate': 'icn.report.label.endYear' | translate}}]"
+              labelText="{{ 'icn.report.label.endYear' | translate }} <span class='label__required'>*</span>"
+              placeholderText="{{ 'icn.report.label.endYear' | translate }}"
+            ></hbt-date-picker>
+          </div>
+
+           <div nz-col nzXs="24" nzLg="12" *ngIf="form.controls['periodType'].value === 'QUARTER'">
+              <hbt-input-text formControlName='year'
+                              [num]="4"
+                              appNumberic
+                              [type]="isSubmitted && form.controls['year'].errors ? 'error' : 'default'"
+                              [showError]="isSubmitted && form.controls['year'].errors !== null"
+                              [errors]="form.controls['year'].errors"
+                              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'icn.report.label.year' | translate }}]"
+                              placeholderText="{{'icn.report.label.year' | translate }}"
+                              labelText="{{'icn.report.label.year' | translate}} <span class='label__required'>*</span>">
+              </hbt-input-text>
+           </div>
+
+
+          <div nz-col nzXs="24" nzLg="12">
+            <hbt-select-check-able formControlName="listLocationJoin"
+                        [urlLoadData]="getUrlCategory(CATEGORY_CODE.NOI_TGIA_BHXH)"
+                        [serviceName]="MICRO_SERVICE.ADMIN"
+                        keyValue="value"
+                        keyLabel="name"
+                        labelText="{{'icn.report.label.locationJoin' | translate}} "
+                        placeholder="{{'icn.report.label.locationJoin' | translate}}"
+            >
+            </hbt-select-check-able>
+          </div>
+
+          <div nz-col nzXs="24" nzLg="12">
+            <hbt-select-check-able formControlName="listStatus"
+                        [urlLoadData]="getUrlCategory(CATEGORY_CODE.TRANG_THAI_THU_BHXH)"
+                        [serviceName]="MICRO_SERVICE.ADMIN"
+                        keyValue="value"
+                        keyLabel="name"
+                        labelText="{{'icn.report.label.status' | translate}}"
+                        placeholder="{{'icn.report.label.status' | translate}}"
+            >
+            </hbt-select-check-able>
+          </div>
+
+
+          <div nz-col nzXs="24" nzLg="24">
+            <div style="text-align: center">
+              <hbt-button
+                class="staff__research__btn__search"
+                buttonSize="MEDIUM"
+                buttonAvailableStyle="SEARCH"
+                buttonText="{{'common.button.export' | translate}}"
+                (click)="export()"
+              ></hbt-button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

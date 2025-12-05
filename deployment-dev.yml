@@ -1,0 +1,109 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crmcore-frontend-web-deployment
+spec:
+  selector:
+    matchLabels:
+      name: crmcore-frontend-web
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        name: crmcore-frontend-web
+    spec:
+      hostAliases:
+        - ip: 10.2.16.184
+          hostnames:
+            - esbinternal.mbbank.com.vn
+        - ip: 10.1.12.164
+          hostnames:
+            - esbinternet.mbbank.com.vn
+        - ip: 10.1.12.164
+          hostnames:
+            - esbexternal.mbbank.com.vn
+      volumes:
+#        - configMap:
+#            defaultMode: 256
+#            items:
+#              - key: application.properties
+#                path: application.properties
+#              - key: log4j2.xml
+#                path: log4j2.xml
+#            name: crmcore-frontend-web
+#            optional: false
+#          name: crmcore-frontend-web-config-volume
+        - downwardAPI:
+            defaultMode: 420
+            items:
+              - fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.labels
+                path: labels
+              - fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.annotations
+                path: annotations
+          name: podinfo
+      containers:
+        - name: crmcore-frontend-web
+          image: 10.1.16.211:8005/dev-crmnew/crmcore-frontend-web:1.0.0
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: 128Mi
+            limits:
+              memory: 512Mi
+#          livenessProbe:
+#            failureThreshold: 3
+#            httpGet:
+#              path: /actuator/health/liveness
+#              port: 10168
+#              scheme: HTTP
+#            initialDelaySeconds: 60
+#            periodSeconds: 10
+#            successThreshold: 1
+#            timeoutSeconds: 1
+#          readinessProbe:
+#            failureThreshold: 3
+#            httpGet:
+#              path: /actuator/health/readiness
+#              port: 10168
+#              scheme: HTTP
+#            initialDelaySeconds: 10
+#            periodSeconds: 10
+#            successThreshold: 1
+#            timeoutSeconds: 1
+          ports:
+            - containerPort: 10170
+          env:
+#            - name: ENV_PROFILE
+#              value: test
+#            - name: JVM_OPTS
+#              value: -Xms1024m -Xmx2048m -Dsun.net.http.retryPost=false -Dhttp.retryPost=false
+            - name: TZ
+              value: Asia/Ho_Chi_Minh
+          volumeMounts:
+#            - mountPath: /deployment/config
+#              name: crmcore-frontend-web-config-volume
+#              readOnly: true
+            - mountPath: /deployment/podinfo
+              name: podinfo
+              readOnly: true
+      imagePullSecrets:
+        - name: harbor-secret-registry
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: crmcore-frontend-web-service
+  name: crmcore-frontend-web-service
+spec:
+  type: NodePort
+  ports:
+    - nodePort: 10170
+      port: 10170
+      targetPort: 10170
+  selector:
+    name: crmcore-frontend-web

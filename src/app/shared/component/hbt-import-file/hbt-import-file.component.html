@@ -1,0 +1,101 @@
+<nz-modal *ngIf="isPopup" [nzVisible]='showContent' [nzFooter]='null' (nzOnCancel)='doClose(false)'
+          [nzTitle]="title" [nzWidth]='nzWidth'
+          [nzCentered]='true'>
+  <ng-container *nzModalContent style='padding: 0'>
+    <ng-content select='.formImport'></ng-content>
+    <ng-container [ngTemplateOutlet]="content">
+
+    </ng-container>
+  </ng-container>
+</nz-modal>
+
+<ng-container *ngIf="!isPopup" [ngTemplateOutlet]="content">
+</ng-container>
+
+<ng-template #content>
+  <div nz-row [nzGutter]='[20,15]'>
+    <hbt-button buttonType='BORDER' class='import-file-btn cus__button--w100 cus__button--no-margin' nz-col
+                nzXs='24' nzLg='24'
+                (click)='doDownloadTemplate()'>
+      <div class='cus__button--content--imp'>
+        <div class='content__left'>
+          <em *ngIf='isDownloadTemplate' nz-icon [nzType]="'loading'"></em>
+          <img alt="" src='/assets/icon/button/zip.png'>
+          <span>{{ 'common.upload.downloadTemplate'|translate }}</span>
+        </div>
+        <div class='content__right'><img alt="" src='/assets/icon/button/file.png'></div>
+      </div>
+    </hbt-button>
+    <nz-upload nz-col nzXs='24' nzLg='24' class="hbt-import"
+               nzType='drag'
+               [nzMultiple]='false' [(nzFileList)]='fileList' [nzBeforeUpload]='beforeUpload'
+               [nzRemove]='doRemoveFile'>
+      <div *ngIf="!fileImportName">
+        <p class='ant-upload-drag-icon'>
+          <img alt="" src='assets/icon/staff-manager/import.svg'>
+        </p>
+        <p class='ant-upload-text'>
+          {{ 'common.upload.description'|translate }}
+        </p>
+        <p class='ant-upload-hint'>
+          {{ 'common.upload.supportExcelS'|translate }}
+        </p>
+      </div>
+      <div *ngIf="fileImportName" class="nz__upload--content">
+        <p class='ant-upload-drag-icon'>
+          <img style="width: 30px; margin-bottom: -10px" alt="" src='/assets/icon/staff-manager/export_excel.svg' />
+        </p>
+        <p class='ant-upload-text upload-file-text'>{{ fileImportName }}</p>
+        <p class='ant-upload-hint'>
+          {{ fileImportSize }} MB
+        </p>
+      </div>
+    </nz-upload>
+  </div>
+  <div nz-row [nzGutter]='[10,10]' *ngIf='isExistFileImport' class='import-file-btn'>
+    <hbt-button buttonType='BORDER' buttonSize='MEDIUM' buttonText="{{'common.button.cancel'|translate }}"
+                class='cus__button--w100 cus__button--no-margin' nz-col nzXs='24' nzLg='12'
+                buttonAvailableStyle='CANCEL'
+                (click)='doClose(false)'></hbt-button>
+    <hbt-button buttonType='BORDER' buttonSize='MEDIUM' buttonAvailableStyle='SAVE'
+                [buttonIsLoading]='isImport'
+                buttonText="{{'common.upload.upload'|translate }}"
+                class='cus__button--w100 cus__button--no-margin' nz-col nzXs='24' nzLg='12'
+                (click)='doImportFile()'></hbt-button>
+  </div>
+</ng-template>
+
+<nz-modal (nzOnCancel)='doCloseModal()' [nzCentered]='true' [nzVisible]='isModalError' [nzFooter]="footer"
+          nzTitle="{{'common.error.list'|translate}}" [nzWidth]="'60%'">
+  <div *nzModalContent>
+    <nz-table [nzData]='errorList' nzBordered='true' nzSize='middle' nzShowPagination='false'
+              [nzScroll]="{x: 'auto', y: '60vh'}">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">{{ 'common.table.column'|translate }}</th>
+        <th scope="col">{{ 'common.table.row'|translate }}</th>
+        <th scope="col">{{ 'common.table.value'|translate }}</th>
+        <th scope="col">{{ 'common.error.description'|translate }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor='let data of errorList; let i = index'>
+        <td>{{ i + 1 }}</td>
+        <td>{{ data?.columnLabel }}</td>
+        <td>{{ data?.row }}</td>
+        <td>{{ data?.content }}</td>
+        <td><span [innerHtml]='data?.description'></span></td>
+      </tr>
+      </tbody>
+    </nz-table>
+    <div class='linkDownload' *ngIf="isHiddenDownloadErrorFile">
+      <a (click)='doDownloadFile()'>{{ 'common.error.downloadFile' |translate }}</a>
+    </div>
+  </div>
+</nz-modal>
+<ng-template #footer>
+  <hbt-button (click)='doCloseModal()' hbtPrefixIcon='close-circle'
+              buttonText="{{'common.button.close'|translate}}" buttonAvailableStyle='CANCEL'></hbt-button>
+</ng-template>
+

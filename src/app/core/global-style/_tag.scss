@@ -1,0 +1,75 @@
+@import "variable";
+.ant-tag-red {
+  color: $error-500;
+  background: $error-200;
+  border: none;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 150%;
+  border-radius: 3px;
+  height: 22px;
+  width: 108px;
+  display: flex;
+  justify-content: center;
+}
+
+.ant-tag-orange {
+  color: $warning-500;
+  background: $warning-200;
+  border: none;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 150%;
+  border-radius: 3px;
+  height: 22px;
+  width: 108px;
+  display: flex;
+  justify-content: center;
+}
+
+.ant-tag-green {
+  color: $success-500;
+  background: $success-200;
+  border: none;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 150%;
+  border-radius: 3px;
+  height: 22px;
+  width: 108px;
+  display: flex;
+  justify-content: center;
+}
+
+.ant-tag-magenta {
+  color: $error-500;
+  background: $error-200;
+  border: none;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 150%;
+  border-radius: 3px;
+  height: 22px;
+  width: 108px;
+  display: flex;
+  justify-content: center;
+}
+
+.content-header {
+  position: fixed;
+  top: 130px;
+  z-index: 1000;
+  right: 25px;
+}
+
+.tooltip-hide {
+  display: none !important;
+}
+
+.tooltip-primary {
+  background-color: $primary-500 !important;
+}

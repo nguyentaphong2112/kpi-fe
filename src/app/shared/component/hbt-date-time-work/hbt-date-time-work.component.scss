@@ -1,0 +1,19 @@
+::ng-deep hbt-date-time-work {
+  .datetimework {
+    display: flex;
+  }
+
+  .datetimework .datepicker__group--group {
+    flex: 1;
+  }
+
+  .datetimework .select-time {
+    width: 90px;
+    margin-left: 10px;
+  }
+}
+
+::ng-deep .datetime-work .ant-select-dropdown > div {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}

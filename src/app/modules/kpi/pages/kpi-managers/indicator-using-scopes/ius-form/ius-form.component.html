@@ -1,0 +1,88 @@
+<div class='save-form-kpi'>
+  <form nz-form [formGroup]="form" style="margin-top: 20px">
+    <div nz-row [nzGutter]='[20,15]'>
+      <!--id khóa chính-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [dataSelects]="[]"
+          formControlName="indicatorUsingId"
+          [type]="isSubmitted && form.controls['indicatorUsingId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['indicatorUsingId'].errors != null"
+          [errors]="form.controls['indicatorUsingId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.indicatorUsingScopes.table.indicatorUsingId' | translate }}]"
+          placeholder="{{'kpi.indicatorUsingScopes.table.indicatorUsingId' | translate}}"
+          labelText="{{'kpi.indicatorUsingScopes.table.indicatorUsingId' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <!--chỉ số-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [dataSelects]="[]"
+          formControlName="indicatorId"
+          [type]="isSubmitted && form.controls['indicatorId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['indicatorId'].errors != null"
+          [errors]="form.controls['indicatorId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.indicatorUsingScopes.table.indicatorId' | translate }}]"
+          placeholder="{{'kpi.indicatorUsingScopes.table.indicatorId' | translate}}"
+          labelText="{{'kpi.indicatorUsingScopes.table.indicatorId' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <!--đơn vị áp dụng chỉ số-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <tree-data-picker
+          [isExpand]="true"
+
+          labelText="{{'kpi.indicatorUsingScopes.table.organizationId' | translate}}"
+          [type]="isSubmitted && form.controls['organizationId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['organizationId'].errors != null"
+          [errors]="form.controls['organizationId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'common.organization.org' | translate }}]"
+          formControlName="organizationId"
+        >
+        </tree-data-picker>
+      </div>
+
+      <!--vị trí việc làm áp dụng chỉ số (position)-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [dataSelects]="[]"
+          formControlName="positionId"
+          [type]="isSubmitted && form.controls['positionId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['positionId'].errors != null"
+          [errors]="form.controls['positionId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.indicatorUsingScopes.table.positionId' | translate }}]"
+          placeholder="{{'kpi.indicatorUsingScopes.table.positionId' | translate}}"
+          labelText="{{'kpi.indicatorUsingScopes.table.positionId' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <!--vị trí áp dụng chỉ số-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [dataSelects]="[]"
+          formControlName="jobId"
+          [type]="isSubmitted && form.controls['jobId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['jobId'].errors != null"
+          [errors]="form.controls['jobId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.indicatorUsingScopes.table.jobId' | translate }}]"
+          placeholder="{{'kpi.indicatorUsingScopes.table.jobId' | translate}}"
+          labelText="{{'kpi.indicatorUsingScopes.table.jobId' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <div nz-col [nzXs]='24' [nzLg]='24' class="input__group">
+        <hbt-upload
+          [(docIdsDelete)]="docIdsDelete"
+          [typeFileAvailable]="['jpeg', 'jpg', 'png', 'pdf', 'doc', 'docx']"
+          [multiple]="true"
+          labelText="{{'common.label.attachFile' | translate}}"
+          [required]="true"
+          (fileListChange)="onFileListChange($event, 'fileList', true)"
+          (docIdsDeleteChange)="removeFile($event, 'fileList')"
+          [serviceName]='serviceName'
+          [showError]="isSubmitted"
+        ></hbt-upload>
+      </div>
+
+    </div>
+  </form>
+</div>
+

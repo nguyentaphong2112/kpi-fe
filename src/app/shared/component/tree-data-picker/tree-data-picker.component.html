@@ -1,0 +1,144 @@
+<div class="input__search--pn--group">
+  <div class="input__employee-code">
+    <form [formGroup]="form">
+      <hbt-tree-select
+        #treeSelectTmpl
+        [isExpand] = "isExpand"
+        [cacheGetRequest]="false"
+        [functionCode]="functionCode"
+        [scope]="scope"
+        [urlLoadData]="urlLoadDataNode"
+        [urlLoadChildren]="urlLoadChildren"
+        [keyLabel]="keyLabel"
+        [keyValue]="keyValue"
+        [serviceName]="serviceName"
+        formControlName='inputSearch'
+        [labelText]="labelText"
+        [placeholder]="placeholder"
+        [type]="type"
+        [showError]="showError"
+        [errors]="errors"
+        [errorDefs]="errorDefs"
+        [checkAble]="isMultiSelect"
+        [asyncData]="true"
+        [checkStrictly]="checkStrictly"
+        [customIconSearch]="suffixIconSearch"
+        [listDataChecked]="selected"
+        (eventEmit)="eventEmitChange($event)"
+        [disable]="disable"
+      ></hbt-tree-select>
+    </form>
+  </div>
+</div>
+
+<ng-template #dataTableModalTmpl>
+  <div class="hbt__org--modal">
+    <div nz-row class="content__home">
+      <div nz-col [nzXs]="24" [nzLg]="6" class="item__home item__home--left">
+        <nz-card [nzBordered]="false" nzTitle="{{dataConfig.titleTree |translate}}" style="border-radius: 20px 0 0 20px">
+          <hbt-tree-view
+            [isExpand]="isExpand"
+            [isClickExpand]="true"
+            [urlLoadDataNode]="urlLoadDataNode"
+            [urlLoadByParentNode]="urlLoadChildren"
+            [keyLabel]="keyLabel"
+            [keyValue]="keyValue"
+            [serviceName]="serviceName"
+            (onClickNode)="selectNode($event)"
+            [scope]="scope"
+            [functionCode]="functionCode"
+            [dataConfig]="{asyncData: true}"
+            [unSelected]="false"
+          ></hbt-tree-view>
+        </nz-card>
+      </div>
+      <div nz-col [nzXs]="24" [nzLg]="18" class="item__home item__home--right">
+        <nz-card style="border-left: 1px solid {{_variable.$black_100}};border-radius: 0 20px 20px 0" [nzBordered]="false" nzTitle="{{dataConfig.titleHeader |translate}}" [nzExtra]="extraTemplate">
+          <div style="margin-bottom: 20px; display: flex">
+            <div style="flex: 1">
+              <hbt-input-text
+                [showFlexEnd]="false"
+                prefixIcon="search"
+                placeholderText="{{'common.organization.search'|translate}}"
+                (keyup.enter)="doSearchOrg()"
+                [(ngModel)]="orgSearchValue">
+              </hbt-input-text>
+            </div>
+
+            <div style="width: 250px">
+              <hbt-button
+                prefixIcon="search"
+                buttonSize="VERY_LARGE"
+                buttonTextColor="#fff" buttonType="NO_BORDER" (click)="doSearchOrg()"
+                buttonText="{{'common.label.search'|translate}}"
+                [buttonBgColor]="_variable.$purple_800">
+              </hbt-button>
+              <hbt-button
+                buttonSize="VERY_LARGE"
+                buttonTextColor="#fff" buttonType="NO_BORDER" (click)="doChooseOrg()"
+                buttonText="{{'common.label.select'|translate}}"
+                [buttonBgColor]="_variable.$purple_800"
+                *ngIf="isMultiSelect"
+              ></hbt-button>
+            </div>
+          </div>
+          <div *ngIf="listDataSelected?.length > 0 && isMultiSelect && this.data?.length > 0">{{'common.label.selectedCount' | translate: {'param': listDataSelected.length} }} </div>
+          <nz-table
+            nz-col [nzXs]="24" [nzLg]="24" style="margin-top: 16px"
+            [nzFrontPagination]="false"
+            nzShowPagination
+            nzShowQuickJumper
+            [nzTotal]="count"
+            [nzPageSize]="pagination.pageSize"
+            [(nzPageIndex)]="pagination.pageNumber"
+            (nzPageIndexChange)="getByParent()"
+            #basicTable nzSize="small" [nzData]="data" [nzLoading]="false"
+          >
+            <thead>
+            <tr>
+              <th
+                *ngIf="isMultiSelect"
+                nzShowCheckbox="true"
+                nzWidth="50px"
+                (nzCheckedChange)='onCheckAll($event)'
+                [nzChecked]='getCheckAll()'
+              >
+              <th scope='col' class="text-nowrap" nzWidth="80px">{{'hrm.staffManager.table.stt' | translate}}</th>
+              <th scope='col' class="text-nowrap">{{dataConfig.domainName | translate}}</th>
+              <th scope='col' class="text-nowrap">{{dataConfig.parentName | translate}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="tr-for-class" *ngFor="let data of basicTable.data; let i = index;" (click)="doSelectOrg(data)" >
+              <td
+                *ngIf="isMultiSelect"
+                nzShowCheckbox="true"
+                [nzChecked]="getCheckedItem(data)"
+                (nzCheckedChange)="onCheckChange($event, data)"
+              ></td>
+              <td class="text-nowrap">{{validateService.getRowIndex(i, basicTable.nzPageIndex, basicTable.nzPageSize)}}</td>
+              <td class="text-nowrap">{{data['name']}}</td>
+              <td class="text-nowrap">{{data['parentName']}}</td>
+            </tr>
+            </tbody>
+          </nz-table>
+        </nz-card>
+        <ng-template #extraTemplate>
+          <button (click)="closeModal()" aria-label="Close" nz-modal-close="" class="ant-modal-close ng-tns-c270-51 ng-star-inserted" style="">
+            <span class="ant-modal-close-x">
+              <em nz-icon="" class="anticon ant-modal-close-icon anticon-close ng-star-inserted" ng-reflect-nz-type="close">
+                <svg viewBox="64 64 896 896" focusable="false" fill="currentColor" width="1em" height="1em" data-icon="close" aria-hidden="true">
+                  <path d="M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 00203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z"></path>
+                </svg>
+              </em>
+            </span>
+          </button>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #suffixIconSearch>
+  <em *ngIf="!disable" class="icon__search" nz-icon nzType="search" (click)="openModal()"></em>
+</ng-template>

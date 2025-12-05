@@ -1,0 +1,56 @@
+<!-- Nút mở dropdown -->
+<em
+  nz-icon
+  [class]="isBtn ? 'menu__item--btn2' : 'menu__item--btn'"
+  nz-button
+  nzType="more"
+  nzTheme="outline"
+  nzTrigger="click"
+  nz-dropdown
+  [nzClickHide]="false"
+[nzDisabled]="disabledAll"
+[ngClass]="{ 'disable__btn': disabledAll }"
+[nzDropdownMenu]="menu"
+(click)="$event.stopPropagation()">
+</em>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu class="dropdown-menu">
+    <ng-container *ngFor="let action of setting.arrAction; let i = index">
+      <li
+        nz-menu-item
+        class="dropdown-menu__item"
+        [nzDisabled]="checkDisable(action.disabled)"
+        *ngIf="action.isShowFn(_model) && action.isShow"
+        (click)="handleItemClick(action, i, $event)">
+        <div class="menu__item">
+          <em nz-icon [nzType]="action?.icon" nzTheme="outline" class="menu__icon"></em>
+          <span>{{ action.label | translate }}</span>
+          <em
+            *ngIf="action.children?.length > 0"
+            nz-icon
+            nzType="caret-down"
+            nzTheme="outline"
+            class="menu__caret">
+          </em>
+        </div>
+
+        <!-- Submenu -->
+        <div
+          *ngIf="action.children?.length > 0 && submenuVisible[i] && !checkDisableChildren(action.children)"
+          class="submenu submenu-visible">
+          <ul nz-menu>
+            <nz-menu-item
+              *ngFor="let child of action.children"
+              [ngClass]="{ 'disabled-item': checkDisable(child.disabled) }"
+              (click)="handleChildClick(child, $event)">
+              <i nz-icon [nzType]="child.icon"></i>
+              {{ child.label | translate }}
+            </nz-menu-item>
+          </ul>
+        </div>
+
+      </li>
+    </ng-container>
+  </ul>
+</nz-dropdown-menu>

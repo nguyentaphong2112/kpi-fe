@@ -1,0 +1,180 @@
+@import "src/app/core/global-style/variable";
+
+.preview-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.preview-content {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.preview-content img {
+  max-width: 60%;
+  max-height: 60%;
+  transition: transform 0.3s ease;
+  cursor: move;
+}
+
+.control-wrapper {
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: end;
+  gap: 20px;
+  align-items: center;
+  z-index: 100;
+  background: rgba(56, 53, 53, 0.2509803922);
+  width: 100%;
+  padding-right: 30px;
+  padding-left: 30px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  height: 50px;
+}
+
+.close-btn {
+  color: $btn-add-text-color;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.icon {
+  color: $btn-add-text-color;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.icon:hover {
+  color: lightgray;
+}
+
+
+.icon-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 22px;
+}
+
+.cancel-btn {
+  font-size: 30px;
+  color: $bg-btn-cancel;
+}
+
+.checkbox {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 20px;
+}
+
+.checkbox input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+}
+
+.checkbox-circle {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid #aaa;
+  transition: all 0.3s;
+}
+
+.checkbox input[type="checkbox"]:checked ~ .checkbox-circle {
+  background: $bg-btn-save;
+  border-color: $bg-btn-save;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  fill: none;
+  stroke: $btn-add-text-color;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  transition: all 0.3s;
+}
+
+.checkbox input[type="checkbox"]:checked ~ .checkbox-circle .checkmark {
+  opacity: 1;
+}
+
+.checkmark-circle {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  transition: stroke-dashoffset 0.3s;
+}
+
+.checkbox input[type="checkbox"]:checked ~ .checkbox-circle .checkmark-circle {
+  stroke-dashoffset: 0;
+}
+
+.checkmark-kick {
+  stroke-dasharray: 50;
+  stroke-dashoffset: 50;
+  transition: stroke-dashoffset 0.3s;
+}
+
+.checkbox input[type="checkbox"]:checked ~ .checkbox-circle .checkmark-kick {
+  stroke-dashoffset: 0;
+}
+
+.from-img{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.ant-image-img {
+  vertical-align: middle;
+  height: 125px;
+}
+
+.ant-image-mask{
+  align-items: center;
+  background: rgba(0, 0, 0, .5);
+  bottom: 57px;
+  color: $btn-add-text-color;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: opacity .3s;
+}
+
+
+.ant-image-mask:hover {
+  opacity: 1;
+}
+
+.ant-image-mask-info{
+  overflow: hidden;
+  padding: 0 4px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cancel-btn, .checkbox {
+  cursor: pointer;
+}

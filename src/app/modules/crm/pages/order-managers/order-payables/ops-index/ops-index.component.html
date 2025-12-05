@@ -1,0 +1,192 @@
+<form nz-form [formGroup]="form" class="ops-index">
+  <div class="search__custom-common {{isShowAdvSearch ? 'add__mr__bt-10' : 'remove__mr__bt-40'}}">
+    <div nz-row class="button__action-left">
+      <hbt-button
+        class="staff__research__btn__search"
+        buttonSize="LARGE"
+        style="margin-right: 20px"
+        buttonAvailableStyle="ADD"
+        buttonText="{{'crm.orderPayables.label.synthetic' | translate}}"
+        *ngIf="objFunction?.create"
+        (click)="openModalMakeList()"
+      ></hbt-button>
+      <hbt-button
+        *ngIf="visibleActionsCount < 2"
+        buttonSize="MEDIUM"
+        buttonType="BORDER"
+        style="margin-right: 20px"
+        (click)="export()">
+        <img src="/assets/icon/staff-manager/export_excel.svg" alt="" />
+      </hbt-button>
+      <hbt-button
+        class="staff__research__btn__search"
+        buttonSize="LARGE"
+        *ngIf="visibleActionsCount < 2 && this.objFunction?.approve"
+        buttonAvailableStyle="ADD"
+        buttonText="{{'common.button.approveAll' | translate}}"
+        (click)="makeList()"
+      ></hbt-button>
+      <btn-more-action *ngIf="visibleActionsCount >= 2" [setting]="actionSchemaHeader" [isBtn]="true">
+      </btn-more-action>
+    </div>
+
+    <div class="search__page-right">
+      <hbt-date-picker
+        style="margin-right: 20px"
+        formControlName="startPeriodDate"
+        mode="month"
+        [type]="isSubmitted && form.controls['startPeriodDate'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['startPeriodDate'].errors !== null"
+        [errors]="form.controls['startPeriodDate'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.orderPayables.table.startPeriodDate' | translate }}]"
+        placeholderText="{{ 'crm.orderPayables.table.startPeriodDate' | translate }}"
+        (ngModelChange)="search()"
+      ></hbt-date-picker>
+      đến&nbsp;
+      <hbt-date-picker
+        style="margin-right: 20px"
+        formControlName="endPeriodDate"
+        mode="month"
+        [type]="isSubmitted && form.controls['endPeriodDate'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['endPeriodDate'].errors !== null"
+        [errors]="form.controls['endPeriodDate'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.orderPayables.table.endPeriodDate' | translate }}]"
+        placeholderText="{{ 'crm.orderPayables.table.endPeriodDate' | translate }}"
+        (ngModelChange)="search()"
+      ></hbt-date-picker>
+      <hbt-select [urlLoadData]="getUrlCategory(categoryCode.CRM_ORDER_PAYABLES_STATUS)"
+                  [serviceName]="microService.ADMIN"
+                  keyLabel="name"
+                  keyValue="code"
+                  formControlName="statusId"
+                  placeholder="{{'crm.orderPayables.table.status' | translate}}"
+      ></hbt-select>
+      <hbt-input-text formControlName='keySearch'
+                      [maxLength]='255'
+                      placeholderText="{{'crm.orderPayables.label.keySearch' | translate}}"></hbt-input-text>
+      <!--      <hbt-button-->
+      <!--        buttonIconType="AWESOME"-->
+      <!--        [prefixIcon]="isShowAdvSearch ? 'fa fa-angle-double-up' : 'fa fa-angle-double-down'"-->
+      <!--        buttonSize="VERY_LARGE"-->
+      <!--        [buttonTextColor]="_variable.$neutral_100"-->
+      <!--        [buttonBorderColor]="_variable.$purple_800"-->
+      <!--        [buttonBgColor]="_variable.$purple_800"-->
+      <!--        (click)="isShowAdvSearch = !isShowAdvSearch">-->
+      <!--      </hbt-button>-->
+    </div>
+  </div>
+
+  <div class='search__content--group'>
+    <hbt-table-wrap>
+      <hbt-table
+        (changePageNum)="search($event)"
+        [(objFilter)]="objFilter"
+        (objFilterChange)="search()"
+        [tableConfig]="tableConfig" [dataList]="tableData"></hbt-table>
+    </hbt-table-wrap>
+  </div>
+
+
+  <ng-template #statusTmpl let-statusCode='statusId'>
+    <ng-container *ngFor='let item of statusCodeList'>
+      <nz-tag [nzColor]="item.bgColor" [ngStyle]="{'color': item.color, width: '120px', 'text-align': 'center'}"
+              *ngIf='statusCode === item.code'>{{ item.name }}
+      </nz-tag>
+    </ng-container>
+  </ng-template>
+
+
+  <ng-template #actionTmpl let-data="data">
+    <btn-more-action [model]="[data]" [setting]="actionSchema">
+    </btn-more-action>
+  </ng-template>
+
+
+  <ng-template #footerTmpl>
+    <hbt-button
+      buttonAvailableStyle="CANCEL"
+      buttonText="{{ 'common.button.cancel' | translate }}"
+      (click)="modalRef.destroy()">
+    </hbt-button>
+    <hbt-button
+      buttonAvailableStyle="SAVE"
+      buttonText="{{ 'common.button.saveS' | translate }}"
+      (click)="modalRef.getContentComponent().save()">
+    </hbt-button>
+  </ng-template>
+
+  <nz-modal [(nzVisible)]="isVisibleMakeList" [nzTitle]="'crm.orderPayables.label.title' | translate"
+            (nzOnCancel)="cancelMakeList()">
+    <ng-container *nzModalContent>
+      <form nz-form [formGroup]="formModalMakeList">
+        <div nz-row [nzGutter]='[20,15]'>
+          <div nz-col [nzXs]="24" [nzLg]="24">
+            <hbt-date-picker
+              style="margin-right: 20px"
+              formControlName="periodDate"
+              mode="month"
+              [type]="isSubmitted && form.controls['periodDate'].errors ? 'error' : 'default'"
+              [showError]="isSubmitted && form.controls['periodDate'].errors !== null"
+              [errors]="form.controls['periodDate'].errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.orderPayables.table.periodDate' | translate }}]"
+              placeholderText="{{ 'crm.orderPayables.table.periodDate' | translate }}"
+            ></hbt-date-picker>
+          </div>
+        </div>
+      </form>
+    </ng-container>
+    <ng-template [nzModalFooter]>
+      <hbt-button
+        buttonAvailableStyle="CANCEL"
+        buttonText="{{ 'common.button.cancel' | translate }}"
+        (click)="cancelMakeList()">
+      </hbt-button>
+      <hbt-button
+        buttonAvailableStyle="SAVE"
+        buttonText="{{ 'common.button.confirm' | translate }}"
+        (click)="makeList()">
+      </hbt-button>
+    </ng-template>
+  </nz-modal>
+
+  <nz-modal [(nzVisible)]="isVisible" [nzTitle]="'crm.customerCertificates.label.approve' | translate"
+            (nzOnCancel)="handleCancel()">
+    <ng-container *nzModalContent>
+      <form nz-form [formGroup]="formModal">
+        <div nz-row [nzGutter]='[20,15]'>
+          <div nz-col [nzXs]="24" [nzLg]="24">
+            <hbt-select
+              [dataSelects]="listStatus"
+              formControlName="statusId"
+              labelText="{{'crm.customerCertificates.label.approve' | translate}} <span class='label__required'>*</span>"
+              placeholder="{{'crm.customerCertificates.label.approve' | translate}}"
+              [type]="isSubmitted && formModal.controls['statusId'].errors ? 'error' : 'default'"
+              [showError]="isSubmitted && formModal.controls['statusId'].errors !== null"
+              [errors]="formModal.controls['statusId'].errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.customerCertificates.label.approve' | translate }}]">
+            </hbt-select>
+          </div>
+          <div nz-col [nzXs]="24" [nzLg]="24">
+            <hbt-input-text formControlName="note" maxLength="1000" isTextAre
+                            [defaultInput]="true"
+                            placeholderText="{{'crm.customerCertificates.table.note' | translate}}"
+                            labelText="{{'crm.customerCertificates.table.note' | translate}}"
+            ></hbt-input-text>
+          </div>
+        </div>
+      </form>
+    </ng-container>
+    <ng-template [nzModalFooter]>
+      <hbt-button
+        buttonAvailableStyle="CANCEL"
+        buttonText="{{ 'common.button.cancel' | translate }}"
+        (click)="handleCancel()">
+      </hbt-button>
+      <hbt-button
+        buttonAvailableStyle="SAVE"
+        buttonText="{{ 'common.button.confirm' | translate }}"
+        (click)="handleOk()">
+      </hbt-button>
+    </ng-template>
+  </nz-modal>
+</form>

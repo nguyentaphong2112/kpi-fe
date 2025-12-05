@@ -1,0 +1,192 @@
+<!--example-->
+<!--<hbt-data-picker-->
+<!--  formControlName="name"-->
+<!--  [formMode]="mode"-->
+<!--  [tableSetting]="[{label: 'Mã nhân viên', value: 'employeeCode'}, {label: 'Tên nhân viên', value: 'fullName'}, {label: 'Chức danh', value: 'jobName'}, {label: 'Đon vị', value: 'orgName'}]"-->
+<!--  [disable]="mode !== modeConst.ADD"-->
+<!--  [type]="isSubmitted && form.controls['name'].errors ? 'error' : 'default'"-->
+<!--  [showError]="isSubmitted && form.controls['name'].errors != null"-->
+<!--  [errors]="form.controls['name'].errors"-->
+<!--  [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'common.label.employeeName' | translate }}]"-->
+<!--  labelText="{{'hrm.staffManager.educationProcess.table.name' | translate}} <span class='label__required'>*</span>"-->
+<!--&gt;-->
+<!--</hbt-data-picker>-->
+<div class="input__search--pn--group">
+  <div class="input__employee-code">
+    <hbt-select *ngIf="!isMulti"
+                [urlLoadData]="urlLoadData"
+                [serviceName]="serviceName"
+                [customIconSearch]="suffixIconSearch"
+                [keyLabel]="keyLabel"
+                [keyValue]="keyValue"
+                [formMode]="formMode"
+                [placeholder]="placeholder"
+                [(ngModel)]="value"
+                (ngModelChange)="writeValue($event)"
+                [disable]="disable"
+                [isLoadMore]="true"
+                [labelText]="labelText"
+                [optionHeightPx]="55"
+                [type]="type"
+                [showError]="showError"
+                [errors]="errors"
+                [errorDefs]="errorDefs"
+                (eventEmit)="emitData($event)"
+                [inputParam]="inputParam"
+                [isRequiredInputParam]="isRequiredInputParam"
+                [isSearchAfterAction]="isRequiredInputParam"
+    ></hbt-select>
+    <hbt-select-check-able *ngIf="isMulti"
+                           [urlLoadData]="urlLoadData"
+                           [serviceName]="serviceName"
+                           [customIconSearch]="suffixIconSearch"
+                           [keyLabel]="keyLabel"
+                           [keyValue]="keyValue"
+                           [formMode]="formMode"
+                           [placeholder]="placeholder"
+                           [(ngModel)]="value"
+                           (ngModelChange)="writeValue($event)"
+                           [disable]="disable"
+                           [isLoadMore]="true"
+                           [labelText]="labelText"
+                           [optionHeightPx]="55"
+                           [type]="type"
+                           [showError]="showError"
+                           [errors]="errors"
+                           [errorDefs]="errorDefs"
+                           (eventEmit)="emitData($event)"
+                           [inputParam]="inputParam"
+                           [isRequiredInputParam]="isRequiredInputParam"
+                           [isSearchAfterAction]="isRequiredInputParam"
+    ></hbt-select-check-able>
+  </div>
+</div>
+
+<ng-template #suffixIconSearch>
+  <em *ngIf="!disable" class="icon__search" nz-icon nzType="search" (click)="openModal(); $event.stopPropagation()"></em>
+</ng-template>
+
+<ng-template #dataTable>
+  <div class="hbt__org--modal">
+    <div nz-row class="content__home">
+      <div nz-col [nzXs]="24" class="item__home item__home--right">
+        <nz-card
+          style="border-left: 1px solid #f0f0f0;border-radius: 0 20px 20px 0"
+          [nzBordered]="false"
+          nzTitle="{{'common.label.searchCondition'|translate}}"
+          [nzExtra]="extraTemplate"
+        >
+          <div nz-row [nzGutter]='[20,15]' class="modal-right__search-input" (keyup.enter)="getEmployeeData(keyWordSearch, 1)">
+            <div nz-col nzSpan="8">
+              <hbt-input-text
+                [(ngModel)]="keyWordSearch"
+                (keyup.enter)="getEmployeeData(keyWordSearch, 1)"
+                [showFlexEnd]="false"
+                [maxLength]="200"
+                [placeholderText]="labelSearch"
+                prefixIcon="search"
+              ></hbt-input-text>
+            </div>
+            <div nz-col nzSpan="8" style="display: flex; align-items: center;">
+              <hbt-button
+                buttonAvailableStyle="SEARCH"
+                buttonText="{{'common.button.search' | translate}}"
+                (click)="getEmployeeData(keyWordSearch, 1)">
+              </hbt-button>
+            </div>
+          </div>
+          <nz-table
+            [nzData]="data"
+            nz-col [nzXs]="24" [nzLg]="24"
+            style="margin-top: 16px"
+            [nzShowPagination]="false"
+            [nzFrontPagination]="false"
+            [nzScroll]=" { y: '450px' }"
+            nzTableLayout="fixed"
+            nzSize="small"
+          >
+            <thead>
+            <tr>
+              <th scope='col' class="text-nowrap" nzWidth="10%" style="font-weight: bold; text-align: center" *ngIf="isMulti"
+                  nzShowCheckbox="true"
+                  [nzChecked]="checkboxAllValueMap.get(pagination.pageNumber)"
+                  [nzIndeterminate]="checkboxAllIndeterminateMap.get(pagination.pageNumber)"
+                  (nzCheckedChange)="onAllChecked($event)"
+                  [nzDisabled]="data.length < 1">
+              </th>
+              <th scope='col' class="text-nowrap" nzWidth="5%" style="font-weight: bold; text-align: center">STT</th>
+              <ng-container *ngFor="let header of tableSetting">
+                <th scope='col' class="text-nowrap" nzWidth="15%" style="font-weight: bold; text-align: center">{{header.label | translate}}</th>
+              </ng-container>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="tr-for-class" *ngFor="let item of data; index as i" (click)="selectItem(item)" [ngClass]="{'item-selected': !isMulti && item[keyValue] === value}">
+              <td class="text-nowrap" *ngIf="isMulti"
+                  nzShowCheckbox="true"
+                  [nzChecked]="value?.includes(item[keyValue])"
+                  (nzCheckedChange)="onItemChecked(item[keyValue], $event)">
+              </td>
+              <td style="text-align: center">
+                {{validateService.getRowIndex(i, pagination.pageNumber, pagination.pageSize)}}
+              </td>
+              <ng-container *ngFor="let header of tableSetting">
+                <td class="text-nowrap">
+                  <span class="emp__picker--content">{{item[header.value]}}</span>
+                </td>
+              </ng-container>
+            </tr>
+            </tbody>
+          </nz-table>
+          <div nz-row class="pagination">
+            <div nz-col nzSpan="10" *ngIf="count === 0; else elseTplNoti">
+              <img alt="" class="pagination__table-info--icon" src="assets/images/icon/idea.svg"/>
+              <span class="pagination__table-info--text"> Tìm thấy {{ count }} kết quả </span>
+            </div>
+            <ng-template #elseTplNoti>
+              <div nz-col nzSpan="10" class="pagination__table-info">
+                <img alt="" class="pagination__table-info--icon" src="assets/images/icon/idea.svg"/>
+                <span class="pagination__table-info--text"
+                >Tìm thấy {{ count }} kết quả, hiển thị từ
+                  {{ pagination.pageSize * (pagination.pageNumber - 1) + 1}} đến
+                  {{ pagination.pageSize * (pagination.pageNumber - 1) + data.length}}</span
+                >
+              </div>
+            </ng-template>
+            <div nz-col nzSpan="14">
+              <nz-pagination
+                [nzPageIndex]="pagination.pageNumber"
+                (nzPageIndexChange)="getEmployeeData(keyWordSearch, $event)"
+                [nzTotal]="count"
+                [nzPageSize]="pagination.pageSize"
+              ></nz-pagination>
+            </div>
+          </div>
+        </nz-card>
+        <ng-template #extraTemplate>
+          <button (click)="closeModal()"
+                  aria-label="Close"
+                  nz-modal-close=""
+                  class="ant-modal-close ng-tns-c270-51 ng-star-inserted"
+                  style=""
+          >
+            <span class="ant-modal-close-x">
+              <em
+                nz-icon=""
+                class="anticon ant-modal-close-icon anticon-close ng-star-inserted"
+                ng-reflect-nz-type="close"
+              >
+                <svg viewBox="64 64 896 896" focusable="false" fill="currentColor" width="1em" height="1em"
+                     data-icon="close" aria-hidden="true"
+                >
+                  <path
+                    d="M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 00203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z"></path>
+                </svg>
+              </em>
+           </span>
+          </button>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</ng-template>

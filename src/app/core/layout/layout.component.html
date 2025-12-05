@@ -1,0 +1,280 @@
+<top-progress-bar></top-progress-bar>
+<div class="container">
+  <nz-layout>
+    <div *ngIf="!isMobile" class="hidden__div" style="width: 88px"></div>
+    <nz-sider
+      class="sidebar__primary {{ sideBarClassMobile }} {{ sideBarClass }}"
+      [(nzCollapsed)]="isCollapsed"
+      (click)="touchEnter()"
+      (mouseenter)="mouseenter()"
+      (mouseleave)="mouseLeave()"
+      [nzTrigger]="null"
+      [nzWidth]="nzWidth"
+      [nzCollapsedWidth]="88"
+    >
+      <div class="btnLogoWrap">
+        <a routerLink="/home" *ngIf="!isMobile">
+          <div class="logo">
+            <img [src]="isCollapsed ? logoCollapsedPath : logoPath"
+                 alt="" />
+          </div>
+        </a>
+        <div *ngIf="!isCollapsed" class="btnPinClass" (click)="onPinClick()">
+          <span *ngIf="!isPinMenu" nz-tooltip [nzTooltipTitle]="'Ghim'" nz-icon nzType="pushpin" nzTheme="outline"
+                class="btnOpenClose"></span>
+          <span *ngIf="isPinMenu" nz-tooltip [nzTooltipTitle]="'Bỏ ghim'" nz-icon nzType="pushpin" nzTheme="outline"
+                class="btnOpenClose" [nzRotate]="-45"></span>
+        </div>
+      </div>
+      <a *ngIf="isMobile">
+        <div class="logo">
+          <em *ngIf="isMobile" class="fal fa-times" (click)="closeMenuMobile()"></em>
+        </div>
+      </a>
+      <div class="menu-primary">
+        <div class="menu__input--search">
+          <app-menu-search [isCollapsed]="isCollapsed" (onBlurEvent)="searchMenu($event)"></app-menu-search>
+        </div>
+        <ul nz-menu nzTheme="dark" [nzInlineCollapsed]="isCollapsed" nzMode="inline" style="margin-bottom: 50px">
+          <ng-container
+            *ngTemplateOutlet="menuTpl; context: { $implicit: menus, level: 1, showIcon: true }"
+          ></ng-container>
+          <ng-template #menuTpl let-menus let-level="level" let-showIcon="showIcon">
+            <ng-container *ngFor="let menu of menus; trackBy: trackByFn">
+              <li
+                class="{{ 'level__' + level }} {{ menu.menuId == selectedMenuId ? 'menu-item menu-item-flex ant-menu-item-selected' : 'menu-item menu-item-flex' }}"
+                *ngIf="menu.subs == null || menu.subs.length == 0" nz-menu-item nzMatchRouterExact
+                [nzMatchRouter]="currentUrl != '/' && this._routerState != '/'"
+                style="padding-right: 8px; padding-left: 8px">
+                <ng-container *ngIf="showIcon">
+                  <ng-container [ngSwitch]="getTypeIcon(menu.icon)">
+                    <ng-container *ngSwitchCase="'IMAGE'">
+                      <img alt='' [class]="'img__' + isCollapsed" [src]="menu.icon" />
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'AWESOME'">
+                      <em [class]="'img__' + isCollapsed + ' ' + menu.icon" style="color: white; font-size: 16px;"></em>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'ZORRO'">
+                      <em [class]="'img__' + isCollapsed" nz-icon [nzType]="menu.icon" nzTheme="outline"
+                          style="color: white; font-size: 20px;"></em>
+                    </ng-container>
+                  </ng-container>
+                </ng-container>
+                <a class="menu-{{menu.menuId}}"
+                  (click)="selectedMenu = menu; openHandler(menu.menuId); setClassSelected(menu.menuId); open(menu, $event)"
+                  style="{{ 'margin-left:' + (level === 1 ? '0px' : level === 2 ? '5px' : '35px') }}">
+                  <em *ngIf="level > 1" class="fas fa-circle" style="{{
+                      'color:' +
+                        (level == 1 ? _variable.$black_100 : _variable.$purple_300) +
+                        '; font-size:' +
+                        (11 - (level <= 3 ? level : 3)) +
+                        'px;width: 20px; margin-right: 8px;'
+                    }}"></em>
+                  <span
+                    class="span__level--{{ level }} span__id--{{ menu.menuId }} span__id--parent--{{ menu.parentId }}"
+                    style="{{
+                      'color:' +
+                        (level == 1 ? _variable.$black_100 : _variable.$purple_300) +
+                        '; font-size:' +
+                        (15 - (level <= 3 ? level : 3)) +
+                        'px'
+                    }}" [innerHTML]="menu.menuName?.trim()">
+                  </span>
+                </a>
+              </li>
+              <li
+                class="menu__sub--true {{ 'level__' + level }} {{ menu.open && isCollapsed ? 'ant-menu-submenu-open' : '' }}"
+                *ngIf="menu.subs != null && menu.subs.length > 0" [(nzOpen)]="openMenuMap[menu.menuId]"
+                nz-submenu (nzOpenChange)="clearMenuOpen(menu)"
+                style="{{ 'padding-left:' + (level <= 2 ? '0px' : '29px') }}" [nzTitle]="title">
+                <ng-template #title>
+                  <em *ngIf="level > 1" class="icon__open--menu fal fa-plus menu__icon--sub color_primary_300"
+                      style="font-size: 14px; margin-right: 15px; width: 20px; text-align: center"></em>
+                  <ng-container *ngIf="showIcon">
+                    <ng-container [ngSwitch]="getTypeIcon(menu.icon)">
+                      <ng-container *ngSwitchCase="'IMAGE'">
+                        <img alt='' [class]="'img__' + isCollapsed" [src]="menu.icon" />
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'AWESOME'">
+                        <em [class]="'img__' + isCollapsed + ' ' + menu.icon"
+                            style="color: white; font-size: 16px;"></em>
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'ZORRO'">
+                        <em [class]="'img__' + isCollapsed" nz-icon [nzType]="menu.icon" nzTheme="outline"
+                            style="color: white; font-size: 20px;"></em>
+                      </ng-container>
+                    </ng-container>
+                  </ng-container>
+                  <span *ngIf="!isCollapsed"
+                        class="span__level--{{ level }} span__id--{{ menu.menuId }} span__id--parent--{{ menu.parentId }}"
+                        style="{{
+                      'color:' +
+                        (level == 1 ? _variable.$black_100 : _variable.$purple_300) +
+                        '; font-size:' +
+                        (15 - (level <= 3 ? level : 3)) +
+                        'px'
+                    }}" [innerHTML]="menu.menuName?.trim()">
+                  </span>
+                </ng-template>
+                <ul>
+                  <ng-container
+                    *ngTemplateOutlet="menuTpl; context: { $implicit: menu.subs, level: level + 1, showIcon: false }"
+                  ></ng-container>
+                </ul>
+              </li>
+            </ng-container>
+          </ng-template>
+        </ul>
+      </div>
+    </nz-sider>
+    <nz-layout class="bg__layout" (click)="touchLeave()" (mouseenter)="mouseLeave()">
+      <app-header
+        [isCollapsed]="isCollapsed"
+        [isMobile]="isMobile"
+        [searchResult]="searchResult"
+        (headerEventEmit)="headerEventEmit($event)"
+      ></app-header>
+      <nz-content [ngStyle]="{position: currentUrl != '/' && currentUrl != '/home' ? '' : 'relative'}">
+        <nz-breadcrumb *ngIf="currentUrl" nzSeparator="/"
+                       [ngStyle]="activeRouteData && activeRouteData['notShowPageName'] ? {marginBottom: '20px'} : ''"
+        >
+          <div class="breadcrumb__items">
+            <div>
+              <nz-breadcrumb-item>
+                <a routerLink="/">
+                <span>
+                  <em nz-icon nzType="home" nzTheme="outline" class="icon__home"></em>
+                  {{ 'common.breadcrumb.home' | translate }}
+                </span>
+                </a>
+              </nz-breadcrumb-item>
+              <nz-breadcrumb-item *ngFor="let breadcrumb of breadcrumbs">
+                <a
+                  [routerLink]="breadcrumb.disabled ? null : breadcrumb.url"><span>{{ translates(breadcrumb.label) }}</span></a>
+              </nz-breadcrumb-item>
+            </div>
+            <div class="icon" *ngIf="objFunctionConfig?.view">
+              <span class="icon-setting" nz-icon nz-tooltip nzTooltipPlacement="left" (click)="openModal()"
+                    nzTooltipTitle=" {{ 'common.button.configPage' | translate }}" nzType="setting"
+                    nzTheme="outline"></span>
+            </div>
+          </div>
+        </nz-breadcrumb>
+        <ng-container *ngIf="activeRouteData && !activeRouteData['notShowPageName'] && activeRouteData['pageName']">
+          <nz-page-header
+            *ngIf="currentUrl && currentUrl != '/' && currentUrl != '/home'"
+            class="site-page-header"
+            [nzTitle]="pageHeader">
+          </nz-page-header>
+          <ng-template #pageHeader>
+            <ng-container *ngIf="activeRouteData && activeRouteData['isShowBackBtn']; else noNeedShowBackBtn">
+              <div class="pageNameClass">
+                <div class="backBtnClass">
+                  <em class="btn-back" nz-icon [nzType]="'arrow-left'" nzTheme="outline" (click)="onBackClick()"></em>
+                </div>
+                <div [attr.id]="pageName?.replace('.','__')"
+                     [innerHTML]="translates(activeRouteData['pageName'] ? activeRouteData['pageName'] : pageName)"></div>
+              </div>
+            </ng-container>
+            <ng-template #noNeedShowBackBtn>
+              <div [attr.id]="pageName?.replace('.','__')"
+                   [innerHTML]="translates(activeRouteData['pageName'] ? activeRouteData['pageName'] : pageName)"></div>
+            </ng-template>
+          </ng-template>
+        </ng-container>
+        <div
+          class="inner-content {{ currentUrl ? (activeRouteData['pageName'] ? 'inner-content--page' : 'inner-content--no-page-name') : 'inner-content--no-page' }}">
+          <loading-page></loading-page>
+          <router-outlet></router-outlet>
+        </div>
+<!--        <nz-modal [(nzVisible)]="isVisible" [nzTitle]="'common.button.configPage' | translate"-->
+<!--                  (nzOnCancel)="handleCancel()" nzWidth="60%">-->
+<!--          <ng-container *nzModalContent>-->
+<!--            <h3 style="font-weight: bold">{{ 'common.button.reportTemplate' | translate }}</h3>-->
+<!--            <nz-table nzBordered [nzData]="[1]" nzSize="small" [nzShowPagination]="false" [nzScroll]="{ x: '100%' }"-->
+<!--                      class="table-file-setting">-->
+<!--              <thead>-->
+<!--              <tr>-->
+<!--                <th [ngStyle]="{width: '45%'}" style="text-align: center">{{ 'common.label.fileCode' | translate }}</th>-->
+<!--                <th [ngStyle]="{width: '45%'}" style="text-align: center">{{ 'common.label.fileName' | translate }}</th>-->
+<!--                <th [ngStyle]="{width: '10%'}"></th>-->
+<!--              </tr>-->
+<!--              </thead>-->
+<!--              <tbody>-->
+<!--              <tr *ngFor="let item of listFile">-->
+<!--                <td>{{ item.code }}</td>-->
+<!--                <td class="text-name">-->
+<!--                  <ng-container *ngFor="let it of item?.attachmentFileList">-->
+<!--                    <span (click)="downloadFile(it)" style="cursor: pointer">{{ it.fileName }}</span>-->
+<!--                    <br>-->
+<!--                  </ng-container>-->
+<!--                </td>-->
+<!--                <td style="text-align: center">-->
+<!--                  <span nz-icon nz-tooltip nzTooltipPlacement="right" (click)="openModalEdit(item)"-->
+<!--                        nzTooltipTitle=" {{ 'common.button.edit' | translate }}" class="action-edit-shared"-->
+<!--                        nzType="edit"-->
+<!--                        nzTheme="outline"></span></td>-->
+<!--              </tr>-->
+<!--              </tbody>-->
+<!--            </nz-table>-->
+<!--          </ng-container>-->
+<!--          <ng-template [nzModalFooter]>-->
+<!--            <hbt-button-->
+<!--              buttonAvailableStyle="CANCEL"-->
+<!--              buttonText="{{ 'common.button.cancel' | translate }}"-->
+<!--              (click)="handleCancel()">-->
+<!--            </hbt-button>-->
+<!--          </ng-template>-->
+<!--        </nz-modal>-->
+
+<!--        <nz-modal [(nzVisible)]="isVisibleEdit"-->
+<!--                  [nzTitle]="('common.button.editTemplate' | translate)"-->
+<!--                  (nzOnCancel)="handleCancelEdit()" nzWidth="60%">-->
+<!--          <ng-container *nzModalContent>-->
+<!--            <div class="table-file-setting-edit" nz-row [nzGutter]='[20,15]'>-->
+<!--              <div nz-col [nzXs]="24" [nzLg]="24" class="label-text">{{ 'common.label.fileCode' | translate }}</div>-->
+<!--              <div nz-col [nzXs]="24" [nzLg]="24" style="margin-left: 10px">{{ fileData?.code ?? '' }}</div>-->
+<!--              <div nz-col [nzXs]="24" [nzLg]="24" class="label-text">{{ 'common.label.fileName' | translate }}</div>-->
+<!--              <div nz-col [nzXs]="24" [nzLg]="24" style="margin-left: 10px">{{ fileData?.name ?? '' }}</div>-->
+<!--              <div nz-col [nzXs]="24" [nzLg]="24">-->
+<!--                <hbt-upload-->
+<!--                  [fileList]="fileListData"-->
+<!--                  [(docIdsDelete)]="attachmentDeleteIds"-->
+<!--                  [typeFileAvailable]="['doc', 'docx', 'xlsx', 'xls', 'pdf']"-->
+<!--                  [multiple]="true"-->
+<!--                  [maxSize]="20"-->
+<!--                  labelText="{{'common.label.attachFile' | translate}}"-->
+<!--                  (fileListChange)="changeFile($event, true)"-->
+<!--                  (docIdsDeleteChange)="removeFileChild($event)"-->
+<!--                  [serviceName]='serviceName'-->
+<!--                ></hbt-upload>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </ng-container>-->
+<!--          <ng-template [nzModalFooter]>-->
+<!--            <hbt-button-->
+<!--              buttonAvailableStyle="CANCEL"-->
+<!--              buttonText="{{ 'common.button.cancel' | translate }}"-->
+<!--              (click)="handleCancelEdit()">-->
+<!--            </hbt-button>-->
+<!--            <hbt-button-->
+<!--              buttonAvailableStyle="SAVE"-->
+<!--              buttonText="{{ 'common.button.confirm' | translate }}"-->
+<!--              (click)="handleOk()"-->
+<!--            >-->
+<!--            </hbt-button>-->
+<!--          </ng-template>-->
+<!--        </nz-modal>-->
+      </nz-content>
+<!--      <app-feedbacks></app-feedbacks>-->
+    </nz-layout>
+  </nz-layout>
+
+  <ng-template #footerCancelTmpl>
+    <hbt-button
+      buttonAvailableStyle="CANCEL"
+      buttonText="{{ 'common.button.cancel' | translate }}"
+      (click)="modalRef.destroy()">
+    </hbt-button>
+  </ng-template>
+</div>

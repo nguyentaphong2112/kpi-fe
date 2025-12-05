@@ -1,0 +1,202 @@
+<div class='tps-form'>
+  <form nz-form [formGroup]="form">
+    <div nz-row [nzGutter]="[20,15]">
+
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <employee-data-picker [isExpand]="true"
+                              [scope]="scope"
+                              labelText="{{'lms.trainingProcess.table.employee' | translate}} <span class='label__required'>*</span>"
+                              placeholder="{{'lms.trainingProcess.table.employee' | translate}}"
+                              formControlName="employeeId"
+                              [type]="isSubmitted && form.controls['employeeId']?.errors ? 'error' : 'default'"
+                              [showError]="isSubmitted && form.controls['employeeId']?.errors != null"
+                              [errors]="form.controls['employeeId']?.errors"
+                              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'lms.trainingProcess.table.employee' | translate }}]"
+                              [functionCode]="functionCodeEmployee"></employee-data-picker>
+      </div>
+
+      <div nz-col [nzXs]="12" [nzLg]="12" class="flex">
+        <hbt-date-picker
+          style="width: 40%"
+          placeholderText="{{'lms.trainingProcess.table.startDate' | translate}}"
+          labelText="{{'lms.trainingProcess.table.date' | translate}} <span class='label__required'>*</span>"
+          [type]="isSubmitted && form.controls['startDate'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['startDate'].errors !== null"
+          [errors]="form.controls['startDate'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'lms.trainingProcess.table.startDate' | translate }}]"
+          formControlName="startDate"></hbt-date-picker>
+        <div class="text-date">đến</div>
+        <hbt-date-picker
+          style="width: 40%"
+          placeholderText="{{'lms.trainingProcess.table.endDate' | translate}}"
+          [type]="(form.errors?.rangeDateError) ? 'error' : 'default'"
+          [showError]="(form.errors?.rangeDateError) !== null"
+          [errors]="form.errors"
+          [errorDefs]="[{ errorName: 'rangeDateError', errorDescription: 'med.validate.rangeDate.pareDate' | translate:
+        {'startDate': 'lms.trainingProcess.table.startDate' | translate, 'endDate': 'lms.trainingProcess.table.endDate' | translate}}]"
+          formControlName="endDate"></hbt-date-picker>
+      </div>
+
+
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [urlLoadData]="getUrlCategory(categoryCode.LMS_NOI_DUNG_DAO_TAO)"
+                    [serviceName]="microService.ADMIN"
+                    keyLabel="name"
+                    formControlName="majorId"
+                    [type]="isSubmitted && form.controls['majorId'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['majorId'].errors != null"
+                    [errors]="form.controls['majorId'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'lms.trainingProcess.table.majorName' | translate }}]"
+                    placeholder="{{'lms.trainingProcess.table.majorName' | translate}}"
+                    labelText="{{'lms.trainingProcess.table.majorName' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [urlLoadData]="getUrlCategory(categoryCode.LMS_NOI_DAO_TAO)"
+                    [serviceName]="microService.ADMIN"
+                    keyLabel="name"
+                    formControlName="trainingPlaceId"
+                    [type]="isSubmitted && form.controls['trainingPlaceId'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['trainingPlaceId'].errors != null"
+                    [errors]="form.controls['trainingPlaceId'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'lms.trainingProcess.table.trainingPlaceName' | translate }}]"
+                    placeholder="{{'lms.trainingProcess.table.trainingPlaceName' | translate}}"
+                    labelText="{{'lms.trainingProcess.table.trainingPlaceName' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [urlLoadData]="getUrlCategory(categoryCode.LMS_KE_HOACH_DAO_TAO)"
+                    [serviceName]="microService.ADMIN"
+                    keyLabel="name"
+                    formControlName="trainingPlanId"
+                    [type]="isSubmitted && form.controls['trainingPlanId'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['trainingPlanId'].errors != null"
+                    [errors]="form.controls['trainingPlanId'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'lms.trainingProcess.table.trainingPlanName' | translate }}]"
+                    placeholder="{{'lms.trainingProcess.table.trainingPlanName' | translate}}"
+                    labelText="{{'lms.trainingProcess.table.trainingPlanName' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [urlLoadData]="getUrlCategory(categoryCode.LMS_KHOA_DAO_TAO)"
+                    [serviceName]="microService.ADMIN"
+                    keyLabel="name"
+                    formControlName="trainingCourseId"
+                    [type]="isSubmitted && form.controls['trainingCourseId'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['trainingCourseId'].errors != null"
+                    [errors]="form.controls['trainingCourseId'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'lms.trainingProcess.table.trainingCourseName' | translate }}]"
+                    placeholder="{{'lms.trainingProcess.table.trainingCourseName' | translate}}"
+                    labelText="{{'lms.trainingProcess.table.trainingCourseName' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="documentNo" [maxLength]="50"
+                        [type]="isSubmitted && form.controls['documentNo'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['documentNo'].errors != null"
+                        [errors]="form.controls['documentNo'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 50}}]"
+                        placeholderText="{{'lms.trainingProcess.table.documentNo' | translate}}"
+                        labelText="{{'lms.trainingProcess.table.documentNo' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-date-picker
+          placeholderText="{{'lms.trainingProcess.table.documentSignedDate' | translate}}"
+          labelText="{{'lms.trainingProcess.table.documentSignedDate' | translate}}"
+          formControlName="documentSignedDate"></hbt-date-picker>
+      </div>
+
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="totalBudget" [maxLength]="20"
+                        [isFormatterCurrency]="true"
+                        [integerPart]="20"
+                        [decimalPart]="0"
+                        [inputType]="'number'"
+                        [showFlexEnd]="false"
+                        [type]="isSubmitted && form.controls['totalBudget'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['totalBudget'].errors != null"
+                        [errors]="form.controls['totalBudget'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 20}}]"
+                        placeholderText="{{'lms.trainingProcess.table.totalBudget' | translate}}"
+                        labelText="{{'lms.trainingProcess.table.totalBudget' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        
+        <hbt-input-text formControlName="totalHours" [maxLength]="23"
+                        appNumberic
+                        [num]="20"
+                        [decimals]="2"
+                        [showFlexEnd]="false"
+                        placeholderText="{{'lms.trainingProcess.table.totalHours' | translate}}"
+                        labelText="{{'lms.trainingProcess.table.totalHours' | translate}} <span class='label__required'>*</span>"
+                        [showError]="isSubmitted && form.controls['totalHours'].errors !== null"
+                        [errors]="form.controls['totalHours'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'lms.trainingProcess.table.totalHours' | translate }}]"
+        ></hbt-input-text>
+      </div>
+      <ng-container *ngIf="listSource.length > 0">
+        <ng-container *ngFor="let source of listSource">
+          <div nz-col [nzXs]="12" [nzLg]="12">
+            <hbt-input-text [formControlName]="source.value" [maxLength]="20"
+                            [placeholderText]="source.name"
+                            [isFormatterCurrency]="true"
+                            [integerPart]="20"
+                            [decimalPart]="0"
+                            [inputType]="'number'"
+                            [showFlexEnd]="false"
+                            [type]="isSubmitted && form.errors?.totalBudgetMismatch ? 'error' : 'default'"
+                            [showError]="isSubmitted && form.errors?.totalBudgetMismatch != null"
+                            [errors]="form.errors"
+                            [errorDefs]="[{ errorName: 'totalBudgetMismatch', errorDescription: 'lms.validate.totalBudgetMismatch' | translate: {'field': 'lms.trainingProcess.table.totalBudget' | translate}}]"
+                            [labelText]="source.name"
+            ></hbt-input-text>
+          </div>
+        </ng-container>
+      </ng-container>
+
+      <ng-container formArrayName="listAttributes">
+        <ng-container *ngFor="let attributes of attributesFormArray.controls; let idx = index" [formGroupName]="idx">
+          <div nz-col [nzXs]="12" [nzLg]="attributes.get('attributeCode')?.value == 'NOTE' ? 24 : 12">
+            <input-attribute-common
+              [controlName]="getAttributeControl(idx, 'attributeValue')"
+              [dataType]="attributes.get('attributeCode')?.value == 'NOTE' ? 'TEXT' : attributes.get('dataType')?.value"
+              [urlLoadData]="attributes.get('urlLoadData')?.value"
+              [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+              [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+              [errors]="attributes.get('attributeValue')?.errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}]"
+              [placeholderText]="attributes.get('attributeName')?.value"
+              [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+            >
+            </input-attribute-common>
+          </div>
+        </ng-container>
+      </ng-container>
+
+      <div nz-col [nzXs]='24' [nzLg]='24'>
+        <hbt-upload
+          [maxSize]="20"
+          [fileList]="f['files'].value"
+          [(docIdsDelete)]="docIdsDelete"
+          [typeFileAvailable]="['jpeg', 'jpg', 'png', 'pdf', 'doc', 'docx', 'jpeg']"
+          [multiple]="true"
+          labelText="{{'common.label.attachFile' | translate}}"
+          (fileListChange)="onFileListChange($event, 'files', true)"
+          (docIdsDeleteChange)="removeFile($event, 'files')"
+          [serviceName]='serviceName'
+          [disable]="mode === modeConst.VIEW"
+        ></hbt-upload>
+      </div>
+
+    </div>
+  </form>
+</div>
+

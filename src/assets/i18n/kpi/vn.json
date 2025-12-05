@@ -1,0 +1,351 @@
+{
+  "evaluationPeriods": {
+    "label": {
+      "keySearch": "Mã/Tên",
+      "evaluationPeriod": " kỳ đánh giá"
+    },
+    "table": {
+      "evaluationPeriodId": "Tên kỳ đánh giá",
+      "year": "Năm đánh giá",
+      "name": "Tên kỳ đánh giá",
+      "evaluationTypeName": "Loại đánh giá",
+      "startDate": "Ngày bắt đầu kỳ",
+      "endDate": "Ngày kết thúc kỳ",
+      "createdTime": "Ngày nhập",
+      "createdBy": "Người nhập",
+      "modifiedTime": "Ngày sửa",
+      "modifiedBy": "Người sửa",
+      "status": "Trạng thái"
+    }
+  },
+  "indicatorConversions": {
+    "label": {
+      "indicatorConversion": "ngân hàng chỉ số",
+      "keySearch": "Nhập điều kiện tìm kiếm",
+      "add": "Bổ sung chỉ số đánh giá",
+      "title": " chỉ số đánh giá",
+      "note": "Mô tả chi tiết",
+      "isNumber": "Thang đo theo kết quả thực hiện",
+      "isValue": "Thang đo theo mức đăng ký của đơn vị",
+      "isOrg": "KPI đơn vị",
+      "isIdentity": "KPI cá nhân",
+      "conversionValue": "Giá trị thang đo",
+      "level1": "KPI cấp 1",
+      "level2": "KPI cấp 2",
+      "level3": "KPI cấp 3",
+      "level4": "KPI cấp 4",
+      "type": "Phân loại",
+      "yes": "Có",
+      "no": "Không",
+      "isRequired": "KPI bắt buộc thực hiện"
+    },
+    "table": {
+      "organizationName": "Đơn vị",
+      "scope": "Phạm vi áp dụng",
+      "status": "Trạng thái",
+      "createdTime": "Ngày tạo",
+      "createdBy": "Người tạo",
+      "modifiedTime": "Ngày sửa",
+      "modifiedBy": "Người sửa",
+      "unitGroup": "Nhóm đơn vị",
+      "jobPosition": "Vị trí việc làm",
+      "managerJob": "Chức danh lãnh đạo đơn vị",
+      "name": "Tên chỉ số",
+      "unitId": "Đơn vị tính",
+      "periodType": "Chu kỳ",
+      "note": "Ghi chú",
+      "scaleInterpretation": "Diễn giải thang đo",
+      "listKpi": "Danh sách chỉ số KPI",
+      "indicatorId": "Chỉ số",
+      "and": "và",
+      "relatedNames": "Các chỉ số liên quan",
+      "scopeNames": "Phạm vi áp dụng",
+      "level": "Cấp KPI"
+    }
+  },
+  "indicatorUsingScopes": {
+    "table": {
+      "indicatorUsingId": "id khóa chính",
+      "indicatorId": "chỉ số",
+      "organizationId": "đơn vị áp dụng chỉ số",
+      "positionId": "vị trí việc làm áp dụng chỉ số (position)",
+      "jobId": "vị trí áp dụng chỉ số"
+    }
+  },
+  "indicators": {
+    "table": {
+      "title": " chỉ số KPI",
+      "name": "Tên chỉ số",
+      "unitId": "Đơn vị tính",
+      "periodType": "Chu kỳ",
+      "significance": "Ý nghĩa của chỉ số",
+      "measurement": "Cách thức đo lường",
+      "systemInfo": "Nguồn thông tin",
+      "note": "Ghi chú",
+      "type": "Phân loại",
+      "orgIds": "Phạm vi áp dụng",
+      "indicatorIds": "Chỉ số liên quan",
+      "ratingType": "Cách nhập kết quả đánh giá",
+      "data": "Dữ liệu "
+    }
+  },
+  "workPlanningTemplates": {
+    "table": {
+      "workPlanningId": "id khóa chính",
+      "name": "Tên",
+      "param": "Tham số",
+      "unit": "Đơn vị tính",
+      "workPlanning": "Kế hoạch công tác",
+      "note": "Ghi chú",
+      "stepOne": "HK1",
+      "stepTwo": "HK2",
+      "fullYear": "Cả năm",
+      "type": "Phân loại",
+      "code": "Mã biểu mẫu"
+    }
+  },
+  "kpiEvaluations": {
+    "organizations": {
+      "label": {
+        "title": "KPI đơn vị",
+        "org": "Đơn vị",
+        "orgType": "Loại đơn vị",
+        "job": "Vị trí việc làm",
+        "year": "Năm",
+        "period": "Kỳ đánh giá",
+        "evaluationCriteria": "Chỉ tiêu đánh giá",
+        "workPlan": "Kế hoạch công tác",
+        "content": "Nội dung nhận xét",
+        "addKpi": "Chọn chỉ tiêu",
+        "keySearch": "Tên đơn vị/Kỳ đánh giá",
+        "adjustReason": "Lý do điều chỉnh",
+        "point": "Kết quả thực hiện",
+        "resultManage": " Điểm",
+        "empManager": "Trưởng đơn vị",
+        "orgScope": "Đơn vị áp dụng",
+        "orgManage": "Đơn vị quản lý",
+        "addIndicator": "Đăng ký KPI cho đơn vị",
+        "leaderType": "Chủ trì",
+        "collaboratorType": "Phối hợp",
+        "personal": "Cá nhân",
+        "selfPoint": "Trưởng đơn vị đánh giá",
+        "managerPoint": "BĐH KHCT&KPI",
+        "selfPoint3": "Trưởng đơn vị cấu thành đánh giá",
+        "managerPoint3": "Trưởng đơn vị đánh giá",
+        "assignmentNote": "Ghi chú"
+      },
+      "table": {
+        "name": "Tên KPI",
+        "org": "Đơn vị",
+        "orgLevel1": "Đơn vị cấp 1",
+        "orgLevel2": "Đơn vị cấp 2",
+        "orgLevel3": "Đơn vị cấp 3",
+        "kpi": "KPI",
+        "period": "Kỳ đánh giá",
+        "status": "Trạng thái",
+        "measureUnit": "Đơn vị tính",
+        "weight": "Trọng số",
+        "target": "Mục tiêu",
+        "levelOfCompletion": "Các mức hoàn thành",
+        "description": "Các trách nhiệm, nhiệm vụ chính theo mô tả vị trí việc làm",
+        "measureUnit2": "ĐVT",
+        "semester1": "HK I",
+        "semester2": "HK II",
+        "workPlan": "Kế hoạch công tác",
+        "allYear": "Cả năm",
+        "createdTime": "Ngày nhập",
+        "createdBy": "Người nhập",
+        "approvedTime": "Ngày phê duyệt",
+        "approvedBy": "Người phê duyệt",
+        "modifiedTime": "Ngày sửa",
+        "modifiedBy": "Người sửa",
+        "leaderName": "Bộ phận chủ trì",
+        "collaboratorName": "Bộ phận phối hợp"
+      }
+    },
+    "orgWorkPlanning": {
+      "label": {
+        "selectWorkPlan": "Chọn kế hoạch công tác biểu mẫu",
+        "samplePlan": "Kế hoạch công tác biểu mẫu"
+      }
+    }
+  },
+  "employeeEvaluations": {
+    "label": {
+      "title": "KPI nhân viên",
+      "employee": "Nhân viên",
+      "period": "Kỳ đánh giá",
+      "status": "Trạng thái",
+      "employeeName": "Tên viên chức/NLĐ",
+      "employeeCode": "Mã viên chức/NLĐ",
+      "createdTime": "Ngày nhập",
+      "createdBy": "Người nhập",
+      "approvedTime": "Ngày phê duyệt",
+      "approvedBy": "Người phê duyệt",
+      "modifiedTime": "Ngày sửa",
+      "modifiedBy": "Người sửa",
+      "workPlanName": "Tên kế hoạch công tác",
+      "workPlanAdd": "Thêm mới kế hoạch công tác",
+      "workPlanEdit": "Chỉnh sửa kế hoạch công tác",
+      "content": "Nội dung nhận xét",
+      "keySearch": "Mã/Tên nhân viên/Kỳ đánh giá",
+      "selectedIndicator": "Chọn chỉ số KPI",
+      "viewIndicator": "Xem chi tiết chỉ số KPI",
+      "addIndicator": "Đăng ký KPI cho năm học",
+      "jobName": "Chức danh",
+      "orgName": "Đơn vị",
+      "total": "Tổng điểm",
+      "selfPointPer": "Cá nhân đánh giá",
+      "selfPoint": "Trưởng đơn vị cấu thành đánh giá",
+      "managerPoint": "Trưởng đơn vị thuộc trường đánh giá",
+      "selfTotalPoint": "Điểm tự đánh giá",
+      "managerTotalPoint": "Điểm QL đánh giá",
+      "administrativeJob": "KHCT Vị trí việc làm hành chính",
+      "teacherJob": "KHCT Vị trí việc làm Giảng viên",
+      "otherActivities": "Các hoạt động khác",
+      "listEvaluation": "Đánh giá danh sách KPI nhân viên",
+      "reason": "Lý do cấp QL trực tiếp yêu cầu đánh giá lại",
+      "reasonManageRequest": "Lý do cấp QL yêu cầu đánh giá lại",
+      "msgSuccess": "Yêu cầu QLTT đánh giá lại thành công",
+      "reasonRequest": "Lý do yêu cầu nhập lại KHCT&KPI"
+    }
+  },
+  "employeeSummary": {
+    "label": {
+      "employee": "Nhân viên",
+      "period": "Kỳ đánh giá",
+      "status": "Trạng thái",
+      "employeeName": "Họ tên",
+      "employeeCode": "Mã nhân viên",
+      "createdTime": "Ngày nhập",
+      "createdBy": "Người nhập",
+      "approvedTime": "Ngày phê duyệt",
+      "approvedBy": "Người phê duyệt",
+      "modifiedTime": "Ngày sửa",
+      "modifiedBy": "Người sửa",
+      "keySearch": "Mã, Tên, Email nhân viên",
+      "jobName": "Chức vụ",
+      "orgName": "Đơn vị",
+      "selfTotalPoint": "Điểm tự đánh giá",
+      "managerTotalPoint": "Điểm quản lý đánh giá",
+      "selfRating": "Tự đánh giá",
+      "managerRating": "Quản lý đánh giá",
+      "point": "Điểm",
+      "result": "Xếp loại",
+      "finalResult": "Cấp trường đánh giá",
+      "evaluationPoint": "Xếp loại theo mức điểm",
+      "evaluationManage": "Quản lý xếp loại",
+      "evaluationSchool": "Cấp trường xếp loại"
+    }
+  },
+  "organizationSummary": {
+    "label": {
+      "keySearch": "Tên đơn vị/Kỳ đánh giá",
+      "org": "Đơn vị",
+      "orgLevel1": "Đơn vị cấp 1",
+      "orgLevel2": "Đơn vị cấp 2",
+      "orgLevel3": "Đơn vị cấp 3",
+      "period": "Kỳ đánh giá",
+      "status": "Trạng thái",
+      "selfTotalPoint": "Điểm tự đánh giá",
+      "managerTotalPoint": "Điểm quản lý đánh giá",
+      "result": "Xếp loại",
+      "finalResult": "Xếp loại sau điều chỉnh",
+      "createdTime": "Ngày nhập",
+      "createdBy": "Người nhập",
+      "approvedTime": "Ngày phê duyệt",
+      "approvedBy": "Người phê duyệt",
+      "modifiedTime": "Ngày sửa",
+      "modifiedBy": "Người sửa",
+      "type": "Loại tổng hợp",
+      "group": "Phân nhóm"
+    }
+  },
+  "organizationAggregateData": {
+    "label": {
+      "evaluationPeriodId": "Kỳ đánh giá",
+      "groupCode": "Phân nhóm",
+      "fullName": "Đơn vị",
+      "totalKpi": "Số lượng KPI",
+      "managerTotalPoint": "Điểm QLTT đánh giá",
+      "selfTotalPoint": "Tự đánh giá",
+      "average": "Xếp loại trung bình",
+      "rankOrg": "Xếp loại đơn vị",
+      "tyLeVuotDayManh": "Tỷ lệ các chỉ số thực hiện vượt mức “Đẩy mạnh” (Số KPI vượt / Tổng KPI được giao)",
+      "tongTrongSoVuotDayManh": "Tổng trọng số các chỉ số thực hiện vượt mức “Đẩy mạnh” ",
+      "mucVuotSoVoiDayManh": "Mức vượt so với mức “Đẩy mạnh” (Tổng % mức vượt của các chỉ số vượt)",
+      "khctDonVi": "Mức độ hoàn thành KHCT của đơn vị: %",
+      "tyLeVuotMucKhct": "Tỷ lệ công việc hoàn thành vượt mức trong kế hoạch công tác (Số công việc vượt mức / Số công việc theo kế hoạch)",
+      "tyLeKhongHoanThanhKhct": "Tỷ lệ công việc KHÔNG HOÀN THÀNH trong kế hoạch công tác (Số công việc không hoàn thành / Số công việc theo kế hoạch)",
+      "tongSoGioGiang": "Số giờ giảng, số giờ hướng dẫn, số giờ khác",
+      "tongSoGioGiangThinhGiang": "Số giờ giảng, hướng dẫn, khác các bậc, hệ đào tạo bình quân / (GV + GV thỉnh giảng)",
+      "tyLeVuotMucCbqt": "Tỷ lệ thực hiện vượt mức “Đẩy mạnh” chỉ tiêu công bố quốc tế",
+      "tyLeVuotMucCbtc": "Tỷ lệ thực hiện vượt mức “Đẩy mạnh” chỉ tiêu công bố trong nước uy tín",
+      "phatTrienDaoTao": "Phát triển chương trình đào tạo",
+      "kiemDinhDaiHoc": "Kiểm định chất lượng chương trình đào tạo trình độ đại học",
+      "kiemDinhThacSi": "Kiểm định chất lượng chương trình đào tạo trình độ thạc sĩ",
+      "tyLeTotNghiepDungHan": "Tỷ lệ sinh viên tốt nghiệp đúng hạn",
+      "soGiangVienDatNn": "Số giảng viên đạt chuẩn giảng dạy chuyên môn bằng ngoại ngữ",
+      "soGiangVienBaoVeLats": "Số giảng viên bảo vệ luận án tiến sĩ thành công / PGS mới",
+      "point": "Điểm",
+      "rank": "Xếp loại",
+      "export": "Danh sách xếp loại đơn vị",
+      "exportSchool": "Danh sách tổng hợp thực hiện KHCT Trường",
+      "tableColumns": "Các tiêu chí"
+    }
+  },
+  "orgConfigs": {
+    "title": "Cấu hình tham số KPI",
+    "table": {
+      "year": "Năm",
+      "organization": "Đơn vị",
+      "note": "Ghi chú",
+      "createdTime": "Ngày nhập",
+      "createdBy": "Người nhập",
+      "approvedTime": "Ngày phê duyệt",
+      "approvedBy": "Người phê duyệt",
+      "modifiedTime": "Ngày sửa",
+      "modifiedBy": "Người sửa",
+      "unitGroup": "Nhóm đơn vị"
+    },
+    "label": {
+      "year": "Năm"
+    }
+  },
+  "validates": {
+    "required": "{{param}} bắt buộc nhập",
+    "required2": " bắt buộc nhập",
+    "duplicate": "{{param}} không được trùng",
+    "valueError": "Giá trị không hợp lệ",
+    "totalPercentExceeded": "Tổng trọng số phải bằng 100",
+    "value": "Giá trị",
+    "comparison": "Biểu thức",
+    "indicatorSelect": "Chỉ số bắt buộc nhập"
+  },
+  "button": {
+    "registerExport": "Xuất dữ liệu đăng ký",
+    "saveEmp": "Lưu nhân viên",
+    "createList": "Lập danh sách",
+    "confirmData1": "Chốt dữ liệu KPI - lần 1",
+    "confirmData2": "Chốt dữ liệu KPI - lần 2",
+    "confirmResult": "Chốt kết quả đánh giá",
+    "assignment": "Gán đơn vị/cá nhân thực hiện",
+    "viewOrgParent": "Xem KPI đơn vị cấp trên"
+  },
+  "label": {
+    "action": "Thực hiện",
+    "result": "Mức độ hoàn thành (%)",
+    "org": "Khoa/phòng",
+    "orgChild": "Tổ/nhóm",
+    "noValue": "Không có chỉ số liên quan",
+    "typeReport": "Loại báo cáo"
+  },
+  "notification": {
+    "createListSuccess": "Lập danh sách thành công"
+  },
+  "error": {
+    "requiredIndicator": "Chỉ tiêu đánh giá bắt buộc nhập",
+    "requiredParam": "Các trách nhiệm, nhiệm vụ chính theo mô tả vị trí việc làm bắt buộc nhập"
+  }
+}
+

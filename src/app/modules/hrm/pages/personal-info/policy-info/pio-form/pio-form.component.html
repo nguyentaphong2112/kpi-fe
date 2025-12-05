@@ -1,0 +1,75 @@
+<div [ngClass]="{'app-card' : isPage}">
+  <div class="content" *ngIf="isPage">
+    <hbt-button buttonType="NO_BORDER" (click)="save()" buttonAvailableStyle="SAVE"
+                buttonText="{{'common.button.save' | translate}}" type='SUBMIT'></hbt-button>
+  </div>
+  <form nz-form [formGroup]="form">
+    <div class="app-row" nz-row [nzGutter]='[20,15]'>
+      <div nz-col nzXs="24" nzLg="12">
+        <hbt-select formControlName="familyPolicyId"
+                    [urlLoadData]="urlLoadFamily"
+                    [serviceName]="serviceName"
+                    keyLabel="name"
+                    labelText="{{'hrm.staffManager.label.familyPolicyId' | translate}}"
+                    placeholder="{{'hrm.staffManager.label.familyPolicyId' | translate}}"
+        >
+        </hbt-select>
+      </div>
+      <div nz-col nzXs="24" nzLg="12">
+        <hbt-select formControlName="selfPolicyId"
+                    [urlLoadData]="urlLoadSelf"
+                    [serviceName]="serviceName"
+                    keyLabel="name"
+                    labelText="{{'hrm.staffManager.label.selfPolicyId' | translate}}"
+                    placeholder="{{'hrm.staffManager.label.selfPolicyId' | translate}}"
+        >
+        </hbt-select>
+      </div>
+      <div nz-col nzXs="24" nzLg="12">
+        <hbt-input-text formControlName="partyNumber" [maxLength]="50"
+                        placeholderText="{{'hrm.staffManager.label.partyNumber' | translate}}"
+                        labelText="{{'hrm.staffManager.label.partyNumber' | translate}}">
+        </hbt-input-text>
+      </div>
+      <div nz-col [nzXs]='24' [nzLg]='12'>
+        <hbt-date-picker
+          formControlName="partyDate"
+          labelText="{{ 'hrm.staffManager.label.partyDate' | translate }}"
+          placeholderText="{{ 'hrm.staffManager.label.partyDate' | translate }}"
+        ></hbt-date-picker>
+      </div>
+      <div nz-col nzXs="24" nzLg="12">
+        <hbt-input-text formControlName="partyPlace" [maxLength]="255"
+                        placeholderText="{{'hrm.staffManager.label.partyPlace' | translate}}"
+                        labelText="{{'hrm.staffManager.label.partyPlace' | translate}}">
+        </hbt-input-text>
+      </div>
+      <div nz-col [nzXs]='24' [nzLg]='12'>
+        <hbt-date-picker
+          formControlName="partyOfficialDate"
+          labelText="{{ 'hrm.staffManager.label.partyDateReal' | translate }}"
+          placeholderText="{{ 'hrm.staffManager.label.partyDateReal' | translate }}"
+        ></hbt-date-picker>
+      </div>
+      <ng-container formArrayName="listAttributes">
+        <ng-container *ngFor="let attributes of attributesFormArray.controls; let idx = index" [formGroupName]="idx">
+          <div nz-col [nzXs]="12" [nzLg]="12">
+            <input-attribute-common
+              [controlName]="getAttributeControl(idx, 'attributeValue')"
+              [dataType]="attributes.get('dataType')?.value"
+              [urlLoadData]="attributes.get('urlLoadData')?.value"
+              [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+              [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+              [errors]="attributes.get('attributeValue')?.errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}]"
+              [placeholderText]="attributes.get('attributeName')?.value"
+              [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+            >
+            </input-attribute-common>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </form>
+
+</div>

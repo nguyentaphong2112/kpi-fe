@@ -1,0 +1,64 @@
+<div class='save-form-abs'>
+  <form nz-form [formGroup]="form" style="margin-top: 20px">
+    <div nz-row [nzGutter]='[20,15]'>
+      <!--mã-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text [defaultInput]="true" formControlName="code" maxLength="255" uppercase (blur)="blur('code')"
+          [type]="isSubmitted && form.controls['code'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['code'].errors != null"
+          [errors]="form.controls['code'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'abs.workdayTypes.table.code' | translate }},
+          { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+          placeholderText="{{'abs.workdayTypes.table.code' | translate}}"
+          labelText="{{'abs.workdayTypes.table.code' | translate}}<span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--tên-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="name" maxLength="255"
+          [type]="isSubmitted && form.controls['name'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['name'].errors != null"
+          [errors]="form.controls['name'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'abs.workdayTypes.table.name' | translate }},
+          { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+          placeholderText="{{'abs.workdayTypes.table.name' | translate}}"
+          labelText="{{'abs.workdayTypes.table.name' | translate}}<span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <ng-container formArrayName="listAttributes">
+        <ng-container *ngFor="let attributes of attributesFormArray.controls; let idx = index" [formGroupName]="idx">
+          <div nz-col [nzXs]="12" [nzLg]="12">
+            <input-attribute-common
+              [controlName]="getAttributeControl(idx, 'attributeValue')"
+              [dataType]="attributes.get('dataType')?.value"
+              [urlLoadData]="attributes.get('urlLoadData')?.value"
+              [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+              [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+              [errors]="attributes.get('attributeValue')?.errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}]"
+              [placeholderText]="attributes.get('attributeName')?.value"
+              [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+            >
+            </input-attribute-common>
+          </div>
+        </ng-container>
+      </ng-container>
+<!--      <div nz-col [nzXs]='24' [nzLg]='24' class="input__group">-->
+<!--        <hbt-upload-->
+<!--          [(docIdsDelete)]="docIdsDelete"-->
+<!--          [typeFileAvailable]="['jpg', 'png', 'pdf', 'doc', 'docx']"-->
+<!--          [multiple]="true"-->
+<!--          labelText="{{'common.label.attachFile' | translate}}"-->
+<!--          [required]="true"-->
+<!--          (fileListChange)="onFileListChange($event, 'fileList', true)"-->
+<!--          (docIdsDeleteChange)="removeFile($event, 'fileList')"-->
+<!--          [serviceName]='serviceName'-->
+<!--          [showError]="isSubmitted"-->
+<!--        ></hbt-upload>-->
+<!--      </div>-->
+    </div>
+  </form>
+</div>
+

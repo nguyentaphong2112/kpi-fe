@@ -1,0 +1,67 @@
+@import "../../../core/global-style/_select.scss";
+
+::ng-deep .tree__select {
+  .ant-select-selection-placeholder, .ant-select-selection-item {
+    padding-top: 7px !important;
+    margin-left: -2px;
+  }
+}
+
+::ng-deep .tree__select-able {
+  .ant-select-selector {
+    height: auto !important;
+  }
+
+  .ant-select-selection-placeholder {
+    margin-left: -22px;
+    padding-top: 2px;
+  }
+
+  .ant-select-selection-search-input {
+    margin-left: 5px !important;
+    margin-top: -3px;
+  }
+}
+
+::ng-deep .ant-select-tree-dropdown {
+  padding-top: 12px !important;
+}
+
+
+::ng-deep .select__custom {
+  em.icon__search {
+    position: absolute;
+    right: 8px;
+    cursor: pointer;
+    z-index: 1;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    padding-top: 4px;
+    padding-left: 3px;
+    background-color: #fff;
+    &:hover {
+      background-color: $black-300;
+      border-radius: 20px;
+    }
+  }
+
+  .ant-select-selector {
+    padding-right: 15px !important;
+  }
+
+
+}
+
+::ng-deep .custom__search-icon .ant-select-clear {
+  margin-right: 20px ;
+}
+
+::ng-deep .ant-select-tree-treenode {
+  display: none !important;
+}
+
+::ng-deep .ant-select-tree-treenode-switcher-close, ::ng-deep .ant-select-tree-treenode-switcher-open {
+  display: flex !important;
+}

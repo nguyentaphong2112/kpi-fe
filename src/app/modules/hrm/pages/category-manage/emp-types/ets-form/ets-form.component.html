@@ -1,0 +1,62 @@
+<div [ngClass]="{'app-card' : isPage}">
+  <div class="content" *ngIf="isPage">
+    <hbt-button buttonType="NO_BORDER" (click)="save()" buttonAvailableStyle="SAVE"
+                buttonText="{{'common.button.save' | translate}}" type='SUBMIT'></hbt-button>
+  </div>
+  <form nz-form [formGroup]="form">
+    <div class="app-row" nz-row [nzGutter]='[20,15]'>
+      <div nz-col nzXs="24" nzLg="12">
+        <hbt-input-text formControlName="name" [maxLength]="255"
+                        [type]="isSubmitted && form.controls['name'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['name'].errors !== null"
+                        [errors]="form.controls['name'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': '255' }},
+                        { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.categoryManage.empTypes.label.name' | translate }}]"
+                        placeholderText="{{'hrm.staffManager.categoryManage.empTypes.label.name' | translate}}"
+                        labelText="{{'hrm.staffManager.categoryManage.empTypes.label.name' | translate}} <span class='label__required'>*</span>">
+        </hbt-input-text>
+      </div>
+      <div nz-col nzXs="24" nzLg="12">
+        <hbt-input-text formControlName="code" [maxLength]="255"
+                        [type]="isSubmitted && form.controls['code'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['code'].errors !== null"
+                        [errors]="form.controls['code'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': '255' }},
+                        { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.categoryManage.empTypes.label.code' | translate }}]"
+                        placeholderText="{{'hrm.staffManager.categoryManage.empTypes.label.code' | translate}}"
+                        labelText="{{'hrm.staffManager.categoryManage.empTypes.label.code' | translate}} <span class='label__required'>*</span>">
+        </hbt-input-text>
+      </div>
+      <div nz-col nzXs="24" nzLg="12">
+        <hbt-input-text formControlName="orderNumber"
+                        appNumberInput
+                        [type]="isSubmitted && form.controls['orderNumber'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['orderNumber'].errors !== null"
+                        [errors]="form.controls['orderNumber'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.categoryManage.empTypes.label.orderNumber' | translate }}]"
+                        placeholderText="{{'hrm.staffManager.categoryManage.empTypes.label.orderNumber' | translate}}"
+                        labelText="{{'hrm.staffManager.categoryManage.empTypes.label.orderNumber' | translate}} <span class='label__required'>*</span>">
+        </hbt-input-text>
+      </div>
+      <ng-container formArrayName="listAttributes">
+        <ng-container *ngFor="let attributes of attributesFormArray.controls; let idx = index" [formGroupName]="idx">
+          <div nz-col [nzXs]="12" [nzLg]="12">
+            <input-attribute-common
+              [controlName]="getAttributeControl(idx, 'attributeValue')"
+              [dataType]="attributes.get('dataType')?.value"
+              [urlLoadData]="attributes.get('urlLoadData')?.value"
+              [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+              [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+              [errors]="attributes.get('attributeValue')?.errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}]"
+              [placeholderText]="attributes.get('attributeName')?.value"
+              [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+            >
+            </input-attribute-common>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </form>
+
+</div>

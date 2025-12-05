@@ -1,0 +1,24 @@
+<div class="tab--wrap">
+  <ul nz-menu nzMode="horizontal" class="scroll__tab">
+    <li
+      class="scroll__tab--title"
+      *ngFor="let tab of tabs"
+      nz-menu-item (click)="scrollTo(tab)"
+      [nzDisabled]="tab.disabled"
+      [id]="'#'+ tab.scrollTo"
+    >
+      <em class="scroll__tab__icon--title" nz-icon [nzType]="tab.icon" *ngIf="tab.icon"></em>
+      <span>{{ tab.title | translate }}</span>
+    </li>
+  </ul>
+
+<!--  <div *ngIf='isShowInfoChange' class="btnInfoChange ant-menu-item" (click)="onShowInfoChangeClick()">-->
+<!--    <span><i nz-icon nzType="history" nzTheme="outline"></i></span>-->
+<!--  </div>-->
+</div>
+
+
+<ng-template #footerTmpl>
+  <hbt-button buttonType="NO_BORDER" (click)="cancel()" buttonBgColor="transparent"
+              buttonText="{{'common.button.close' | translate}}"></hbt-button>
+</ng-template>

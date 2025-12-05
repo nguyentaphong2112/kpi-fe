@@ -1,0 +1,90 @@
+<div [class]="isNotPageName ? 'btn__across-no-page' : 'btn__across-page'">
+  <hbt-button
+    buttonAvailableStyle="DEFAULT"
+    buttonText="{{ 'common.button.back' | translate }}"
+    (click)="back()">
+  </hbt-button>
+</div>
+<div class="ics-add">
+  <div class="content__item content__item--border bg__content--default">
+    <div nz-row [nzGutter]='[20,15]'>
+      <div nz-col [nzXs]='24' [nzLg]='8'>
+        <div class="bold-text">{{ 'kpi.indicatorConversions.table.organizationName' | translate }}</div>
+        <span class="ct-text">{{ organizationName }}</span>
+      </div>
+      <div nz-col [nzXs]='24' [nzLg]='8' *ngIf="orgTypeName">
+        <div class="bold-text">{{ 'kpi.indicatorConversions.table.unitGroup' | translate }}</div>
+        <span class="ct-text">{{ orgTypeName }}</span>
+      </div>
+      <div nz-col [nzXs]='24' [nzLg]='8' *ngIf="jobName">
+        <div class="bold-text">{{ 'kpi.indicatorConversions.table.jobPosition' | translate }}</div>
+        <span class="ct-text">{{ jobName }}</span>
+      </div>
+    </div>
+  </div>
+  <div class='search__content--group'>
+    <div class="title-table">
+      <div style="font-weight: bold">{{ 'kpi.indicatorConversions.table.listKpi' | translate }}</div>
+      <div class="btn-group" *ngIf="!isDetail">
+<!--        <hbt-button buttonSize="MEDIUM"-->
+<!--                    class="staff__research__btn__search"-->
+<!--                    buttonText="{{'common.button.uploadFile' | translate}}"-->
+<!--                    [buttonTextColor]="_variable.$purple_800" (click)="doImportData()"></hbt-button>-->
+        <hbt-button
+          class="staff__research__btn__search"
+          buttonSize="MEDIUM"
+          buttonAvailableStyle="ADD"
+          buttonText="{{'kpi.indicatorConversions.label.add' | translate}}"
+          (click)="doOpenForm(modeConst.ADD, {orgId: orgId})"
+        ></hbt-button>
+      </div>
+    </div>
+    <hbt-table-wrap [tableConfig]="tableConfig">
+      <hbt-table
+        (changePageNum)="search($event)"
+        (onDblClick)="onClickItem($event)"
+        [tableConfig]="tableConfig" [dataList]="tableData"></hbt-table>
+    </hbt-table-wrap>
+  </div>
+
+  <ng-template #actionTmpl let-data="data">
+    <btn-more-action [model]="[data]" [setting]="actionSchema">
+    </btn-more-action>
+  </ng-template>
+
+  <ng-template #noteTpl let-note='note'>
+    <ng-container *ngFor="let data of (note?.split('\n') ?? [])">
+      <div [innerHTML]="strReplaceSpace(data)"></div>
+    </ng-container>
+  </ng-template>
+
+  <ng-template #footerTmpl>
+    <hbt-button
+      buttonAvailableStyle="CANCEL"
+      buttonText="{{ 'common.button.cancel' | translate }}"
+      (click)="modalRef.destroy()">
+    </hbt-button>
+    <hbt-button
+      buttonAvailableStyle="SAVE"
+      buttonText="{{ 'common.button.select' | translate }}"
+      (click)="modalRef.getContentComponent().save()">
+    </hbt-button>
+  </ng-template>
+
+  <hbt-import-file [showContent]='isImportData'
+                   (onCloseModal)='doCloseImport($event)'
+                   [importApi]='importApi'
+                   [downLoadTemplateApi]="downLoadTemplateApi"
+                   [fileTemplateName]="fileTemplateName"
+                   [doDownloadFileByNameApi]='doDownloadFileByNameApi'>
+  </hbt-import-file>
+
+  <ng-template #statusTmpl let-statusCode='status'>
+    <ng-container *ngFor='let item of statusCodeList'>
+      <nz-tag [nzColor]="item.bgColor" [ngStyle]="{'color': item.color, width: '180px', 'text-align': 'center'}"
+              *ngIf='statusCode === item.code'>
+        {{ item.name }}
+      </nz-tag>
+    </ng-container>
+  </ng-template>
+</div>

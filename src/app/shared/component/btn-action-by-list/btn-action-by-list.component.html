@@ -1,0 +1,23 @@
+<hbt-button
+  (click)='approveAll()'
+  buttonSize='SMALL'
+  buttonAvailableStyle='APPROVE'
+  buttonText="{{'personalTax.label.approveAll' | translate}}"
+  [buttonBgColor]="isDisabled ? '#7F85F3' : ''"
+  [isDisable]="isDisabled"
+></hbt-button>
+<hbt-button
+  *ngIf="listId.length > 0"
+  (click)='approveByList()'
+  buttonSize='SMALL'
+  buttonAvailableStyle='APPROVE'
+  buttonText="{{'personalTax.label.approve' | translate}}"
+></hbt-button>
+<hbt-button
+  *ngIf="listId.length > 0"
+  (click)="openRejectByList()"
+  buttonSize='SMALL'
+  buttonAvailableStyle='REJECT'
+  buttonText="{{'personalTax.label.reject' | translate}}"
+></hbt-button>
+

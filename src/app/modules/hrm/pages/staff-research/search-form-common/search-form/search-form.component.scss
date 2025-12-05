@@ -1,0 +1,33 @@
+
+.btn-choose__bookmark, .btn-save__bookmark, {
+  //margin-top: 4px;
+}
+.popover_footer {
+  text-align: center;
+  ::ng-deep.btn__save {
+    .ant-btn {
+      margin: 10px 10px 0 10px;
+    }
+  }
+
+  ::ng-deep.btn__choose {
+    .ant-btn {
+      margin: 10px 10px 0 10px;
+    }
+  }
+}
+
+.popover__inner {
+  min-width: 300px;
+}
+
+::ng-deep .form__search .input__group--no-label {
+  min-height: 0px !important;
+}
+
+::ng-deep .search__adv {
+  margin-top: 20px !important;
+}
+.fa-angle-double-up, .fa-angle-double-down {
+  font-size: 20px;
+}

@@ -1,0 +1,58 @@
+@import "variable";
+
+.extend-form-group {
+  label.extend-form-item_label {
+    color: $input-label-color;
+    font-size: 14px;
+    font-family: avertaB, sans-serif;
+
+    .extend-form-item_label__required {
+      color: $error-default-color;
+    }
+  }
+}
+
+.has-errors {
+  font-size: 12px;
+  margin-top: 8px;
+  color: $input-label-color;
+
+  em {
+    margin-right: 8px;
+  }
+}
+
+.extend-form-item__has-errors {
+
+  em, span {
+    color: $error-default-color;
+  }
+
+  ::ng-deep {
+    .ant-picker, .ant-input, .ant-select {
+      border: 1px solid $bd-error !important
+    }
+  }
+
+}
+
+.extend-form-item__has-warning {
+  em, span {
+    color: $bg-warning-default;
+  }
+
+  .ant-picker, .ant-input, .ant-select {
+    border-color: $bg-warning-default !important;
+  }
+}
+
+.extend-form-item__has-success {
+  em, span {
+    border-color: $bg-success-default;
+  }
+
+  .ant-picker, .ant-input, .ant-select {
+    border-color: $bg-success-default !important;
+  }
+}
+

@@ -1,0 +1,12 @@
+<hbt-tree-view
+  [isExpand]="isExpand"
+  [urlLoadDataNode]="urlLoadDataNode"
+  [urlLoadByParentNode]="urlLoadChildren"
+  [keyLabel]="keyLabel"
+  [keyValue]="keyValue"
+  [serviceName]="serviceName"
+  (onClickNode)="selectNode($event)"
+  [scope]="scope"
+  [functionCode]="functionCode"
+  [dataConfig]="{asyncData: true}"
+></hbt-tree-view>

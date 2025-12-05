@@ -1,0 +1,113 @@
+#!groovy
+
+node('dev-slave02-10.1.16.21') {
+    def project_name = "crmcore-frontend-web"
+    def mvnhome = "/sharedata/jenkin-home/tools/apache-maven-3.6.2"
+    def jdkhome = "/sharedata/jenkin-home/tools/jdk-11.0.5"
+    def nodejs_home = "/sharedata/jenkin-home/tools/nodejs"
+    def harbor_host = "10.1.27.43"
+    def kubernetes_namespace = "channel"
+    def docker_prefix = "${harbor_host}/uat-crmnew"
+
+    def kubernetes_deployment_name = "${project_name}-deployment"
+    def kubernetes_cluster = "$uat_crmnew_27_43"
+    def image_version = "1.0.0"
+
+    try {
+        notifyBuild('STARTED')
+        stage('Clone repository') {
+            checkout scm
+        }
+
+        stage('npm install') {
+            env.PATH = "${nodejs_home}/bin:${env.PATH}"
+            sh "npm install"
+            env.PATH = "./node_modules/.bin:${env.PATH}"
+        }
+
+//        stage('Unit test') {
+//           sh "ng test --no-watch --code-coverage"
+//        }
+
+        stage('Angular build') {
+            sh "ng build --configuration=uat --build-optimizer"
+        }
+
+
+        stage('Build image') {
+            app = docker.build("${docker_prefix}/${project_name}:${image_version}")
+        }
+
+        stage('Push image') {
+            /* Finally, we'll push the image with two tags:
+             * First, the incremental build number from Jenkins
+             * Second, the 'latest' tag.
+             * Pushing multiple tags is cheap, as all the layers are reused.*/
+            docker.withRegistry("https://${harbor_host}/", 'harbor-private-registry') {
+                app.push()
+            }
+        }
+
+        stage('ReDeploy to K8s'){
+            rancherRedeploy alwaysPull: true, credential: 'RancherRedeploy', images: "${docker_prefix}/${project_name}:${image_version}", workload: "/project/${kubernetes_cluster}/workloads/deployment:${kubernetes_namespace}:${kubernetes_deployment_name}"
+        }
+    } catch (e) {
+        currentBuild.result = "FAILED"
+        throw e
+    } finally {
+        notifyBuild(currentBuild.result)
+    }
+}
+
+
+def waitApplicationStart(String deploy_host, String port) {
+    def count = 1
+    while (count <= 50) {
+        sleep 5
+        try {
+            def response = sh(script: "curl http://${deploy_host}:${port}/actuator/health", returnStdout: true)
+            if (response && response == "{\"status\":\"UP\"}") {
+                count == 50
+                return "UP"
+            }
+        } catch (e) {
+            echo "Err $e"
+        }
+        count++
+    }
+    return "DOWN"
+}
+
+def notifyBuild(String buildStatus = 'STARTED') {
+    // build status of null means successful
+    buildStatus = buildStatus ?: 'SUCCESSFUL'
+
+    // Default values
+    def colorName = 'RED'
+    def colorCode = '#FF0000'
+    def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
+    def summary = "${subject} (${env.BUILD_URL})"
+    def details = """<p>STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+    <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>"""
+
+    // Override default values based on build status
+    if (buildStatus == 'STARTED') {
+        color = 'YELLOW'
+        colorCode = '#FFFF00'
+    } else if (buildStatus == 'SUCCESSFUL') {
+        color = 'GREEN'
+        colorCode = '#00FF00'
+    } else {
+        color = 'RED'
+        colorCode = '#FF0000'
+    }
+
+    // Send notifications
+//    slackSend (color: colorCode, message: summary)
+
+    // emailext(
+    //     subject: subject,
+    //     body: details,
+    //     recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+    //   )
+}

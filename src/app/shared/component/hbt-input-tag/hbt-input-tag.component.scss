@@ -1,0 +1,73 @@
+@import "src/app/core/global-style/input";
+
+::ng-deep.ant-input-number-handler-wrap {
+  border-radius: 10px;
+}
+
+::ng-deep .index-setting {
+  border: 1px solid $black-200;
+  padding: 5px;
+  border-radius: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  .ant-tag {
+    margin-bottom: 5px;
+    background: #e8eaf6;
+    border-radius: 4px;
+  }
+
+  .tag {
+    flex: 1;
+    min-width: 100px;
+  }
+
+  .ant-input {
+    border: 0;
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  &:hover, &:focus {
+    outline: none;
+    border-color: $bd-default-hover;
+  }
+
+  &:disabled {
+    background: $bg-default-disabled;
+
+    &:hover, &:focus {
+      border-color: $bd-default;
+    }
+  }
+}
+
+.input-focused {
+  border-color: $bd-default-hover;
+}
+
+::ng-deep.index__input-text {
+  margin-top: 4px;
+}
+
+::ng-deep {
+  .tagClass {
+    background: #e8eaf6;
+    border-radius: 4px;
+    z-index: 5;
+  }
+}
+
+::ng-deep .label__required {
+  color: red;
+}
+
+::ng-deep .input__label {
+  color: #6E7191;
+  font-size: 14px;
+  font-family: avertaB, sans-serif;
+  margin-bottom: 4px;
+}

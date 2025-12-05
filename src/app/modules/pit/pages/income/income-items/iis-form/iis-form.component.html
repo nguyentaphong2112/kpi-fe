@@ -1,0 +1,57 @@
+<div [ngClass]="{'app-card' : isPage}">
+  <form nz-form [formGroup]="form">
+    <div class="app-row" nz-row [nzGutter]='[20,15]'>
+      <!--Biểu mẫu thu nhập-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select formControlName="incomeTemplateId"
+                    [type]="isSubmitted && form.controls['incomeTemplateId']?.errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['incomeTemplateId']?.errors != null"
+                    [errors]="form.controls['incomeTemplateId']?.errors"
+                    [errorDefs]="[
+                      { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'pit.incomeItemMasters.table.typeIncome' | translate }}]"
+                    [dataSelects]="listIncomeTemplate" keyLabel="name" keyValue="incomeTemplateId"
+                    [serviceName]="microService.ADMIN"
+                    (select)= "onChangeTypeTemplate($event)"
+                    labelText="{{'pit.incomeItemMasters.table.typeIncome' | translate}} <span class='label__required'>*</span>"
+                    placeholder="{{'pit.incomeItemMasters.table.typeIncome' | translate}}"
+        >
+        </hbt-select>
+      </div>
+
+      <!--Kỳ kê khai-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-date-picker
+          mode="month"
+          formControlName="salaryPeriodDate"
+          [type]="isSubmitted && form.controls['salaryPeriodDate']?.errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['salaryPeriodDate']?.errors != null"
+          [errors]="form.controls['salaryPeriodDate']?.errors"
+          [errorDefs]="[
+                      { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'pit.incomeItemMasters.table.taxPeriodDate' | translate }}]"
+          labelText="{{ 'pit.incomeItemMasters.table.taxPeriodDate' | translate }} <span class='label__required'>*</span>"
+          placeholderText="{{ 'pit.incomeItemMasters.table.taxPeriodDate' | translate }}"
+        ></hbt-date-picker>
+      </div>
+
+      <!--Mã-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName='code' [maxLength]='50'
+                        [disable] = "true"
+                        placeholderText="{{'pit.incomeItemMasters.table.itemCode' | translate}}"
+                        labelText="{{'pit.incomeItemMasters.table.itemCode' | translate}}"></hbt-input-text>
+      </div>
+
+      <!--Tên-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName='name' [maxLength]='50'
+                        [type]="isSubmitted && form.controls['name']?.errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['name']?.errors != null"
+                        [errors]="form.controls['name']?.errors"
+                        [errorDefs]="[
+                          { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'pit.incomeItemMasters.table.itemName' | translate }}]"
+                        placeholderText="{{'pit.incomeItemMasters.table.itemName' | translate}}"
+                        labelText="{{'pit.incomeItemMasters.table.itemName' | translate}}  <span class='label__required'>*</span>"></hbt-input-text>
+      </div>
+    </div>
+  </form>
+</div>

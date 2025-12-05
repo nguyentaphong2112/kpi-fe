@@ -1,0 +1,145 @@
+<form nz-form [formGroup]="form">
+  <div nz-row [nzGutter]='[20,15]'>
+    <div nz-col [nzXs]="12" [nzLg]="12" *ngIf="!hiddenEmp">
+      <employee-data-picker [isExpand]="true"
+                            [functionCode]="functionCode"
+                            [scope]="scope"
+                            [status]='mode !== modeConst.ADD ? "ALL" : "ACTIVE"'
+                            [formMode]="mode"
+                            [disable]="mode !== modeConst.ADD"
+                            formControlName="employeeId"
+                            [type]="isSubmitted && form.controls['employeeId'].errors ? 'error' : 'default'"
+                            [showError]="isSubmitted && form.controls['employeeId'].errors != null"
+                            [errors]="form.controls['employeeId'].errors"
+                            [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'common.label.employeeName' | translate }}]"
+                            labelText="{{'hrm.staffManager.educationDegrees.table.employeeId' | translate}} <span class='label__required'>*</span>"
+      >
+      </employee-data-picker>
+    </div>
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-select
+        [urlLoadData]="getUrlCategory(categoryCode.HR_GIAI_DOAN_QUY_HOACH)"
+        [serviceName]="microService.ADMIN"
+        keyLabel="name"
+        formControlName="planningPeriodId"
+        [type]="isSubmitted && form.controls['planningPeriodId'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['planningPeriodId'].errors != null"
+        [errors]="form.controls['planningPeriodId'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.staffResearch.planningAssignment.table.planningPeriodId' | translate }}]"
+        placeholder="{{'hrm.staffManager.staffResearch.planningAssignment.table.planningPeriodId' | translate}}"
+        labelText="{{'hrm.staffManager.staffResearch.planningAssignment.table.planningPeriodId' | translate}} <span class='label__required'>*</span>"
+      ></hbt-select>
+    </div>
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-select
+        [urlLoadData]="getUrlCategory(categoryCode.HR_CHUC_VU_QUY_HOACH)"
+        [serviceName]="microService.ADMIN"
+        keyLabel="name"
+        formControlName="positionId"
+        [type]="isSubmitted && form.controls['positionId'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['positionId'].errors != null"
+        [errors]="form.controls['positionId'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.staffResearch.planningAssignment.table.positionId' | translate }}]"
+        placeholder="{{'hrm.staffManager.staffResearch.planningAssignment.table.positionId' | translate}}"
+        labelText="{{'hrm.staffManager.staffResearch.planningAssignment.table.positionId' | translate}} <span class='label__required'>*</span>"
+      ></hbt-select>
+    </div>
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-input-text
+        formControlName="documentNo" [maxLength]="50"
+        placeholderText="{{'hrm.staffManager.staffResearch.planningAssignment.table.documentNo' | translate}}"
+        labelText="{{'hrm.staffManager.staffResearch.planningAssignment.table.documentNo' | translate}}"
+      ></hbt-input-text>
+    </div>
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-date-picker
+        formControlName="documentSignedDate"
+        placeholderText="{{'hrm.staffManager.staffResearch.planningAssignment.table.documentSignedDate' | translate}}"
+        labelText="{{'hrm.staffManager.staffResearch.planningAssignment.table.documentSignedDate' | translate}}"
+      ></hbt-date-picker>
+    </div>
+
+    <div nz-col [nzXs]='24' [nzLg]='12'>
+      <hbt-date-picker
+        formControlName="startDate"
+        [type]="isSubmitted && form.controls['startDate'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['startDate'].errors !== null"
+        [errors]="form.controls['startDate'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.staffResearch.planningAssignment.table.startDate' | translate }}]"
+        labelText="{{ 'hrm.staffManager.staffResearch.planningAssignment.table.startDate' | translate }} <span class='label__required'>*</span>"
+        placeholderText="{{ 'hrm.staffManager.staffResearch.planningAssignment.table.startDate' | translate }}"
+      ></hbt-date-picker>
+    </div>
+    <div nz-col [nzXs]='24' [nzLg]='12'>
+      <hbt-date-picker
+        formControlName="endDate"
+        [type]="(form.controls['endDate'].errors || form.errors?.rangeDateError) ? 'error' : 'default'"
+        [showError]="(form.controls['endDate'].errors || form.errors?.rangeDateError) !== null"
+        [errors]="form.errors?.rangeDateError ? form.errors : form.controls['endDate']?.errors"
+        [errorDefs]="[{ errorName: 'rangeDateError', errorDescription: 'hrm.validate.rangeDate.pareDateMore' | translate:{'fromDate': 'hrm.staffManager.staffResearch.planningAssignment.table.startDate' | translate, 'toDate': 'hrm.staffManager.staffResearch.planningAssignment.table.endDate' | translate}}]"
+        labelText="{{ 'hrm.staffManager.staffResearch.planningAssignment.table.endDate' | translate }}"
+        placeholderText="{{ 'hrm.staffManager.staffResearch.planningAssignment.table.endDate' | translate }}"
+        (ngModelChange)="changeShow($event)"
+      ></hbt-date-picker>
+    </div>
+    <ng-container *ngIf="isShow">
+      <div nz-col [nzXs]="24" [nzLg]="12">
+        <hbt-select
+          [urlLoadData]="getUrlCategory(categoryCode.HR_LY_DO_RA_QUY_HOACH)"
+          [serviceName]="microService.ADMIN"
+          keyLabel="name"
+          formControlName="endReasonId"
+          placeholder="{{'hrm.staffManager.staffResearch.planningAssignment.table.endReasonId' | translate}}"
+          labelText="{{'hrm.staffManager.staffResearch.planningAssignment.table.endReasonId' | translate}}"
+        ></hbt-select>
+      </div>
+      <div nz-col [nzXs]="24" [nzLg]="12">
+        <hbt-input-text
+          formControlName="endDocumentNo" [maxLength]="20"
+          placeholderText="{{'hrm.staffManager.staffResearch.planningAssignment.table.endDocumentNo' | translate}}"
+          labelText="{{'hrm.staffManager.staffResearch.planningAssignment.table.endDocumentNo' | translate}}"
+        ></hbt-input-text>
+      </div>
+      <div nz-col [nzXs]="24" [nzLg]="12">
+        <hbt-date-picker
+          formControlName="endDocumentSignedDate"
+          placeholderText="{{'hrm.staffManager.staffResearch.planningAssignment.table.endDocumentSignedDate' | translate}}"
+          labelText="{{'hrm.staffManager.staffResearch.planningAssignment.table.endDocumentSignedDate' | translate}}"
+        ></hbt-date-picker>
+      </div>
+    </ng-container>
+    <ng-container formArrayName="listAttributes">
+      <ng-container *ngFor="let attributes of attributesFormArray.controls; let idx = index" [formGroupName]="idx">
+        <div nz-col [nzXs]="12" [nzLg]="12">
+          <input-attribute-common
+            [controlName]="getAttributeControl(idx, 'attributeValue')"
+            [dataType]="attributes.get('dataType')?.value"
+            [urlLoadData]="attributes.get('urlLoadData')?.value"
+            [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+            [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+            [errors]="attributes.get('attributeValue')?.errors"
+            [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}]"
+            [placeholderText]="attributes.get('attributeName')?.value"
+            [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+          >
+          </input-attribute-common>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <div nz-col [nzXs]='24' [nzLg]='24' class="input__group">
+      <hbt-upload
+        [fileList]="f['files'].value"
+        [(docIdsDelete)]="docIdsDelete"
+        [typeFileAvailable]="['pdf']"
+        [multiple]="true"
+        labelText="{{'common.label.attachFile' | translate}}"
+        (fileListChange)="onFileListChange($event, 'files', true)"
+        (docIdsDeleteChange)="removeFile($event, 'files')"
+        [serviceName]='microService.HRM'
+        [maxSize]="3"
+        [disable]="mode === modeConst.VIEW"
+      ></hbt-upload>
+    </div>
+  </div>
+</form>

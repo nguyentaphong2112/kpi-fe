@@ -1,0 +1,15 @@
+@import "src/app/core/global-style/variable";
+
+::ng-deep .position__salary {
+  .ant-dropdown-menu-item-divider {
+    background-color: $neutral-500;
+  }
+
+  .fa-plus-circle:before, .fa-trash-alt:before {
+    font-size: 15px;
+  }
+
+  .position__salary-action button {
+    margin-left: 0;
+  }
+}

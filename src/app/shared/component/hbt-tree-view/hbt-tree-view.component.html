@@ -1,0 +1,40 @@
+<nz-tree
+  nzShowLine
+  nzAsyncData
+  [nzData]="dataTree"
+  [nzAsyncData]="dataConfig.asyncData"
+  [nzCheckable]="dataConfig.isCheckbox"
+  (nzClick)="doClickNode($event)"
+  (nzDblClick)="doDbClickNode($event)"
+  (nzCheckBoxChange)="doCheckedNode($event)"
+  (nzExpandChange)="doGetNodeChild($event)"
+  [nzExpandedIcon]="multiExpandedIconTpl"
+  [nzSelectedKeys]="selectedKeys"
+  [nzSearchValue]="searchValue"
+  [nzHideUnMatched]="hideUnMatched"
+  style="margin-top: 5px"
+>
+  <ng-template #multiExpandedIconTpl let-node let-origin="origin">
+    <em *ngIf="!origin.isLeaf && !node.isExpanded && origin.totalChildren > 0 && !origin.isLoading" nz-icon>
+      <svg width="13" height="13" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M13 8H8V13C8 13.55 7.55 14 7 14C6.45 14 6 13.55 6 13V8H1C0.45 8 0 7.55 0 7C0 6.45 0.45 6 1 6H6V1C6 0.45 6.45 0 7 0C7.55 0 8 0.45 8 1V6H13C13.55 6 14 6.45 14 7C14 7.55 13.55 8 13 8Z"
+          fill="#141ED2"/>
+      </svg>
+    </em>
+
+    <em *ngIf="!origin.isLeaf && (node.isExpanded || origin.totalChildren == 0) && !origin.isLoading" nz-icon>
+      <svg width="13" height="13" viewBox="0 0 14 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M13 2H1C0.45 2 0 1.55 0 1C0 0.45 0.45 0 1 0H13C13.55 0 14 0.45 14 1C14 1.55 13.55 2 13 2Z"
+              fill="#141ED2"/>
+      </svg>
+    </em>
+
+    <em *ngIf="origin.isLeaf" nz-icon style="color: {{_variable.$primary_700}};font-size: 12px" nzType="dash"
+        class="ant-tree-switcher-line-icon"
+    ></em>
+
+  </ng-template>
+</nz-tree>
+
+<nz-empty *ngIf="dataTree === null || dataTree.length === 0 && !isLoading"></nz-empty>

@@ -1,0 +1,81 @@
+@import "src/app/core/global-style/variable";
+.save-form-crm__title {
+  font-family: avertaB, sans-serif;
+  font-size: 16px;
+}
+
+.relationship-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.relationship-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+  border: 1px solid $bd-default;
+  &__content {
+    border-radius: 10px;
+    border: 1px solid $bd-default;
+    height: 45px;
+    align-content: center;
+    width: 100%;
+    padding-left: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  &__action {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+  }
+}
+
+.attachment-card {
+  &__title {
+    color: #6E779C;
+    font-size: 14px;
+    font-family: avertaB, sans-serif;
+    margin-bottom: 4px;
+  }
+  &__content {
+    border-radius: 10px;
+    border: 1px solid $bd-default;
+    align-content: center;
+    &__file {
+      display: flex;
+      margin: 5px;
+      &__name {
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        cursor: pointer;
+      }
+      &__action {
+
+      }
+    }
+  }
+}
+
+.menu__item--btn {
+  font-size: 16px;
+  padding: 3px;
+  color: $error-500;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.pass-eye {
+  position: absolute;
+  top: 45px;
+  right: 24px;
+  font-size: 16px;
+  cursor: pointer;
+}

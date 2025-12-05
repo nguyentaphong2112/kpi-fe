@@ -1,0 +1,92 @@
+<form nz-form [formGroup]="form">
+  <div nz-row [nzGutter]='[20,15]'>
+    <!--id nhân viên-->
+    <div nz-col [nzXs]="12" [nzLg]="12" *ngIf="!hiddenEmp">
+      <employee-data-picker [isExpand]="true"
+        [functionCode]="functionCode"
+        [scope]="scope"
+        [status]='mode !== modeConst.ADD ? "ALL" : "ACTIVE"'
+        [formMode]="mode"
+        [disable]="mode !== modeConst.ADD"
+        formControlName="employeeId"
+        [type]="isSubmitted && form.controls['employeeId'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['employeeId'].errors != null"
+        [errors]="form.controls['employeeId'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'common.label.employeeName' | translate }}]"
+        labelText="{{'hrm.staffManager.awardProcess.table.employeeId' | translate}} <span class='label__required'>*</span>"
+      >
+      </employee-data-picker>
+    </div>
+
+    <!-- số tài khoản -->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-input-text
+        formControlName='accountNo'
+        [showFlexEnd]='false'
+        [maxLength]='25'
+        [type]="isSubmitted && form.controls['accountNo'].errors ? 'error' : 'default'"
+        [showError]='isSubmitted && form.controls["accountNo"].errors !== null'
+        [errors]='form.controls["accountNo"].errors'
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.staffManager.bankAccount.table.accountNo' | translate }}]"
+        placeholderText="{{'hrm.staffManager.bankAccount.table.accountNo' | translate}}"
+        labelText="{{'hrm.staffManager.bankAccount.table.accountNo' | translate}} <span class='label__required'>*</span>"
+      ></hbt-input-text>
+    </div>
+
+    <!-- Ngân hàng-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-select
+        [dataSelects]="listBanks"
+        keyLabel="name"
+        [type]="isSubmitted && form.controls['bankId'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['bankId'].errors !== null"
+        [errors]="form.controls['bankId'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.staffManager.bankAccount.table.bankName' | translate }}]"
+        placeholder="{{'hrm.staffManager.bankAccount.table.bankName' | translate}}"
+        labelText="{{'hrm.staffManager.bankAccount.table.bankName' | translate}} <span class='label__required'>*</span>"
+        formControlName='bankId'
+      ></hbt-select>
+    </div>
+
+    <!-- Chi nhánh-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-input-text
+        formControlName='bankBranch'
+        [showFlexEnd]='false' [maxLength]='255'
+        [type]="isSubmitted && form.controls['bankBranch'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['bankBranch'].errors !== null"
+        [errors]="form.controls['bankBranch'].errors"
+        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'hrm.validate.maxLength' | translate: {'numberLength': 255}}]"
+        labelText="{{'hrm.staffManager.bankAccount.table.bankBranch' | translate}}"
+        placeholderText="{{'hrm.staffManager.bankAccount.table.bankBranch' | translate}}"></hbt-input-text>
+    </div>
+
+    <div nz-col [nzXs]="24" [nzLg]="24">
+      <label nz-checkbox formControlName='isMain'>
+        <span class="ant-checkbox-isMain">{{'hrm.staffManager.bankAccount.table.isPaymentAccount' | translate }}</span>
+      </label>
+
+    </div>
+
+    <ng-container formArrayName="listAttributes">
+      <ng-container *ngFor="let attributes of attributesFormArray.controls; let idx = index" [formGroupName]="idx">
+        <div nz-col [nzXs]="12" [nzLg]="12">
+          <input-attribute-common
+            [controlName]="getAttributeControl(idx, 'attributeValue')"
+            [dataType]="attributes.get('dataType')?.value"
+            [urlLoadData]="attributes.get('urlLoadData')?.value"
+            [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+            [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+            [errors]="attributes.get('attributeValue')?.errors"
+            [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}]"
+            [placeholderText]="attributes.get('attributeName')?.value"
+            [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+          >
+          </input-attribute-common>
+        </div>
+      </ng-container>
+    </ng-container>
+
+  </div>
+</form>
+

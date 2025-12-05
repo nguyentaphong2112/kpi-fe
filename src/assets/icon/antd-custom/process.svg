@@ -1,0 +1,7 @@
+<!--<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--<circle cx="10" cy="10" r="10" fill="#FBE3E8"/>-->
+<!--<circle cx="10" cy="10" r="5" fill="#EB5366"/>-->
+<!--</svg>-->
+<svg width="20" height="20" viewBox="0 0 20 20" stroke="#EB5366" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="10" cy="10" r="9.5" fill="transparent" />
+</svg>

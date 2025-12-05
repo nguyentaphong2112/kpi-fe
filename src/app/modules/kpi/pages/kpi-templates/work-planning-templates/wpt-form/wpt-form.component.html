@@ -1,0 +1,169 @@
+<div [ngClass]="{'app-card' : isPage}">
+  <div class="content" *ngIf="isPage" style="margin-right: 20px">
+    <hbt-button
+      buttonAvailableStyle="DEFAULT"
+      buttonText="{{ 'common.button.back' | translate }}"
+      (click)="back()">
+    </hbt-button>
+    <hbt-button buttonType="NO_BORDER" *ngIf="mode !== modeConst.VIEW" (click)="save()" buttonAvailableStyle="SAVE"
+                buttonText="{{'common.button.save' | translate}}" type='SUBMIT'></hbt-button>
+  </div>
+  <form nz-form [formGroup]="form" style="margin-top: 20px">
+    <div nz-row [nzGutter]='[20,15]'>
+      <!--Năm đánh giá-->
+      <div nz-col [nzXs]="8" [nzLg]="8">
+        <hbt-input-text formControlName="name" [maxLength]="255"
+                        [type]="isSubmitted && form.controls['name'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['name'].errors != null"
+                        [errors]="form.controls['name'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 10}},
+                        { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.workPlanningTemplates.table.name' | translate }}]"
+                        placeholderText="{{'kpi.workPlanningTemplates.table.name' | translate}}"
+                        labelText="{{'kpi.workPlanningTemplates.table.name' | translate}}<span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+      <div nz-col [nzXs]="8" [nzLg]="8">
+        <hbt-input-text formControlName="code" [maxLength]="50"
+                        [type]="isSubmitted && form.controls['code'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['code'].errors != null"
+                        [errors]="form.controls['code'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.workPlanningTemplates.table.code' | translate }}]"
+                        placeholderText="{{'kpi.workPlanningTemplates.table.code' | translate}}"
+                        labelText="{{'kpi.workPlanningTemplates.table.code' | translate}}<span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+      <div nz-col [nzXs]="8" [nzLg]="8">
+        <hbt-select formControlName="type"
+                    keyLabel="name"
+                    keyValue="code"
+                    placeholder="{{'kpi.workPlanningTemplates.table.type' | translate}}"
+                    labelText="{{'kpi.workPlanningTemplates.table.type' | translate}}<span class='label__required'>*</span>"
+                    [urlLoadData]="getUrlCategory(categoryCode.KPI_TEMPLATES_TYPE)"
+                    [type]="isSubmitted && form.controls['type'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['type'].errors != null"
+                    [errors]="form.controls['type'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.workPlanningTemplates.table.type' | translate }}]">
+        </hbt-select>
+      </div>
+      <div nz-col [nzXs]='24' [nzLg]='24' class="input__group">
+        <nz-table nzBordered [nzData]="[1]" nzSize="small" [nzShowPagination]="false" class="data-table"
+                  [nzScroll]="{ x: '100%' ,y: '60vh'}"
+                  [nzWidthConfig]="mode == modeConst.VIEW ? ['5%', '30%', '10%','8%','8%','8%', '15%'] : ['5%', '30%', '10%','8%','8%','8%', '15%', '5%']">
+          <thead>
+          <tr>
+            <th rowSpan="2" nzWidth='5%' class="text-center">STT</th>
+            <th rowSpan="2" nzWidth='25%' class="text-center">{{ 'kpi.workPlanningTemplates.table.param' | translate }}
+              <!--              <span class='label__required'>*</span>-->
+            </th>
+            <th rowSpan="2" nzWidth='10%' class="text-center">{{ 'kpi.workPlanningTemplates.table.unit' | translate }}
+            </th>
+            <th colSpan="3"
+                class="text-center">{{ 'kpi.workPlanningTemplates.table.workPlanning' | translate }}
+            </th>
+            <th rowSpan="2" nzWidth='25%' class="text-center">{{ 'kpi.workPlanningTemplates.table.note' | translate }}
+            </th>
+            <th rowSpan="2" nzWidth='5%' *ngIf="mode !== modeConst.VIEW"></th>
+          </tr>
+          <tr>
+            <th nzWidth='10%' class="text-center">{{ 'kpi.workPlanningTemplates.table.stepOne' | translate }}
+            </th>
+            <th nzWidth='10%' class="text-center">{{ 'kpi.workPlanningTemplates.table.stepTwo' | translate }}
+            </th>
+            <th nzWidth='10%' class="text-center">{{ 'kpi.workPlanningTemplates.table.fullYear' | translate }}
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container [formArrayName]="FORM_ARRAY_NAME">
+            <ng-container *ngFor="let item of formArray.controls; let i = index" [formGroupName]="i">
+              <tr>
+                <td class="text-center"
+                    style="font-weight: bold"> {{ item.get('level').value > 2 ? item.get('level').value > 3 ? (item.get('level').value > 4 ? '-' : '+') : getKeyByIndex(item.get('key').value) : item.get('key').value }}
+                </td>
+                <td
+                  [attr.colspan]="map.get(item.get('key').value) == null || map.get(item.get('key').value) === 0 ? '1' : '6'">
+                  <hbt-input-text formControlName="param" [maxLength]="2000" class="wpn-input"
+                                  [ngClass]="{'wpn-input-parent': item.get('level').value < 3, 'wpn-input-child': [4, 2].includes(item.get('level').value)}"
+                                  [isTextAre]="true" [config]="{ rows: 1, autoSize: true }"
+                                  [type]="isSubmitted && item.get('param')?.errors ? 'error' : 'default'"
+                                  [showError]="isSubmitted && item.get('param')?.errors !== null"
+                                  [errors]="item.get('param')?.errors"
+                                  [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': '255' }},
+           { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.workPlanningTemplates.table.param' | translate }}]"
+                                  placeholderText="{{'kpi.workPlanningTemplates.table.param' | translate}}">
+                  </hbt-input-text>
+                </td>
+                <ng-container *ngIf="map.get(item.get('key').value) == null || map.get(item.get('key').value) === 0">
+                  <td>
+                    <hbt-select formControlName="unit" class="wpn-input"
+                                keyLabel="name"
+                                keyValue="value"
+                                [dataSelects]="listDataSelect"
+                                [type]="isSubmitted && item.get('unit')?.errors ? 'error' : 'default'"
+                                [showError]="isSubmitted && item.get('unit')?.errors !== null"
+                                [errors]="item.get('unit')?.errors"
+                                [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.workPlanningTemplates.table.unit' | translate }}]"
+                                placeholder="{{'kpi.workPlanningTemplates.table.unit' | translate}}">
+                    </hbt-select>
+                  </td>
+                  <td>
+                    <hbt-input-text formControlName="stepOne" [maxLength]="255" class="wpn-input"
+                                    appNumberic
+                                    [num]="11"
+                                    [decimals]="5"
+                                    [type]="isSubmitted && item.get('stepOne')?.errors ? 'error' : 'default'"
+                                    [showError]="isSubmitted && item.get('stepOne')?.errors !== null"
+                                    [errors]="item.get('stepOne')?.errors"
+                                    [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': '255' }},
+             { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.workPlanningTemplates.table.stepOne' | translate }}]"
+                                    placeholderText="{{'kpi.workPlanningTemplates.table.stepOne' | translate}}">
+
+                    </hbt-input-text>
+                  </td>
+                  <td>
+                    <hbt-input-text formControlName="stepTwo" [maxLength]="255" class="wpn-input"
+                                    appNumberic
+                                    [num]="11"
+                                    [decimals]="5"
+                                    [type]="isSubmitted && item.get('stepTwo')?.errors ? 'error' : 'default'"
+                                    [showError]="isSubmitted && item.get('stepTwo')?.errors !== null"
+                                    [errors]="item.get('stepTwo')?.errors"
+                                    [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': '255' }},
+             { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.workPlanningTemplates.table.stepTwo' | translate }}]"
+                                    placeholderText="{{'kpi.workPlanningTemplates.table.stepTwo' | translate}}">
+                    </hbt-input-text>
+                  </td>
+                  <td>
+                    <hbt-input-text formControlName="fullYear" [maxLength]="255" class="wpn-input"
+                                    appNumberic
+                                    [num]="11"
+                                    [decimals]="5"
+                                    placeholderText="{{'kpi.workPlanningTemplates.table.fullYear' | translate}}">
+                    </hbt-input-text>
+                  </td>
+                  <td>
+                    <hbt-input-text formControlName="note" [maxLength]="2000" class="wpn-input"
+                                    [type]="isSubmitted && item.get('note')?.errors ? 'error' : 'default'"
+                                    [isTextAre]="true" [config]="{ rows: 1, autoSize: true }"
+                                    [showError]="isSubmitted && item.get('note')?.errors !== null"
+                                    [errors]="item.get('note')?.errors"
+                                    [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': '255' }},
+             { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.workPlanningTemplates.table.note' | translate }}]"
+                                    placeholderText="{{'kpi.workPlanningTemplates.table.note' | translate}}">
+                    </hbt-input-text>
+                  </td>
+                </ng-container>
+                <td class="text-center" *ngIf="mode !== modeConst.VIEW">
+                  <btn-more-action [model]="[item, {key: i + 1}]" [setting]="actionSchema">
+                  </btn-more-action>
+                </td>
+              </tr>
+            </ng-container>
+          </ng-container>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </form>
+</div>
+

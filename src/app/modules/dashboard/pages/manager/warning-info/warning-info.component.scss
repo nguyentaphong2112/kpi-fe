@@ -1,0 +1,122 @@
+@import "src/app/core/global-style/variable";
+
+.warning-header {
+  height: 50px;
+  background-color: $neutral-200;
+  border-radius: 5px 5px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &-left {
+    display: flex;
+    align-items: center;
+
+    em {
+      font-size: 1.2rem;
+      margin-left: 10px;
+      color: $error-500;
+    }
+
+    &-title {
+      margin-left: 10px;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+  }
+
+  &-icon {
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin-right: 10px;
+  }
+}
+
+.warning-list {
+  display: flex;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  gap: 12px;
+}
+
+.warning {
+  padding: 5px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
+
+  //::ng-deep .app__cnt--block {
+  //  display: grid;
+  //  position: relative;
+  //}
+  //
+  //::ng-deep .app__title {
+  //  display: flex;
+  //  justify-content: space-between;
+  //  align-items: center;
+  //  margin-bottom: 13px;
+  //
+  //  .app__title--value {
+  //    font-family: avertaB, sans-serif;
+  //    font-size: 16px;
+  //    color: #000;
+  //  }
+  //
+  //  .app__title--border {
+  //    width: calc(100% - 145px);
+  //    padding-left: 20px;
+  //  }
+  //}
+  //
+  //::ng-deep .app_item--card {
+  //  position: relative;
+  //  overflow: hidden;
+  //}
+
+
+  &-item {
+    cursor: pointer;
+    min-height: 120px;
+    padding: 10px 5px;
+    flex: 0 0 auto;
+    width: 280px;
+
+    &-content {
+      background-color: $black-100;
+      border-radius: 5px;
+      width: 100%;
+      height: 100%;
+
+      &-icon {
+        border-radius: 10px;
+        text-align: center;
+        width: 3.5rem;
+        height: 3.5rem;
+        margin: 10px;
+        padding: 10px;
+        float: left;
+
+        em {
+          font-size: 2.2rem;
+          color: white;
+        }
+      }
+
+      &-text {
+        &-count {
+          font-size: 2.2rem;
+          color: $primary-500;
+        }
+
+        &-title {
+          padding: 0 10px 10px 10px;
+          font-size: 0.9rem;
+          font-weight: 300;
+          color: $neutral-600;
+          white-space: normal;
+          word-wrap: break-word;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,160 @@
+<form nz-form [formGroup]="form" class="mts-index">
+  <div class="search__custom-common {{isShowAdvSearch ? 'add__mr__bt-10' : 'remove__mr__bt-40'}}">
+    <div nz-row class="button__action-left">
+      <hbt-button
+        class="staff__research__btn__search"
+        buttonSize="LARGE"
+        buttonAvailableStyle="ADD"
+        style="margin-right: 20px"
+        buttonText="{{'common.button.add' | translate}}"
+        *ngIf="objFunction?.create"
+        (click)="doOpenForm(modeConst.ADD)"
+      ></hbt-button>
+      <hbt-button buttonSize="LARGE" buttonText="{{'common.button.uploadFile' | translate}}"
+                  [buttonTextColor]="_variable.$purple_800" (click)="doImportData()" *ngIf="visibleActionsCount < 2 && objFunction?.import"></hbt-button>
+      <hbt-button
+        style="margin-left: 20px"
+        buttonSize="MEDIUM"
+        buttonType="BORDER"
+        *ngIf="visibleActionsCount < 2"
+        (click)="export()">
+        <img src="/assets/icon/staff-manager/export_excel.svg" alt="" />
+      </hbt-button>
+      <btn-more-action *ngIf="visibleActionsCount >= 2" [setting]="actionSchemaHeader" [isBtn]="true">
+      </btn-more-action>
+    </div>
+
+    <div class="search__page-right">
+      <hbt-input-text formControlName='keySearch'
+                      [maxLength]='255'
+                      placeholderText="{{'crm.label.keySearchCustomerCareRecord' | translate}}"></hbt-input-text>
+      <hbt-button
+        buttonIconType="AWESOME"
+        [prefixIcon]="isShowAdvSearch ? 'fa fa-angle-double-up' : 'fa fa-angle-double-down'"
+        buttonSize="VERY_LARGE"
+        [buttonTextColor]="_variable.$neutral_100"
+        [buttonBorderColor]="_variable.$purple_800"
+        [buttonBgColor]="_variable.$purple_800"
+        (click)="isShowAdvSearch = !isShowAdvSearch"
+      >
+      </hbt-button>
+    </div>
+  </div>
+  <div *ngIf="isShowAdvSearch" class="content__item content__item--border bg__content--default">
+    <div class="form-search">
+      <div nz-row [nzGutter]='[20,15]'>
+        <!--Phân loại-->
+        <div nz-col [nzXs]="12" [nzLg]="6">
+          <hbt-select formControlName="type"
+                      [urlLoadData]="getUrlCategory(categoryCode.CRM_PHAN_LOAI)" keyLabel="name" keyValue="value"
+                      labelText="{{'crm.customerCareRecords.table.typeName' | translate}}"
+                      placeholder="{{'crm.customerCareRecords.table.typeName' | translate}}"
+          >
+          </hbt-select>
+        </div>
+
+        <!--Người giới thiệu-->
+        <div nz-col [nzXs]="12" [nzLg]="6">
+          <hbt-select formControlName="requestedEmpId"
+                      [dataSelects]="employeesInfo?.length ? employeesInfo : []" keyLabel="fullName"
+                      keyValue="employeeId"
+                      labelText="{{'crm.customerCareRecords.table.requestedEmpId' | translate}}"
+                      placeholder="{{'crm.customerCareRecords.table.requestedEmpId' | translate}}"
+          >
+          </hbt-select>
+        </div>
+        <!--id nhân viên chăm sóc-->
+        <div nz-col [nzXs]="12" [nzLg]="6">
+          <hbt-select [dataSelects]="employeesInfo?.length ? employeesInfo : []" keyLabel="fullName" keyValue="employeeId"
+                      formControlName="caringEmpId"
+                      labelText="{{'crm.customerCareRecords.table.caringEmpId' | translate}}"
+                      placeholder="{{'crm.customerCareRecords.table.caringEmpId' | translate}}"
+          >
+          </hbt-select>
+        </div>
+
+<!--        &lt;!&ndash;Từ ngày&ndash;&gt;-->
+<!--        <div nz-col [nzXs]='12' [nzLg]='6'>-->
+<!--          <hbt-date-picker-->
+<!--            mode="date"-->
+<!--            formControlName="startDate"-->
+<!--            labelText="{{ 'common.label.startDate' | translate }}"-->
+<!--            placeholderText="{{ 'common.label.startDate' | translate }}"-->
+<!--          ></hbt-date-picker>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash;Đến ngày&ndash;&gt;-->
+<!--        <div nz-col [nzXs]='12' [nzLg]='6'>-->
+<!--          <hbt-date-picker-->
+<!--            mode="date"-->
+<!--            formControlName="endDate"-->
+<!--            labelText="{{ 'common.label.endDate' | translate }}"-->
+<!--            placeholderText="{{ 'common.label.endDate' | translate }}"-->
+<!--          ></hbt-date-picker>-->
+<!--        </div>-->
+
+        <!--        &lt;!&ndash;Tình trạng con cái&ndash;&gt;-->
+        <!--        <div nz-col [nzXs]='12' [nzLg]='6'>-->
+        <!--          <hbt-select-check-able-->
+        <!--            placeholder="{{'crm.label.childStatus' | translate}}"-->
+        <!--            [urlLoadData]="urlConstantShare.GET_JOBS"-->
+        <!--            [serviceName]="microService.HRM"-->
+        <!--            labelText="{{'crm.label.childStatus' | translate}}"-->
+        <!--            formControlName='childStatus'></hbt-select-check-able>-->
+        <!--        </div>-->
+
+        <div nz-col [nzXs]="24" [nzLg]="24" style="text-align: center">
+          <hbt-button
+            class="staff__research__btn__search"
+            buttonSize="LARGE"
+            buttonAvailableStyle="SEARCH"
+            buttonText="{{'common.button.search' | translate}}"
+            (click)="search()"
+          ></hbt-button>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+  <div class='search__content--group' [ngClass]="{'search__content--group-hidden-header': isShowAdvSearch}">
+    <hbt-table-wrap>
+      <hbt-table
+        (changePageNum)="search($event)"
+        [tableConfig]="tableConfig" [dataList]="tableData"></hbt-table>
+    </hbt-table-wrap>
+  </div>
+
+  <ng-template #actionTmpl let-data="data">
+    <btn-more-action [model]="[data]" [setting]="actionSchema">
+    </btn-more-action>
+  </ng-template>
+
+  <hbt-import-file [showContent]='isImportData'
+                   (onCloseModal)='doCloseImport($event)'
+                   [importApi]='importApi'
+                   [downLoadTemplateApi]="downLoadTemplateApi"
+                   [fileTemplateName]="fileTemplateName"
+                   [doDownloadFileByNameApi]='doDownloadFileByNameApi'>
+  </hbt-import-file>
+  <ng-template #attachFileTmpl let-attachFileList='attachFileList'>
+    <div *ngFor="let file of attachFileList">
+      <a class="attach-file" (click)="doDownLoadFile(file); $event.stopPropagation();">{{ file.fileName }}</a>
+    </div>
+  </ng-template>
+
+  <ng-template #footerTmpl>
+    <hbt-button
+      buttonAvailableStyle="CANCEL"
+      buttonText="{{ 'common.button.cancel' | translate }}"
+      (click)="modalRef.destroy()">
+    </hbt-button>
+    <hbt-button
+      buttonAvailableStyle="SAVE"
+      buttonText="{{ 'common.button.save' | translate }}"
+      (click)="modalRef.getContentComponent().save()">
+    </hbt-button>
+  </ng-template>
+
+</form>

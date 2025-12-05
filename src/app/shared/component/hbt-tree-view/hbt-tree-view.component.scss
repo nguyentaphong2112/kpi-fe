@@ -1,0 +1,36 @@
+@import 'src/app/core/global-style/variable';
+
+::ng-deep .ant-tree-show-line .ant-tree-indent-unit::before {
+  border-right: 1.5px dashed !important;
+  border-right-color: $bg-default !important;
+}
+
+::ng-deep .ant-tree-node-selected {
+  background-color: $info-800 !important;
+  color: $bg-content !important;
+}
+
+::ng-deep .ant-tree-checkbox-checked .ant-tree-checkbox-inner {
+  background-color: $bg-default !important;
+  border-color: $bg-default !important;
+}
+
+::ng-deep .ant-tree-checkbox-indeterminate .ant-tree-checkbox-inner::after {
+  background-color: $bg-default !important;
+}
+
+::ng-deep .tree__group--home {
+  .ant-tree {
+    height: calc(100vh - 425px);
+    max-height: calc(100vh - 425px);
+    overflow-y: auto;
+  }
+
+  .ant-empty, .ant-spin {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%);
+  }
+
+}

@@ -1,0 +1,238 @@
+<div class='save-form-med'>
+  <form nz-form [formGroup]="form" >
+    <div nz-row [nzGutter]='[20,15]'>
+      <!-- Danh sách người tiếp nhận -->
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <ng-container formArrayName="listParticipating">
+          <ng-container *ngFor="let partici of participating.controls; let i = index; let first = first">
+            <div nz-row [nzGutter]='[20,15]' class="direct__managers" [formGroupName]="i">
+              <div nz-col [nzXs]="24" [nzLg]="12">
+                <employee-data-picker [isExpand]="true"
+                                      [scope]="scope"
+                                      [type]="isSubmitted && partici.get('employeeId')?.errors ? 'error' : 'default'"
+                                      [showError]="isSubmitted && partici.get('employeeId')?.errors != null"
+                                      [errors]="partici.get('employeeId')?.errors"
+                                      [errorDefs]="[{ errorName: 'required', errorDescription: 'abs.timekeepingManagement.requestsLeave.validate.required' | translate: {'param': 'med.mentoringTrainers.table.employeeName' | translate}}
+                      ,{ errorName: 'duplicate', errorDescription: 'abs.timekeepingManagement.requestsLeave.validate.duplicate' | translate }
+                      ,{ errorName: 'duplicateEmployee', errorDescription: 'abs.timekeepingManagement.requestsLeave.validate.duplicateEmployee' | translate }]"
+                                      [formControlName]="'employeeId'"
+                                      [functionCode]="functionCodeEmployee"
+                                      labelText="{{'med.mentoringTrainers.table.employeeName' | translate}} <span class='label__required'>*</span>">
+                </employee-data-picker>
+              </div>
+              <div nz-col [nzXs]="24" [nzLg]="8">
+                <!-- Vai trò tham gia (category_type = 'CDT_VAI_TRO') -->
+                <hbt-select formControlName="roleId"
+                            [urlLoadData]="getUrlCategory(categoryCode.CDT_VAI_TRO)"
+                            keyLabel="name"
+                            [type]="isSubmitted && partici.get('roleId')?.errors ? 'error' : 'default'"
+                            [showError]="isSubmitted && partici.get('roleId')?.errors != null"
+                            [errors]="partici.get('roleId')?.errors"
+                            [errorDefs]="[
+                              { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.mentoringTrainers.table.roleName' | translate }},
+                              { errorName: 'duplicate', errorDescription: 'common.validate.duplicate' | translate: {'param': 'med.mentoringTrainers.validate.duplicateEmployeeRole' | translate }}
+                            ]"
+                            placeholder="{{'med.mentoringTrainers.table.roleName' | translate}}"
+                            labelText="{{'med.mentoringTrainers.table.roleName' | translate}} <span class='label__required'>*</span>"
+                ></hbt-select>
+              </div>
+              <div *ngIf="mode !== Mode.VIEW && mode !== Mode.EDIT" nz-col [nzXs]="24" [nzLg]="4" class="area-action-partici">
+                <em nz-button nz-icon nzType="plus-circle" nzTheme="outline"
+                    nz-tooltip
+                    nzTooltipTitle="{{'common.button.add' | translate}}"
+                    nzTooltipPlacement="left"
+                    class="btn-create"
+                    (click)="addPartici()"></em>
+                <em nz-button nz-icon nzType="delete" nzTheme="outline"
+                    nz-tooltip
+                    nzTooltipTitle="{{'common.button.delete' | translate}}"
+                    nzTooltipPlacement="right"
+                    class="btn-removed"
+                    (click)="removePartici(i)"></em>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+      <!--Từ ngày-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-date-picker
+          placeholderText="{{'med.mentoringTrainers.table.startDate' | translate}}"
+          labelText="{{'med.mentoringTrainers.table.startDate' | translate}} <span class='label__required'>*</span>"
+          [type]="isSubmitted && (form.errors || form.controls['startDate']?.errors) ? 'error' : 'default'"
+          [showError]="isSubmitted && (form.errors || form.controls['startDate']?.errors ) != null"
+          [errors]="form.errors?.rangeDateError ? form.errors : form.controls['startDate']?.errors"
+          [errorDefs]="[{ errorName: 'rangeDateError', errorDescription: 'med.validate.rangeDate.pareDate' | translate:
+        {'startDate': 'med.mentoringTrainers.table.startDate' | translate, 'endDate': 'med.mentoringTrainers.table.endDate' | translate}},
+             { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.mentoringTrainers.table.startDate' | translate }}
+          ]"
+          formControlName="startDate"></hbt-date-picker>
+      </div>
+
+      <!--Đến ngày-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-date-picker
+          placeholderText="{{'med.mentoringTrainers.table.endDate' | translate}}"
+          labelText="{{'med.mentoringTrainers.table.endDate' | translate}} <span class='label__required'>*</span>"
+          [type]="isSubmitted && form.controls['endDate'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['endDate'].errors !== null"
+          [errors]="form.controls['endDate'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.mentoringTrainers.table.endDate' | translate }}]"
+          formControlName="endDate"></hbt-date-picker>
+      </div>
+
+      <!--Chuyên môn đào tạo (category_type = 'CDT_CHUYEN_MON')-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [urlLoadData]="getUrlCategory(categoryCode.CDT_CHUYEN_MON)" keyLabel="name"
+          formControlName="majorId"
+          [type]="isSubmitted && form.controls['majorId']?.errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['majorId']?.errors != null"
+          [errors]="form.controls['majorId']?.errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.mentoringTrainers.table.majorName' | translate }}]"
+          placeholder="{{'med.mentoringTrainers.table.majorName' | translate}}"
+          labelText="{{'med.mentoringTrainers.table.majorName' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <!--Bệnh viện đào tạo (category_type = 'CDT_BENH_VIEN')-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [urlLoadData]="getUrlCategory(categoryCode.CDT_BENH_VIEN)" keyLabel="name"
+          formControlName="hospitalId"
+          [type]="isSubmitted && form.controls['hospitalId']?.errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['hospitalId']?.errors != null"
+          [errors]="form.controls['hospitalId']?.errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.mentoringTrainers.table.hospitalName' | translate }}]"
+          placeholder="{{'med.mentoringTrainers.table.hospitalName' | translate}}"
+          labelText="{{'med.mentoringTrainers.table.hospitalName' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <!--Kỹ thuật chuyển giao-->
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <hbt-input-text formControlName="content" isTextAre="true"
+          maxLength="1000" [config]="{ autoSize: true }"
+          placeholderText="{{'med.mentoringTrainers.table.content' | translate}}"
+          labelText="{{'med.mentoringTrainers.table.content' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--Tên lớp đào tạo-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="className" maxLength="255"
+          [type]="isSubmitted && form.controls['className']?.errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['className']?.errors != null"
+          [errors]="form.controls['className']?.errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.mentoringTrainers.table.className' | translate }},
+          { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+          placeholderText="{{'med.mentoringTrainers.table.className' | translate}}"
+          labelText="{{'med.mentoringTrainers.table.className' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--số tiết học-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="totalLessons" maxLength="4" [decimals]="0"
+          [type]="isSubmitted && form.controls['totalLessons']?.errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['totalLessons']?.errors != null"
+          [errors]="form.controls['totalLessons']?.errors"
+          [errorDefs]="[ { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.mentoringTrainers.table.totalLessons' | translate }},
+          { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 10}}]"
+          placeholderText="{{'med.mentoringTrainers.table.totalLessons' | translate}}"
+          labelText="{{'med.mentoringTrainers.table.totalLessons' | translate}} <span class='label__required'>*</span>"
+          appNumberic
+        ></hbt-input-text>
+      </div>
+
+      <!--Số lớp học-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="totalClasses" maxLength="4" [decimals]="0"
+          [type]="isSubmitted && form.controls['totalClasses']?.errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['totalClasses']?.errors != null"
+          [errors]="form.controls['totalClasses']?.errors"
+          [errorDefs]="[ { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.mentoringTrainers.table.totalClasses' | translate }},
+          { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 10}},
+
+          ]"
+          placeholderText="{{'med.mentoringTrainers.table.totalClasses' | translate}}"
+          labelText="{{'med.mentoringTrainers.table.totalClasses' | translate}} <span class='label__required'>*</span>"
+          appNumberic pattern="^[0-9]*$"
+        ></hbt-input-text>
+      </div>
+
+      <!--Số người học-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="totalStudents" maxLength="5" [decimals]="0"
+          [type]="isSubmitted && form.controls['totalStudents']?.errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['totalStudents']?.errors != null"
+          [errors]="form.controls['totalStudents']?.errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.mentoringTrainers.table.totalStudents' | translate }},
+          { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 10}}]"
+          placeholderText="{{'med.mentoringTrainers.table.totalStudents' | translate}}"
+          labelText="{{'med.mentoringTrainers.table.totalStudents' | translate}} <span class='label__required'>*</span>"
+          appNumberic
+        ></hbt-input-text>
+      </div>
+
+      <!--Số lượt khám và điều trị-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="totalExaminations" maxLength="4" [decimals]="0"
+          [type]="isSubmitted && form.controls['totalExaminations']?.errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['totalExaminations']?.errors != null"
+          [errors]="form.controls['totalExaminations']?.errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.mentoringTrainers.table.totalExaminations' | translate }},
+          { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 10}}]"
+          placeholderText="{{'med.mentoringTrainers.table.totalExaminations' | translate}}"
+          labelText="{{'med.mentoringTrainers.table.totalExaminations' | translate}} <span class='label__required'>*</span>"
+          appNumberic
+        ></hbt-input-text>
+      </div>
+
+      <!--Số ca phẫu thuật-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="totalSurgeries" maxLength="9" [decimals]="0"
+          [type]="isSubmitted && form.controls['totalSurgeries']?.errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['totalSurgeries']?.errors != null"
+          [errors]="form.controls['totalSurgeries']?.errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.mentoringTrainers.table.totalSurgeries' | translate }},
+          { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 10}}]"
+          placeholderText="{{'med.mentoringTrainers.table.totalSurgeries' | translate}}"
+          labelText="{{'med.mentoringTrainers.table.totalSurgeries' | translate}} <span class='label__required'>*</span>"
+          appNumberic
+        ></hbt-input-text>
+      </div>
+
+      <!--Số lượt xét nghiệm-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="totalTests" maxLength="9" [decimals]="0"
+          [type]="isSubmitted && form.controls['totalTests']?.errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['totalTests']?.errors != null"
+          [errors]="form.controls['totalTests']?.errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.mentoringTrainers.table.totalTests' | translate }},
+          { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 10}}]"
+          placeholderText="{{'med.mentoringTrainers.table.totalTests' | translate}}"
+          labelText="{{'med.mentoringTrainers.table.totalTests' | translate}} <span class='label__required'>*</span>"
+          appNumberic
+        ></hbt-input-text>
+      </div>
+      <ng-container formArrayName="listAttributes">
+        <ng-container *ngFor="let attributes of attributesFormArray.controls; let idx = index" [formGroupName]="idx">
+          <div nz-col [nzXs]="12" [nzLg]="12">
+            <input-attribute-common
+              [controlName]="getAttributeControl(idx, 'attributeValue')"
+              [dataType]="attributes.get('dataType')?.value"
+              [urlLoadData]="attributes.get('urlLoadData')?.value"
+              [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+              [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+              [errors]="attributes.get('attributeValue')?.errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}]"
+              [placeholderText]="attributes.get('attributeName')?.value"
+              [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+            >
+            </input-attribute-common>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </form>
+</div>
+

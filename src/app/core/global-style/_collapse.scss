@@ -1,0 +1,32 @@
+@import "variable";
+
+.ant__collapse__icon {
+  display: inline-block;
+  margin-right: 12px;
+  font-size: 1rem;
+  vertical-align: -0.3rem;
+}
+
+.ant__collapse__header {
+  line-height: 21px;
+  font-size: 1rem;
+  font-family: avertaSB, sans-serif;
+  margin-bottom: 0;
+}
+
+.ant-collapse-header {
+  border-bottom: 1px solid $primary-200;
+  margin-bottom: 16px;
+  align-items: center !important;
+}
+
+.ant__collapse__extra {
+  font-family: avertaSB, sans-serif;
+  line-height: 21px;
+}
+
+.ant-collapse {
+  .ant-collapse-item {
+    margin-bottom: 1rem;
+  }
+}

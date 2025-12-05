@@ -1,0 +1,40 @@
+<div [class]="inputGroupClass">
+  <label class="input__label" [innerHTML]="labelText"></label>
+  <div
+    [class]="inputGroupGroupClass + '  index-setting index__input-text'"
+    [ngClass]="{'input-focused': isFocused}"
+    [ngStyle]="!isShowAddNewTag && {'min-height.px': 37}"
+  >
+    <nz-tag
+      *ngFor="let tag of tags; let i = index"
+      [nzMode]="disabled ? 'default': 'closeable'"
+      (nzOnClose)="handleClose(tag)"
+      class="tagClass"
+    >
+      {{ sliceTagName(tag) }}
+    </nz-tag>
+    <!--    <nz-tag *ngIf="!inputVisible && isShowAddNewTag" style="cursor: pointer" class="tagClass" nzNoAnimation (click)="showInput()">-->
+    <!--      <span nz-icon nzType="plus"></span>-->
+    <!--      {{newTagLabel}}-->
+    <!--    </nz-tag>-->
+    <div class="tag">
+      <input
+        #inputElement
+        nz-input
+        [(ngModel)]="inputValue"
+        (ngModelChange)="onInputChange($event)"
+        (keydown.enter)="handleInputConfirm()"
+        (keydown)="handleInputConfirmComma($event)"
+        (keydown.backspace)="handleBackspace($event)"
+        (blur)="handleInputConfirm(); inputBlur($event); "
+        (focus)="inputFocus($event)"
+        [disabled]="disabled"
+        [attr.placeholder]="tags.length > 0 ? '' : config?.placeholder"
+      />
+    </div>
+  </div>
+  <div *ngIf="config?.textMessageValue !== null && config?.showError" [class]="inputMessageClass">
+    <em *ngIf="config?.showIcon" nz-icon [nzType]="iconType" nzTheme="outline"></em>
+    <span class="text__message">{{ config?.textMessageValue }}</span>
+  </div>
+</div>

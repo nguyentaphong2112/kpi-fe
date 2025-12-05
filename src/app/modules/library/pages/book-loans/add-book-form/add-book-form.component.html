@@ -1,0 +1,50 @@
+<form nz-form [formGroup]="form">
+  <div class="app-row" nz-row [nzGutter]='[20,15]'>
+    <div nz-col nzXs="24" nzLg="12">
+      <hbt-select formControlName="bookId"
+                  [urlLoadData]="urlLoadData"
+                  [serviceName]="serviceName"
+                  [isLoadMore]="true"
+                  keyValue="bookId"
+                  keyLabel="title"
+                  [type]="isSubmitted && form.controls['bookId'].errors ? 'error' : 'default'"
+                  [showError]="isSubmitted && form.controls['bookId'].errors !== null"
+                  [errors]="form.controls['bookId'].errors"
+                  [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'library.bookLoan.label.bookTitle' | translate }}]"
+                  labelText="{{'library.bookLoan.label.bookTitle' | translate}} <span class='label__required'>*</span>"
+                  placeholder="{{'library.bookLoan.label.bookTitle' | translate}}"
+                  (ngModelChange)="doBookChange($event)"
+      >
+      </hbt-select>
+    </div>
+    <div nz-col nzXs="24" nzLg="12" *ngIf="isBookEditionDetail">
+      <hbt-select #selectComponent formControlName="bookEditionId"
+                  [urlLoadData]="urlLoadBookEdition"
+                  [serviceName]="serviceName"
+                  keyValue="bookEditionId"
+                  keyLabel="name"
+                  [type]="isSubmitted && form.controls['bookEditionId'].errors ? 'error' : 'default'"
+                  [showError]="isSubmitted && form.controls['bookEditionId'].errors !== null"
+                  [errors]="form.controls['bookEditionId'].errors"
+                  [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'library.bookLoan.label.bookEditionId' | translate }}]"
+                  labelText="{{'library.bookLoan.label.bookEditionId' | translate}} <span class='label__required'>*</span>"
+                  placeholder="{{'library.bookLoan.label.bookEditionId' | translate}}"
+      >
+      </hbt-select>
+    </div>
+  </div>
+</form>
+<div>
+  <span class="notice_message"> {{ 'library.books.label.noticeScan' | translate }}</span>
+</div>
+<div class='search__content--group'>
+  <hbt-table-wrap>
+    <hbt-table
+      [tableConfig]="tableConfig" [dataList]="tableData"></hbt-table>
+  </hbt-table-wrap>
+</div>
+
+<ng-template #actionTmpl let-data="data">
+  <btn-more-action [model]="[data]" [setting]="actionSchema">
+  </btn-more-action>
+</ng-template>

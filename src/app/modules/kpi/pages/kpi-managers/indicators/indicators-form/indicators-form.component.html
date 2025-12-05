@@ -1,0 +1,185 @@
+<div class='save-form-kpi'>
+  <form nz-form [formGroup]="form">
+    <div nz-row [nzGutter]='[20,15]'>
+      <!--tên chỉ số-->
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <hbt-input-text formControlName="name" [maxLength]="255"
+                        [type]="isSubmitted && form.controls['name'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['name'].errors !== null"
+                        [errors]="form.controls['name'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.indicators.table.name' | translate }}]"
+                        placeholderText="{{'kpi.indicators.table.name' | translate}}"
+                        labelText="{{'kpi.indicators.table.name' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [urlLoadData]="getUrlCategory(categoryCode.PHAN_LOAI_KPI, true, 'PERIOD_ID')"
+                    [serviceName]="microService.ADMIN"
+                    [type]="isSubmitted && form.controls['type'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['type'].errors !== null"
+                    [errors]="form.controls['type'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.indicators.table.type' | translate }}]"
+                    keyLabel="name"
+                    formControlName="type"
+                    placeholder="{{'kpi.indicators.table.type' | translate}}"
+                    labelText="{{'kpi.indicators.table.type' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <!--đơn vị tính-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [urlLoadData]="getUrlCategory(categoryCode.DON_VI_TINH)"
+                    [serviceName]="microService.ADMIN"
+                    [type]="isSubmitted && form.controls['unitId'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['unitId'].errors !== null"
+                    [errors]="form.controls['unitId'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.indicators.table.unitId' | translate }}]"
+                    keyLabel="name"
+                    formControlName="unitId"
+                    placeholder="{{'kpi.indicators.table.unitId' | translate}}"
+                    labelText="{{'kpi.indicators.table.unitId' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <!--chu kỳ-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [urlLoadData]="getUrlCategory(categoryCode.CHU_KY)"
+                    [serviceName]="microService.ADMIN"
+                    [type]="isSubmitted && form.controls['periodType'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['periodType'].errors !== null"
+                    [errors]="form.controls['periodType'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.indicators.table.periodType' | translate }}]"
+                    keyLabel="name"
+                    formControlName="periodType"
+                    placeholder="{{'kpi.indicators.table.periodType' | translate}}"
+                    labelText="{{'kpi.indicators.table.periodType' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+<!--      <div nz-col [nzXs]="24" [nzLg]="12">-->
+<!--        <tree-data-picker-->
+<!--          [isExpand]="true"-->
+<!--          [isMultiSelect]="true"-->
+<!--          formControlName="orgIds"-->
+<!--          [scope]="scope"-->
+<!--          [functionCode]="functionCode"-->
+<!--          [type]="isSubmitted && form.controls['orgIds'].errors ? 'error' : 'default'"-->
+<!--          [showError]="isSubmitted && form.controls['orgIds'].errors !== null"-->
+<!--          [errors]="form.controls['orgIds'].errors"-->
+<!--          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.indicators.table.orgIds' | translate }}]"-->
+<!--          labelText="{{'kpi.indicators.table.orgIds' | translate}}  <span class='label__required'>*</span>"-->
+<!--          placeholder="{{'kpi.indicators.table.orgIds' | translate}}"-->
+<!--        >-->
+<!--        </tree-data-picker>-->
+<!--      </div>-->
+
+      <!--nguồn thông tin quản lý-->
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <hbt-input-text formControlName="systemInfo" [maxLength]="255"
+                        [type]="isSubmitted && form.controls['systemInfo'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['systemInfo'].errors !== null"
+                        [errors]="form.controls['systemInfo'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.indicators.table.systemInfo' | translate }}]"
+                        isTextAre
+                        placeholderText="{{'kpi.indicators.table.systemInfo' | translate}}"
+                        labelText="{{'kpi.indicators.table.systemInfo' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--ý nghĩa của chỉ số-->
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <hbt-input-text formControlName="significance" isTextAre
+                        [type]="isSubmitted && form.controls['significance'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['significance'].errors !== null"
+                        [errors]="form.controls['significance'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.indicators.table.significance' | translate }}]"
+                        [maxLength]="1000"
+                        placeholderText="{{'kpi.indicators.table.significance' | translate}}"
+                        labelText="{{'kpi.indicators.table.significance' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--cách thức đo-->
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <hbt-input-text formControlName="measurement" [maxLength]="255" isTextAre
+                        [defaultInput]="true"
+                        [type]="isSubmitted && form.controls['measurement'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['measurement'].errors !== null"
+                        [errors]="form.controls['measurement'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.indicators.table.measurement' | translate }}]"
+                        placeholderText="{{'kpi.indicators.table.measurement' | translate}}"
+                        labelText="{{'kpi.indicators.table.measurement' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+<!--      <div nz-col [nzXs]="12" [nzLg]="12">-->
+<!--        <hbt-select-check-able [urlLoadData]="urlLoadData"-->
+<!--                               [serviceName]="microService.KPI"-->
+<!--                               [isLoadMore]="true"-->
+<!--                               [valueFilter]="id ? [id] : null"-->
+<!--                               keyLabel="name"-->
+<!--                               keyValue="indicatorId"-->
+<!--                               formControlName="indicatorIds"-->
+<!--                               placeholder="{{'kpi.indicators.table.indicatorIds' | translate}}"-->
+<!--                               labelText="{{'kpi.indicators.table.indicatorIds' | translate}}"-->
+<!--        ></hbt-select-check-able>-->
+<!--      </div>-->
+
+<!--      <div nz-col [nzXs]="12" [nzLg]="12">-->
+<!--        <hbt-select [urlLoadData]="getUrlCategory(categoryCode.KPI_CACH_DANH_GIA)"-->
+<!--                    [serviceName]="microService.ADMIN"-->
+<!--                    [type]="isSubmitted && form.controls['ratingType'].errors ? 'error' : 'default'"-->
+<!--                    [showError]="isSubmitted && form.controls['ratingType'].errors !== null"-->
+<!--                    [errors]="form.controls['ratingType'].errors"-->
+<!--                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.indicators.table.ratingType' | translate }}]"-->
+<!--                    formControlName="ratingType"-->
+<!--                    keyLabel="name"-->
+<!--                    placeholder="{{'kpi.indicators.table.ratingType' | translate}}"-->
+<!--                    labelText="{{'kpi.indicators.table.ratingType' | translate}} <span class='label__required'>*</span>"-->
+<!--        ></hbt-select>-->
+<!--      </div>-->
+
+<!--      <ng-container *ngIf="isShow">-->
+<!--        <ng-container formArrayName="listData">-->
+<!--          <ng-container *ngFor="let item of formArray.controls; let i = index" [formGroupName]="i">-->
+<!--            <div nz-col [nzXs]="22" [nzLg]="22">-->
+<!--              <hbt-input-text-->
+<!--                [maxLength]="500"-->
+<!--                [isTextAre]="true"-->
+<!--                [defaultInput]="true"-->
+<!--                [type]="(isSubmitted || isSubmitted2) && item.get('value')?.errors ? 'error' : 'default'"-->
+<!--                [showError]="(isSubmitted || isSubmitted2) && item.get('value')?.errors !== null"-->
+<!--                [errors]="item.get('value')?.errors"-->
+<!--                [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': ('kpi.indicators.table.data' | translate) + (i + 1) }},-->
+<!--                {errorName: 'duplicate', errorDescription: 'common.validate.duplicate' | translate: {'param': ('kpi.indicators.table.data' | translate) + (i + 1) | translate}}]"-->
+<!--                placeholderText="{{('kpi.indicators.table.data' | translate) + (i + 1)}}"-->
+<!--                formControlName="value"></hbt-input-text>-->
+<!--            </div>-->
+<!--            <div nz-col [nzXs]="2" [nzLg]="2" style="margin: auto">-->
+<!--              <hbt-button *ngIf="i === f['listData'].value.length - 1 && f['listData'].value.length < 5" buttonIconType="AWESOME"-->
+<!--                          prefixIcon="far fa-plus-circle" buttonSize="LARGE"-->
+<!--                          [buttonTextColor]="_variable.$neutral_100" buttonType="NO_BORDER" (click)="addQuery(i)"-->
+<!--                          [buttonBgColor]="_variable.$success_500"></hbt-button>-->
+<!--              <hbt-button *ngIf="i < f['listData'].value.length - 1 || f['listData'].value.length == 5" buttonIconType="AWESOME"-->
+<!--                          prefixIcon="far fa-trash-alt"-->
+<!--                          buttonSize="LARGE"-->
+<!--                          [buttonTextColor]="_variable.$neutral_100" buttonType="NO_BORDER" (click)="removeQuery(i)"-->
+<!--                          [buttonBgColor]="_variable.$error_500"></hbt-button>-->
+<!--            </div>-->
+<!--          </ng-container>-->
+<!--        </ng-container>-->
+<!--      </ng-container>-->
+
+
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <hbt-input-text formControlName="note" [maxLength]="1000" isTextAre
+                        placeholderText="{{'kpi.indicators.table.note' | translate}}"
+                        labelText="{{'kpi.indicators.table.note' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+    </div>
+  </form>
+</div>
+

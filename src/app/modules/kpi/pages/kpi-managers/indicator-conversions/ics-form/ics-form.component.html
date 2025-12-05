@@ -1,0 +1,47 @@
+<div class='save-form-kpi'>
+  <form nz-form [formGroup]="form">
+    <div nz-row [nzGutter]='[20,15]'>
+      <!--id chỉ số-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <tree-data-picker
+          [isExpand]="true"
+          labelText="{{'kpi.kpiEvaluations.organizations.label.org' | translate}} <span class='label__required'>*</span>"
+          placeholder="{{'kpi.kpiEvaluations.organizations.label.org' | translate}}"
+          [type]="isSubmitted && form.controls['organizationId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['organizationId'].errors !== null"
+          [errors]="form.controls['organizationId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.kpiEvaluations.organizations.label.org' | translate }}]"
+          formControlName="organizationId"
+          [scope]="scope">
+        </tree-data-picker>
+      </div>
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select formControlName="orgTypeId"
+                    [urlLoadData]="getUrlCategory(categoryCode.LOAI_HINH_DON_VI)"
+                    [serviceName]="microService.ADMIN"
+                    keyLabel="name"
+                    [type]="isSubmitted && form.controls['orgTypeId'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['orgTypeId'].errors !== null"
+                    [errors]="form.controls['orgTypeId'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.indicatorConversions.table.unitGroup' | translate }}]"
+                    labelText="{{'kpi.indicatorConversions.table.unitGroup' | translate}} <span class='label__required'>*</span>"
+                    placeholder="{{'kpi.indicatorConversions.table.unitGroup' | translate}}"
+        >
+        </hbt-select>
+      </div>
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select formControlName="jobId"
+                    [urlLoadData]="urlLoadData"
+                    [serviceName]="serviceName"
+                    keyLabel="name"
+                    keyValue="jobId"
+                    labelText="{{'kpi.indicatorConversions.table.jobPosition' | translate}}"
+                    placeholder="{{'kpi.indicatorConversions.table.jobPosition' | translate}}"
+        >
+        </hbt-select>
+      </div>
+
+    </div>
+  </form>
+</div>
+

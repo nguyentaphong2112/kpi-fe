@@ -1,0 +1,106 @@
+<div class='save-form-pit'>
+  <form nz-form [formGroup]="form" style="margin-top: 20px">
+    <div nz-row [nzGutter]="[30,30]">
+      <!--năm quyết toán thuế-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="year" maxLength="10"
+          [type]="isSubmitted && form.controls['year'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['year'].errors != null"
+          [errors]="form.controls['year'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 10}}]"
+          placeholderText="{{'pit.taxSettlementMasters.table.year' | translate}}"
+          labelText="{{'pit.taxSettlementMasters.table.year' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--kiểu input dữ liệu-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="inputType" maxLength="9"
+          [type]="isSubmitted && form.controls['inputType'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['inputType'].errors != null"
+          [errors]="form.controls['inputType'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 9}}]"
+          placeholderText="{{'pit.taxSettlementMasters.table.inputType' | translate}}"
+          labelText="{{'pit.taxSettlementMasters.table.inputType' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--danh sách id bản ghi kê khai thuế hàng tháng-->
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <hbt-select [dataSelects]="[]"
+          formControlName="taxDeclareMasterIds"
+          [type]="isSubmitted && form.controls['taxDeclareMasterIds'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['taxDeclareMasterIds'].errors != null"
+          [errors]="form.controls['taxDeclareMasterIds'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'pit.taxSettlementMasters.table.taxDeclareMasterIds' | translate }}]"
+          placeholder="{{'pit.taxSettlementMasters.table.taxDeclareMasterIds' | translate}}"
+          labelText="{{'pit.taxSettlementMasters.table.taxDeclareMasterIds' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <!--tổng số cá nhân nộp thuế-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="totalTaxpayers" maxLength="10"
+          [type]="isSubmitted && form.controls['totalTaxpayers'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['totalTaxpayers'].errors != null"
+          [errors]="form.controls['totalTaxpayers'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 10}}]"
+          placeholderText="{{'pit.taxSettlementMasters.table.totalTaxpayers' | translate}}"
+          labelText="{{'pit.taxSettlementMasters.table.totalTaxpayers' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--tổng số tiền chịu thuế-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="totalIncomeTaxable" maxLength="19"
+          [type]="isSubmitted && form.controls['totalIncomeTaxable'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['totalIncomeTaxable'].errors != null"
+          [errors]="form.controls['totalIncomeTaxable'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 19}}]"
+          placeholderText="{{'pit.taxSettlementMasters.table.totalIncomeTaxable' | translate}}"
+          labelText="{{'pit.taxSettlementMasters.table.totalIncomeTaxable' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--tổng số tiền khấu trừ bảo hiểm-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="totalInsuranceDeduction" maxLength="19"
+          [type]="isSubmitted && form.controls['totalInsuranceDeduction'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['totalInsuranceDeduction'].errors != null"
+          [errors]="form.controls['totalInsuranceDeduction'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 19}}]"
+          placeholderText="{{'pit.taxSettlementMasters.table.totalInsuranceDeduction' | translate}}"
+          labelText="{{'pit.taxSettlementMasters.table.totalInsuranceDeduction' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--tổng số thuế đã khấu trừ-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="totalTaxCollected" maxLength="19"
+          [type]="isSubmitted && form.controls['totalTaxCollected'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['totalTaxCollected'].errors != null"
+          [errors]="form.controls['totalTaxCollected'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 19}}]"
+          placeholderText="{{'pit.taxSettlementMasters.table.totalTaxCollected' | translate}}"
+          labelText="{{'pit.taxSettlementMasters.table.totalTaxCollected' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <div nz-col [nzXs]='24' [nzLg]='24' class="input__group">
+        <hbt-upload
+          [(docIdsDelete)]="docIdsDelete"
+          [typeFileAvailable]="['jpg', 'png', 'pdf', 'doc', 'docx']"
+          [multiple]="true"
+          labelText="{{'common.label.attachFile' | translate}}"
+          [required]="true"
+          (fileListChange)="onFileListChange($event, 'fileList', true)"
+          (docIdsDeleteChange)="removeFile($event, 'fileList')"
+          [serviceName]='serviceName'
+          [showError]="isSubmitted"
+        ></hbt-upload>
+      </div>
+
+    </div>
+  </form>
+</div>
+

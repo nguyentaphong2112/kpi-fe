@@ -1,0 +1,224 @@
+@import 'src/app/core/global-style/variable';
+
+.form-search {
+  background-color: $bg-content-default;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 1rem $breadcrumb-box-shadow;
+  margin: 1rem 0.1rem;
+
+  .search-btn {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .search-btn-end {
+    align-self: flex-end;
+    margin: 2px;
+  }
+}
+
+.form-search-popup {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin: 1rem 0.1rem;
+
+  .search-btn {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .search-btn-end {
+    align-self: flex-end;
+    margin: 2px;
+  }
+}
+
+.form-search-custom {
+  margin: 0.5rem;
+
+  .search-btn {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .search-btn-end {
+    align-self: flex-end;
+    padding: 2px;
+  }
+}
+
+.tag-custom-tm {
+  color: white;
+  margin: 2px;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+:host ::ng-deep {
+
+  .btn-wrap hbt-button:first-child span {
+    margin-left: 0 !important;
+    padding-right: 5px;
+  }
+
+  .btn-wrap hbt-button:last-child span {
+    margin-left: 0 !important;
+    padding-left: 5px;
+  }
+}
+
+.content {
+  z-index: 10;
+  position: fixed;
+  top: 9.5em;
+  right: 2em;
+}
+
+.block-center {
+  display: flex;
+  align-items: center;
+
+  .input__label{
+    color: $input-label-color;
+    font-family: avertaB, sans-serif;
+  }
+
+  .form-group {
+    position: relative;
+    width: 100%;
+    a {
+      text-align: center;
+      width: 20px;
+      font-size: 20px;
+      right: 6px;
+      position: absolute;
+      top: 42%;
+      transform: translateY(-50%);
+      img {
+        filter: opacity(0.5);
+      }
+    }
+    .btn {
+      width: 10%
+    }
+  }
+
+  .input {
+    margin-top: 4px;
+    width: 99.5%;
+    border-radius: 8px;
+    min-height: 44px;
+    border: 1px solid #d9d9d9;
+    padding: 4px 11px;
+  }
+}
+
+.checkbox-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  span {
+    color: #6E7191;
+    font-size: 14px;
+    font-family: avertaB, sans-serif;
+  }
+}
+
+.label__required {
+  color: $error-default-color;
+  padding-left: 5px;
+}
+
+.color-error {
+  color: $error-default-color;
+  font-size: 12px;
+  font-family: avertaL, sans-serif;
+  margin-top: 8px;
+}
+
+@media screen and (max-width: 666px) {
+  .content {
+    position: static;
+    margin-bottom: 25px;
+  }
+
+  .pagination {
+    flex-direction: column;
+  }
+}
+
+.hrTag {
+  border-color: $tag-color;
+  border-width: thin;
+  margin-top: 10px;
+}
+
+div.menu__item {
+  width: 100%;
+  border-bottom: 1px solid $bd-default-disabled;
+  padding: 10px 0;
+}
+.menu__item--btn {
+  &__selected {
+    background-color: white;
+    color: gray;
+    border: 1px solid $bd-default-disabled;
+    border-radius: 2px;
+  }
+  font-size: 24px;
+  &:hover {
+    cursor: pointer;
+    color: $default-hover-color;
+    border: 1px solid $bd-default-disabled;
+    border-radius: 2px;
+  }
+}
+
+.btnListWrap {
+  width: 150px;
+  padding: 0;
+}
+
+.btnItem {
+  padding: 0 20px;
+}
+
+.iconClass {
+  margin-right: 10px;
+}
+
+.btnWrap {
+  text-align: right;
+}
+
+.tm-btn-cus {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.data-table {
+  .table-header > th {
+    background: $bg-table-header;
+    color: $table-text-header;
+    font-family: avertaB, sans-serif;
+  }
+  .row-table:hover > td {
+    background: $table-hover-row;
+  }
+}
+
+::ng-deep {
+  .tm-btn-search {
+    button {
+      margin-left: 0 !important;
+    }
+  }
+}

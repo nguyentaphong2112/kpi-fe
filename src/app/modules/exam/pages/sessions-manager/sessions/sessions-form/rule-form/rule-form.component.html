@@ -1,0 +1,85 @@
+<form nz-form [formGroup]="form">
+  <div class="app-row" nz-row [nzGutter]='[20,15]'>
+    <div nz-col nzXs="24" nzLg="8">
+      <hbt-select [urlLoadData]="getUrlCategory(categoryCode.CHOOSE_YES_NO)"
+                  [serviceName]="microService.ADMIN"
+                  [type]="isSubmitted && form.controls['allowRetakes'].errors ? 'error' : 'default'"
+                  [showError]="isSubmitted && form.controls['allowRetakes'].errors !== null"
+                  [errors]="form.controls['allowRetakes'].errors"
+                  [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'exam.sessions.form.allowRetakes' | translate }}]"
+                  keyLabel="name"
+                  formControlName="allowRetakes"
+                  placeholder="{{'exam.sessions.form.allowRetakes' | translate}}"
+                  labelText="{{'exam.sessions.form.allowRetakes' | translate}} <span class='label__required'>*</span>"
+      ></hbt-select>
+    </div>
+
+    <div nz-col nzXs="24" nzLg="8" *ngIf="'Y' == form.controls['allowRetakes'].value">
+      <hbt-input-text formControlName="maxAttempts" [maxLength]="2" appNumberInput
+                      placeholderText="{{'exam.sessions.form.maxAttempts' | translate}}"
+                      labelText="{{'exam.sessions.form.maxAttempts' | translate}}"
+      ></hbt-input-text>
+    </div>
+
+    <div nz-col nzXs="24" nzLg="8">
+      <hbt-select [urlLoadData]="getUrlCategory(categoryCode.CHOOSE_YES_NO)"
+                  [serviceName]="microService.ADMIN"
+                  [type]="isSubmitted && form.controls['randomizeQuestions'].errors ? 'error' : 'default'"
+                  [showError]="isSubmitted && form.controls['randomizeQuestions'].errors !== null"
+                  [errors]="form.controls['randomizeQuestions'].errors"
+                  [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'exam.sessions.form.randomizeQuestions' | translate }}]"
+                  keyLabel="name"
+                  formControlName="randomizeQuestions"
+                  placeholder="{{'exam.sessions.form.randomizeQuestions' | translate}}"
+                  labelText="{{'exam.sessions.form.randomizeQuestions' | translate}} <span class='label__required'>*</span>"
+      ></hbt-select>
+    </div>
+
+    <div nz-col nzXs="24" nzLg="8">
+      <hbt-select [urlLoadData]="getUrlCategory(categoryCode.CHOOSE_YES_NO)"
+                  [serviceName]="microService.ADMIN"
+                  [type]="isSubmitted && form.controls['randomizeOptions'].errors ? 'error' : 'default'"
+                  [showError]="isSubmitted && form.controls['randomizeOptions'].errors !== null"
+                  [errors]="form.controls['randomizeOptions'].errors"
+                  [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'exam.sessions.form.randomizeOptions' | translate }}]"
+                  keyLabel="name"
+                  formControlName="randomizeOptions"
+                  placeholder="{{'exam.sessions.form.randomizeOptions' | translate}}"
+                  labelText="{{'exam.sessions.form.randomizeOptions' | translate}} <span class='label__required'>*</span>"
+      ></hbt-select>
+    </div>
+
+    <div nz-col nzXs="24" nzLg="8">
+      <hbt-input-text formControlName="password" [maxLength]="100"
+                      placeholderText="{{'exam.sessions.form.password' | translate}}"
+                      labelText="{{'exam.sessions.form.password' | translate}}"
+      ></hbt-input-text>
+    </div>
+
+    <div nz-col nzXs="24" nzLg="8">
+      <hbt-select [dataSelects]="listVisibilityCode"
+                  [type]="isSubmitted && form.controls['visibilityCode'].errors ? 'error' : 'default'"
+                  [showError]="isSubmitted && form.controls['visibilityCode'].errors !== null"
+                  [errors]="form.controls['visibilityCode'].errors"
+                  [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'exam.sessions.form.visibilityCode' | translate }}]"
+                  formControlName="visibilityCode"
+                  placeholder="{{'exam.sessions.form.visibilityCode' | translate}}"
+                  labelText="{{'exam.sessions.form.visibilityCode' | translate}} <span class='label__required'>*</span>"
+      ></hbt-select>
+    </div>
+
+    <div nz-col nzXs="24" nzLg="8">
+      <hbt-select [urlLoadData]="getUrlCategory(categoryCode.CHOOSE_YES_NO)"
+                  [serviceName]="microService.ADMIN"
+                  [type]="isSubmitted && form.controls['requireWebcam'].errors ? 'error' : 'default'"
+                  [showError]="isSubmitted && form.controls['requireWebcam'].errors !== null"
+                  [errors]="form.controls['requireWebcam'].errors"
+                  [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'exam.sessions.form.requireWebcam' | translate }}]"
+                  keyLabel="name"
+                  formControlName="requireWebcam"
+                  placeholder="{{'exam.sessions.form.requireWebcam' | translate}}"
+                  labelText="{{'exam.sessions.form.requireWebcam' | translate}} <span class='label__required'>*</span>"
+      ></hbt-select>
+    </div>
+  </div>
+</form>

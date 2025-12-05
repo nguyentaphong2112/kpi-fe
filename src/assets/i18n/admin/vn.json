@@ -1,0 +1,369 @@
+{
+  "feedbacks": {
+    "title": "Thông tin phản ánh",
+    "process": "Xử lý",
+    "empCode": "Mã viên chức/NLĐ",
+    "empName": "Tên viên chức/NLĐ",
+    "content": "Nội dung phản ánh",
+    "jobName": "Chức danh",
+    "orgName": "Đơn vị",
+    "status": "Trạng thái",
+    "processContent": "Nội dung",
+    "processFeedBack": "Xử lý thông tin phản ánh",
+    "employee": "Viên chức/NLĐ",
+    "comment": "Nội dung trao đổi",
+    "keySearch": "Mã/Tên viên chức/NLĐ",
+    "createdDate": "Ngày tạo",
+    "startDate": "Từ ngày",
+    "endDate": "Đến ngày",
+    "type": "Loại phản ánh"
+  },
+  "permissions": {
+    "resources": {
+      "label": {
+        "resource": "chức năng",
+        "keySearch": "Mã/Tên chức năng",
+        "status": "Trạng thái",
+        "url": "Url",
+        "usedStatus": "Tình trạng sử dụng",
+        "code": "Mã",
+        "name": "Tên",
+        "parentName": "Chức năng cha",
+        "stt": "Số thứ tự",
+        "icon": "Icon",
+        "createdBy": "Người tạo",
+        "createdDate": "Ngày tạo",
+        "lastUpdatedBy": "Người  sửa",
+        "lastUpdatedDate": "Ngày sửa",
+        "unlock": "Mở khóa",
+        "lock": "Khóa",
+        "used": "Đã sử dụng",
+        "notUsed": "Chưa sử dụng",
+        "yes": "Có",
+        "no": "Không"
+      },
+      "form": {
+        "code": "Mã chức năng",
+        "name": "Tên chức năng",
+        "parentName": "Chức năng cha",
+        "stt": "Số thứ tự",
+        "icon": "Icon",
+        "url": "Url",
+        "isMenu": "Là menu",
+        "scope": "Scope"
+      }
+    },
+    "users": {
+      "label": {
+        "user": " người dùng",
+        "keySearch": "Tên đăng nhập/họ tên",
+        "loginName": "Tên đăng nhập",
+        "fullName": "Họ và tên",
+        "email": "Email",
+        "mobileNumber": "Số điện thoại",
+        "employeeCode": "Mã nhân viên",
+        "status": "Trạng thái",
+        "createdTime": "Ngày tạo",
+        "createdBy": "Người tạo",
+        "modifiedTime": "Ngày sửa",
+        "modifiedBy": "Người sửa",
+        "active": "Hoạt động",
+        "notActive": "Khóa",
+        "note": "Ghi chú",
+        "tree": "Cây dữ liệu"
+      }
+    },
+    "roles": {
+      "label": {
+        "role": " vai trò",
+        "domainLevel": "Trạng thái sử dụng",
+        "keySearch": "Mã/tên vai trò",
+        "code": "Mã",
+        "name": "Tên",
+        "createdTime": "Ngày tạo",
+        "createdBy": "Người tạo",
+        "modifiedTime": "Ngày sửa",
+        "modifiedBy": "Người sửa",
+        "note": "Ghi chú",
+        "defaultDomainType": "Phân quyền mặc định theo",
+        "authorized": "Cập nhật quyền"
+      }
+    },
+    "userRoles": {
+      "label": {
+        "roleName": "Tên vai trò",
+        "scopeAuthorized": "Phạm vi phân quyền",
+        "addRole": "Chọn vai trò",
+        "unit": "Đơn vị",
+        "object": "Đối tượng",
+        "scope": "Xem phạm vi"
+      }
+    }
+  },
+  "categories": {
+    "label": {
+      "keySearch": "Mã/Tên",
+      "categoryTypeList": "Danh sách loại danh mục",
+      "categoryType": "Loại danh mục",
+      "value": "Giá trị",
+      "category": "danh mục"
+    },
+    "form": {
+    }
+  },
+  "categoryTypes": {
+    "title": "Loại danh mục",
+    "isAutoIncrease": "Giá trị tự động tăng",
+    "add": "Thêm mới loại danh mục",
+    "edit": "Chỉnh sửa loại danh mục",
+    "groupType": "Mã nhóm danh mục"
+  },
+  "configurations": {
+    "attributes": {
+      "label": {
+        "keySearch": "Mã/tên",
+        "name": "Tên",
+        "tableName": "Bảng",
+        "functionCode": "Nghiệp vụ",
+        "createdTime": "Ngày tạo",
+        "createdBy": "Người tạo",
+        "modifiedTime": "Ngày sửa",
+        "modifiedBy": "Người sửa",
+        "attribute": " thuộc tính",
+        "string": "Kiểu chuỗi",
+        "textArea": "Kiểu TextArea",
+        "long": "Kiểu số nguyên",
+        "double": "Kiểu số thực",
+        "date": "Kiểu ngày tháng",
+        "list": "Kiểu lựa chọn",
+        "multiList": "Kiểu chọn nhiều"
+      },
+      "table": {
+        "name": "Tên",
+        "tableName": "Bảng dữ liệu",
+        "functionCode": "Mã nghiệp vụ",
+        "note": "Ghi chú",
+        "dataCode": "Mã trường dữ liệu",
+        "dataName": "Tên trường dữ liệu",
+        "dataType": "Kiểu dữ liệu",
+        "isRequired": "Bắt buộc nhập",
+        "description": "Mô tả",
+        "urlApi": "Link Api",
+        "nzXs":"nzXs",
+        "nzLg":"nzLg",
+        "urlLoadData": "Link Api"
+      }
+    },
+    "parameters": {
+      "label": {
+        "config": "Cấu hình",
+        "startDate": "Từ ngày",
+        "endDate": "Đến ngày",
+        "startMonth": "Từ tháng",
+        "endMonth": "Đến tháng",
+        "titleConfig": " cấu hình",
+        "configGroup": "Mã nhóm cấu hình",
+        "configGroupName": "Tên nhóm cấu hình",
+        "configPeriodType": "Loại",
+        "month": "MONTH",
+        "date": "DATE",
+        "onlyMonth": "ONLY_MONTH",
+        "time": "Thời gian áp dụng",
+        "periodTime": "Từ {{startDate}} -> {{endDate}}",
+        "now": "đến hiện tại"
+      },
+      "button": {
+        "add": "Thêm mới cấu hình",
+        "edit": "Chỉnh sửa cấu hình"
+      }
+    },
+    "dynamicReports": {
+      "label": {
+        "keySearch": "Mã/tên",
+        "dynamicReport": " báo cáo động",
+        "doc": "DOC",
+        "pdf": "PDF",
+        "excel": "EXCEL",
+        "stt": "STT",
+        "title": "Tên điều kiện",
+        "isRequired": "Bắt buộc nhập",
+        "name": "Mã điều kiện",
+        "dataType": "Kiểu dữ liệu",
+        "urlApi": "UrlAPI",
+        "additionalCondition": "Câu lệnh điều kiện bổ sung",
+        "string": "Kiểu chuỗi",
+        "date": "Kiểu ngày tháng",
+        "long": "Kiểu số nguyên",
+        "double": "Kiểu số thực",
+        "list": "Chọn danh sách",
+        "manyList": "Chọn danh sách (chọn nhiều)",
+        "staff": "Chọn nhân viên",
+        "manyStaff": "Chọn nhân viên (chọn nhiều)",
+        "unit": "Chọn đơn vị",
+        "manyUnit": "Chọn đơn vị (chọn nhiều)",
+        "fileList": "File biểu mẫu",
+        "query": "Câu lệnh query"
+      },
+      "table": {
+        "code": "Mã báo cáo",
+        "name": "Tên báo cáo",
+        "reportType": "Loại báo cáo",
+        "createdTime": "Ngày tạo",
+        "createdBy": "Người tạo",
+        "modifiedTime": "Ngày sửa",
+        "modifiedBy": "Người sửa"
+      }
+    },
+    "warningConfigs": {
+      "pageName": "Cấu hình cảnh báo",
+      "label": {
+        "keySearch": "Mã chức năng/tiêu đề",
+        "dynamicReport": " báo cáo động",
+        "doc": "DOC",
+        "excel": "EXCEL",
+        "stt": "STT",
+        "title": "Tên điều kiện",
+        "isRequired": "Bắt buộc nhập",
+        "name": "Mã điều kiện",
+        "dataType": "Kiểu dữ liệu",
+        "urlApi": "UrlAPI",
+        "additionalCondition": "Câu lệnh điều kiện bổ sung",
+        "string": "Kiểu chuỗi",
+        "date": "Kiểu ngày tháng",
+        "long": "Kiểu số nguyên",
+        "double": "Kiểu số thực",
+        "list": "Chọn danh sách",
+        "manyList": "Chọn danh sách (chọn nhiều)",
+        "staff": "Chọn nhân viên",
+        "manyStaff": "Chọn nhân viên (chọn nhiều)",
+        "unit": "Chọn đơn vị",
+        "manyUnit": "Chọn đơn vị (chọn nhiều)",
+        "fileList": "File biểu mẫu",
+        "query": "Câu lệnh query"
+      },
+      "table": {
+        "title":"Tiêu đề",
+        "resource": "Mã chức năng",
+        "backgroundColor": "Màu nền",
+        "icon": "icon hiển thị",
+        "apiUri": "URI",
+        "urlViewDetail": "URL chức năng chi tiết",
+        "sqlQuery": "Câu lệnh query",
+        "isDeleted": "Trạng thái xóa (Y : đã xóa, N : chưa xóa)",
+        "isMustPositive": "Chỉ hiển thị nếu là số dương > 0",
+        "orderNumber":"Thứ tự sắp xếp",
+        "createdTime": "Ngày tạo",
+        "createdBy": "Người tạo",
+        "modifiedTime": "Ngày sửa",
+        "modifiedBy": "Người sửa"
+      }
+    },
+    "configMappings": {
+      "label": {
+        "config": "Cấu hình",
+        "import": "Import dữ liệu mapping"
+      },
+      "tooltip": {
+        "add": "Thêm mới loại cấu hình",
+        "edit": "Chỉnh sửa loại cấu hình"
+      },
+      "table": {
+        "code": "Mã",
+        "name": "Tên",
+        "parameterTitle": "Tên thuộc tính",
+        "valueTitle": "Tên giá trị",
+        "dataType": "Kiểu giá trị",
+        "createdTime": "Ngày tạo",
+        "createdBy": "Người tạo",
+        "modifiedTime": "Ngày sửa",
+        "modifiedBy": "Người sửa"
+      }
+    },
+    "mappingValues": {
+      "table": {
+        "startDate": "Từ ngày",
+        "endDate": "Đến ngày",
+        "createdTime": "Ngày tạo",
+        "createdBy": "Người tạo",
+        "modifiedTime": "Ngày sửa",
+        "modifiedBy": "Người sửa"
+      },
+      "label": {
+        "keySearch": "Từ khóa",
+        "import": "Import dữ liệu mapping"
+      }
+    }
+  },
+  "cardTemplates": {
+    "label": "Cấu hình biểu mẫu",
+    "templateTypeName": "Loại biểu mẫu",
+    "title": "Nghiệp vụ",
+    "isApplyAll": "Áp dụng cho tất cả",
+    "defaultParameters": "Tham số mặc định",
+    "parameters": "Tham số cho nhập liệu",
+    "code": "Mã",
+    "name": "Tên",
+    "defaultValue": "Giá tri mặc định",
+    "templateFile": "File biểu mẫu"
+  },
+  "common": {
+    "stt": "STT",
+    "code": "Mã",
+    "name": "Tên",
+    "value": "Giá trị",
+    "isAutoIncrease": "Giá trị tự động tăng",
+    "createdTime": "Ngày tạo",
+    "createdBy": "Người tạo",
+    "modifiedTime": "Ngày sửa",
+    "modifiedBy": "Người sửa"
+  },
+  "validates": {
+    "required": "{{param}} bắt buộc nhập",
+    "requiredOrg": "Đơn vị hoặc Đối tượng bắt buộc nhập"
+  },
+  "action": {
+  },
+  "notifications": {
+  },
+  "configPages": {
+    "table": {
+      "url": "URL",
+      "reportCodes": "Mã báo cáo",
+      "type" : "Phân loại",
+      "createdBy": "Người tạo",
+      "createdTime": "Ngày tạo",
+      "modifiedBy": "Người sửa",
+      "modifiedTime": "Ngày sửa"
+    },
+    "label": {
+      "configPage":"Cấu hình tham số theo page",
+      "keySearch": "Mã báo cáo / Url",
+      "reportTemplate" : "Mẫu báo cáo",
+      "userGuide" : "Hướng dẫn sử dụng"
+    }
+  },
+  "configCharts": {
+    "title": "Cấu hình biểu đồ",
+    "table": {
+      "url": "URL",
+      "code": "Mã biểu đồ",
+      "name": "Tiêu đề",
+      "type": "Loại biểu đồ",
+      "sqlQuery": "Câu lệnh SQL",
+      "serviceName": "Tên service",
+      "orderNumber": "Số thứ tự",
+      "createdBy": "Người tạo",
+      "createdTime": "Ngày tạo",
+      "modifiedBy": "Người sửa",
+      "modifiedTime": "Ngày sửa"
+    },
+    "label": {
+      "configPage":"Cấu hình tham số theo page",
+      "keySearch": "Mã biểu đồ / Url"
+    },
+    "validation": {
+      "exclusiveField": "Vui lòng chỉ nhập 1 trong 2 trường {{0}} - {{1}}",
+      "invalidColorFormat": "Vui lòng nhập màu sắc theo định dạng [{\"Label1\":\"color1\"}, {\"Label2\":\"color2\"}]"
+    }
+  }
+}

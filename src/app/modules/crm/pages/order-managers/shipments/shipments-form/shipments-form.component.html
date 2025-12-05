@@ -1,0 +1,67 @@
+<div class='save-form-crm'>
+  <form nz-form [formGroup]="form" style="margin-top: 20px">
+    <div nz-row [nzGutter]='[20,15]'>
+      <!--id đơn hàng-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [dataSelects]="[]"
+          formControlName="orderId"
+          [type]="isSubmitted && form.controls['orderId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['orderId'].errors != null"
+          [errors]="form.controls['orderId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.shipments.table.orderId' | translate }}]"
+          placeholder="{{'crm.shipments.table.orderId' | translate}}"
+          labelText="{{'crm.shipments.table.orderId' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <!--id đơn vị vận chuyển (category_type = 'CRM_DON_VI_VAN_CHUYEN')-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [dataSelects]="[]"
+          formControlName="shipperId"
+          [type]="isSubmitted && form.controls['shipperId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['shipperId'].errors != null"
+          [errors]="form.controls['shipperId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.shipments.table.shipperId' | translate }}]"
+          placeholder="{{'crm.shipments.table.shipperId' | translate}}"
+          labelText="{{'crm.shipments.table.shipperId' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <!--ngày giao hàng-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-date-picker
+          placeholderText="{{'crm.shipments.table.shipmentDate' | translate}}"
+          labelText="{{'crm.shipments.table.shipmentDate' | translate}}"
+          formControlName="shipmentDate"></hbt-date-picker>
+      </div>
+
+      <!--mã theo dõi lô hàng-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="trackingNo" maxLength="20"
+          [type]="isSubmitted && form.controls['trackingNo'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['trackingNo'].errors != null"
+          [errors]="form.controls['trackingNo'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 20}}]"
+          placeholderText="{{'crm.shipments.table.trackingNo' | translate}}"
+          labelText="{{'crm.shipments.table.trackingNo' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <div nz-col [nzXs]='24' [nzLg]='24' class="input__group">
+        <hbt-upload
+          [(docIdsDelete)]="docIdsDelete"
+          [typeFileAvailable]="['jpeg', 'jpg', 'png', 'pdf', 'doc', 'docx']"
+          [multiple]="true"
+          labelText="{{'common.label.attachFile' | translate}}"
+          [required]="true"
+          (fileListChange)="onFileListChange($event, 'fileList', true)"
+          (docIdsDeleteChange)="removeFile($event, 'fileList')"
+          [serviceName]='serviceName'
+          [showError]="isSubmitted"
+        ></hbt-upload>
+      </div>
+
+    </div>
+  </form>
+</div>
+

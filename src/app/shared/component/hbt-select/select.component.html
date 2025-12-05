@@ -1,0 +1,66 @@
+<div class="select__group select__group--icon select__custom {{customIconSearch  ? 'custom__search-icon' : ''}} {{(showAddCategory && !disable) ? 'custom__add-category' : ''}}">
+  <div *ngIf="labelText != null" class="input__label" [innerHTML]="labelText">
+    <span *ngIf="required" style="color: red">*</span>
+  </div>
+  <div [class]="inputGroupGroupClass">
+    <em *ngIf="selectIcon != null" nz-icon [nzType]="selectIcon" nzTheme="outline"></em>
+    <em *ngIf="showAddCategory && !disable"
+        nz-icon [nzType]="'plus'"
+        nzTheme="outline"
+        class="custom__icon-add"
+        (click)="openAddCategory()"
+        nz-tooltip
+        nzTooltipPlacement="top"
+        nzTooltipTitle="{{'common.label.categoryType' | translate}}"
+    ></em>
+    <ng-container *ngTemplateOutlet="customIconSearch"></ng-container>
+    <nz-select [nzClearIcon]="clearIcon"
+               class="select__select select__select--one {{selectIcon != null ? 'include__icon' : 'no__icon'}}"
+               [nzMode]="mode" style="width: 100%" [nzShowSearch]="showSearch"
+               (nzOnSearch)="onSearch($event)"
+               [nzAllowClear]="showClear" [nzPlaceHolder]="placeholder" [nzLoading]="isLoading"
+               [nzOptionHeightPx]="optionHeightPx" [nzOptionOverflowSize]="optionOverflowSize"
+               [nzDisabled]="disable" [nzDropdownClassName]="dropdownClassName"
+               [(ngModel)]="itemSelectedValue" (ngModelChange)="selectItem($event)" [(nzOpen)]="isOpenOptions"
+               (nzScrollToBottom)="isLoadMore ? loadMore() : null"
+               [nzDropdownRender]="isLoadMore ? renderTemplate : null">
+      <ng-container *ngFor="let dataSelect of dataSelects">
+        <nz-option-group [nzLabel]="dataSelect.groupLabel" *ngIf="dataSelect.isGroup">
+          <nz-option class="select__option-group" *ngFor="let item of dataSelect.childItem" [nzLabel]="item[keyLabel]"
+                     [nzValue]="keyValueStringType ? (item[keyValue]+'') : item[keyValue]"
+                     [nzDisabled]="item['disable']"
+                     style="margin-left: 10px"
+          >
+          </nz-option>
+        </nz-option-group>
+        <nz-option *ngIf="!dataSelect.isGroup" class="select__option" [nzLabel]="dataSelect[keyLabel]"
+                   [nzValue]="keyValueStringType ? (dataSelect[keyValue]+'') : dataSelect[keyValue]"
+                   [nzDisabled]="dataSelect['disable']">
+        </nz-option>
+      </ng-container>
+    </nz-select>
+    <ng-template #renderTemplate>
+      <nz-spin *ngIf="isLoadMoreLoading"></nz-spin>
+    </ng-template>
+  </div>
+  <div *ngIf="textMessageValue != null && showError" [class]="inputMessageClass">
+    <em *ngIf="showIconMessage" nz-icon [nzType]="iconType" nzTheme="outline"></em>
+    <span class="text__message">{{textMessageValue}}</span>
+  </div>
+</div>
+<ng-template #clearIcon>
+  <em nz-icon nzType="close" nzTheme="outline" (click)="clearValue()"></em>
+</ng-template>
+
+<ng-template #footerTmpl>
+  <hbt-button
+    buttonAvailableStyle="CANCEL"
+    buttonText="{{ 'common.button.cancel' | translate }}"
+    (click)="modalRef.destroy()">
+  </hbt-button>
+  <hbt-button
+    buttonAvailableStyle="SAVE"
+    buttonText="{{ 'common.button.save' | translate }}"
+    (click)="modalRef.getContentComponent().save()">
+  </hbt-button>
+</ng-template>

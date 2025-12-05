@@ -1,0 +1,128 @@
+
+<form nz-form [formGroup]="form" class="mts-index">
+  <div class='abs'>
+    <div class="search__custom-common remove__mr__bt-40 ">
+      <div nz-row class="button__action-left">
+
+      </div>
+
+      <div class="search__page-right">
+        <hbt-input-text formControlName='keySearch'
+                        [maxLength]='255'
+                        placeholderText="{{'common.label.keySearchEmpCodeAndName' | translate}}"></hbt-input-text>
+      </div>
+    </div>
+
+    <div class='search__content--group'>
+      <hbt-table-wrap>
+        <hbt-table
+          (changePageNum)="search($event)"
+          [tableConfig]="tableConfig" [dataList]="tableData"></hbt-table>
+      </hbt-table-wrap>
+    </div>
+
+    <!--  <ng-template #actionTmpl let-data="data">-->
+    <!--    <btn-more-action [model]="[data]" [setting]="actionSchema">-->
+    <!--    </btn-more-action>-->
+    <!--  </ng-template>-->
+
+    <ng-template #actionTmpl let-data="data">
+      <div>
+        <em class="menu__item--btn" nz-icon nzType="check" *ngIf="data.statusId === Constant.ATTENDANCE_HISTORIES_STATUS.CHO_PHE_DUYET"
+            nzTooltipTitle="{{'abs.attendanceHistories.tooltip.approve' | translate}}" (click)=" this.openModal(data.attendanceHistoryId)"
+            nzTooltipPlacement="left" nz-button nz-tooltip></em>
+      </div>
+
+    </ng-template>
+
+    <ng-template #footerTmpl>
+      <hbt-button
+        buttonAvailableStyle="CANCEL"
+        buttonText="{{ 'common.button.cancel' | translate }}"
+        (click)="modalRef.destroy()">
+      </hbt-button>
+      <hbt-button
+        buttonAvailableStyle="SAVE"
+        buttonText="{{ 'common.button.save' | translate }}"
+        (click)="modalRef.getContentComponent().save()">
+      </hbt-button>
+    </ng-template>
+
+    <hbt-import-file [showContent]='isImportData'
+                     (onCloseModal)='doCloseImport($event)'
+                     [importApi]='importApi'
+                     [downLoadTemplateApi]="downLoadTemplateApi"
+                     [fileTemplateName]="fileTemplateName"
+                     [doDownloadFileByNameApi]='doDownloadFileByNameApi'>
+    </hbt-import-file>
+
+    <reject-common-template
+      [isReject]="isReject"
+      [listRejectId]="listId"
+      [rejectId]='rejectId'
+      [rejectByListApi]='rejectByListApi'
+      (onCloseModal)="doCloseReject($event)">
+    </reject-common-template>
+
+    <ng-template #attachFileTmpl let-attachFileList='attachFileList'>
+      <div *ngFor="let file of attachFileList">
+        <a class="attach-file" (click)="doDownLoadFile(file); $event.stopPropagation();">{{file.fileName}}</a>
+      </div>
+    </ng-template>
+
+    <ng-template #processTmpl let-data="data">
+        <div *ngIf="data.statusId === Constant.REQUESTS_STATUS.CHO_PHE_DUYET">
+          {{'abs.attendanceHistories.processStatus.notProcessed' | translate}}
+        </div>
+      <div *ngIf="!(data.statusId === Constant.REQUESTS_STATUS.CHO_PHE_DUYET)">
+        {{'abs.attendanceHistories.processStatus.done' | translate}}
+      </div>
+    </ng-template>
+
+    <nz-modal [(nzVisible)]="isVisible" [nzTitle]="'abs.attendanceHistories.title.approve' | translate"
+              (nzOnCancel)="handleCancel()">
+      <ng-container *nzModalContent>
+        <form nz-form [formGroup]="formModal">
+          <div nz-row [nzGutter]='[20,15]'>
+            <div nz-col [nzXs]="24" [nzLg]="24">
+              <hbt-select
+                [dataSelects]="listStatus"
+                formControlName="statusId"
+                labelText="{{'abs.attendanceHistories.label.confirm' | translate}} <span class='label__required'>*</span>"
+                placeholder="{{'abs.attendanceHistories.label.confirm' | translate}}"
+                [type]="isSubmitted && formModal.controls['statusId'].errors ? 'error' : 'default'"
+                [showError]="isSubmitted && formModal.controls['statusId'].errors !== null"
+                [errors]="formModal.controls['statusId'].errors"
+                [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'abs.attendanceHistories.label.confirm' | translate }}]">
+              </hbt-select>
+            </div>
+            <div nz-col [nzXs]="24" [nzLg]="24">
+              <hbt-input-text formControlName="note" maxLength="1000" isTextAre
+                              [config]="{ rows: 3 }"
+                              [defaultInput]="true"
+                              placeholderText="{{'abs.attendanceHistories.label.note' | translate}}"
+                              labelText="{{'abs.attendanceHistories.label.note' | translate}}"
+              ></hbt-input-text>
+            </div>
+          </div>
+        </form>
+      </ng-container>
+      <ng-template [nzModalFooter]>
+        <hbt-button
+          buttonAvailableStyle="CANCEL"
+          buttonText="{{ 'common.button.cancel' | translate }}"
+          (click)="handleCancel()">
+        </hbt-button>
+        <hbt-button
+          buttonAvailableStyle="SAVE"
+          buttonText="{{ 'common.button.confirm' | translate }}"
+          (click)="handleOk()">
+        </hbt-button>
+      </ng-template>
+    </nz-modal>
+
+  </div>
+</form>
+
+
+

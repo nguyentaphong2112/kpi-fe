@@ -1,0 +1,20 @@
+<div class="datepicker__group datepicker__group--icon">
+  <div *ngIf="labelText != null" class="input__label" [innerHTML]="labelText"></div>
+  <span *ngIf="required" class='label__required'> *</span>
+  <div [class]="inputGroupGroupClass">
+    <em *ngIf="datePickerIcon != null" nz-icon [nzType]="datePickerIcon" nzTheme="outline"></em>
+    <nz-time-picker nzAllowClear nzBackdrop
+                    [nzAutoFocus]="autofocus"
+                    [nzDisabled]="disabled"
+                    [nzPopupClassName]="popupClassName"
+                    [nzMode]="mode"
+                    [(ngModel)]="value"
+                    [nzFormat]="format"
+                    [nzPlaceHolder]="placeholderText"
+                    (ngModelChange)="onInputChange($event)"></nz-time-picker>
+  </div>
+  <div *ngIf="textMessageValue != null && showError" [class]="inputMessageClass">
+    <em *ngIf="showIconMessage" nz-icon [nzType]="iconType" nzTheme="outline"></em>
+    <span class="text__message">{{textMessageValue}}</span>
+  </div>
+</div>

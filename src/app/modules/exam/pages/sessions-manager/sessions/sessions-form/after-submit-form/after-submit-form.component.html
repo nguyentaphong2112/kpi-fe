@@ -1,0 +1,30 @@
+<form nz-form [formGroup]="form">
+  <div class="app-row" nz-row [nzGutter]='[20,15]'>
+    <div nz-col nzXs="24" nzLg="8">
+      <hbt-select [urlLoadData]="getUrlCategory(categoryCode.CHOOSE_YES_NO)"
+                  [serviceName]="microService.ADMIN"
+                  [type]="isSubmitted && form.controls['showResultAfterSubmit'].errors ? 'error' : 'default'"
+                  [showError]="isSubmitted && form.controls['showResultAfterSubmit'].errors !== null"
+                  [errors]="form.controls['showResultAfterSubmit'].errors"
+                  [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'exam.sessions.form.showResultAfterSubmit' | translate }}]"
+                  keyLabel="name"
+                  formControlName="showResultAfterSubmit"
+                  placeholder="{{'exam.sessions.form.showResultAfterSubmit' | translate}}"
+                  labelText="{{'exam.sessions.form.showResultAfterSubmit' | translate}} <span class='label__required'>*</span>"
+      ></hbt-select>
+    </div>
+    <div nz-col nzXs="24" nzLg="8">
+      <hbt-select [urlLoadData]="getUrlCategory(categoryCode.CHOOSE_YES_NO)"
+                  [serviceName]="microService.ADMIN"
+                  [type]="isSubmitted && form.controls['showCorrectAnswers'].errors ? 'error' : 'default'"
+                  [showError]="isSubmitted && form.controls['showCorrectAnswers'].errors !== null"
+                  [errors]="form.controls['showCorrectAnswers'].errors"
+                  [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'exam.sessions.form.showCorrectAnswers' | translate }}]"
+                  keyLabel="name"
+                  formControlName="showCorrectAnswers"
+                  placeholder="{{'exam.sessions.form.showCorrectAnswers' | translate}}"
+                  labelText="{{'exam.sessions.form.showCorrectAnswers' | translate}} <span class='label__required'>*</span>"
+      ></hbt-select>
+    </div>
+  </div>
+</form>

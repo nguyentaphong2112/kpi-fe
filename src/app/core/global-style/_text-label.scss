@@ -1,0 +1,30 @@
+@import "variable";
+
+.text__label {
+
+  ::ng-deep .input__group {
+
+    div.input__label {
+      color: $input-body-color !important;
+    }
+  }
+
+  .label__text, .label__value {
+    display: block;
+    color: $input-body-color;
+  }
+
+  .label__text {
+    font-family: avertaB, sans-serif;
+    margin-bottom: 10px;
+  }
+
+  .label__value {
+    white-space: normal !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow-wrap: break-word;
+  }
+}

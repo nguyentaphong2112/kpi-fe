@@ -1,0 +1,292 @@
+@import "src/app/core/global-style/variable";
+
+.slide {
+  position: absolute;
+  top: 18px;
+  left: 150px;
+  display: flex;
+  align-items: center;
+  p {
+    margin: 0 10px;
+    min-width: 130px;
+    text-align: center;
+    cursor: pointer;
+  }
+  em {
+    cursor: pointer;
+  }
+}
+.group__dashboard {
+  min-height: 100%;
+  display: grid;
+  grid-gap: 24px;
+  grid-template-columns: auto 450px;
+
+  .group__dashboard--left {
+
+    .group__left--grid {
+      display: grid;
+      grid-template-columns: 100%;
+      grid-gap: 24px;
+      align-content: space-between;
+      min-height: 100%;
+
+      .article__area {
+        height: calc(100vh - 520px);
+        overflow: auto;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .group__dashboard--right {
+
+    .group__right--grid {
+      min-height: 100%;
+      display: grid;
+      grid-template-columns: 100%;
+      align-content: space-between;
+      background: url(/assets/img/background/bg-bot.png) no-repeat 100% 100%;
+      background-size: cover;
+      border-radius: 8px;
+      grid-gap: 20px;
+
+      .personal__area {
+        padding: 20px;
+        background: url(/assets/img/background/bg-top.png) no-repeat 100% 100%;
+        background-size: cover;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+      }
+
+      .calendar__area {
+        z-index: 1;
+        padding: 0 20px;
+        overflow: auto;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+      }
+
+      .maxim__area {
+        padding: 0 20px 20px 20px;
+        overflow: hidden;
+      }
+    }
+  }
+
+  ::ng-deep .icon__sw {
+    width: 23px;
+    height: 23px;
+    display: inline-block;
+    text-align: center;
+    border-radius: 50%;
+    box-shadow: 0 0 3px $input-label-color;
+    color: $input-label-color;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    background: $bg-form-default;
+    cursor: pointer;
+  }
+
+  ::ng-deep .icon__sw.icon__sw--prev {
+    left: -10px;
+  }
+
+  ::ng-deep .icon__sw.icon__sw--next {
+    right: -10px;
+  }
+}
+
+@media screen and (max-width: 1880px) {
+  .group__dashboard {
+    grid-gap: 18px;
+    grid-template-columns: auto 315px;
+
+    .group__dashboard--left {
+
+      .group__left--grid {
+        grid-gap: 3px;
+
+        ::ng-deep .banner__item img {
+          height: 120px !important;
+        }
+
+        .article__area {
+          height: calc(100vh - 375px);
+        }
+      }
+    }
+
+    .group__dashboard--right {
+
+      .group__right--grid {
+        grid-gap: 5px;
+
+        .personal__area {
+          padding: 8px 14px;
+        }
+
+        .calendar__area {
+          padding: 0 14px;
+        }
+
+        .maxim__area {
+          padding: 0 14px 8px 14px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1556px) {
+  .group__dashboard {
+    grid-gap: 18px;
+    grid-template-columns: auto 315px;
+
+    .group__dashboard--left {
+
+      .group__left--grid {
+        grid-gap: 8px;
+
+        ::ng-deep .banner__item img {
+          height: 130px !important;
+        }
+
+        .article__area {
+          height: calc(100vh - 375px);
+        }
+      }
+    }
+
+    .group__dashboard--right {
+
+      .group__right--grid {
+        grid-gap: 5px;
+
+        .personal__area {
+          padding: 8px 14px;
+        }
+
+        .calendar__area {
+          padding: 0 14px;
+        }
+
+        .maxim__area {
+          padding: 0 14px 8px 14px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .group__dashboard {
+    grid-gap: 18px;
+    grid-template-columns: auto 315px;
+
+    .group__dashboard--left {
+
+      .group__left--grid {
+        grid-gap: 8px;
+
+        ::ng-deep .banner__item img {
+          height: 106px !important;
+        }
+
+        .article__area {
+          height: calc(100vh - 375px);
+        }
+      }
+    }
+
+    .group__dashboard--right {
+
+      .group__right--grid {
+        grid-gap: 5px;
+
+        .personal__area {
+          padding: 8px 14px;
+        }
+
+        .calendar__area {
+          padding: 0 14px;
+        }
+
+        .maxim__area {
+          padding: 0 14px 8px 14px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .group__dashboard {
+    grid-template-columns: 100% !important;
+
+    .group__dashboard--left {
+      grid-column: 1/2 !important;
+
+      .article__area {
+        height: auto !important;
+      }
+
+      ::ng-deep .art__items {
+        grid-template-columns: 100%;
+      }
+    }
+
+    .group__dashboard--right {
+      .calendar__area {
+        height: auto !important;
+      }
+    }
+  }
+
+}
+
+.notification__area {
+  min-height: calc(100vh - 220px);
+  margin-top: 20px;
+  padding: 10px 30px;
+
+  p {
+    margin-bottom: 0;
+    line-height: 38px;
+  }
+
+  .notification__area-title {
+    text-align: center;
+    font-family: 'avertaB', sans-serif;
+    h1 {
+      color: $error-500;
+    }
+  }
+
+  .notification__area-body {
+    font-size: 18px;
+    font-weight: 400;
+    h3 {
+      font-weight: bold;
+      span {
+        font-weight: normal;
+        font-style: italic
+      }
+    }
+  }
+}
+
+::ng-deep .app__area .card__item--default a {
+  padding: 20px 0 10px 0;
+}

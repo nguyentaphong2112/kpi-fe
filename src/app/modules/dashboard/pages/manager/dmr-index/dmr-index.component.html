@@ -1,0 +1,27 @@
+<div nz-row class="dmr-index">
+  <div nz-col nzSpan="24" class="item-warning">
+    <div>
+      <app-warning-info></app-warning-info>
+    </div>
+  </div>
+
+
+  <ng-container *ngFor="let chart of arrChart">
+    <div nz-col [nzLg]="8" [nzXs]="24" class="item">
+      <div style="position: relative">
+        <app-chart-info
+        [type]="chart.type"
+        [title]="chart.name"
+        [icon]="'fas fa-chart-' + chart.type.toLowerCase()"
+        [serviceName]="chart.serviceName"
+        [url]="chart?.url"
+        [configChartId]="chart.configChartId"
+        [color]="chart?.color"
+        >
+
+        </app-chart-info>
+      </div>
+    </div>
+
+  </ng-container>
+</div>

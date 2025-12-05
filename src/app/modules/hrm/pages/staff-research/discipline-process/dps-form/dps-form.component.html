@@ -1,0 +1,133 @@
+<form nz-form [formGroup]="form">
+  <div nz-row [nzGutter]='[20,15]'>
+    <!--id nhân viên-->
+    <div nz-col [nzXs]="12" [nzLg]="12" *ngIf="!hiddenEmp">
+      <employee-data-picker [isExpand]="true"
+        [functionCode]="functionCode"
+        [scope]="scope"
+        [status]='mode !== modeConst.ADD ? "ALL" : "ACTIVE"'
+        [formMode]="mode"
+        formControlName="employeeId"
+        [disable]="mode !== modeConst.ADD"
+        [type]="isSubmitted && form.controls['employeeId'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['employeeId'].errors != null"
+        [errors]="form.controls['employeeId'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'common.label.employeeName' | translate }}]"
+        labelText="{{'hrm.staffManager.disciplineProcess.table.employeeId' | translate}} <span class='label__required'>*</span>"
+      >
+      </employee-data-picker>
+    </div>
+
+    <!--Cơ quan quyết định kỷ luật-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-input-text
+        formControlName="signedDepartment" maxLength="255"
+        [type]="isSubmitted && form.controls['signedDepartment'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['signedDepartment'].errors != null"
+        [errors]="form.controls['signedDepartment'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.disciplineProcess.table.signedDepartment' | translate }}]"
+        placeholderText="{{'hrm.staffManager.disciplineProcess.table.signedDepartment' | translate}}"
+        labelText="{{'hrm.staffManager.disciplineProcess.table.signedDepartment' | translate}} <span class='label__required'>*</span>"
+      ></hbt-input-text>
+    </div>
+
+    <!--hình thức kỷ luật-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-select
+        [urlLoadData]="getUrlCategory(categoryCode.HINH_THUC_KY_LUAT)"
+        [serviceName]="microService.ADMIN"
+        keyLabel="name"
+        formControlName="disciplineFormId"
+        [type]="isSubmitted && form.controls['disciplineFormId'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['disciplineFormId'].errors != null"
+        [errors]="form.controls['disciplineFormId'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.disciplineProcess.table.disciplineFormId' | translate }}]"
+        placeholder="{{'hrm.staffManager.disciplineProcess.table.disciplineFormId' | translate}}"
+        labelText="{{'hrm.staffManager.disciplineProcess.table.disciplineFormId' | translate}} <span class='label__required'>*</span>"
+      ></hbt-select>
+    </div>
+
+    <!--ngày bị kỷ luật-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-date-picker
+        placeholderText="{{'hrm.staffManager.disciplineProcess.table.fromDate' | translate}}"
+        labelText="{{'hrm.staffManager.disciplineProcess.table.fromDate' | translate}} <span class='label__required'>*</span>"
+        [type]="isSubmitted && form.controls['startDate'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['startDate'].errors != null"
+        [errors]="form.controls['startDate'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.disciplineProcess.table.fromDate' | translate }}]"
+        formControlName="startDate"></hbt-date-picker>
+    </div>
+
+    <!--ngày hết hạn kỷ luật-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-date-picker
+        placeholderText="{{'hrm.staffManager.disciplineProcess.table.endDate' | translate}}"
+        labelText="{{'hrm.staffManager.disciplineProcess.table.endDate' | translate}}"
+        [type]="(form.errors || isSubmitted && form.controls['endDate'].errors) ? 'error' : 'default'"
+        [showError]="(form.errors || isSubmitted && form.controls['endDate'].errors)  != null"
+        [errors]="form.errors?.rangeDateError ? form.errors : form.controls['endDate'].errors"
+        [errorDefs]="[{ errorName: 'rangeDateError', errorDescription: 'hrm.validate.rangeDate.pareDate' | translate:
+      {'fromDate': 'hrm.staffManager.disciplineProcess.table.fromDate' | translate, 'toDate': 'hrm.staffManager.disciplineProcess.table.endDate' | translate}}]"
+        formControlName="endDate"></hbt-date-picker>
+    </div>
+
+    <!--số quyêt định-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-input-text
+        formControlName="documentNo" maxLength="50"
+        [type]="isSubmitted && form.controls['documentNo'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['documentNo'].errors != null"
+        [errors]="form.controls['documentNo'].errors"
+        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 50}}]"
+        placeholderText="{{'hrm.staffManager.disciplineProcess.table.documentNo' | translate}}"
+        labelText="{{'hrm.staffManager.disciplineProcess.table.documentNo' | translate}}"
+      ></hbt-input-text>
+    </div>
+
+    <!--ngày ký quyết định-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-date-picker
+        placeholderText="{{'hrm.staffManager.disciplineProcess.table.documentSignedDate' | translate}}"
+        labelText="{{'hrm.staffManager.disciplineProcess.table.documentSignedDate' | translate}}"
+        formControlName="documentSignedDate"></hbt-date-picker>
+    </div>
+
+    <!--lý do bị kỷ luật-->
+    <div nz-col [nzXs]="24" [nzLg]="24">
+      <hbt-input-text
+        formControlName="reason" isTextAre
+        maxLength="500"
+        placeholderText="{{'hrm.staffManager.disciplineProcess.table.reason' | translate}}"
+        labelText="{{'hrm.staffManager.disciplineProcess.table.reason' | translate}} <span class='label__required'>*</span>"
+        [type]="isSubmitted && form.controls['reason'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['reason'].errors != null"
+        [errors]="form.controls['reason'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.disciplineProcess.table.reason' | translate }}]"
+      ></hbt-input-text>
+    </div>
+
+
+    <ng-container formArrayName="listAttributes">
+      <ng-container *ngFor="let attributes of attributesFormArray.controls; let idx = index" [formGroupName]="idx">
+        <div nz-col [nzXs]="12" [nzLg]="12">
+          <input-attribute-common
+            [controlName]="getAttributeControl(idx, 'attributeValue')"
+            [dataType]="attributes.get('dataType')?.value"
+            [urlLoadData]="attributes.get('urlLoadData')?.value"
+            [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+            [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+            [errors]="attributes.get('attributeValue')?.errors"
+            [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}]"
+            [placeholderText]="attributes.get('attributeName')?.value"
+            [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+          >
+          </input-attribute-common>
+        </div>
+      </ng-container>
+    </ng-container>
+
+
+  </div>
+</form>
+

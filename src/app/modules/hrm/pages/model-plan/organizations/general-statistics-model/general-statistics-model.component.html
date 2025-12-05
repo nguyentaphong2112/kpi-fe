@@ -1,0 +1,7 @@
+<div class="model__plan">
+  <div id="play-controls">
+    <button id="play-pause-button" (click)="playOrPauseRange()" class="fa fa-play" title="play"></button>
+    <input id="play-range" type="range" (ngModelChange)="changeSequenceTimer($event)" [(ngModel)]="sequenceTimer" [min]="0" [max]="maxRange" />
+  </div>
+  <div [id]="'chart_bar'"></div>
+</div>

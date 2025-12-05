@@ -1,0 +1,114 @@
+<form nz-form [formGroup]="form" class="prs-index">
+  <div class="search__custom-common {{isShowAdvSearch ? 'add__mr__bt-10' : 'remove__mr__bt-40'}}">
+    <div nz-row class="button__action-left">
+      <hbt-button
+        buttonSize="MEDIUM"
+        buttonType="BORDER"
+        (click)="export()">
+        <img src="/assets/icon/staff-manager/export_excel.svg" alt="" />
+      </hbt-button>
+    </div>
+
+    <div class="search__page-right">
+      <hbt-input-text formControlName='keySearch'
+                      [maxLength]='255'
+                      placeholderText="{{'crm.pytagoResearchs.table.fullName' | translate}}"></hbt-input-text>
+      <hbt-button
+        buttonIconType="AWESOME"
+        [prefixIcon]="isShowAdvSearch ? 'fa fa-angle-double-up' : 'fa fa-angle-double-down'"
+        buttonSize="VERY_LARGE"
+        [buttonTextColor]="_variable.$neutral_100"
+        [buttonBorderColor]="_variable.$purple_800"
+        [buttonBgColor]="_variable.$purple_800"
+        (click)="isShowAdvSearch = !isShowAdvSearch">
+      </hbt-button>
+    </div>
+  </div>
+  <div *ngIf="isShowAdvSearch" class="content__item content__item--border bg__content--default">
+    <div class="form-search">
+      <div nz-row [nzGutter]='[20,15]'>
+<!--        <div nz-col [nzXs]='12' [nzLg]='6'>-->
+<!--          <hbt-input-text formControlName="fullName" [maxLength]="255"-->
+<!--                          placeholderText="{{'crm.pytagoResearchs.table.fullName' | translate}}"-->
+<!--                          labelText="{{'crm.pytagoResearchs.table.fullName' | translate}}"-->
+<!--          ></hbt-input-text>-->
+<!--        </div>-->
+        <div nz-col [nzXs]='12' [nzLg]='6'>
+          <hbt-date-picker
+            formControlName="dateOfBirth"
+            placeholderText="{{'crm.pytagoResearchs.table.dateOfBirth' | translate}}"
+            labelText="{{'crm.pytagoResearchs.table.dateOfBirth' | translate}} "
+          ></hbt-date-picker>
+        </div>
+
+        <div nz-col [nzXs]='12' [nzLg]='6'>
+          <hbt-input-text formControlName='parentName' [maxLength]='255'
+                          placeholderText="{{'crm.pytagoResearchs.table.parentName' | translate}}"
+                          labelText="{{'crm.pytagoResearchs.table.parentName' | translate}}"></hbt-input-text>
+        </div>
+
+        <div nz-col [nzXs]='12' [nzLg]='6'>
+          <hbt-input-text formControlName='mobileNumber' [maxLength]='20'
+                          appNumberInput
+                          placeholderText="{{'crm.pytagoResearchs.table.mobileNumber' | translate}}"
+                          labelText="{{'crm.pytagoResearchs.table.mobileNumber' | translate}}"></hbt-input-text>
+        </div>
+
+        <div nz-col [nzXs]='12' [nzLg]='6'>
+          <hbt-input-text formControlName='email' [maxLength]='255'
+                          placeholderText="{{'crm.pytagoResearchs.table.email' | translate}}"
+                          labelText="{{'crm.pytagoResearchs.table.email' | translate}}"></hbt-input-text>
+        </div>
+        <div nz-col [nzXs]='12' [nzLg]='6'>
+          <hbt-input-text formControlName='currentAddress' [maxLength]='255'
+                          placeholderText="{{'crm.pytagoResearchs.table.currentAddress' | translate}}"
+                          labelText="{{'crm.pytagoResearchs.table.currentAddress' | translate}}"></hbt-input-text>
+        </div>
+        <div nz-col [nzXs]='12' [nzLg]='6'>
+          <hbt-select formControlName="type"
+                      [dataSelects]="typeList"
+                      labelText="{{'crm.pytagoResearchs.table.type' | translate}}"
+                      placeholder="{{'crm.pytagoResearchs.table.type' | translate}}"
+          >
+          </hbt-select>
+        </div>
+        <div nz-col [nzXs]="24" [nzLg]="24" style="text-align: center">
+          <hbt-button
+            class="staff__research__btn__search"
+            buttonAvailableStyle="SEARCH"
+            buttonText="{{'common.button.search' | translate}}"
+            (click)="search()"
+          ></hbt-button>
+        </div>
+      </div>
+    </div>
+    <!--End Form tìm kiếm-->
+  </div>
+  <div class='search__content--group' [ngClass]="{'search__content--group-hidden-header': isShowAdvSearch}">
+    <hbt-table-wrap>
+      <hbt-table
+        (changePageNum)="search($event)"
+        [(objFilter)]="objFilter"
+        (objFilterChange)="search()"
+        [tableConfig]="tableConfig" [dataList]="tableData"></hbt-table>
+    </hbt-table-wrap>
+  </div>
+
+  <ng-template #actionTmpl let-data="data">
+    <btn-more-action [model]="[data]" [setting]="actionSchema">
+    </btn-more-action>
+  </ng-template>
+
+  <ng-template #footerTmpl>
+    <hbt-button
+      buttonAvailableStyle="CANCEL"
+      buttonText="{{ 'common.button.cancel' | translate }}"
+      (click)="modalRef.destroy()">
+    </hbt-button>
+    <hbt-button
+      buttonAvailableStyle="SAVE"
+      buttonText="{{ 'common.button.saveS' | translate }}"
+      (click)="modalRef.getContentComponent().save()">
+    </hbt-button>
+  </ng-template>
+</form>

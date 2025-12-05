@@ -1,0 +1,146 @@
+<form nz-form [formGroup]="form">
+  <div nz-row [nzGutter]='[20,15]'>
+    <!--  Nhân viên  -->
+    <div nz-col [nzXs]="12" [nzLg]="12" *ngIf="!hiddenEmp">
+      <employee-data-picker [isExpand]="true"
+        [functionCode]="functionCode"
+        [scope]="scope"
+        [status]='mode !== modeConst.ADD ? "ALL" : "ACTIVE"'
+        [formMode]="mode"
+        [disable]="mode !== modeConst.ADD"
+        formControlName="employeeId"
+        [type]="isSubmitted && form.controls['employeeId'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['employeeId'].errors != null"
+        [errors]="form.controls['employeeId'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'common.label.employeeName' | translate }}]"
+        labelText="{{'hrm.staffManager.workedHistories.employeeId' | translate}} <span class='label__required'>*</span>"
+      >
+      </employee-data-picker>
+    </div>
+
+    <!-- Từ ngày và Đến ngày -->
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-date-picker
+        labelText="{{'hrm.staffManager.concurrentProcess.label.fromDate' | translate}} <span class='label__required'>*</span>"
+        placeholderText="{{'hrm.staffManager.concurrentProcess.label.fromDate' | translate}}"
+        formControlName="startDate"
+        [type]="isSubmitted && form.controls['startDate'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['startDate'].errors!== null"
+        [errors]="form.controls['startDate'].errors"
+        [errorDefs]="[
+      { errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param':'hrm.staffManager.concurrentProcess.label.fromDate' | translate }},
+    ]"
+      ></hbt-date-picker>
+
+    </div>
+
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-date-picker
+        labelText="{{'hrm.staffManager.concurrentProcess.label.toDate' | translate}}"
+        placeholderText="{{'hrm.staffManager.concurrentProcess.label.toDate' | translate}}"
+        formControlName="endDate"
+        [type]="(form.controls['endDate'].errors || form.errors?.rangeDateError) ? 'error' : 'default'"
+        [showError]="(form.controls['endDate'].errors || form.errors?.rangeDateError) !== null"
+        [errors]="form.errors?.rangeDateError ? form.errors : form.controls['endDate'].errors"
+        [errorDefs]="[
+      { errorName: 'rangeDateError', errorDescription: 'hrm.validate.rangeDate.pareDate' | translate: {'fromDate': 'hrm.staffManager.concurrentProcess.label.fromDate' | translate, 'toDate': 'hrm.staffManager.concurrentProcess.label.toDate' | translate}}
+    ]"
+      ></hbt-date-picker>
+    </div>
+
+
+    <!-- ID Đơn vị -->
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <tree-data-picker
+          [isExpand]="true"
+        [functionCode]="functionCode"
+        [scope]="scope"
+        formControlName="organizationId"
+        labelText="{{'hrm.staffManager.concurrentProcess.label.organization' | translate}} <span class='label__required'>*</span>"
+        placeholder="{{'hrm.staffManager.concurrentProcess.label.organization' | translate}}"
+        [type]="isSubmitted && form.controls['organizationId']?.errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['organizationId']?.errors !== null"
+        [errors]="form.controls['organizationId']?.errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.staffManager.concurrentProcess.label.organization' | translate}}]"
+      ></tree-data-picker>
+    </div>
+
+    <!-- Chức danh -->
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-select
+        [dataSelects]="listPosition"
+        keyLabel="name"
+        keyValue="positionId"
+        formControlName="positionId"
+        labelText="{{'hrm.staffManager.concurrentProcess.label.position' | translate}} <span class='label__required'>*</span>"
+        placeholder="{{'hrm.staffManager.concurrentProcess.label.position' | translate}}"
+        [type]="isSubmitted && form.controls['positionId']?.errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['positionId']?.errors !== null"
+        [errors]="form.controls['positionId']?.errors"
+        [errorDefs]="[{errorName: 'required', errorDescription: 'hrm.validate.required' | translate:{'param': 'hrm.staffManager.concurrentProcess.label.position' | translate} }]"
+      ></hbt-select>
+    </div>
+
+    <!-- Số quyết định -->
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-input-text
+        formControlName="documentNo"
+        labelText="{{'hrm.staffManager.concurrentProcess.label.documentNo' | translate}}"
+        placeholderText="{{'hrm.staffManager.concurrentProcess.label.documentNo' | translate}}"
+        [type]="isSubmitted && form.controls['documentNo'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['documentNo'].errors !== null"
+        [errors]="form.controls['documentNo'].errors"
+        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'hrm.validate.maxLength' | translate: {'nuerLength': '50' }}]"
+      ></hbt-input-text>
+    </div>
+
+    <!-- Ngày ký QĐ -->
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-date-picker
+        formControlName="documentSignedDate"
+        labelText="{{'hrm.staffManager.concurrentProcess.label.signedDate' | translate}}"
+        placeholderText="{{'hrm.staffManager.concurrentProcess.label.signedDate' | translate}}"
+        [type]="isSubmitted && form.controls['documentSignedDate'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['documentSignedDate'].errors !== null"
+        [errors]="form.controls['documentSignedDate'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required'}]"
+      ></hbt-date-picker>
+    </div>
+
+    <ng-container formArrayName="listAttributes">
+      <ng-container *ngFor="let attributes of attributesFormArray.controls; let idx = index" [formGroupName]="idx">
+        <div nz-col [nzXs]="12" [nzLg]="12">
+          <input-attribute-common
+            [controlName]="getAttributeControl(idx, 'attributeValue')"
+            [dataType]="attributes.get('dataType')?.value"
+            [urlLoadData]="attributes.get('urlLoadData')?.value"
+            [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+            [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+            [errors]="attributes.get('attributeValue')?.errors"
+            [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}]"
+            [placeholderText]="attributes.get('attributeName')?.value"
+            [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+          >
+          </input-attribute-common>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <!-- File đính kèm -->
+    <div nz-col [nzXs]='24' [nzLg]='24' class="input__group">
+      <hbt-upload
+        [fileList]="f['files'].value"
+        [(docIdsDelete)]="docIdsDelete"
+        [typeFileAvailable]="['jpeg', 'jpg', 'png', 'pdf', 'doc', 'docx']"
+        [multiple]="true"
+        labelText="{{'common.label.attachFile' | translate}}"
+        (fileListChange)="onFileListChange($event, 'files', true)"
+        (docIdsDeleteChange)="removeFile($event, 'files')"
+        [serviceName]='microService.HRM'
+        [showError]="isSubmitted"
+        [maxSize]="3"
+        [disable]="mode === modeConst.VIEW"
+      ></hbt-upload>
+    </div>
+  </div>
+</form>

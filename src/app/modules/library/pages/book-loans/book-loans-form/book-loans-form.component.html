@@ -1,0 +1,32 @@
+<form nz-form [formGroup]="form">
+  <div nz-col nzXs="24" nzLg="12">
+    <hbt-select formControlName="memberId"
+                [urlLoadData]="urlLoadData"
+                [serviceName]="serviceName"
+                [isLoadMore]="true"
+                keyValue="memberId"
+                keyLabel="name"
+                [type]="isSubmitted && form.controls['memberId'].errors ? 'error' : 'default'"
+                [showError]="isSubmitted && form.controls['memberId'].errors !== null"
+                [errors]="form.controls['memberId'].errors"
+                [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'library.bookLoan.label.borrower' | translate }}]"
+                labelText="{{'library.bookLoan.label.borrower' | translate}} <span class='label__required'>*</span>"
+                placeholder="{{'library.bookLoan.label.borrower' | translate}}"
+    >
+    </hbt-select>
+  </div>
+</form>
+<div>
+  <span class="notice_message"> {{ 'library.books.label.noticeScan' | translate }}</span>
+</div>
+<div class='search__content--group'>
+  <hbt-table-wrap [tableConfig]="tableConfig">
+    <hbt-table
+      [tableConfig]="tableConfig" [dataList]="tableData"></hbt-table>
+  </hbt-table-wrap>
+</div>
+
+<ng-template #actionTmpl let-data="data">
+  <btn-more-action [model]="[data]" [setting]="actionSchema">
+  </btn-more-action>
+</ng-template>

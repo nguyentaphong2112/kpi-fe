@@ -1,0 +1,41 @@
+@import 'src/app/core/global-style/variable';
+
+.content__home {
+  margin-top: 30px;
+}
+
+
+::ng-deep nz-tree-node {
+  border-radius: 10px !important;
+  padding: 8px 5px !important;
+}
+
+.org__name {
+  font-weight: bold;
+  font-size: 22px;
+}
+
+.btnAcrossPageName {
+  position: absolute;
+  top: 135px;
+  right: 27px;
+}
+
+::ng-deep .scale-effect {
+  transform: scale(1.1) !important;
+  transition: transform 0.3s ease !important;
+}
+
+.item__home--left {
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+
+::ng-deep .org__layout .ant-tabs-tab-active {
+  background-color: $info-800 !important;
+
+  .ant-tabs-tab-btn {
+    color: $bg-form-default !important;
+  }
+}

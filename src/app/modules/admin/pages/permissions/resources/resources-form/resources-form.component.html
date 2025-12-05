@@ -1,0 +1,111 @@
+<div [ngClass]="{'app-card' : isPage}">
+  <form nz-form [formGroup]="form">
+    <div class="app-row" nz-row [nzGutter]='[20,15]'>
+      <div nz-col [nzXs]="24" [nzLg]="12">
+        <hbt-input-text formControlName="code" [maxLength]="50" uppercase (blur)="blur('code')"
+                        [type]="isSubmitted && form.controls['code'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['code'].errors !== null"
+                        [errors]="form.controls['code'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': '50' }},
+                        { errorName: 'code', errorDescription: 'common.validate.code' | translate },
+                        { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.permissions.resources.form.code' | translate }}]"
+                        placeholderText="{{'admin.permissions.resources.form.code' | translate}}"
+                        labelText="{{'admin.permissions.resources.form.code' | translate}} <span class='label__required'>*</span>">
+        </hbt-input-text>
+      </div>
+
+      <div nz-col [nzXs]="24" [nzLg]="12">
+        <hbt-input-text formControlName="name"
+                        [type]="isSubmitted && form.controls['name'].errors ? 'error' : 'default'"
+                        [maxLength]="255"
+                        [showError]="isSubmitted && form.controls['name'].errors != null"
+                        [errors]="form.controls['name'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': '100' }},
+                        { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.permissions.resources.form.name' | translate }}]"
+                        placeholderText="{{'admin.permissions.resources.form.name' | translate}}"
+                        labelText="{{'admin.permissions.resources.form.name' | translate}} <span class='label__required'>*</span>">
+        </hbt-input-text>
+      </div>
+
+      <div nz-col [nzXs]='24' [nzLg]='12'>
+        <hbt-tree-select
+          [urlLoadData]="urlTreeResource"
+          [keyLabel]="'name'"
+          [keyValue]="'nodeId'"
+          [serviceName]="serviceName"
+          nzId="title"
+          formControlName='parentId'
+          labelText="{{'admin.permissions.resources.form.parentName' | translate}}"
+          placeholder="{{'admin.permissions.resources.form.parentName' | translate}}"
+        ></hbt-tree-select>
+      </div>
+
+      <div nz-col [nzXs]="24" [nzLg]="12">
+        <hbt-input-text formControlName="orderNumber"
+                        appNumberic
+                        [num]="5"
+                        [type]="isSubmitted && form.controls['orderNumber'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['orderNumber'].errors != null"
+                        [errors]="form.controls['orderNumber'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': '100' }},
+                        { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.permissions.resources.form.stt' | translate }}]"
+                        placeholderText="{{'admin.permissions.resources.form.stt' | translate}}"
+                        labelText="{{'admin.permissions.resources.form.stt' | translate}} <span class='label__required'>*</span>">
+        </hbt-input-text>
+      </div>
+
+      <div nz-col [nzXs]="24" [nzLg]="12">
+        <hbt-input-text formControlName="icon"
+                        [maxLength]="255"
+                        [type]="isSubmitted && form.controls['icon'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['icon'].errors !== null"
+                        [errors]="form.controls['icon'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': '2000' }}]"
+                        placeholderText="{{'admin.permissions.resources.form.icon' | translate}}"
+                        labelText="{{'admin.permissions.resources.form.icon' | translate}}">
+        </hbt-input-text>
+      </div>
+
+      <div nz-col [nzXs]="24" [nzLg]="12">
+        <hbt-input-text formControlName="url"
+                        [defaultInput]="true"
+                        [maxLength]="255"
+                        [type]="isSubmitted && form.controls['url'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['url'].errors !== null"
+                        [errors]="form.controls['url'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': '2000' }}]"
+                        placeholderText="{{'admin.permissions.resources.form.url' | translate}}"
+                        labelText="{{'admin.permissions.resources.form.url' | translate}}">
+        </hbt-input-text>
+      </div>
+
+      <div nz-col [nzXs]="24" [nzLg]="12">
+        <hbt-select formControlName="isMenu"
+                    [dataSelects]="listIsMenu"
+                    labelText="{{'admin.permissions.resources.form.isMenu' | translate}}"
+                    placeholder="{{'admin.permissions.resources.form.isMenu' | translate}}"
+        >
+        </hbt-select>
+      </div>
+
+      <div nz-col [nzSm]='24' [nzLg]="12">
+        <hbt-select-check-able
+          [urlLoadData]="urlLoadScope"
+          [serviceName]="serviceName"
+          [isLoadMore]="false"
+          [showAction]="false"
+          keyLabel="name"
+          keyValue="scopeId"
+          labelText="{{ 'admin.permissions.resources.form.scope' | translate }}"
+          placeholder="{{ 'admin.permissions.resources.form.scope' | translate }}"
+          [optionHeightPx]="55"
+          formControlName="scopeIds"
+          [type]="isSubmitted && form.controls['scopeIds'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['scopeIds'].errors != null"
+          [errors]="form.controls['scopeIds'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: { param: 'admin.permissions.resources.form.scope' | translate } }]"
+        ></hbt-select-check-able>
+      </div>
+    </div>
+  </form>
+</div>

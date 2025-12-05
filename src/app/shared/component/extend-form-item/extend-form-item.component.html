@@ -1,0 +1,10 @@
+<div class="extend-form-group" [ngClass]="showError ?  errorClass : ''">
+  <label class="extend-form-item_label">{{ labelText }} <span *ngIf="isRequired" class="extend-form-item_label__required">*</span></label>
+
+  <ng-content></ng-content>
+
+  <div *ngIf="showError && errors" class="has-errors">
+    <em *ngIf="errorIcon" nz-icon [nzType]="errorIcon" nzTheme="outline"></em>
+    <span class="text__message">{{ errorMessage | translate }}</span>
+  </div>
+</div>

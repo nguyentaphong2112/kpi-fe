@@ -1,0 +1,70 @@
+@import "src/app/modules/kpi/data-access/style/style";
+
+::ng-deep .save-form-kpi .ant-tabs-tab {
+  margin-right: 10px !important;
+  border-radius: 5px !important;
+  position: relative;
+  z-index: 20;
+}
+
+::ng-deep .save-form-kpi .ant-tabs-nav {
+  padding-top: 10px !important;
+}
+
+::ng-deep .save-form-kpi .ant-card {
+  margin-top: -30px;
+}
+
+::ng-deep .opl-form-tab .ant-tabs-nav {
+  display: none;
+}
+
+::ng-deep .opl-form-tab .org-parent-content {
+  padding: 16px;
+  border-radius: 8px;
+  background-color: white;
+}
+
+#opl-form {
+  height: calc(100vh - 192px);
+  overflow-y: auto;
+
+  .label-text {
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+  .text-head {
+    font-size: 18px;
+    color: $black-700;
+  }
+}
+
+::ng-deep {
+  hbt-scroll-tabs {
+    .tab--wrap {
+      background: $bg-form-default;
+      position: sticky;
+      z-index: 999;
+      top: 0;
+    }
+  }
+}
+
+::ng-deep .opl-form .ant-collapse-header {
+  display: none!important;
+}
+
+::ng-deep .opl-form .ant-table.ant-table-small {
+  td {
+    padding: 3px !important;
+  }
+}
+
+.text {
+  font-size: 18px;
+  color: $primary-500;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-right: 10px;
+}

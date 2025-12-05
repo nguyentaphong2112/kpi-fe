@@ -1,0 +1,39 @@
+<form nz-form [formGroup]="form" class="dsm-index">
+  <div class="search__custom-common {{'remove__mr__bt-40'}}">
+    <div nz-row class="button__action-left">
+    </div>
+    <div class="search__page-right">
+      <tree-data-picker
+        style="flex: 1"
+        [isExpand]="true"
+        placeholder="{{'abs.label.org' | translate}}"
+        formControlName="organizationId"
+        [type]="isSubmitted && form.controls['organizationId'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['organizationId'].errors !== null"
+        [errors]="form.controls['organizationId'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'abs.label.org'| translate }}]"
+        [scope]="scope"
+        (ngModelChange)="search()"
+      >
+      </tree-data-picker>
+      <hbt-date-picker
+        mode="month"
+        style="margin-left: 20px; width: 40%"
+        formControlName="monthValue"
+        placeholderText="{{ 'abs.dutySchedules.label.month' | translate }}"
+        [type]="isSubmitted && form.controls['monthValue'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['monthValue'].errors !== null"
+        [errors]="form.controls['monthValue'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'abs.dutySchedules.label.month'| translate }}]"
+      ></hbt-date-picker>
+    </div>
+  </div>
+</form>
+
+<ng-container>
+  <app-dsm-form (changedIndex)="search($event)"
+                [monthValue]="form.controls.monthValue.value" [responseSearch]="responseSearch"
+  ></app-dsm-form>
+</ng-container>
+
+

@@ -1,0 +1,53 @@
+<div class="role-menus">
+  <div class="header-modal">
+    <div class="flex">
+      <div class="title">{{ 'admin.permissions.roles.label.authorized' | translate }}</div>
+      <div>
+        <hbt-button
+          buttonAvailableStyle="CANCEL"
+          buttonText="{{ 'common.button.cancel' | translate }}"
+          (click)="modalRef.close()">
+        </hbt-button>
+        <hbt-button
+          buttonAvailableStyle="SAVE"
+          buttonText="{{ 'common.button.saveS' | translate }}"
+          (click)="save()">
+        </hbt-button>
+      </div>
+    </div>
+    <app-menu-search [isCollapsed]="isCollapsed" (onBlurEvent)="searchMenu($event)"></app-menu-search>
+  </div>
+  <div class="content__item content__item--border bg__content--default">
+    <nz-tree-view [nzTreeControl]="treeControl" [nzDataSource]="dataSource">
+      <nz-tree-node *nzTreeNodeDef="let node" nzTreeNodePadding>
+        <nz-tree-node-toggle nzTreeNodeNoopToggle>
+          <span *ngIf="node.level === 0" nz-icon nzType="caret-down" nzTreeNodeToggleRotateIcon></span>
+        </nz-tree-node-toggle>
+        <nz-tree-node-checkbox
+          [nzChecked]="checklistSelection.isSelected(node)"
+          (nzClick)="leafItemSelectionToggle(node)"
+          *ngIf="node.level > 0"
+        ></nz-tree-node-checkbox>
+        <nz-tree-node-option (nzClick)="leafItemSelectionToggle(node)">
+        <span *ngIf="node.level === 0" nz-icon [nzType]="treeControl.isExpanded(node) ? 'folder-open' : 'folder'"
+              nzTheme="outline"></span>
+          <span [innerHTML]="node.name.trim()"></span>
+        </nz-tree-node-option>
+      </nz-tree-node>
+
+      <nz-tree-node *nzTreeNodeDef="let node; when: hasChild" nzTreeNodePadding>
+        <nz-tree-node-toggle>
+          <span nz-icon nzType="caret-down" nzTreeNodeToggleRotateIcon></span>
+        </nz-tree-node-toggle>
+        <nz-tree-node-checkbox
+          [nzChecked]="descendantsAllSelected(node)"
+          (nzClick)="itemSelectionToggle(node)"
+        ></nz-tree-node-checkbox>
+        <nz-tree-node-option (nzClick)="node.level > 0 ? itemSelectionToggle(node) : ''">
+          <span nz-icon [nzType]="treeControl.isExpanded(node) ? 'folder-open' : 'folder'" nzTheme="outline"></span>
+          <span [innerHTML]="node.name.trim()"></span>
+        </nz-tree-node-option>
+      </nz-tree-node>
+    </nz-tree-view>
+  </div>
+</div>

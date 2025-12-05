@@ -1,0 +1,305 @@
+<nz-table
+  #expandTable
+  class="data-table"
+  [nzShowPagination]="calculateNumPages() > 1"
+  nzTableLayout="fixed"
+  [nzData]="dataMapResult"
+  [nzFrontPagination]="tableConfig.showFrontPagination"
+  [nzSize]="tableConfig.size"
+  [nzShowSizeChanger]="showSizeChanger"
+  [nzTotal]="tableConfig!.total"
+  [(nzPageIndex)]="tableConfig.pageIndex"
+  (nzPageIndexChange)="onPageIndexChange($event)"
+  [(nzPageSize)]="tableConfig.pageSize"
+  (nzPageSizeChange)="onPageSizeChange($event)"
+  (nzCurrentPageDataChange)="currentPageDataChange($event)"
+  [nzShowQuickJumper]="showQuickJumper"
+  [nzLoading]="tableConfig.loading"
+  [nzScroll]="(tableConfig.needScroll && isScrollY) ? { x: nzScrollWidth + 'px' , y: '60vh'} : (tableConfig.needScroll ? { x: nzScrollWidth + 'px'} : {})"
+  [nzOuterBordered]="true"
+  [nzBordered]="true"
+  [nzItemRender]="renderItemTemplate"
+  [nzShowTotal]="rangeTotalTemplate ?? rangeTemplate"
+  [nzWidthConfig]="nzWidthConfig"
+>
+  <thead>
+  <tr *ngFor="let header of tableHeader">
+    <ng-container *ngFor="let subHeader of header">
+      <th
+        *ngIf="subHeader.isCheckBox"
+        [nzLeft]="true"
+        [ngClass]="['text-center']"
+        [rowspan]="subHeader.rowspan ? subHeader.rowspan : 1"
+        nzWidth="50px"
+        nzShowCheckbox="true"
+        [nzChecked]="checkboxAllValueMap.get(currentPageIndex)"
+        [nzIndeterminate]="checkboxAllIndeterminateMap.get(currentPageIndex)"
+        (nzCheckedChange)="onAllChecked($event)"
+        [nzDisabled]="isDisableAll()"
+      >
+      </th>
+      <th
+        *ngIf="(subHeader.show === undefined || subHeader.show === true) && !subHeader.isCheckBox"
+        [rowspan]="subHeader.rowspan ? subHeader.rowspan : 1"
+        [colSpan]="subHeader.colspan ? subHeader.colspan : 1"
+        [nzRight]="(!!subHeader.fixed && subHeader.fixedDir==='right')"
+        [nzLeft]="(!!subHeader.fixed && subHeader.fixedDir==='left')"
+        [nzEllipsis]="subHeader.needEllipsis"
+        [nzBreakWord]="subHeader.needBreakword"
+        [ngClass]="subHeader.thClassList ? subHeader.thClassList : 'text-center'"
+      >
+        <div style="display: flex; justify-content: flex-end">
+          <div style="width: 100%">
+            <ng-container *ngIf="subHeader.thTemplate;else notTpl">
+              <ng-container *ngTemplateOutlet="subHeader.thTemplate"></ng-container>
+            </ng-container>
+
+            <ng-template #notTpl>
+              {{ subHeader.titleTrans }}
+            </ng-template>
+          </div>
+          <ng-container *ngIf="subHeader.titleTrans === 'STT' && objFilter">
+            <span class="table-filter" nz-icon nzType="filter" nzTheme="outline"
+                  (click)="isShowFilter = !isShowFilter"></span>
+          </ng-container>
+        </div>
+      </th>
+    </ng-container>
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr [ngStyle]="{'display': isShowFilter ? 'revert' : 'none'}" class="hbt-table-tr-filter" *ngIf="objFilter">
+    <ng-container *ngFor="let head of tableHeaderMappingWithBe; index as rowIndex">
+      <td
+        *ngIf="(head.show === undefined || head.show === true) && (tableConfig.showSelect ? (tableConfig.showSelect && rowIndex >= 1) : true)"
+        [ngClass]="head.tdClassList ? head.tdClassList : '' "
+        [nzEllipsis]="head.needEllipsis"
+        [nzBreakWord]="head.needBreakword"
+        [nzLeft]="(!!head.fixed && head.fixedDir==='left')"
+        [nzRight]="(!!head.fixed && head.fixedDir==='right')"
+      >
+        <ng-container *ngIf="head.thFilter">
+          <ng-container *ngTemplateOutlet="filterTmpl; context: {head}"></ng-container>
+        </ng-container>
+      </td>
+    </ng-container>
+  </tr>
+
+  <ng-container *ngFor="let data of expandTable.data">
+    <ng-container *ngFor="let row of mapOfExpanded[data.key]; index as rowIndex">
+      <tr (dblclick)='onDetail(row)' *ngIf="(row.parent && row.parent.expand) || !row.parent">
+        <ng-container *ngIf="row?.isCustomFieldTr; else otherTr">
+          <td></td>
+          <td [colSpan]="getColSpanCustomField()" class="custom__td-title">
+            {{ row?.isCustomFieldTr }}
+          </td>
+        </ng-container>
+        <ng-template #otherTr>
+          <ng-container *ngFor="let head of tableHeaderMappingWithBe; index as headIndex">
+            <td
+              *ngIf="tableConfig.showSelect && headIndex === 0"
+              [nzLeft]="true"
+              [ngClass]="['text-center']"
+              nzShowCheckbox="true"
+              [nzChecked]="setOfCheckedId.has(row[tableConfig.key])"
+              [nzDisabled]="row.disabled"
+              (nzCheckedChange)="onItemChecked(row, $event)"
+            >
+            </td>
+
+            <td
+              *ngIf="(head.show === undefined || head.show === true) && (tableConfig.showSelect ? (tableConfig.showSelect && headIndex >= 1) : true) && !head.isExpand"
+              [ngClass]="head.tdClassList ? head.tdClassList : '' "
+              [nzEllipsis]="head.needEllipsis"
+              [nzBreakWord]="head.needBreakword"
+              [nzLeft]="(!!head.fixed && head.fixedDir==='left')"
+              [nzRight]="(!!head.fixed && head.fixedDir==='right')"
+            >
+              <ng-container *ngTemplateOutlet="tdContent; context: {head, rowIndex, row}"></ng-container>
+            </td>
+
+            <td
+              *ngIf="(head.show === undefined || head.show === true) && (tableConfig.showSelect ? (tableConfig.showSelect && headIndex >= 1) : true) && head.isExpand"
+
+              [nzIndentSize]="row.level! * 20"
+              [nzShowExpand]="!!row.children"
+              [(nzExpand)]="row.expand"
+              (nzExpandChange)="collapses(mapOfExpanded[data.key], row, $event, true)"
+
+              [ngClass]="getClassTd(head, row)"
+              [nzEllipsis]="head.needEllipsis"
+              [nzBreakWord]="head.needBreakword"
+              [nzLeft]="(!!head.fixed && head.fixedDir==='left')"
+              [nzRight]="(!!head.fixed && head.fixedDir==='right')"
+            >
+              <ng-container *ngTemplateOutlet="tdContent; context: {head, rowIndex, row}"></ng-container>
+            </td>
+
+          </ng-container>
+        </ng-template>
+      </tr>
+    </ng-container>
+  </ng-container>
+  </tbody>
+
+</nz-table>
+
+<ng-template #tdContent let-head='head' let-rowIndex='rowIndex' let-row='row'>
+  <!--STT-->
+  <ng-container *ngIf="head.titleTrans === 'STT' else notIndexCol">
+    {{ row.key.replaceAll('-', '.') }}
+  </ng-container>
+  <!--End: STT-->
+  <ng-template #notIndexCol>
+    <div [ngSwitch]="head.fieldType">
+      <ng-container *ngSwitchCase="'tdTemplate'">
+        <ng-container *ngTemplateOutlet="head.fieldTypeValue;context: getRow(row)"></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="'tagColor'">
+        <ng-container
+          *ngTemplateOutlet="tagColorTpl;context: {field: row[head.field], arrTag: head.fieldTypeValue}"></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="'listTag'">
+        <ng-container
+          *ngTemplateOutlet="tagTpl;context: {field: row[head.field], fieldValue: head.fieldTypeValue}"></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="'listFile'">
+        <ng-container
+          *ngTemplateOutlet="attachFileTpl;context: {field: row[head.field]}"></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="'pipe'">
+              <span
+                [title]='(row|tableFiledPipe:head.field|map:head.fieldTypeValue)'
+              >{{ row|tableFiledPipe:head.field|map:head.fieldTypeValue }}</span>
+      </ng-container>
+      <ng-container *ngSwitchDefault>
+              <span
+                [title]='row|tableFiledPipe:head.field'
+              >{{ row|tableFiledPipe:head.field }}</span>
+      </ng-container>
+    </div>
+  </ng-template>
+</ng-template>
+
+<ng-template #rangeTemplate let-range="range" let-total>
+  <div *ngIf="showRangeTotal" class="group__total--table" style="display: flex; align-items: center">
+    <img style="margin-right: 5px" src="assets/icon/common/light.svg"
+         alt=""> {{ 'common.paging.rangePage' | translate: { 'result': total } }} {{ range[0] }} - {{ range[1] }}
+  </div>
+</ng-template>
+
+<ng-template #renderItemTemplate let-type let-page="page">
+  <ng-container [ngSwitch]="type">
+    <a *ngSwitchCase="'prev'"><img class="svg-arrow mb-4" src="assets/images/arrow_paginate_left2.svg" alt=""></a>
+    <a *ngSwitchCase="'page'">{{ page }}</a>
+    <a *ngSwitchCase="'next'" class="wrapper-paginate-item-right">
+      <img class="svg-arrow mb-4" src="assets/images/arrow_paginate_right2.svg" alt="">
+      <div class="mt-6-2">
+        <input [(ngModel)]="valPageNavigated" (click)="$event.stopPropagation()" class="input_custom_paginate"
+               maxLength="5" type="tel"
+               placeholder="Nhập" />
+        <img (click)="$event.stopPropagation();handlePageNavigated()" class="ic-paginate_update"
+             src="assets/images/paginate_update.svg"
+             alt="">
+      </div>
+    </a>
+    <a (mouseover)="isHoveredLeft = true" (mouseout)="isHoveredLeft = false" *ngSwitchCase="'prev_5'">
+      <ng-template [ngIf]="isHoveredLeft">
+        <img class="svg-arrow" src="assets/images/arrow_paginate_left.svg"
+             alt="">
+      </ng-template>
+      <ng-template [ngIf]="!isHoveredLeft">
+        <a class="dot_paginate">•••</a>
+      </ng-template>
+    </a>
+    <a (mouseover)="isHoveredRight = true" (mouseout)="isHoveredRight = false" *ngSwitchCase="'next_5'">
+      <ng-template [ngIf]="isHoveredRight">
+        <img class="svg-arrow" src="assets/images/arrow_paginate_right.svg"
+             alt="">
+      </ng-template>
+      <ng-template [ngIf]="!isHoveredRight">
+        <a class="dot_paginate">•••</a>
+      </ng-template>
+    </a>
+  </ng-container>
+</ng-template>
+
+<ng-template #tagColorTpl let-field="field" let-arrTag="arrTag">
+  <nz-tag
+    [nzColor]="arrTag[field]?.backgroud"
+    [ngStyle]="{ color: arrTag[field]?.color }"
+  >
+    {{ arrTag[field]?.label }}
+  </nz-tag>
+</ng-template>
+
+<ng-template #tagTpl let-field="field" let-fieldValue="fieldValue">
+  <app-tag [tags]="field" [showValue]="fieldValue" [remove]="false"></app-tag>
+</ng-template>
+
+<ng-template #attachFileTpl let-field="field">
+  <div *ngFor="let file of field">
+    <a class="attach-file" (click)="doDownLoadFile(file); $event.stopPropagation();">{{ file.fileName }}</a>
+  </div>
+</ng-template>
+
+
+<ng-template #filterTmpl let-data="head">
+  <ng-container [ngSwitch]="data.filterType">
+    <ng-container *ngSwitchCase="'number'">
+      <hbt-input-text [(ngModel)]='objFilter[(data.filterKeyName ?? data.field + "Filter")]'
+                      (ngModelChange)="onFilterChange()"
+                      [maxLength]='255'
+                      [defaultInput]="true"
+                      placeholderText="{{'>=x, \<=x' | translate}}"
+      ></hbt-input-text>
+    </ng-container>
+    <ng-container *ngSwitchCase="'text'">
+      <hbt-input-text [(ngModel)]='objFilter[(data.filterKeyName ?? data.field) + "Filter"]'
+                      [maxLength]='255'
+                      placeholderText="{{'Nhập' | translate}}"
+                      (ngModelChange)="onFilterChange()"
+      ></hbt-input-text>
+    </ng-container>
+    <ng-container *ngSwitchCase="'date'">
+      <div style="display: flex; flex-direction: column; align-items: center">
+        <hbt-date-picker
+          [(ngModel)]='objFilter[(data.filterKeyName ?? data.field) + "FilterFrom"]'
+          placeholderText="{{ 'Từ' | translate }}"
+          (ngModelChange)="onFilterChange()"
+        ></hbt-date-picker>
+        <span> - </span>
+        <hbt-date-picker
+          [(ngModel)]='objFilter[(data.filterKeyName ?? data.field) + "FilterTo"]'
+          placeholderText="{{ 'Đến' | translate }}"
+          (ngModelChange)="onFilterChange()"
+        ></hbt-date-picker>
+      </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="'select'">
+      <hbt-select *ngIf="data.filterUrl" [(ngModel)]='objFilter[(data.filterKeyName ?? data.field) + "Filter"]'
+                  (ngModelChange)="onFilterChange()"
+                  [urlLoadData]="data.filterUrl"
+                  serviceName=""
+                  keyLabel="name"
+                  placeholder="{{'Chọn' | translate }}">
+      </hbt-select>
+    </ng-container>
+    <ng-container *ngSwitchCase="'multiSelect'">
+      <hbt-select-check-able *ngIf="data.filterUrl"
+                             [(ngModel)]='objFilter[(data.filterKeyName ?? data.field) + "Filter"]'
+                             (ngModelChange)="onFilterChange()"
+                             [urlLoadData]="data.filterUrl"
+                             serviceName=""
+                             keyLabel="name"
+                             placeholder="{{'Chọn tất cả' | translate }}">
+      </hbt-select-check-able>
+
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<!--<div #tableBodyElement *ngIf="!virtualTemplate" class="ant-table-body" [ngStyle]="bodyStyleMap">-->
+<!--  <div style="width: {{tableBodyElementTable?.nativeElement?.offsetWidth}}px"></div>-->
+<!--</div>-->

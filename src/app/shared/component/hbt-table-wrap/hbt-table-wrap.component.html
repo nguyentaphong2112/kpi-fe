@@ -1,0 +1,93 @@
+<nz-card
+  style="width:100%;"
+  class="table-wrap"
+  [nzBordered]="false"
+  [nzExtra]="extra ? tableToolbar : null"
+>
+  <!-- Đã chọn -->
+  <p
+    *ngIf="currentTableComponent.tableConfig.showSelect && curAmountSelectedRows > 0"
+    style="margin-bottom: 0"
+  >
+    {{'hrm.staffManager.label.selected' | translate}}: {{curAmountSelectedRows}}
+  </p>
+  <!--End: Đã chọn -->
+
+  <ng-content></ng-content>
+</nz-card>
+
+<ng-template #tableToolbar>
+  <div style="width: 100%; display: flex; justify-content: end;">
+    <ng-content select=".headerTableSelect"></ng-content>
+    <span
+      class="icon__extra-table"
+      nz-icon nzType="unordered-list"
+      nzTheme="outline"
+      (click)="tableConfigVisible = false"
+      nz-popover
+      nzPopoverTrigger="click"
+      nzPopoverPlacement="bottomRight"
+      [nzPopoverTitle]="popoverTitle"
+      [nzPopoverContent]="contentTemplate"
+      [nzPopoverVisible]="tableConfigVisible"
+    ></span>
+  </div>
+</ng-template>
+
+
+<ng-template #contentTemplate>
+  <div class="show-column__panel">
+    <ul class="table-wrap__show-column" cdkDropList>
+      <li *ngFor="let item of tableHeaders" cdkDrag class="flex space-between" style="padding: 4px 16px 8px 0">
+        <label
+          nz-checkbox
+          [(nzChecked)]="item.show"
+          (nzCheckedChange)="changeSignalCheck($event, item)"
+          *ngIf="item.title !== '' && item.title !== 'STT'"
+        >
+          <span cdkDragHandle>{{ item.titleTrans }}</span>
+        </label>
+      </li>
+    </ul>
+  </div>
+</ng-template>
+
+<ng-template #popoverTitle>
+
+  <p><strong>{{ 'common.label.searchField' | translate }}</strong></p>
+
+  <!--Search-->
+  <hbt-input-text
+    maxLength="200"
+    placeholderText="-- {{ 'common.label.searchFieldInput' | translate }} --"
+    [(ngModel)]="columnSearch" (ngModelChange)="searchColumn()"
+    [showFlexEnd]="false"
+  >
+  </hbt-input-text>
+  <!--End: Search-->
+
+  <br>
+
+  <nz-space>
+
+        <span *nzSpaceItem>
+          <label
+            nz-checkbox
+            (nzCheckedChange)="changeAllTableTableConfigShow($event)"
+            [nzIndeterminate]="allTableFieldIndeterminate"
+            [(nzChecked)]="allTableFieldChecked">{{ 'common.label.chooseAll' | translate }}
+          </label>
+        </span>
+
+    <hbt-button
+      *nzSpaceItem
+      buttonType="NO_BORDER"
+      buttonTextColor="#fff"
+      [buttonBgColor]="_variable.$purple_800"
+      buttonText="{{ 'common.label.resetConfig' | translate}}"
+      (click)="reset()"
+    ></hbt-button>
+
+  </nz-space>
+
+</ng-template>

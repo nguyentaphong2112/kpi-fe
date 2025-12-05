@@ -1,0 +1,60 @@
+@import "../../../../../../core/global-style/variable";
+
+.category__type-header {
+  font-weight: bold;
+  font-size: 22px;
+}
+
+.item__home--left {
+  max-height: calc(100vh - 160px);
+  overflow-y: auto;
+}
+
+.item__home--left tr {
+  cursor: pointer;
+  font-size: 16px;
+}
+
+tr.tr__active {
+  background-color: $purple-400 !important;
+  font-weight: bold !important;
+  font-family: 'avertaB', sans-serif;
+}
+
+.category__type-btn {
+  position: absolute;
+  right: 10px;
+  top: 15px;
+  border-radius: 50%;
+  padding: 7px;
+  background-color: $purple-700;
+  color: $bg-form-default;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.csm-index .config__title {
+  white-space: normal;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.menu__item--btn {
+  font-size: 18px;
+  padding: 3px;
+  color: $neutral-700;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.menu__item--btn--warning {
+  font-size: 18px;
+  padding: 3px;
+  color: $error-500;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

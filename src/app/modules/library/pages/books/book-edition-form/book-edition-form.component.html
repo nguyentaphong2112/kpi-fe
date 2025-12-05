@@ -1,0 +1,101 @@
+<div [ngClass]="{'app-card' : isPage}">
+  <div class="content" *ngIf="isPage">
+    <hbt-button buttonType="NO_BORDER" (click)="save()" buttonAvailableStyle="SAVE"
+                buttonText="{{'common.button.save' | translate}}" type='SUBMIT'></hbt-button>
+  </div>
+  <form nz-form [formGroup]="form">
+    <!-- Nhà xuất bản -->
+    <div class="app-row" nz-row [nzGutter]='[20,15]'>
+      <div nz-col nzSm='24' nzLg="12">
+        <hbt-select
+          [urlLoadData]="urlLoadPublisher"
+          [serviceName]="serviceName"
+          keyLabel="name"
+          keyValue="value"
+          labelText="{{ 'library.books.label.publisher' | translate }} <span class='label__required'>*</span>"
+          placeholder="{{ 'library.books.label.publisher' | translate }}"
+          [optionHeightPx]="55"
+          formControlName="publisherId"
+          (eventEmit)="changeValue($event, 'publisherName')"
+          [type]="isSubmitted && form.controls['publisherId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['publisherId'].errors != null"
+          [errors]="form.controls['publisherId'].errors"
+          [errorDefs]="[
+            { errorName: 'required', errorDescription: 'library.validates.required' | translate : {param: 'library.books.label.publisher' | translate }},
+          ]"
+        ></hbt-select>
+      </div>
+      <!-- Năm xuất bản -->
+      <div nz-col nzXs="24" nzLg="12">
+        <hbt-date-picker
+          mode="year"
+          (ngModelChange)="changeIssueYear($event)"
+          formControlName="publishedYear"
+          labelText="{{'library.books.label.publishedYear' | translate}} <span class='label__required'>*</span>"
+          placeholderText="{{'library.books.label.publishedYear' | translate}}"
+          [type]="isSubmitted && (form.controls['publishedYear'].errors || form.errors?.yearGreaterThanCurrentYear) ? 'error' : 'default'"
+          [showError]="isSubmitted && (form.controls['publishedYear'].errors || form.errors?.yearGreaterThanCurrentYear) !== null"
+          [errors]="isSubmitted && form.errors?.yearGreaterThanCurrentYear ? form.errors : form.controls['publishedYear']?.errors"
+          [errorDefs]="[
+            { errorName: 'required', errorDescription: 'library.validates.required' | translate : {'param': 'library.books.label.publishedYear' | translate }},
+            { errorName: 'yearGreaterThanCurrentYear', errorDescription: 'hrm.validate.maxYearNow' | translate:{'param': 'library.books.label.publishedYear'  | translate}}
+          ]"
+        ></hbt-date-picker>
+      </div>
+      <!-- Khổ sách -->
+      <div nz-col nzSm='24' nzLg="12">
+        <hbt-select
+          [urlLoadData]="urlLoadFormat"
+          [serviceName]="serviceName"
+          keyLabel="name"
+          keyValue="value"
+          labelText="{{ 'library.books.label.bookFormatId' | translate }} <span class='label__required'>*</span>"
+          placeholder="{{ 'library.books.label.bookFormatId' | translate }}"
+          [optionHeightPx]="55"
+          formControlName="bookFormatId"
+          (eventEmit)="changeValue($event, 'bookFormatName')"
+          [type]="isSubmitted && form.controls['bookFormatId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['bookFormatId'].errors != null"
+          [errors]="form.controls['bookFormatId'].errors"
+          [errorDefs]="[
+            { errorName: 'required', errorDescription: 'library.validates.required' | translate : {param: 'library.books.label.bookFormatId' | translate }},
+          ]"
+        ></hbt-select>
+      </div>
+      <!-- số trang -->
+      <div nz-col nzXs="24" nzLg="12">
+        <hbt-input-text formControlName="totalPages"
+                        appNumberInput
+                        [type]="isSubmitted && form.controls['totalPages'].errors ? 'error' : 'default'"
+                        [maxLength]="100"
+                        [showError]="isSubmitted && form.controls['totalPages'].errors != null"
+                        [errors]="form.controls['totalPages'].errors"
+                        [errorDefs]="[
+                          { errorName: 'required', errorDescription: 'library.validates.required' | translate : {param: 'library.books.label.totalPages' | translate }},
+                        ]"
+                        placeholderText="{{'library.books.label.totalPages' | translate}}"
+                        labelText="{{'library.books.label.totalPages' | translate}} <span class='label__required'>*</span>">
+        </hbt-input-text>
+      </div>
+      <!-- Kho sách -->
+      <div nz-col nzSm='24' nzLg="24">
+        <hbt-select
+          [urlLoadData]="urlLoadStore"
+          [serviceName]="serviceName"
+          keyLabel="name"
+          keyValue="value"
+          labelText="{{ 'library.books.label.storeId' | translate }} <span class='label__required'>*</span>"
+          placeholder="{{ 'library.books.label.storeId' | translate }}"
+          [optionHeightPx]="55"
+          formControlName="storeId"
+          (eventEmit)="changeValue($event, 'storeName')"
+          [type]="isSubmitted && form.controls['storeId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['storeId'].errors != null"
+          [errors]="form.controls['storeId'].errors"
+          [errorDefs]="[
+            { errorName: 'required', errorDescription: 'library.validates.required' | translate : {param: 'library.books.label.storeId' | translate }},
+          ]"></hbt-select>
+      </div>
+    </div>
+  </form>
+</div>

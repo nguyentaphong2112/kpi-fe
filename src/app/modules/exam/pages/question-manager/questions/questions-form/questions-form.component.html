@@ -1,0 +1,252 @@
+<div class='save-form-exam'>
+  <form nz-form [formGroup]="form" style="margin-top: 20px">
+    <div [nzGutter]="[20, 20]" class="register__inno-ideas" nz-row>
+      <div nz-col nzLg="24" nzSm="24">
+        <hbt-steps [stepConfig]="{ currentStep: currentStep, steps: steps }"></hbt-steps>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="[30,30]">
+      <!--Mã câu hỏi (tùy chọn, có thể tự sinh)-->
+      <div nz-col [nzXs]="8" [nzLg]="8" *ngIf="continue && currentStep === CONSTANT.STEP_1">
+        <hbt-input-text formControlName="code" maxLength="50"
+                        [type]="isSubmitted && form.controls['code'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['code'].errors != null"
+                        [errors]="form.controls['code'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 50}}]"
+                        placeholderText="{{'exam.questions.table.code' | translate}}"
+                        labelText="{{'exam.questions.table.code' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--Mã môn học. Liên kết tới bảng sys_categories.type=EXAM_SUBJECT-->
+      <div nz-col [nzXs]="8" [nzLg]="8" *ngIf="continue && currentStep === CONSTANT.STEP_1">
+        <hbt-select [dataSelects]="subjectCodeData"
+                    formControlName="subjectCode"
+                    keyLabel="name"
+                    keyValue="id"
+                    [required]="true"
+                    [type]="isSubmitted && form.controls['subjectCode'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['subjectCode'].errors != null"
+                    [errors]="form.controls['subjectCode'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'exam.questions.table.subjectCode' | translate }}]"
+                    placeholder="{{'exam.questions.table.subjectCode' | translate}}"
+                    labelText="{{'exam.questions.table.subjectCode' | translate}}  <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <!--Topic câu hỏi. Dùng để phân loại chủ đề nhỏ hơn trong một môn.
+Ví dụ: trong môn “Toán” có các topic như Hàm số, Đạo hàm, Tích phân, Liên kết tới bảng sys_categories.type=EXAM_TOPIC-->
+      <div nz-col [nzXs]="8" [nzLg]="8" *ngIf="continue && currentStep === CONSTANT.STEP_1">
+        <hbt-select [dataSelects]="topicCodeData"
+                    formControlName="topicCode"
+                    keyLabel="name"
+                    keyValue="id"
+                    [type]="isSubmitted && form.controls['topicCode'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['topicCode'].errors != null"
+                    [errors]="form.controls['topicCode'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'exam.questions.table.topicCode' | translate }}]"
+                    placeholder="{{'exam.questions.table.topicCode' | translate}}"
+                    labelText="{{'exam.questions.table.topicCode' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <!--Loại câu hỏi. Liên kết tới bảng sys_categories.type=EXAM_QUESTTION_TYPE-->
+      <div nz-col [nzXs]="8" [nzLg]="8" *ngIf="continue && currentStep === CONSTANT.STEP_1">
+        <hbt-select [dataSelects]="typeCodeData"
+                    formControlName="typeCode"
+                    keyLabel="name"
+                    keyValue="id"
+                    [required]="true"
+                    [type]="isSubmitted && form.controls['typeCode'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['typeCode'].errors != null"
+                    [errors]="form.controls['typeCode'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'exam.questions.table.typeCode' | translate }}]"
+                    placeholder="{{'exam.questions.table.typeCode' | translate}}"
+                    labelText="{{'exam.questions.table.typeCode' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <!--Câu hỏi thuộc phần số mấy của bài thi.
+Ví dụ bài thi toeic sẽ có part1, part 2.
+Liên kết tới bảng sys_categories.type=EXAM_SECTION-->
+      <div nz-col [nzXs]="8" [nzLg]="8" *ngIf="continue && currentStep === CONSTANT.STEP_1">
+        <hbt-select [dataSelects]="sectionCodeData"
+                    formControlName="sectionCode"
+                    keyLabel="name"
+                    keyValue="id"
+                    [required]="true"
+                    [type]="isSubmitted && form.controls['sectionCode'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['sectionCode'].errors != null"
+                    [errors]="form.controls['sectionCode'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'exam.questions.table.sectionCode' | translate }}]"
+                    placeholder="{{'exam.questions.table.sectionCode' | translate}}"
+                    labelText="{{'exam.questions.table.sectionCode' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <!--Mức độ khó. Liên kết tới bảng sys_categories.type=EXAM_QUESTION_LEVEL-->
+      <div nz-col [nzXs]="8" [nzLg]="8" *ngIf="continue && currentStep === CONSTANT.STEP_1">
+        <hbt-select [dataSelects]="levelCodeData"
+                    formControlName="levelCode"
+                    keyLabel="name"
+                    keyValue="id"
+                    [type]="isSubmitted && form.controls['levelCode'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['levelCode'].errors != null"
+                    [errors]="form.controls['levelCode'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'exam.questions.table.levelCode' | translate }}]"
+                    placeholder="{{'exam.questions.table.levelCode' | translate}}"
+                    labelText="{{'exam.questions.table.levelCode' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <!--Loại Kỹ năng. Liên kết tới bảng sys_categories.type=EXAM_SKILL_TYPE-->
+      <div nz-col [nzXs]="8" [nzLg]="8" *ngIf="continue && currentStep === CONSTANT.STEP_1">
+        <hbt-input-text formControlName="skillType" maxLength="20"
+                        [required]="true"
+                        [type]="isSubmitted && form.controls['skillType'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['skillType'].errors != null"
+                        [errors]="form.controls['skillType'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 20}}]"
+                        placeholderText="{{'exam.questions.table.skillType' | translate}}"
+                        labelText="{{'exam.questions.table.skillType' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--Nhóm câu hỏi cùng đoạn hoặc audio-->
+      <div nz-col [nzXs]="8" [nzLg]="8" *ngIf="continue && currentStep === CONSTANT.STEP_1">
+        <hbt-select [dataSelects]="questionGroupIdData"
+                    formControlName="questionGroupId"
+                    keyLabel="name"
+                    keyValue="id"
+                    [type]="isSubmitted && form.controls['questionGroupId'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['questionGroupId'].errors != null"
+                    [errors]="form.controls['questionGroupId'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'exam.questions.table.questionGroupId' | translate }}]"
+                    placeholder="{{'exam.questions.table.questionGroupId' | translate}}"
+                    labelText="{{'exam.questions.table.questionGroupId' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <!--Thứ tự câu hỏi-->
+      <div nz-col [nzXs]="8" [nzLg]="8" *ngIf="continue && currentStep === CONSTANT.STEP_1">
+        <hbt-input-text formControlName="orderNumber" maxLength="10"
+                        [required]="true"
+                        [type]="isSubmitted && form.controls['orderNumber'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['orderNumber'].errors != null"
+                        [errors]="form.controls['orderNumber'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 10}}]"
+                        placeholderText="{{'exam.questions.table.orderNumber' | translate}}"
+                        labelText="{{'exam.questions.table.orderNumber' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--Điểm mặc định của câu hỏi-->
+      <div nz-col [nzXs]="8" [nzLg]="8" *ngIf="continue && currentStep === CONSTANT.STEP_1">
+        <hbt-input-text formControlName="defaultScore" maxLength="5"
+                        [required]="true"
+                        [type]="isSubmitted && form.controls['defaultScore'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['defaultScore'].errors != null"
+                        [errors]="form.controls['defaultScore'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 5}}]"
+                        placeholderText="{{'exam.questions.table.defaultScore' | translate}}"
+                        labelText="{{'exam.questions.table.defaultScore' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--Trọng số-->
+      <div nz-col [nzXs]="8" [nzLg]="8" *ngIf="continue && currentStep === CONSTANT.STEP_1">
+        <hbt-input-text formControlName="defaultWeight" maxLength="5"
+                        [required]="true"
+                        [type]="isSubmitted && form.controls['defaultWeight'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['defaultWeight'].errors != null"
+                        [errors]="form.controls['defaultWeight'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 5}}]"
+                        placeholderText="{{'exam.questions.table.defaultWeight' | translate}}"
+                        labelText="{{'exam.questions.table.defaultWeight' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--Thời gian gợi ý (giây)-->
+      <div nz-col [nzXs]="8" [nzLg]="8" *ngIf="continue && currentStep === CONSTANT.STEP_1">
+        <hbt-input-text formControlName="timeSuggestedSeconds" maxLength="10"
+                        [type]="isSubmitted && form.controls['timeSuggestedSeconds'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['timeSuggestedSeconds'].errors != null"
+                        [errors]="form.controls['timeSuggestedSeconds'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 10}}]"
+                        placeholderText="{{'exam.questions.table.timeSuggestedSeconds' | translate}}"
+                        labelText="{{'exam.questions.table.timeSuggestedSeconds' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--Nội dung câu hỏi (rich text / HTML)-->
+      <div nz-col [nzXs]="12" [nzLg]="12" *ngIf="continue2 && currentStep === CONSTANT.STEP_2">
+        <hbt-input-text formControlName="content" isTextAre
+                        [required]="true"
+                        maxLength="4294967295"
+                        placeholderText="{{'exam.questions.table.content' | translate}}"
+                        labelText="{{'exam.questions.table.content' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--Giải thích đáp án (nội bộ)-->
+      <div nz-col [nzXs]="12" [nzLg]="12" *ngIf="continue2  && currentStep === CONSTANT.STEP_2">
+        <hbt-input-text formControlName="explanation" isTextAre
+                        maxLength="4294967295"
+                        placeholderText="{{'exam.questions.table.explanation' | translate}}"
+                        labelText="{{'exam.questions.table.explanation' | translate}}"
+        ></hbt-input-text>
+      </div>
+      <!--Lời giải hiển thị cho thí sinh-->
+      <div nz-col [nzXs]="24" [nzLg]="24" *ngIf="continue3 && currentStep === CONSTANT.STEP_3">
+        <hbt-input-text formControlName="solution" isTextAre
+                        [required]="true"
+                        maxLength="4294967295"
+                        placeholderText="{{'exam.questions.table.solution' | translate}}"
+                        labelText="{{'exam.questions.table.solution' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <div nz-col [nzXs]='24' [nzLg]='24' class="input__group" *ngIf="continue3 && currentStep === CONSTANT.STEP_3">
+        <hbt-upload
+          [(docIdsDelete)]="docIdsDelete"
+          [typeFileAvailable]="['jpg', 'png', 'pdf', 'doc', 'docx']"
+          [multiple]="true"
+          labelText="{{'common.label.attachFile' | translate}}"
+          (fileListChange)="onFileListChange($event, 'fileList', true)"
+          (docIdsDeleteChange)="removeFile($event, 'fileList')"
+          [serviceName]='serviceName'
+          [showError]="isSubmitted"
+        ></hbt-upload>
+      </div>
+
+      <div
+        style="width: 100%; display: flex; justify-content: flex-end; padding-right: 50px;">
+        <hbt-button
+          (click)="back()"
+          *ngIf="continue"
+          buttonSize="LARGE"
+          buttonAvailableStyle="CANCEL"
+          buttonText="{{ 'common.button.cancel' | translate }}"
+        >
+        </hbt-button>
+        <hbt-button
+          [isDisable]="disableButton"
+          *ngIf="!continue"
+          class="staff__research__btn__search"
+          buttonSize="LARGE"
+          buttonAvailableStyle="CANCEL"
+          buttonText="{{'exam.sessions.action.back' | translate}}"
+          (click)="onBack()"
+        ></hbt-button>
+        <hbt-button
+          class="staff__research__btn__search"
+          buttonSize="LARGE"
+          buttonAvailableStyle="SAVE"
+          buttonText="{{'exam.sessions.action.continual' | translate}}"
+          (click)="onContinue()"
+        ></hbt-button>
+      </div>
+    </div>
+  </form>
+</div>
+

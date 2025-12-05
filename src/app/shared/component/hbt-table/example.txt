@@ -1,0 +1,38 @@
+  <div class='search__content--group'>
+    <hbt-table-wrap>
+      <hbt-table
+        (changePageNum)="search($event)"
+        [(objFilter)]="objFilter"
+        (objFilterChange)="search()"
+        [tableConfig]="tableConfig" [dataList]="tableData"></hbt-table>
+    </hbt-table-wrap>
+  </div>
+
+        {
+          title: 'hrm.salaryManager.salaryReviews.label.type',
+          field: 'typeName',
+          width: 150,
+          rowspan: 2,
+          thClassList: ['text-center'],
+          thFilter: true,
+          filterType: 'multiSelect',
+          filterUrl: this.getBaseUrl(this.microService.ADMIN) + '/v1' + this.getUrlCategory('HR_LOAI_XET_NANG_LUONG'),
+          filterKeyName: 'types',
+        },
+        {
+          title: 'hrm.salaryManager.salaryReviews.label.periodId',
+          field: 'periodName',
+          width: 150,
+          rowspan: 2,
+          thClassList: ['text-center']
+        },
+        {
+          title: 'hrm.salaryManager.salaryReviews.label.employeeCode',
+          field: 'employeeCode',
+          width: 120,
+          rowspan: 2,
+          tdClassList: ['text-center'],
+          thClassList: ['text-center'],
+          thFilter: true,
+          filterType: 'text',
+        },

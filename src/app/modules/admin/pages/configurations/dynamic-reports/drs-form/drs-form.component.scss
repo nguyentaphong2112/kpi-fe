@@ -1,0 +1,46 @@
+@import "../../../../../../core/global-style/variable";
+@import "src/app/modules/hrm/data-access/style/style";
+
+.menu__item--btn {
+  font-size: 16px;
+  padding: 3px;
+  color: $error-500;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.input__label {
+  color: #6E7191;
+  font-size: 14px;
+  font-family: avertaB, sans-serif;
+  margin-bottom: 4px;
+
+  ::ng-deep .label__required {
+    color: $error-default-color;
+  }
+}
+
+.menu__item--btn1 {
+  font-size: 16px;
+  padding: 3px;
+  color: $bg-default;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+
+::ng-deep .dynamic-form .ant-btn {
+  margin-left: 0 !important;
+}
+
+
+.text-center {
+  text-align: center;
+}

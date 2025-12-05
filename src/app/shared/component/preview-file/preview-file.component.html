@@ -1,0 +1,28 @@
+<div *ngIf="!isPdf" class="excel-table" [innerHTML]="excelHTML"></div>
+<div *ngIf="isPdf" class="excel-table" style="height: 60vh;">
+  <pdf-viewer [src]="pdfSrc"
+              [render-text]="true"
+              [zoom]="0.6"
+              style="width: 100%; height: 100%">
+  </pdf-viewer>
+</div>
+<div *nzModalFooter>
+  <hbt-button *ngIf="!isPdf"
+    buttonAvailableStyle="SAVE"
+    buttonText="{{'common.button.download' | translate}}"
+    class="btn-download"
+    (click)="exportFile()">
+  </hbt-button>
+  <hbt-button *ngIf="isImage"
+              buttonAvailableStyle="SAVE"
+              buttonText="{{'common.button.downloadJpg' | translate}}"
+              class="btn-download"
+              (click)="exportJpg()">
+  </hbt-button>
+  <hbt-button *ngIf="isPdf"
+    buttonAvailableStyle="SAVE"
+    buttonText="{{'common.button.downloadPdf' | translate}}"
+    class="btn-download"
+    (click)="exportFile()">
+  </hbt-button>
+</div>

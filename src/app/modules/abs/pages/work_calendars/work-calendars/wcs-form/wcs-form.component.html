@@ -1,0 +1,156 @@
+<div class='save-form-abs'>
+  <form nz-form [formGroup]="form" style="margin-top: 20px">
+    <div nz-row [nzGutter]='[20,15]'>
+      <!--tên lịch làm việc-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="name" maxLength="200"
+          [type]="isSubmitted && form.controls['name'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['name'].errors != null"
+          [errors]="form.controls['name'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 200}}]"
+          placeholderText="{{'abs.workCalendars.table.name' | translate}}"
+          labelText="{{'abs.workCalendars.table.name' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--lịch làm ngày thứ 2-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [dataSelects]="[]"
+          formControlName="monWorkTimeId"
+          [type]="isSubmitted && form.controls['monWorkTimeId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['monWorkTimeId'].errors != null"
+          [errors]="form.controls['monWorkTimeId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'abs.workCalendars.table.monWorkTimeId' | translate }}]"
+          placeholder="{{'abs.workCalendars.table.monWorkTimeId' | translate}}"
+          labelText="{{'abs.workCalendars.table.monWorkTimeId' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <!--lịch làm ngày thứ 3-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [dataSelects]="[]"
+          formControlName="tueWorkTimeId"
+          [type]="isSubmitted && form.controls['tueWorkTimeId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['tueWorkTimeId'].errors != null"
+          [errors]="form.controls['tueWorkTimeId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'abs.workCalendars.table.tueWorkTimeId' | translate }}]"
+          placeholder="{{'abs.workCalendars.table.tueWorkTimeId' | translate}}"
+          labelText="{{'abs.workCalendars.table.tueWorkTimeId' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <!--lịch làm ngày thứ 4-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [dataSelects]="[]"
+          formControlName="wedWorkTimeId"
+          [type]="isSubmitted && form.controls['wedWorkTimeId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['wedWorkTimeId'].errors != null"
+          [errors]="form.controls['wedWorkTimeId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'abs.workCalendars.table.wedWorkTimeId' | translate }}]"
+          placeholder="{{'abs.workCalendars.table.wedWorkTimeId' | translate}}"
+          labelText="{{'abs.workCalendars.table.wedWorkTimeId' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <!--lịch làm ngày thứ 5-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [dataSelects]="[]"
+          formControlName="thuWorkTimeId"
+          [type]="isSubmitted && form.controls['thuWorkTimeId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['thuWorkTimeId'].errors != null"
+          [errors]="form.controls['thuWorkTimeId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'abs.workCalendars.table.thuWorkTimeId' | translate }}]"
+          placeholder="{{'abs.workCalendars.table.thuWorkTimeId' | translate}}"
+          labelText="{{'abs.workCalendars.table.thuWorkTimeId' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <!--lịch làm ngày thứ 6-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [dataSelects]="[]"
+          formControlName="friWorkTimeId"
+          [type]="isSubmitted && form.controls['friWorkTimeId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['friWorkTimeId'].errors != null"
+          [errors]="form.controls['friWorkTimeId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'abs.workCalendars.table.friWorkTimeId' | translate }}]"
+          placeholder="{{'abs.workCalendars.table.friWorkTimeId' | translate}}"
+          labelText="{{'abs.workCalendars.table.friWorkTimeId' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <!--lịch làm ngày thứ 7-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [dataSelects]="[]"
+          formControlName="satWorkTimeId"
+          [type]="isSubmitted && form.controls['satWorkTimeId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['satWorkTimeId'].errors != null"
+          [errors]="form.controls['satWorkTimeId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'abs.workCalendars.table.satWorkTimeId' | translate }}]"
+          placeholder="{{'abs.workCalendars.table.satWorkTimeId' | translate}}"
+          labelText="{{'abs.workCalendars.table.satWorkTimeId' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <!--lịch làm ngày cn-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [dataSelects]="[]"
+          formControlName="sunWorkTimeId"
+          [type]="isSubmitted && form.controls['sunWorkTimeId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['sunWorkTimeId'].errors != null"
+          [errors]="form.controls['sunWorkTimeId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'abs.workCalendars.table.sunWorkTimeId' | translate }}]"
+          placeholder="{{'abs.workCalendars.table.sunWorkTimeId' | translate}}"
+          labelText="{{'abs.workCalendars.table.sunWorkTimeId' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <!--các ngày nghỉ lễ mặc định trong năm-->
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <hbt-input-text formControlName="defaultHodidayDate" isTextAre
+          maxLength="2000"
+          placeholderText="{{'abs.workCalendars.table.defaultHodidayDate' | translate}}"
+          labelText="{{'abs.workCalendars.table.defaultHodidayDate' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--Thời gian áp dụng từ ngày-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-date-picker
+          placeholderText="{{'abs.workCalendars.table.fromDate' | translate}}"
+          labelText="{{'abs.workCalendars.table.fromDate' | translate}}"
+          [type]="isSubmitted && (form.errors || form.controls['fromDate'].errors) ? 'error' : 'default'"
+          [showError]="isSubmitted && (form.errors || form.controls['fromDate'].errors ) != null"
+          [errors]="form.errors?.rangeDateError ? form.errors : form.controls['fromDate'].errors"
+          [errorDefs]="[{ errorName: 'rangeDateError', errorDescription: 'staffManager.validate.rangeDate.pareDate' | translate:
+        {'fromDate': 'abs.workCalendars.table.fromDate' | translate, 'toDate': 'abs.workCalendars.table.toDate' | translate}},
+             { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'abs.workCalendars.table.fromDate' | translate }}
+          ]"
+          formControlName="fromDate"></hbt-date-picker>
+      </div>
+
+      <!--Thời gian áp dụng đến ngày-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-date-picker
+          placeholderText="{{'abs.workCalendars.table.endDate' | translate}}"
+          labelText="{{'abs.workCalendars.table.endDate' | translate}}"
+          formControlName="endDate"></hbt-date-picker>
+      </div>
+
+      <div nz-col [nzXs]='24' [nzLg]='24' class="input__group">
+        <hbt-upload
+          [(docIdsDelete)]="docIdsDelete"
+          [typeFileAvailable]="['jpeg', 'jpg', 'png', 'pdf', 'doc', 'docx']"
+          [multiple]="true"
+          labelText="{{'common.label.attachFile' | translate}}"
+          [required]="true"
+          (fileListChange)="onFileListChange($event, 'fileList', true)"
+          (docIdsDeleteChange)="removeFile($event, 'fileList')"
+          [serviceName]='serviceName'
+          [showError]="isSubmitted"
+        ></hbt-upload>
+      </div>
+
+    </div>
+  </form>
+</div>
+

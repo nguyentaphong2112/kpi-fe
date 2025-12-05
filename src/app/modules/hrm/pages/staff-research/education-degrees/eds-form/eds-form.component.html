@@ -1,0 +1,246 @@
+<form nz-form [formGroup]="form">
+  <div nz-row [nzGutter]='[20,15]'>
+    <!--id nhân viên-->
+    <div nz-col [nzXs]="12" [nzLg]="12" *ngIf="!hiddenEmp">
+      <employee-data-picker [isExpand]="true"
+        [functionCode]="functionCode"
+        [scope]="scope"
+        [status]='mode !== modeConst.ADD ? "ALL" : "ACTIVE"'
+        [formMode]="mode"
+        [disable]="mode !== modeConst.ADD"
+        formControlName="employeeId"
+        [type]="isSubmitted && form.controls['employeeId'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['employeeId'].errors != null"
+        [errors]="form.controls['employeeId'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'common.label.employeeName' | translate }}]"
+        labelText="{{'hrm.staffManager.educationDegrees.table.employeeId' | translate}} <span class='label__required'>*</span>"
+      >
+      </employee-data-picker>
+    </div>
+
+    <!--trường đào tạo-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <div nz-row>
+        <div nz-col [nzXs]="24" nzLg="{{configShowForm.trainingSchoolName ? 12 : 24}}" *ngIf="!showTrainingSchoolName">
+          <hbt-select
+            [dataSelects]="listTrainingSchool"
+            [isLoadData]="false"
+            keyLabel="name"
+            formControlName="trainingSchoolId"
+            [type]="isSubmitted && form.controls['trainingSchoolId'].errors ? 'error' : 'default'"
+            [showError]="isSubmitted && form.controls['trainingSchoolId'].errors != null"
+            [errors]="form.controls['trainingSchoolId'].errors"
+            [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.educationDegrees.table.trainingSchoolId' | translate }}]"
+            placeholder="{{'hrm.staffManager.educationDegrees.table.trainingSchoolId' | translate}}"
+            labelText="{{'hrm.staffManager.educationDegrees.table.trainingSchoolId' | translate}} <span class='label__required'>*</span>"
+            (ngModelChange)="changeEduInfo($event, 'trainingSchoolName')"
+          ></hbt-select>
+        </div>
+        <div nz-col [nzXs]="24" [nzLg]="showTrainingSchoolName ? 24 :12"
+             *ngIf="configShowForm.trainingSchoolName || showTrainingSchoolName"
+             [style]="showTrainingSchoolName ? null : 'padding-left: 5px'">
+          <hbt-input-text
+            [dataSource]="suggestListTrainingSchool"
+            formControlName="trainingSchoolName" maxLength="255"
+            [type]="isSubmitted && form.controls['trainingSchoolName'].errors ? 'error' : 'default'"
+            [showError]="isSubmitted && form.controls['trainingSchoolName'].errors != null"
+            [errors]="form.controls['trainingSchoolName'].errors"
+            [errorDefs]="[
+              { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.educationDegrees.table.trainingSchoolName' | translate }}
+            ]"
+            placeholderText="{{'hrm.staffManager.educationDegrees.table.trainingSchoolName' | translate}}"
+            labelText="{{'hrm.staffManager.educationDegrees.table.trainingSchoolName' | translate}} <span class='label__required'>*</span>"
+          ></hbt-input-text>
+        </div>
+      </div>
+    </div>
+
+    <!--id chuyên ngành-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <div nz-row>
+        <div nz-col [nzXs]="24" nzLg="{{configShowForm.majorName ? 12 : 24}}" *ngIf="!showMajorName">
+          <hbt-select
+            [dataSelects]="listMajor"
+            [isLoadData]="false"
+            keyLabel="name"
+            formControlName="majorId"
+            [type]="isSubmitted && form.controls['majorId'].errors ? 'error' : 'default'"
+            [showError]="isSubmitted && form.controls['majorId'].errors != null"
+            [errors]="form.controls['majorId'].errors"
+            [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.educationDegrees.table.majorId' | translate }}]"
+            placeholder="{{'hrm.staffManager.educationDegrees.table.majorId' | translate}}"
+            labelText="{{'hrm.staffManager.educationDegrees.table.majorId' | translate}} <span class='label__required'>*</span>"
+            (ngModelChange)="changeEduInfo($event, 'majorName')"
+          ></hbt-select>
+        </div>
+        <div nz-col [nzXs]="24" [nzLg]="showMajorName ? 24 :12"
+             *ngIf="configShowForm.majorName || showMajorName"
+             [style]="showMajorName ? null : 'padding-left: 5px'">
+          <hbt-input-text
+            [dataSource]="suggestListMajorName"
+            formControlName="majorName" maxLength="255"
+            [type]="isSubmitted && form.controls['majorName'].errors ? 'error' : 'default'"
+            [showError]="isSubmitted && form.controls['majorName'].errors != null"
+            [errors]="form.controls['majorName'].errors"
+            [errorDefs]="[
+              { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.educationDegrees.table.majorName' | translate }}
+            ]"
+            placeholderText="{{'hrm.staffManager.educationDegrees.table.majorName' | translate}}"
+            labelText="{{'hrm.staffManager.educationDegrees.table.majorName' | translate}} <span class='label__required'>*</span>"
+          ></hbt-input-text>
+        </div>
+      </div>
+    </div>
+
+    <!--id trình độ đào tạo-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <div nz-row>
+        <div nz-col [nzXs]="24" nzLg="{{configShowForm.majorLevelName ? 12 : 24}}">
+          <hbt-select
+            [urlLoadData]="getUrlCategory(categoryCode.TRINH_DO_DAO_TAO)"
+            [serviceName]="microService.ADMIN"
+            keyLabel="name"
+            formControlName="majorLevelId"
+            [type]="isSubmitted && form.controls['majorLevelId'].errors ? 'error' : 'default'"
+            [showError]="isSubmitted && form.controls['majorLevelId'].errors != null"
+            [errors]="form.controls['majorLevelId'].errors"
+            [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.educationDegrees.table.majorLevelId' | translate }}]"
+            placeholder="{{'hrm.staffManager.educationDegrees.table.majorLevelId' | translate}}"
+            labelText="{{'hrm.staffManager.educationDegrees.table.majorLevelId' | translate}} <span class='label__required'>*</span>"
+            (ngModelChange)="changeEduInfo($event, 'majorLevelName')"
+          ></hbt-select>
+        </div>
+        <div nz-col [nzXs]="24" [nzLg]="12" *ngIf="configShowForm.majorLevelName" style="padding-left: 5px">
+          <hbt-input-text
+            formControlName="majorLevelName" maxLength="255"
+            [type]="isSubmitted && form.controls['majorLevelName'].errors ? 'error' : 'default'"
+            [showError]="isSubmitted && form.controls['majorLevelName'].errors != null"
+            [errors]="form.controls['majorLevelName'].errors"
+            [errorDefs]="[
+              { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.educationDegrees.table.majorLevelName' | translate }},
+              { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+            placeholderText="{{'hrm.staffManager.educationDegrees.table.majorLevelName' | translate}}"
+            labelText="{{'hrm.staffManager.educationDegrees.table.majorLevelName' | translate}} <span class='label__required'>*</span>"
+          ></hbt-input-text>
+        </div>
+      </div>
+    </div>
+
+    <!--Hình thức đào tạo-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-select
+        [urlLoadData]="getUrlCategory(categoryCode.HINH_THUC_DAO_TAO)"
+        [serviceName]="microService.ADMIN"
+        keyLabel="name"
+        formControlName="trainingMethodId"
+        [type]="isSubmitted && form.controls['trainingMethodId'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['trainingMethodId'].errors != null"
+        [errors]="form.controls['trainingMethodId'].errors"
+        [errorDefs]="[
+          { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.educationDegrees.table.trainingMethodId' | translate }}
+        ]"
+        placeholder="{{'hrm.staffManager.educationDegrees.table.trainingMethodId' | translate}}"
+        labelText="{{'hrm.staffManager.educationDegrees.table.trainingMethodId' | translate}} <span class='label__required'>*</span>"
+      ></hbt-select>
+    </div>
+
+    <!--năm tốt nghiệp-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-date-picker
+        mode="year"
+        format="YYYY"
+        formControlName="graduatedYear"
+        [type]="isSubmitted && form.controls['graduatedYear'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['graduatedYear'].errors != null"
+        [errors]="form.controls['graduatedYear'].errors"
+        [errorDefs]="[
+          { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 4}},
+          { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.educationDegrees.table.graduatedYear' | translate }}
+        ]"
+        placeholderText="{{'hrm.staffManager.educationDegrees.table.graduatedYear' | translate}}"
+        labelText="{{'hrm.staffManager.educationDegrees.table.graduatedYear' | translate}} <span class='label__required'>*</span>"
+      ></hbt-date-picker>
+    </div>
+
+    <!--xếp loại tôt nghiệp-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <div nz-row>
+        <div nz-col [nzXs]="24" nzLg="{{configShowForm.graduatedRankName ? 12 : 24}}" *ngIf="!showGraduatedRankName">
+          <hbt-select
+            [dataSelects]="listGraduatedRank"
+            [showAddCategory]="true"
+            keyLabel="name"
+            formControlName="graduatedRankId"
+            [type]="isSubmitted && form.controls['graduatedRankId'].errors ? 'error' : 'default'"
+            [showError]="isSubmitted && form.controls['graduatedRankId'].errors != null"
+            [errors]="form.controls['graduatedRankId'].errors"
+            [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.educationDegrees.table.graduatedRankId' | translate }}]"
+            placeholder="{{'hrm.staffManager.educationDegrees.table.graduatedRankId' | translate}}"
+            labelText="{{'hrm.staffManager.educationDegrees.table.graduatedRankId' | translate}}"
+            (ngModelChange)="changeEduInfo($event, 'graduatedRankName')"
+          ></hbt-select>
+        </div>
+        <div nz-col [nzXs]="24" [nzLg]="showGraduatedRankName ? 24 :12"
+             *ngIf="configShowForm.graduatedRankName || showGraduatedRankName"
+             [style]="showGraduatedRankName ? null : 'padding-left: 5px'">
+          <hbt-input-text
+            formControlName="graduatedRankName" maxLength="255"
+            [type]="isSubmitted && form.controls['graduatedRankName'].errors ? 'error' : 'default'"
+            [showError]="isSubmitted && form.controls['graduatedRankName'].errors != null"
+            [errors]="form.controls['graduatedRankName'].errors"
+            [errorDefs]="[
+              { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.educationDegrees.table.graduatedRankName' | translate }},
+              { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}
+            ]"
+            placeholderText="{{'hrm.staffManager.educationDegrees.table.graduatedRankName' | translate}}"
+            labelText="{{'hrm.staffManager.educationDegrees.table.graduatedRankName' | translate}} <span class='label__required'>*</span>"
+          ></hbt-input-text>
+        </div>
+      </div>
+    </div>
+
+    <!--Là trình độ cao nhất-->
+    <div nz-col [nzXs]="24" [nzLg]="24">
+      <label nz-checkbox formControlName="isHighest">
+        {{ 'hrm.staffManager.educationDegrees.table.isHighest' | translate }}
+      </label>
+    </div>
+
+    <ng-container formArrayName="listAttributes">
+      <ng-container *ngFor="let attributes of attributesFormArray.controls; let idx = index" [formGroupName]="idx">
+        <div nz-col [nzXs]="12" [nzLg]="12">
+          <input-attribute-common
+            [controlName]="getAttributeControl(idx, 'attributeValue')"
+            [dataType]="attributes.get('dataType')?.value"
+            [urlLoadData]="attributes.get('urlLoadData')?.value"
+            [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+            [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+            [errors]="attributes.get('attributeValue')?.errors"
+            [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}]"
+            [placeholderText]="attributes.get('attributeName')?.value"
+            [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+          >
+          </input-attribute-common>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <!-- File đính kèm -->
+    <div nz-col [nzXs]='24' [nzLg]='24' class="input__group">
+      <hbt-upload
+        [required]="true"
+        [fileList]="f['files'].value"
+        [(docIdsDelete)]="docIdsDelete"
+        [typeFileAvailable]="['pdf']"
+        [multiple]="true"
+        (fileListChange)="onFileListChange($event, 'files', true)"
+        (docIdsDeleteChange)="removeFile($event, 'files')"
+        [serviceName]='microService.HRM'
+        [showError]="isSubmitted"
+        [maxSize]="3"
+        [disable]="mode === modeConst.VIEW"
+      ></hbt-upload>
+    </div>
+  </div>
+</form>
+

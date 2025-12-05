@@ -1,0 +1,95 @@
+<ng-container *ngIf="['STRING'].includes(dataType)">
+  <hbt-input-text
+    [defaultInput]="true"
+    [formControl]="controlName"
+    (ngModelChange)="changeValue($event)"
+    [isTextAre]="dataType === 'TEXT'"
+    [maxLength]="255"
+    [type]="type"
+    [showError]="showError"
+    [errors]="errors"
+    [errorDefs]="errorDefs"
+    [placeholderText]="placeholderText"
+    [labelText]="labelText"
+  >
+  </hbt-input-text>
+</ng-container>
+<ng-container *ngIf="['TEXT'].includes(dataType)">
+  <hbt-input-text
+    [defaultInput]="true"
+    [formControl]="controlName"
+    (ngModelChange)="changeValue($event)"
+    [isTextAre]="true"
+    [maxLength]="5000"
+    [type]="type"
+    [showError]="showError"
+    [errors]="errors"
+    [errorDefs]="errorDefs"
+    [placeholderText]="placeholderText"
+    [labelText]="labelText"
+  >
+  </hbt-input-text>
+</ng-container>
+<ng-container *ngIf="['LONG','DOUBLE'].includes(dataType)">
+  <hbt-input-text
+    [formControl]="controlName"
+    (ngModelChange)="changeValue($event)"
+    appNumberic
+    [num]="100"
+    [maxLength]="255"
+    [decimals]="dataType === 'DOUBLE' ? 50 : 0"
+    [type]="type"
+    [showError]="showError"
+    [errors]="errors"
+    [errorDefs]="errorDefs"
+    [placeholderText]="placeholderText"
+    [labelText]="labelText"
+  >
+  </hbt-input-text>
+</ng-container>
+<ng-container *ngIf="dataType === 'DATE'">
+  <hbt-date-picker
+    [formControl]="controlName"
+    (ngModelChange)="changeValue($event)"
+    [type]="type"
+    [showError]="showError"
+    [errors]="errors"
+    [errorDefs]="errorDefs"
+    [placeholderText]="placeholderText"
+    [labelText]="labelText"
+  >
+  </hbt-date-picker>
+</ng-container>
+<ng-container *ngIf="dataType === 'LIST'">
+  <hbt-select
+    [urlLoadData]="urlLoadData"
+    [serviceName]="null"
+    [formControl]="controlName"
+    (ngModelChange)="changeValue($event)"
+    [type]="type"
+    keyLabel="name"
+    [showError]="showError"
+    [errors]="errors"
+    [errorDefs]="errorDefs"
+    [placeholder]="placeholderText"
+    [labelText]="labelText"
+  >
+  </hbt-select>
+</ng-container>
+<ng-container *ngIf="dataType === 'MULTI_LIST'">
+  <hbt-select-check-able
+    [urlLoadData]="urlLoadData"
+    [serviceName]="null"
+    [showAction]="false"
+    [formControl]="controlName"
+    (ngModelChange)="changeValue($event)"
+    [type]="type"
+    keyLabel="name"
+    [showError]="showError"
+    [errors]="errors"
+    [errorDefs]="errorDefs"
+    [placeholder]="placeholderText"
+    [labelText]="labelText"
+  >
+  </hbt-select-check-able>
+</ng-container>

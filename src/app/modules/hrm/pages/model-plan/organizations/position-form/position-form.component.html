@@ -1,0 +1,59 @@
+<div [ngClass]="{'app-card' : isPage}">
+  <form nz-form [formGroup]="form">
+    <div nz-row [nzGutter]='[20,15]'>
+      <!-- Loại chức danh -->
+      <div nz-col [nzXs]='12' [nzLg]='12'>
+        <hbt-select
+          [dataSelects]="listJobType"
+          [disable]="mode === modeConst.EDIT"
+          keyLabel="name"
+          labelText="{{'hrm.modelPlan.organizations.jobType' | translate }} <span class='label__required'>*</span>"
+          placeholder="{{'hrm.modelPlan.organizations.jobType' | translate }}"
+          formControlName="jobType"
+          [type]="isSubmitted && form.controls['jobType'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['jobType'].errors !== null"
+          [errors]="form.controls['jobType'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.modelPlan.organizations.jobType' | translate }}]"
+        ></hbt-select>
+      </div>
+
+      <!--Chức danh-->
+      <div nz-col [nzXs]='12' [nzLg]='12'>
+        <hbt-select-check-able
+          [dataSelects]="listJob"
+          [disable]="mode === modeConst.EDIT"
+          keyValue="jobId"
+          keyLabel="name"
+          labelText="{{'hrm.modelPlan.organizations.jobName' | translate }} <span class='label__required'>*</span>"
+          placeholder="{{'hrm.modelPlan.organizations.jobName' | translate }}"
+          formControlName="jobIds"
+          [type]="isSubmitted && form.controls['jobIds'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['jobIds'].errors !== null"
+          [errors]="form.controls['jobIds'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.modelPlan.organizations.jobName' | translate }}]"
+        ></hbt-select-check-able>
+      </div>
+
+      <!--Định biên-->
+      <div nz-col [nzXs]='12' [nzLg]='12'>
+        <hbt-input-text
+          appNumberic
+          [num]="5"
+          [decimals]="0"
+          formControlName="quotaNumber"
+          [type]="isSubmitted && form.controls['quotaNumber'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['quotaNumber'].errors != null"
+          [errors]="form.controls['quotaNumber'].errors"
+          [errorDefs]="[
+            { errorName: 'min', errorDescription: 'common.validate.min' | translate: {'param': 'hrm.modelPlan.organizations.quotaNumber' | translate, 'min': 1 }},
+            { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.modelPlan.organizations.quotaNumber' | translate }}
+          ]"
+          placeholderText="{{'hrm.modelPlan.organizations.quotaNumber' | translate}}"
+          labelText="{{'hrm.modelPlan.organizations.quotaNumber' | translate}}">
+        </hbt-input-text>
+      </div>
+
+    </div>
+  </form>
+
+</div>

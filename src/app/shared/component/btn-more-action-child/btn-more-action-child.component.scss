@@ -1,0 +1,129 @@
+@import 'src/app/core/global-style/variable';
+
+
+div.menu__item {
+  width: 100%;
+  border-bottom: 1px solid $bd-default-disabled;
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+.menu__item--btn {
+  font-size: 24px;
+  min-width: 27px;
+  min-height: 27px;
+  &:hover {
+    cursor: pointer;
+    color: $default-hover-color;
+    border: 1px solid $bd-default-disabled;
+    border-radius: 2px;
+  }
+}
+
+.menu__item--btn2 {
+  font-size: 24px;
+  min-width: 27px;
+  min-height: 27px;
+  cursor: pointer;
+  color: $default-hover-color;
+  border: 1px solid $bd-default-disabled;
+  border-radius: 2px;
+}
+
+
+.menu__item--btn.disabled__btn,
+.disabled__btn {
+  cursor: not-allowed !important;
+  color: $btn-disabled-default;
+}
+
+
+.submenu {
+  position: absolute;
+  top: 0;
+  right: 100%;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  min-width: 220px;
+  z-index: 1000;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.2s ease-in-out;
+}
+
+
+.submenu.submenu-visible {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+.submenu ul {
+  list-style: none;
+  padding: 8px 0;
+  margin: 0;
+}
+
+.submenu nz-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  font-size: 14px;
+  color: #000;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  position: relative;  // Cần phải có để pseudo-element được định vị đúng
+}
+
+.submenu nz-menu-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;  // Đưa nó vào giữa
+  width: 90%;  // Chiều dài của border (80% chiều rộng)
+  height: 1px;  // Độ dày của border
+  background-color: $bd-default-disabled;  // Màu của border
+  transform: translateX(-50%);  // Căn giữa border theo trục X
+}
+
+
+
+.submenu nz-menu-item:hover {
+  background-color: #f5f5f5;
+}
+
+
+.submenu nz-menu-item i {
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+
+.submenu nz-menu-item.disabled-item {
+  color: $btn-disabled-default;
+  cursor: not-allowed;
+  background-color: transparent;
+}
+
+
+@media (max-width: 768px) {
+  .submenu {
+    right: 0;
+    top: 100%;
+    width: 100%;
+    min-width: unset;
+  }
+}
+
+.submenu {
+  display: none;
+}
+.submenu-visible {
+  display: block;
+}

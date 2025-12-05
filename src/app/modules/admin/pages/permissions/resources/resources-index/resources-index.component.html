@@ -1,0 +1,124 @@
+<form nz-form [formGroup]="form" class="resource-index">
+  <div class="search__custom-common {{isShowAdvSearch ? 'add__mr__bt-10' : 'remove__mr__bt-40'}}">
+    <div nz-row class="button__action-left">
+      <hbt-button
+        class="staff__research__btn__search"
+        buttonSize="LARGE"
+        buttonAvailableStyle="ADD"
+        buttonText="{{'common.button.add' | translate}}"
+        *ngIf="objFunction?.create"
+        (click)="doOpenForm(modeConst.ADD)"
+      ></hbt-button>
+      <hbt-button
+        style="margin-left: 20px"
+        buttonSize="MEDIUM"
+        buttonType="BORDER"
+        (click)="export()">
+        <img src="/assets/icon/staff-manager/export_excel.svg" alt="" />
+      </hbt-button>
+    </div>
+    <div class="search__page-right">
+      <hbt-input-text formControlName='keySearch'
+                      [maxLength]='255'
+                      placeholderText="{{'admin.permissions.resources.label.keySearch' | translate}}"></hbt-input-text>
+      <hbt-button
+        buttonIconType="AWESOME"
+        [prefixIcon]="isShowAdvSearch ? 'fa fa-angle-double-up' : 'fa fa-angle-double-down'"
+        buttonSize="VERY_LARGE"
+        [buttonTextColor]="_variable.$neutral_100"
+        [buttonBorderColor]="_variable.$purple_800"
+        [buttonBgColor]="_variable.$purple_800"
+        (click)="isShowAdvSearch = !isShowAdvSearch"
+      >
+      </hbt-button>
+    </div>
+  </div>
+  <div *ngIf="isShowAdvSearch" class="content__item content__item--border bg__content--default">
+    <div class="form-search">
+      <div nz-row [nzGutter]='[20,15]'>
+
+        <!--   Trạng thái   -->
+        <div nz-col [nzXs]="12" [nzLg]="12">
+          <hbt-select formControlName="status"
+                      [dataSelects]="listStatus"
+                      labelText="{{'admin.permissions.resources.label.status' | translate}}"
+                      placeholder="{{'admin.permissions.resources.label.status' | translate}}"
+          >
+          </hbt-select>
+        </div>
+
+        <!--   Url   -->
+        <div nz-col [nzXs]='12' [nzLg]='12'>
+          <hbt-input-text formControlName='url'
+                          [maxLength]='255'
+                          placeholderText="{{'admin.permissions.resources.label.url' | translate}}"
+                          labelText="{{'admin.permissions.resources.label.url' | translate}}"></hbt-input-text>
+        </div>
+
+        <!--   Tình trạng sử dụng   -->
+        <div nz-col [nzXs]="12" [nzLg]="12">
+          <hbt-select formControlName="usedStatus"
+                      [dataSelects]="listUsedStatus"
+                      labelText="{{'admin.permissions.resources.label.usedStatus' | translate}}"
+                      placeholder="{{'admin.permissions.resources.label.usedStatus' | translate}}"
+          >
+          </hbt-select>
+        </div>
+        <div nz-col [nzXs]='12' [nzLg]='12'>
+          <hbt-tree-select
+            [urlLoadData]="urlTreeResource"
+            [keyLabel]="'name'"
+            [keyValue]="'nodeId'"
+            [serviceName]="serviceName"
+            nzId="title"
+            formControlName='parentId'
+            labelText="{{'admin.permissions.resources.form.parentName' | translate}}"
+            placeholder="{{'admin.permissions.resources.form.parentName' | translate}}"
+          ></hbt-tree-select>
+        </div>
+      </div>
+    </div>
+    <div nz-row class="btn__row-search">
+      <div nz-col nzSpan="24">
+        <div style="text-align: center">
+          <hbt-button
+            class="staff__research__btn__search"
+            buttonSize="MEDIUM"
+            buttonAvailableStyle="SEARCH"
+            buttonText="{{'common.button.search' | translate}}"
+            (click)="search()"
+          ></hbt-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<div class="search__content--group" [ngClass]="{'search__content--group-hidden-header': isShowAdvSearch}">
+  <hbt-table-wrap>
+    <hbt-table
+      (changePageNum)="search($event)"
+      [tableConfig]="tableConfig"
+      [dataList]="tableData"
+    ></hbt-table>
+  </hbt-table-wrap>
+</div>
+
+<ng-template #actionTmpl let-data="data">
+  <btn-more-action [model]="[data]" [setting]="actionSchema">
+  </btn-more-action>
+</ng-template>
+
+<ng-template #footerTmpl>
+  <hbt-button
+    buttonAvailableStyle="CANCEL"
+    buttonText="{{ 'common.button.cancel' | translate }}"
+    (click)="modalRef.destroy()">
+  </hbt-button>
+  <hbt-button
+    buttonAvailableStyle="SAVE"
+    buttonText="{{ 'common.button.save' | translate }}"
+    (click)="modalRef.getContentComponent().save()">
+  </hbt-button>
+</ng-template>
+
+

@@ -1,0 +1,249 @@
+<div class='add-ics'>
+  <form nz-form [formGroup]="form">
+    <div nz-row [nzGutter]='[20,15]'>
+      <div nz-col [nzXs]="24" [nzLg]="24" class="flex-box2">
+        <hbt-data-picker
+          formControlName="indicatorId"
+          keyLabel="name"
+          keyValue="indicatorId"
+          [style]="mode !== modeConst.VIEW ? 'width: 95%' : 'width: 100%'"
+          [urlLoadData]="urlLoadData"
+          [serviceName]="serviceName"
+          [formMode]="mode"
+          labelSearch="{{'kpi.indicators.table.name' | translate}}"
+          [tableSetting]="[{label: 'kpi.indicators.table.name' | translate, value: 'name'}, {label: 'kpi.indicators.table.type' | translate, value: 'typeName'},
+           {label: 'kpi.indicators.table.unitId' | translate, value: 'unitName'}, {label: 'kpi.indicators.table.periodType' | translate, value: 'periodTypeName'}]"
+          [type]="isSubmitted && form.controls['indicatorId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['indicatorId'].errors != null"
+          [errors]="form.controls['indicatorId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.indicatorConversions.table.indicatorId' | translate }}]"
+          labelText="{{'kpi.indicatorConversions.table.indicatorId' | translate}} <span class='label__required'>*</span>"
+          placeholder="{{'kpi.indicatorConversions.table.indicatorId' | translate}}"
+          (selectedChange)="loadData($event)"
+        >
+        </hbt-data-picker>
+        <em *ngIf="mode !== modeConst.VIEW" nz-button nz-icon nzType="plus-square" nzTheme="outline"
+            class="btn-create"
+            nz-tooltip
+            nzTooltipTitle="{{'common.button.add' | translate}}"
+            nzTooltipPlacement="top"
+            (click)="doOpenForm()"
+        ></em>
+      </div>
+      <ng-container *ngIf="!isHidden">
+        <div nz-col [nzXs]="24" [nzLg]="12">
+          <hbt-input-text maxLength="255"
+                          [disable]="true"
+                          [(ngModel)]="typeName"
+                          [ngModelOptions]="{standalone: true}"
+                          placeholderText="{{'kpi.indicators.table.type' | translate}}"
+                          labelText="{{'kpi.indicators.table.type' | translate}}"
+          ></hbt-input-text>
+        </div>
+        <div nz-col [nzXs]="24" [nzLg]="12">
+          <hbt-input-text maxLength="255"
+                          [disable]="true"
+                          [(ngModel)]="unitName"
+                          [ngModelOptions]="{standalone: true}"
+                          placeholderText="{{'kpi.indicators.table.unitId' | translate}}"
+                          labelText="{{'kpi.indicators.table.unitId' | translate}}"
+          ></hbt-input-text>
+        </div>
+        <div nz-col [nzXs]="24" [nzLg]="12">
+          <hbt-input-text maxLength="255"
+                          [disable]="true"
+                          [(ngModel)]="periodTypeName"
+                          [ngModelOptions]="{standalone: true}"
+                          placeholderText="{{'kpi.indicators.table.periodType' | translate}}"
+                          labelText="{{'kpi.indicators.table.periodType' | translate}}"
+          ></hbt-input-text>
+        </div>
+
+        <div nz-col [nzXs]="24" [nzLg]="24">
+          <hbt-input-text [maxLength]="255"
+                          [disable]="true"
+                          [(ngModel)]="systemInfo"
+                          [ngModelOptions]="{standalone: true}"
+                          isTextAre
+                          placeholderText="{{'kpi.indicators.table.systemInfo' | translate}}"
+                          labelText="{{'kpi.indicators.table.systemInfo' | translate}}"
+          ></hbt-input-text>
+        </div>
+
+        <!--ý nghĩa của chỉ số-->
+        <div nz-col [nzXs]="24" [nzLg]="24">
+          <hbt-input-text isTextAre
+                          [maxLength]="1000"
+                          [disable]="true"
+                          [(ngModel)]="significance"
+                          [ngModelOptions]="{standalone: true}"
+                          placeholderText="{{'kpi.indicators.table.significance' | translate}}"
+                          labelText="{{'kpi.indicators.table.significance' | translate}}"
+          ></hbt-input-text>
+        </div>
+
+        <!--cách thức đo-->
+        <div nz-col [nzXs]="24" [nzLg]="24">
+          <hbt-input-text [maxLength]="255" isTextAre
+                          [defaultInput]="true"
+                          [disable]="true"
+                          [(ngModel)]="measurement"
+                          [ngModelOptions]="{standalone: true}"
+                          placeholderText="{{'kpi.indicators.table.measurement' | translate}}"
+                          labelText="{{'kpi.indicators.table.measurement' | translate}}"
+          ></hbt-input-text>
+        </div>
+      </ng-container>
+<!--      <div nz-col [nzXs]="24" [nzLg]="12">-->
+<!--        <hbt-select-->
+<!--          formControlName="isRequired"-->
+<!--          labelText="{{'kpi.indicatorConversions.label.isRequired' | translate}} <span class='label__required'>*</span>"-->
+<!--          placeholder="{{'kpi.indicatorConversions.label.isRequired' | translate}}"-->
+<!--          [dataSelects]="listRequired"-->
+<!--          [type]="isSubmitted && form.controls['isRequired'].errors ? 'error' : 'default'"-->
+<!--          [showError]="isSubmitted && form.controls['isRequired'].errors != null"-->
+<!--          [errors]="form.controls['isRequired'].errors"-->
+<!--          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.indicatorConversions.label.isRequired' | translate }}]"-->
+<!--        >-->
+<!--        </hbt-select>-->
+<!--      </div>-->
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <hbt-input-text formControlName="note" maxLength="1000" isTextAre
+                        [defaultInput]="true"
+                        placeholderText="{{'kpi.indicators.table.note' | translate}}"
+                        labelText="{{'kpi.indicators.table.note' | translate}}"
+        ></hbt-input-text>
+      </div>
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <div nz-row [nzGutter]='[20,15]'>
+          <div nz-col [nzXs]="4" [nzLg]="4" class="flex-box">
+            <div class="scale">{{ 'kpi.indicatorConversions.table.scaleInterpretation' | translate }}</div>
+          </div>
+<!--          <div nz-col [nzXs]="8" [nzLg]="8">-->
+<!--            <hbt-select-->
+<!--              formControlName="conversionType"-->
+<!--              placeholder="{{'kpi.indicatorConversions.label.conversionValue' | translate}}"-->
+<!--              [dataSelects]="listConversionValue"-->
+<!--              [type]="isSubmitted && form.controls['conversionType'].errors ? 'error' : 'default'"-->
+<!--              [showError]="isSubmitted && form.controls['conversionType'].errors != null"-->
+<!--              [errors]="form.controls['conversionType'].errors"-->
+<!--              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.indicatorConversions.label.conversionValue' | translate }}]"-->
+<!--              (ngModelChange)="changeInput($event)">-->
+<!--            </hbt-select>-->
+<!--          </div>-->
+          <ng-container [formArrayName]="FORM_ARRAY_NAME">
+            <ng-container *ngFor="let conversion of conversions.controls; let i = index" [formGroupName]="i">
+              <div nz-col [nzXs]="24" [nzLg]="24">
+                <div nz-row [nzGutter]="[20,20]" class="flex-box">
+                  <div nz-col [nzXs]="2" [nzLg]="2" class="text-bold center">
+                    {{ conversion.get('resultId').value }}
+                  </div>
+                  <div nz-col [nzXs]="2" [nzLg]="2">
+                    <hbt-select formControlName="minComparison"
+                                [dataSelects]="!isValueSelected && isSelected ? listEqual : (i == 0 || i == listConversion.length - 1) ? listSign : listSignMax"
+                                [type]="isSubmitted && conversion.get('minComparison').errors ? 'error' : 'default'"
+                                [showError]="isSubmitted && conversion.get('minComparison').errors !== null"
+                                [errors]="conversion.get('minComparison').errors"
+                                [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.validates.comparison' | translate }},]">
+                    </hbt-select>
+                  </div>
+                  <div nz-col [nzXs]="!isValueSelected && isSelected ? 8 : 4"
+                       [nzLg]="!isValueSelected && isSelected ? 8 : 4">
+                    <hbt-input-text formControlName="minValue" appNumberic [maxlength]="20"
+                                    *ngIf="!isValueSelected && !isSelected"
+                                    [decimals]="2"
+                                    [num]="18"
+                                    [type]="isSubmitted && (conversion.get('minValue').errors || conversion?.errors) ? 'error' : 'default'"
+                                    [showError]="isSubmitted && (conversion.get('minValue').errors !== null || conversion?.errors !== null)"
+                                    [errors]="conversion.get('minValue').errors ? conversion.get('minValue').errors : conversion?.errors"
+                                    [errorDefs]="[{ errorName: 'maxLessThanMin', errorDescription: 'kpi.validates.valueError' | translate},
+                                    { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.validates.value' | translate }},]"
+                    ></hbt-input-text>
+                    <hbt-select [dataSelects]="listValuesSelect"
+                                *ngIf="!isValueSelected && isSelected"
+                                formControlName="minValue"
+                                [type]="isSubmitted && (conversion.get('minValue').errors || conversion?.errors) ? 'error' : 'default'"
+                                [showError]="isSubmitted && (conversion.get('minValue').errors !== null || conversion?.errors !== null)"
+                                [errors]="conversion.get('minValue').errors ? conversion.get('minValue').errors : conversion?.errors"
+                                [errorDefs]="[{ errorName: 'maxLessThanMin', errorDescription: 'kpi.validates.valueError' | translate},
+                                    { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.validates.value' | translate }},]"
+                    ></hbt-select>
+                    <hbt-select [dataSelects]="listConversionSelected"
+                                *ngIf="isValueSelected"
+                                keyLabel="name"
+                                keyValue="name"
+                                formControlName="minValue"
+                                [type]="isSubmitted && (conversion.get('minValue').errors || conversion?.errors) ? 'error' : 'default'"
+                                [showError]="isSubmitted && (conversion.get('minValue').errors !== null || conversion?.errors !== null)"
+                                [errors]="conversion.get('minValue').errors ? conversion.get('minValue').errors : conversion?.errors"
+                                [errorDefs]="[{ errorName: 'maxLessThanMin', errorDescription: 'kpi.validates.valueError' | translate},
+                                    { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.validates.value' | translate }},]"
+                    ></hbt-select>
+                  </div>
+                  <ng-container *ngIf="isValueSelected || !isSelected">
+                    <div nz-col [nzXs]="2" [nzLg]="2" class="center">
+                      {{ 'kpi.indicatorConversions.table.and' | translate }}
+                    </div>
+                    <div nz-col [nzXs]="2" [nzLg]="2">
+                      <hbt-select formControlName="maxComparison"
+                                  [disable]="(i === 0 || i=== listConversion.length - 1)"
+                                  [dataSelects]="((i === 0 || i=== listConversion.length - 1) && conversion.get('maxComparison').value) ? listSign :  listSignMin"
+                                  [type]="isSubmitted && conversion.get('maxComparison').errors ? 'error' : 'default'"
+                                  [showError]="isSubmitted && conversion.get('maxComparison').errors !== null"
+                                  [errors]="conversion.get('maxComparison').errors"
+                                  [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.validates.comparison' | translate }},]"
+                      >
+                      </hbt-select>
+                    </div>
+                    <div nz-col [nzXs]="4" [nzLg]="4">
+                      <hbt-input-text formControlName="maxValue" appNumberic [maxlength]="20"
+                                      *ngIf="!isValueSelected"
+                                      [disable]="(i === 0 || i=== listConversion.length - 1)"
+                                      [decimals]="2"
+                                      [num]="18"
+                                      [type]="isSubmitted && (conversion.get('maxValue').errors || conversion?.errors) ? 'error' : 'default'"
+                                      [showError]="isSubmitted && (conversion.get('maxValue').errors !== null || conversion?.errors !== null)"
+                                      [errors]="conversion.get('maxValue').errors ? conversion.get('maxValue').errors : conversion?.errors"
+                                      [errorDefs]="[{ errorName: 'maxLessThanMin', errorDescription: 'kpi.validates.valueError' | translate},
+                                    { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.validates.value' | translate }},]"
+                      ></hbt-input-text>
+                      <hbt-select [dataSelects]="listConversionSelected"
+                                  *ngIf="isValueSelected"
+                                  [disable]="(i === 0 || i=== listConversion.length - 1)"
+                                  keyLabel="name"
+                                  keyValue="name"
+                                  formControlName="maxValue"
+                                  [type]="isSubmitted && (conversion.get('maxValue').errors || conversion?.errors) ? 'error' : 'default'"
+                                  [showError]="isSubmitted && (conversion.get('maxValue').errors !== null || conversion?.errors !== null)"
+                                  [errors]="conversion.get('maxValue').errors ? conversion.get('maxValue').errors : conversion?.errors"
+                                  [errorDefs]="[{ errorName: 'maxLessThanMin', errorDescription: 'kpi.validates.valueError' | translate},
+                                { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.validates.value' | translate }},]"
+                      ></hbt-select>
+                    </div>
+                    <div nz-col [nzXs]="8" [nzLg]="8">
+                      <hbt-input-text formControlName="note" [maxLength]="1000" isTextAre
+                                      placeholderText="{{'kpi.indicatorConversions.label.note' | translate}}"
+                      ></hbt-input-text>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </form>
+  <ng-template #footerTmpl>
+    <hbt-button
+      buttonAvailableStyle="CANCEL"
+      buttonText="{{ 'common.button.cancel' | translate }}"
+      (click)="modalRef.destroy()">
+    </hbt-button>
+    <hbt-button
+      buttonAvailableStyle="SAVE"
+      buttonText="{{ 'common.button.saveS' | translate }}"
+      (click)="modalRef.getContentComponent().save()">
+    </hbt-button>
+  </ng-template>
+</div>

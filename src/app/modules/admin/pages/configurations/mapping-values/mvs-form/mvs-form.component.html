@@ -1,0 +1,88 @@
+<div class='save-form-admin'>
+  <form nz-form [formGroup]="form" style="margin-top: 20px">
+    <div nz-row [nzGutter]="[20,15]">
+      <!--tham số-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="parameter" maxLength="255"
+          [type]="isSubmitted && form.controls['parameter']?.errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['parameter']?.errors != null"
+          [errors]="form.controls['parameter']?.errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': dataConfigMappingSelect?.parameterTitle }}]"
+          [placeholderText]="dataConfigMappingSelect?.parameterTitle"
+          [labelText]="dataConfigMappingSelect?.parameterTitle"
+        ></hbt-input-text>
+      </div>
+
+      <!--Giá trị-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <ng-container *ngIf="['string'].includes(dataConfigMappingSelect?.dataType ?? data?.dataType)">
+          <hbt-input-text formControlName="value" maxLength="255"
+                          [type]="isSubmitted && form.controls['value']?.errors ? 'error' : 'default'"
+                          [showError]="isSubmitted && form.controls['value']?.errors != null"
+                          [errors]="form.controls['value']?.errors"
+                          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': dataConfigMappingSelect?.valueTitle }}]"
+                          [placeholderText]="dataConfigMappingSelect?.valueTitle"
+                          [labelText]="dataConfigMappingSelect?.valueTitle"
+          ></hbt-input-text>
+        </ng-container>
+        <ng-container *ngIf="['date'].includes(dataConfigMappingSelect?.dataType ?? data?.dataType)">
+          <hbt-date-picker formControlName="value"
+                          [type]="isSubmitted && form.controls['value']?.errors ? 'error' : 'default'"
+                          [showError]="isSubmitted && form.controls['value']?.errors != null"
+                          [errors]="form.controls['value']?.errors"
+                          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': dataConfigMappingSelect?.valueTitle }}]"
+                          [placeholderText]="dataConfigMappingSelect?.valueTitle"
+                          [labelText]="dataConfigMappingSelect?.valueTitle"
+          ></hbt-date-picker>
+        </ng-container>
+        <ng-container *ngIf="['int','double'].includes(dataConfigMappingSelect?.dataType ?? data?.dataType)">
+          <hbt-input-text formControlName="value"
+                          appNumberic
+                          [num]="100"
+                          [maxLength]="255"
+                          [decimals]="dataConfigMappingSelect?.dataType === 'double' ? 50 : 0"
+                           [type]="isSubmitted && form.controls['value']?.errors ? 'error' : 'default'"
+                           [showError]="isSubmitted && form.controls['value']?.errors != null"
+                           [errors]="form.controls['value']?.errors"
+                           [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': dataConfigMappingSelect?.valueTitle }}]"
+                           [placeholderText]="dataConfigMappingSelect?.valueTitle"
+                           [labelText]="dataConfigMappingSelect?.valueTitle"
+          ></hbt-input-text>
+        </ng-container>
+
+      </div>
+
+      <!--Từ ngày-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-date-picker
+          placeholderText="{{'admin.configurations.mappingValues.table.startDate' | translate}}"
+          labelText="{{'admin.configurations.mappingValues.table.startDate' | translate}} <span class='label__required'>*</span>"
+          [type]="isSubmitted &&  form.controls['startDate']?.errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['startDate']?.errors != null"
+          [errors]="form.controls['startDate']?.errors"
+          [errorDefs]="[
+             { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configurations.mappingValues.table.startDate' | translate }}
+          ]"
+          formControlName="startDate"></hbt-date-picker>
+      </div>
+
+      <!--Đến ngày-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-date-picker
+          placeholderText="{{'admin.configurations.mappingValues.table.endDate' | translate}}"
+          labelText="{{'admin.configurations.mappingValues.table.endDate' | translate}}"
+          formControlName="endDate"
+          [type]="isSubmitted && (form?.errors || form.controls['endDate']?.errors) ? 'error' : 'default'"
+          [showError]="isSubmitted && (form?.errors || form.controls['endDate']?.errors ) != null"
+          [errors]="form?.errors?.rangeDateError ? form?.errors : form.controls['endDate']?.errors"
+          [errorDefs]="[{ errorName: 'rangeDateError', errorDescription: 'hrm.validate.rangeDate.pareDateMore' | translate:
+        {'fromDate': 'admin.configurations.mappingValues.table.startDate' | translate, 'toDate': 'admin.configurations.mappingValues.table.endDate' | translate}},
+          ]"
+
+        ></hbt-date-picker>
+      </div>
+
+    </div>
+  </form>
+</div>
+

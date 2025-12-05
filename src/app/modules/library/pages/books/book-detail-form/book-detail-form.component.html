@@ -1,0 +1,39 @@
+<div class="book-detail-form">
+  <div nz-row [nzGutter]='[20,15]'>
+    <div nz-col [nzXs]='8' [nzLg]='8'>
+      <div>{{ 'library.details.label.publisher' | translate }}</div>
+      {{type == modeConst.EDIT ? data?.publisherName : data?.data.publisherName}}
+    </div>
+    <div nz-col [nzXs]='8' [nzLg]='8'>
+      <div>{{ 'library.details.label.yearOfPublication' | translate }}</div>
+      {{type == modeConst.EDIT ? data?.publishedYear : data?.data.publishedYear}}
+    </div>
+    <div nz-col [nzXs]='8' [nzLg]='8'>
+      <div>{{ 'library.details.label.format' | translate }}</div>
+      {{type == modeConst.EDIT ? data?.bookFormatName : data?.data.bookFormatName}}
+    </div>
+    <div nz-col [nzXs]='8' [nzLg]='8'>
+      <div>{{ 'library.details.label.pageNumber' | translate }}</div>
+      {{type == modeConst.EDIT ? data?.totalPages : data?.data.totalPages}}
+    </div>
+    <div nz-col [nzXs]='8' [nzLg]='8'>
+      <div>{{ 'library.details.label.storeId' | translate }}</div>
+      {{type == modeConst.EDIT ? data?.storeName : data?.data.storeName }}
+    </div>
+  </div>
+
+  <div class='search__content--group'>
+    <div class="title">{{ 'library.details.label.titleList' | translate }}</div>
+    <hbt-table-wrap>
+      <hbt-table
+        (changePageNum)="initDataTable($event)"
+        [tableConfig]="tableConfig" [dataList]="tableData"></hbt-table>
+    </hbt-table-wrap>
+  </div>
+
+  <ng-template #actionTmpl let-data="data">
+    <btn-more-action [model]="[data]" [setting]="actionSchema">
+    </btn-more-action>
+  </ng-template>
+
+</div>

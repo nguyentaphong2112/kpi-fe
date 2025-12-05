@@ -1,0 +1,17 @@
+@import 'src/app/core/global-style/variable';
+
+::ng-deep {
+  hbt-scroll-tabs {
+    .tab--wrap {
+      background: $bg-form-default;
+      position: sticky;
+      z-index: 999;
+      top: 0;
+    }
+  }
+}
+
+#personal-information {
+  height: calc(100vh - 192px);
+  overflow-y: auto;
+}

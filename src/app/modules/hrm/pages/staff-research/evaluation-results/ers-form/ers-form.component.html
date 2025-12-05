@@ -1,0 +1,115 @@
+<form nz-form [formGroup]="form">
+  <div nz-row [nzGutter]='[20,15]'>
+    <!--id nhân viên-->
+    <div nz-col [nzXs]="12" [nzLg]="12" *ngIf="!hiddenEmp">
+      <employee-data-picker [isExpand]="true"
+        [functionCode]="functionCode"
+        [scope]="scope"
+        [status]='mode !== modeConst.ADD ? "ALL" : "ACTIVE"'
+        [formMode]="mode"
+        [disable]="mode !== modeConst.ADD"
+        formControlName="employeeId"
+        [type]="isSubmitted && form.controls['employeeId'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['employeeId'].errors != null"
+        [errors]="form.controls['employeeId'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'common.label.employeeName' | translate }}]"
+        labelText="{{'hrm.staffManager.evaluationResults.table.employeeId' | translate}} <span class='label__required'>*</span>"
+      >
+      </employee-data-picker>
+    </div>
+
+    <!--năm đánh giá-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-date-picker
+        formControlName="year"
+        mode="year"
+        format="YYYY"
+        [type]="isSubmitted && form.controls['year'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['year'].errors != null"
+        [errors]="form.controls['year'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.evaluationResults.table.year' | translate }}]"
+        placeholderText="{{'hrm.staffManager.evaluationResults.table.year' | translate}}"
+        labelText="{{'hrm.staffManager.evaluationResults.table.year' | translate}} <span class='label__required'>*</span>"
+      ></hbt-date-picker>
+    </div>
+
+    <!--  Loại đánh giá  -->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-select
+        [dataSelects]="listEvaluationType"
+        keyLabel="name"
+        formControlName="evaluationType"
+        [type]="isSubmitted && form.controls['evaluationType'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['evaluationType'].errors != null"
+        [errors]="form.controls['evaluationType'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.evaluationResults.table.evaluationType' | translate }}]"
+        placeholder="{{'hrm.staffManager.evaluationResults.table.evaluationType' | translate}}"
+        labelText="{{'hrm.staffManager.evaluationResults.table.evaluationType' | translate}} <span class='label__required'>*</span>"
+        (ngModelChange)="changeEvaluationType($event)"
+      ></hbt-select>
+    </div>
+
+    <!--id kỳ đánh giá-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-select
+        [dataSelects]="listEvaluationPeriod"
+        keyValue="evaluationPeriodId"
+        keyLabel="name"
+        formControlName="evaluationPeriodId"
+        [type]="isSubmitted && form.controls['evaluationPeriodId'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['evaluationPeriodId'].errors != null"
+        [errors]="form.controls['evaluationPeriodId'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.evaluationResults.table.evaluationPeriodId' | translate }}]"
+        placeholder="{{'hrm.staffManager.evaluationResults.table.evaluationPeriodId' | translate}}"
+        labelText="{{'hrm.staffManager.evaluationResults.table.evaluationPeriodId' | translate}} <span class='label__required'>*</span>"
+      ></hbt-select>
+    </div>
+
+    <!--Kết quả đánh giá-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-select
+        [dataSelects]="listKpiResult"
+        keyLabel="name"
+        keyValue="name"
+        formControlName="kpiResult"
+        [type]="isSubmitted && form.controls['kpiResult'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['kpiResult'].errors != null"
+        [errors]="form.controls['kpiResult'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.evaluationResults.table.kpiResult' | translate }}]"
+        placeholder="{{'hrm.staffManager.evaluationResults.table.kpiResult' | translate}}"
+        labelText="{{'hrm.staffManager.evaluationResults.table.kpiResult' | translate}} <span class='label__required'>*</span>"
+      ></hbt-select>
+    </div>
+
+    <!--điểm đánh giá-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-input-text
+        formControlName="kpiPoint"
+        appNumberic
+        [num]="3"
+        [decimals]="2"
+        [type]="isSubmitted && form.controls['kpiPoint'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['kpiPoint'].errors != null"
+        [errors]="form.controls['kpiPoint'].errors"
+        [errorDefs]="[
+          { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.evaluationResults.table.kpiPoint' | translate }}
+        ]"
+        placeholderText="{{'hrm.staffManager.evaluationResults.table.kpiPoint' | translate}}"
+        [labelText]="getLabelText('hrm.staffManager.evaluationResults.table.kpiPoint', isRequiredKpiPoint)"
+      ></hbt-input-text>
+    </div>
+
+    <!--ghi chú-->
+    <div nz-col [nzXs]="24" [nzLg]="24">
+      <hbt-input-text
+        formControlName="note"
+        isTextAre
+        maxLength="500"
+        placeholderText="{{'hrm.staffManager.evaluationResults.table.note' | translate}}"
+        labelText="{{'hrm.staffManager.evaluationResults.table.note' | translate}}"
+      ></hbt-input-text>
+    </div>
+
+  </div>
+</form>
+

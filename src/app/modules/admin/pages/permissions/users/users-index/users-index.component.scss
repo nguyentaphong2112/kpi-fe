@@ -1,0 +1,12 @@
+
+.staff__research__btn__search {
+  ::ng-deep .ant-btn {
+    margin-left: 0;
+  }
+}
+
+::ng-deep .ant-modal-confirm-content .ng-star-inserted {
+  font-size: 24px;
+  font-weight: bolder;
+  margin-left: 20px;
+}

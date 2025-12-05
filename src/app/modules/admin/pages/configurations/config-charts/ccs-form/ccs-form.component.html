@@ -1,0 +1,134 @@
+<div class='save-form-admin'>
+  <form nz-form [formGroup]="form" style="margin-top: 20px">
+    <div nz-row [nzGutter]="[20,15]">
+      <!--link với bảng sys_categories-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select formControlName="type"
+                    [urlLoadData]="getUrlCategory(categoryCode.SYS_LOAI_BIEU_DO)"
+                    keyLabel="name"
+                    keyValue="value"
+                    [type]="isSubmitted && form.controls['type'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['type'].errors != null"
+                    [errors]="form.controls['type'].errors"
+                    [errorDefs]="[
+          { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configCharts.table.type' | translate }}
+          ]"
+                    placeholder="{{'admin.configCharts.table.type' | translate}}"
+                    labelText="{{'admin.configCharts.table.type' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <!--Mã biểu đồ-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="code" maxLength="255"
+          [type]="isSubmitted && form.controls['code'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['code'].errors != null"
+          [errors]="form.controls['code'].errors"
+          [errorDefs]="[
+          { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}},
+          { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configCharts.table.code' | translate }}
+          ]"
+          placeholderText="{{'admin.configCharts.table.code' | translate}}"
+          labelText="{{'admin.configCharts.table.code' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--Tên biểu đồ-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="name" maxLength="255"
+                        [type]="isSubmitted && form.controls['name'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['name'].errors != null"
+                        [errors]="form.controls['name'].errors"
+                        [errorDefs]="[
+          { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}},
+          { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configCharts.table.name' | translate }}
+          ]"
+                        placeholderText="{{'admin.configCharts.table.name' | translate}}"
+                        labelText="{{'admin.configCharts.table.name' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select formControlName="serviceName"
+                    [dataSelects]="listService"
+                    keyLabel="label"
+                    keyValue="value"
+                    [type]="isSubmitted && form.controls['serviceName'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['serviceName'].errors != null"
+                    [errors]="form.controls['serviceName'].errors"
+                    [errorDefs]="[
+          { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configCharts.table.serviceName' | translate }},
+           { errorName: 'exclusiveField', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configCharts.table.serviceName' | translate }}
+          ]"
+                    placeholder="{{'admin.configCharts.table.serviceName' | translate}}"
+                    labelText="{{'admin.configCharts.table.serviceName' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="orderNumber"
+                        appNumberic
+                        [num]="5"
+                        placeholderText="{{'admin.configCharts.table.orderNumber' | translate}}"
+                        labelText="{{'admin.configCharts.table.orderNumber' | translate}} "
+        ></hbt-input-text>
+      </div>
+
+      <ng-container formArrayName="listAttributes">
+        <ng-container *ngFor="let attributes of attributesFormArray.controls; let idx = index" [formGroupName]="idx">
+          <div nz-col [nzXs]="12" [nzLg]="12">
+            <input-attribute-common
+              [controlName]="getAttributeControl(idx, 'attributeValue')"
+              [dataType]="attributes.get('dataType')?.value"
+              [urlLoadData]="attributes.get('urlLoadData')?.value"
+              [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+              [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+              [errors]="attributes.get('attributeValue')?.errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}
+              ]"
+              [placeholderText]="attributes.get('attributeName')?.value"
+              [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+            >
+            </input-attribute-common>
+          </div>
+        </ng-container>
+      </ng-container>
+
+      <!--câu lệnh select-->
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <hbt-input-text formControlName="sqlQuery"
+          isTextAre
+          [defaultInput]="true"
+          placeholderText="{{'admin.configCharts.table.sqlQuery' | translate}}"
+          [labelText]= "getLabelText('admin.configCharts.table.sqlQuery',form.get('sqlQuery')?.hasValidator(Validators.required))"
+          [type]="isSubmitted && form.controls['sqlQuery'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['sqlQuery'].errors != null"
+          [errors]="form.controls['sqlQuery'].errors"
+          [errorDefs]="[
+          { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configCharts.table.sqlQuery' | translate }}
+          ]"
+        ></hbt-input-text>
+      </div>
+
+      <!--link api-->
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <hbt-input-text formControlName="url" maxLength="255"
+          [type]="isSubmitted && form.controls['url'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['url'].errors != null"
+          [errors]="form.controls['url'].errors"
+          [errorDefs]="[
+          { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}},
+          { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configCharts.table.url' | translate }},
+          { errorName: 'exclusiveField', errorDescription: 'admin.configCharts.validation.exclusiveField' | translate: {'0': 'admin.configCharts.table.sqlQuery' | translate,'1': 'admin.configCharts.table.url' | translate }}
+          ]"
+          placeholderText="{{'admin.configCharts.table.url' | translate}}"
+          [labelText]= "getLabelText('admin.configCharts.table.url',form.get('url')?.hasValidator(Validators.required))"
+        ></hbt-input-text>
+      </div>
+
+
+
+    </div>
+  </form>
+</div>
+

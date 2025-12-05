@@ -1,0 +1,88 @@
+<div class="scope__modal">
+  <div class='search__content--group'>
+    <nz-table
+      nzBordered
+      [nzData]="[1]"
+      [nzShowPagination]="false"
+    >
+      <thead>
+      <tr>
+        <th [nzWidth]='getWidth()' *ngFor="let item of data">{{ item.name }}</th>
+        <th nzWidth='10%' *ngIf="objFunction?.edit"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container [formGroup]="form">
+        <ng-container [formArrayName]="FORM_ARRAY_NAME">
+          <ng-container *ngFor="let scope of scopes.controls; let i = index" [formGroupName]="i">
+            <tr>
+              <td *ngFor="let item of data">
+                <ng-container *ngIf="item.attributes.TYPE == 'LIST'">
+                  <hbt-select-check-able
+                    [urlLoadData]="urlLoadDomainList.replace('{type}', item.value)"
+                    [serviceName]="serviceName"
+                    keyLabel="name"
+                    keyValue="domainId"
+                    [disable]="!objFunction?.edit"
+                    [isLoadMore]="false"
+                    [showAction]="false"
+                    [placeholder]="item.name"
+                    [formControlName]="item.value"
+                  ></hbt-select-check-able>
+                </ng-container>
+                <ng-container *ngIf="item.attributes.TYPE == 'TREE'">
+                  <tree-data-picker
+                    [isExpand]="true"
+                    *ngIf="item.value == 'DANH_MUC_SACH'"
+                    [isOnlyId]="false"
+                    keyValue="domainId"
+                    [disable]="!objFunction?.edit"
+                    [dataConfig]="dataConfig"
+                    [formControlName]="item.value"
+                    [placeholder]="item.name"
+                    isMultiSelect="true"
+                    [urlLoadDataNode]="urlLoadDataNode.replace('{type}', item.value)"
+                    [urlLoadChildren]="urlLoadChildren.replace('{type}', item.value)"
+                    [urlSearch]="urlSearch.replace('{type}', item.value)"
+                    [serviceName]="serviceName"
+                  >
+                  </tree-data-picker>
+                  <tree-data-picker
+                    [isExpand]="true"
+                    *ngIf="item.value == 'DON_VI'"
+                    keyValue="domainId"
+                    [isOnlyId]="false"
+                    [disable]="!objFunction?.edit"
+                    [type]="isSubmitted && scope?.errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && scope?.errors !== null"
+                    [errors]="scope?.errors"
+                    [errorDefs]="[{ errorName: 'atLeastOneRequired', errorDescription: 'admin.validates.requiredOrg' | translate}]"
+                    [formControlName]="item.value"
+                    [placeholder]="item.name"
+                    isMultiSelect="true"
+                    [urlLoadDataNode]="urlLoadDataNode.replace('{type}', item.value)"
+                    [urlLoadChildren]="urlLoadChildren.replace('{type}', item.value)"
+                    [urlSearch]="urlSearch.replace('{type}', item.value)"
+                    [serviceName]="serviceName"
+                  >
+                  </tree-data-picker>
+                </ng-container>
+              </td>
+              <td class="text-center" *ngIf="objFunction?.edit">
+                <em class="menu__item--btn1" nz-icon nzType="plus-circle" nzTheme="outline"
+                    nzTooltipTitle="{{'common.title.add' | translate}}" (click)="addNewScopes()"
+                    nzTooltipPlacement="left" nz-button nz-tooltip></em>
+                <em class="menu__item--btn" nz-icon nzType="delete" nzTheme="outline"
+                    nzTooltipTitle="{{'common.title.delete' | translate}}"
+                    nzTooltipPlacement="right" nz-button nz-tooltip (click)="onDeleteScopesClick(i)"></em></td>
+            </tr>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+      </tbody>
+    </nz-table>
+  </div>
+</div>
+
+
+

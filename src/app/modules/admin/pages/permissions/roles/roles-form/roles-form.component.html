@@ -1,0 +1,63 @@
+<div [ngClass]="{'app-card' : isPage}">
+  <div class="content" *ngIf="isPage">
+    <hbt-button buttonType="NO_BORDER" (click)="save()" buttonAvailableStyle="SAVE"
+                buttonText="{{'common.button.save' | translate}}" type='SUBMIT'></hbt-button>
+  </div>
+  <form nz-form [formGroup]="form">
+    <div class="app-row" nz-row [nzGutter]='[20,15]'>
+      <div nz-col nzXs="24" nzLg="12">
+        <hbt-input-text formControlName="code" [maxLength]="20"
+                        [type]="isSubmitted && form.controls['code'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['code'].errors !== null"
+                        [errors]="form.controls['code'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': '20' }},
+           { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.permissions.roles.label.code' | translate }}]"
+                        placeholderText="{{'admin.permissions.roles.label.code' | translate}}"
+                        labelText="{{'admin.permissions.roles.label.code' | translate}} <span class='label__required'>*</span>">
+        </hbt-input-text>
+      </div>
+      <div nz-col nzXs="24" nzLg="12">
+        <hbt-input-text formControlName="name"
+                        [type]="isSubmitted && form.controls['name'].errors ? 'error' : 'default'"
+                        [maxLength]="255"
+                        [showError]="isSubmitted && form.controls['name'].errors != null"
+                        [errors]="form.controls['name'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': '255' }},
+            { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.permissions.roles.label.name' | translate }}]"
+                        placeholderText="{{'admin.permissions.roles.label.name' | translate}}"
+                        labelText="{{'admin.permissions.roles.label.name' | translate}} <span class='label__required'>*</span>">
+        </hbt-input-text>
+      </div>
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select formControlName="defaultDomainType"
+                    [dataSelects]="listDomainType"
+                    keyLabel="name"
+                    labelText="{{'admin.permissions.roles.label.defaultDomainType' | translate}}"
+                    placeholder="{{'admin.permissions.roles.label.defaultDomainType' | translate}}"
+                    (ngModelChange)="domainTypeChange($event)"
+        >
+        </hbt-select>
+      </div>
+      <div nz-col [nzXs]="12" [nzLg]="12" *ngIf="!hideDomainValue">
+        <hbt-select formControlName="defaultDomainValue"
+                    [urlLoadData]="urlLoadDomainValue"
+                    [serviceName]="serviceName"
+                    keyLabel="name"
+                    [labelText]="selectedLabel"
+                    [placeholder]="selectedLabel"
+        >
+        </hbt-select>
+      </div>
+      <div nz-col nzXs="24" nzLg="12">
+        <hbt-input-text formControlName="note" [maxLength]="500"
+                        [type]="isSubmitted && form.controls['note'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['note'].errors !== null"
+                        [errors]="form.controls['note'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': '500' }}]"
+                        placeholderText="{{'admin.permissions.roles.label.note' | translate}}"
+                        labelText="{{'admin.permissions.roles.label.note' | translate}}">
+        </hbt-input-text>
+      </div>
+    </div>
+  </form>
+</div>

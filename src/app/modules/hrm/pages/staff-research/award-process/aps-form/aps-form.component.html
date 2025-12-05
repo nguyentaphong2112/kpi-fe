@@ -1,0 +1,94 @@
+<form nz-form [formGroup]="form">
+  <div nz-row [nzGutter]='[20,15]'>
+    <!--id nhân viên-->
+    <div nz-col [nzXs]="12" [nzLg]="12" *ngIf="!hiddenEmp">
+      <employee-data-picker [isExpand]="true"
+        [status]='mode !== modeConst.ADD ? "ALL" : "ACTIVE"'
+        [functionCode]="functionCode"
+        [scope]="scope"
+        [formMode]="mode"
+        [disable]="mode !== modeConst.ADD"
+        formControlName="employeeId"
+        [type]="isSubmitted && form.controls['employeeId'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['employeeId'].errors != null"
+        [errors]="form.controls['employeeId'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'common.label.employeeName' | translate }}]"
+        labelText="{{'hrm.staffManager.awardProcess.table.employeeId' | translate}} <span class='label__required'>*</span>"
+      >
+      </employee-data-picker>
+    </div>
+
+    <!--hình thức khen thưởng-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-select
+        [urlLoadData]="getUrlCategory(categoryCode.HINH_THUC_KHEN_THUONG)"
+        [serviceName]="microService.ADMIN"
+        keyLabel="name"
+        formControlName="awardFormId"
+        [type]="isSubmitted && form.controls['awardFormId'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['awardFormId'].errors != null"
+        [errors]="form.controls['awardFormId'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.awardProcess.table.awardFormId' | translate }}]"
+        placeholder="{{'hrm.staffManager.awardProcess.table.awardFormId' | translate}}"
+        labelText="{{'hrm.staffManager.awardProcess.table.awardFormId' | translate}} <span class='label__required'>*</span>"
+      ></hbt-select>
+    </div>
+
+    <!--năm được khen thưởng-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-date-picker
+        format="yyyy"
+        mode="year"
+        formControlName="awardYear"
+        [type]="isSubmitted && form.controls['awardYear'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['awardYear'].errors != null"
+        [errors]="form.controls['awardYear'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.awardProcess.table.awardYear' | translate }}]"
+        placeholderText="{{'hrm.staffManager.awardProcess.table.awardYear' | translate}}"
+        labelText="{{'hrm.staffManager.awardProcess.table.awardYear' | translate}} <span class='label__required'>*</span>"
+      ></hbt-date-picker>
+    </div>
+
+    <!--số quyết định-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-input-text
+        formControlName="documentNo" maxLength="50"
+        [type]="isSubmitted && form.controls['documentNo'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['documentNo'].errors != null"
+        [errors]="form.controls['documentNo'].errors"
+        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 50}}]"
+        placeholderText="{{'hrm.staffManager.awardProcess.table.documentNo' | translate}}"
+        labelText="{{'hrm.staffManager.awardProcess.table.documentNo' | translate}}"
+      ></hbt-input-text>
+    </div>
+
+    <!--ngày ký quyết định-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-date-picker
+        placeholderText="{{'hrm.staffManager.awardProcess.table.documentSignedDate' | translate}}"
+        labelText="{{'hrm.staffManager.awardProcess.table.documentSignedDate' | translate}}"
+        formControlName="documentSignedDate"></hbt-date-picker>
+    </div>
+
+    <ng-container formArrayName="listAttributes">
+      <ng-container *ngFor="let attributes of attributesFormArray.controls; let idx = index" [formGroupName]="idx">
+        <div nz-col [nzXs]="12" [nzLg]="12">
+          <input-attribute-common
+            [controlName]="getAttributeControl(idx, 'attributeValue')"
+            [dataType]="attributes.get('dataType')?.value"
+            [urlLoadData]="attributes.get('urlLoadData')?.value"
+            [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+            [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+            [errors]="attributes.get('attributeValue')?.errors"
+            [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}]"
+            [placeholderText]="attributes.get('attributeName')?.value"
+            [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+          >
+          </input-attribute-common>
+        </div>
+      </ng-container>
+    </ng-container>
+
+  </div>
+</form>
+

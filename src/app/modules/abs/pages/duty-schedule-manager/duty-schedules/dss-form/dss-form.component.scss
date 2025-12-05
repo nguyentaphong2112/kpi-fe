@@ -1,0 +1,54 @@
+@import "src/app/modules/kpi/data-access/style/style";
+@import "src/app/core/global-style/variable";
+
+.text-center {
+  text-align: center;
+}
+
+.dss-form .head-table{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dss-form .head-text{
+  font-size: 20px;
+  font-weight: bold;
+}
+
+
+.text-red{
+  color: $error-500!important;
+}
+
+.text-normal{
+  color: $neutral_700!important;
+}
+
+.menu__item--btn2 {
+  font-size: 16px;
+  padding: 3px;
+  color: $error-500;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.menu__item--btn1 {
+  font-size: 16px;
+  padding: 3px;
+  color: $bg-default;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+::ng-deep .dss-form nz-table-inner-scroll {
+  th {
+    background: $bg-table-header;
+    color: $table-text-header;
+    font-family: avertaB, sans-serif;
+  }
+}

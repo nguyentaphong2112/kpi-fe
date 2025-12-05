@@ -1,0 +1,12 @@
+<div class="text__label text__label--default">
+  <hbt-input-text *ngIf="showEdit && showLabelValue" ngModel="{{valueShow}}" labelText="{{labelText}}"
+                  [isDatepicker]="valueType === 'date'" [placeholderText]="placeholderText"
+                  [prefixIcon]="prefixIcon"
+                  [suffixIcon]="suffixIcon"
+                  [datepickerConfig]="{ dateInputFormat: dateFormatShow,  returnFocusToInput: true }"></hbt-input-text>
+  <label *ngIf="!showEdit && showLabelText" class="label__text">{{labelText}}</label>
+  <ng-container *ngIf="!showEdit && showLabelValue">
+    <label *ngIf="!isInnerHTML" class="label__value">{{valueShow}}</label>
+    <label *ngIf="isInnerHTML" class="label__value" [innerHtml]="valueShow"></label>
+  </ng-container>
+</div>

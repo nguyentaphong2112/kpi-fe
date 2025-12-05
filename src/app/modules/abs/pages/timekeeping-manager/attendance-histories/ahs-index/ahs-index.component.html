@@ -1,0 +1,139 @@
+
+<form nz-form [formGroup]="form" class="mts-index">
+  <div class='abs'>
+    <div class="search__custom-common remove__mr__bt-40 ">
+      <div nz-row class="button__action-left">
+
+      </div>
+
+      <div class="search__page-right">
+        <!--Từ ngày-->
+        <hbt-date-picker
+          style="margin-right: 20px"
+          mode="date"
+          formControlName="startDate"
+          [type]="isSubmitted && (form.controls['startDate'].errors || form.errors?.rangeDateError) ? 'error' : 'default'"
+          [showError]="isSubmitted && (form.controls['startDate'].errors || form.errors?.rangeDateError) !== null"
+          [errors]=" form.controls['startDate'].errors"
+          [errorDefs]="[
+          { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'abs.attendanceHistories.label.startDate' | translate }}
+          ]"
+
+          placeholderText="{{ 'abs.attendanceHistories.label.startDate' | translate }}"
+
+        ></hbt-date-picker>
+
+
+        <!--Đến ngày-->
+        <hbt-date-picker
+          style="margin-right: 20px"
+          mode="date"
+          formControlName="endDate"
+          [type]="isSubmitted && (form.controls['endDate'].errors || form.errors?.rangeDateError) ? 'error' : 'default'"
+          [showError]="isSubmitted && (form.controls['endDate'].errors || form.errors?.rangeDateError) !== null"
+          [errors]="form.errors?.rangeDateError ? form.errors : form.controls['endDate'].errors"
+          [errorDefs]="[
+              { errorName: 'rangeDateError', errorDescription: 'common.validate.rangeDate.pareDate' | translate:{'fromDate': 'abs.attendanceHistories.label.startDate' | translate, 'toDate': 'abs.attendanceHistories.label.endDate' | translate}},
+               { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'abs.attendanceHistories.label.startDate' | translate }}
+
+
+              ]"
+
+          placeholderText="{{ 'abs.attendanceHistories.label.endDate' | translate }}"
+        ></hbt-date-picker>
+
+      </div>
+    </div>
+
+    <div class='search__content--group'>
+      <hbt-table-wrap>
+        <hbt-table
+          (changePageNum)="search($event)"
+          [tableConfig]="tableConfig" [dataList]="tableData"></hbt-table>
+      </hbt-table-wrap>
+    </div>
+
+    <!--  <ng-template #actionTmpl let-data="data">-->
+    <!--    <btn-more-action [model]="[data]" [setting]="actionSchema">-->
+    <!--    </btn-more-action>-->
+    <!--  </ng-template>-->
+
+    <ng-template #actionTmpl let-data="data">
+      <div style="display: flex">
+        <em class="menu__item--btn" nz-icon nzType="edit"
+            nzTooltipTitle="{{'common.title.edit' | translate}}" (click)="openForm(data)"
+            nzTooltipPlacement="left" nz-button nz-tooltip></em>
+
+        <em class="menu__item--btn" nz-icon nzType="history"
+            nzTooltipTitle="{{'abs.attendanceHistories.tooltip.history' | translate}}" (click)="openLog(Mode.VIEW,data)"
+            nzTooltipPlacement="top" nz-button nz-tooltip></em>
+
+        <em class="menu__item--btn--warning" nz-icon nzType="delete"
+            nzTooltipTitle="{{'common.button.delete' | translate}}" (click)="deleteItem(data)"
+            nzTooltipPlacement="right" nz-button nz-tooltip></em>
+      </div>
+
+    </ng-template>
+
+    <ng-template #footerTmpl>
+      <hbt-button
+        buttonAvailableStyle="CANCEL"
+        buttonText="{{ 'common.button.cancel' | translate }}"
+        (click)="modalRef.destroy()">
+      </hbt-button>
+      <hbt-button
+        buttonAvailableStyle="SAVE"
+        buttonText="{{ 'common.button.save' | translate }}"
+        (click)="modalRef.getContentComponent().save()">
+      </hbt-button>
+    </ng-template>
+
+    <hbt-import-file [showContent]='isImportData'
+                     (onCloseModal)='doCloseImport($event)'
+                     [importApi]='importApi'
+                     [downLoadTemplateApi]="downLoadTemplateApi"
+                     [fileTemplateName]="fileTemplateName"
+                     [doDownloadFileByNameApi]='doDownloadFileByNameApi'>
+    </hbt-import-file>
+
+    <reject-common-template
+      [isReject]="isReject"
+      [listRejectId]="listId"
+      [rejectId]='rejectId'
+      [rejectByListApi]='rejectByListApi'
+      (onCloseModal)="doCloseReject($event)">
+    </reject-common-template>
+
+    <ng-template #attachFileTmpl let-attachFileList='attachFileList'>
+      <div *ngFor="let file of attachFileList">
+        <a class="attach-file" (click)="doDownLoadFile(file); $event.stopPropagation();">{{file.fileName}}</a>
+      </div>
+    </ng-template>
+
+    <ng-template #timekeepingDayTmpl let-data="data">
+      <div>
+        {{getVietnameseDayName(data.dateTimekeeping)}}
+      </div>
+    </ng-template>
+
+    <ng-template #validTmpl let-data="data">
+      <div class="{{data.isValid === 'Y' ? 'text-normal' : 'text-red'}}">
+        {{data.validName}}
+      </div>
+    </ng-template>
+
+    <ng-template #contentTmpl let-data="data">
+      <hbt-table-wrap>
+        <hbt-table
+          [tableConfig]="tableConfig1"
+          [dataList]="tableResult1"
+          [showExtra]="false"
+        >
+
+        </hbt-table>
+      </hbt-table-wrap>
+    </ng-template>
+  </div>
+</form>
+
+

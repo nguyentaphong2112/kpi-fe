@@ -1,0 +1,221 @@
+@import "variable";
+.ant-btn::after {
+  display: none !important;
+}
+.ant-btn {
+  font-size: 14px;
+  margin-left: 20px;
+  border-radius: 4px;
+  padding: 4px 16px;
+}
+
+.ant-btn-sm {
+  padding: 0 10px;
+}
+
+.button__class--no-padding .ant-btn.button__class {
+  padding: 0 !important;
+}
+
+.button__class--no-margin .ant-btn.button__class {
+  margin: 0 !important;
+}
+
+.ant-btn.button__class {
+  line-height: 1.2;
+}
+
+.button__class--only-icon {
+  cursor: pointer;
+  margin-left: 15px;
+}
+
+.ant-btn.button__class--small {
+  padding: 4px 8px;
+  font-size: 12px;
+  height: 24px;
+  border-radius: 4px;
+}
+
+.ant-btn.button__class--medium {
+  padding: 8px 16px;
+  font-size: 12px;
+  border-radius: 4px;
+}
+
+.ant-btn.button__class--large {
+  padding: 10px 18px;
+  font-size: 14px;
+  border-radius: 6px;
+  height: 40px;
+}
+
+.ant-btn.button__class--very_large {
+  padding: 10px 16px;
+  font-size: 14px;
+  border-radius: 6px;
+  height: 44px;
+}
+
+.ant-btn.button__class--no-border {
+  border: none;
+}
+
+.button__class--dash-vertical {
+  position: absolute;
+  width: 1px;
+  border-left: 1px solid;
+  top: -1px;
+  right: 25px;
+}
+
+.ant-btn.button__class--show-dash.button__class--small {
+  padding-right: 33px;
+
+  .suffix__icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    line-height: 0;
+  }
+}
+
+.ant-btn.button__class--show-dash.button__class--medium {
+  padding-right: 41px;
+
+  .suffix__icon {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    line-height: 0;
+  }
+}
+
+.ant-btn.button__class--show-dash.button__class--large {
+  padding-right: 41px;
+
+  .suffix__icon {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    line-height: 0;
+  }
+}
+
+.ant-btn.button__class--show-dash.button__class--very_large {
+  padding-right: 41px;
+
+  .suffix__icon {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    line-height: 0;
+  }
+}
+
+.ant-btn.button__class.button__class--content {
+  height: auto;
+
+  > span {
+    display: none;
+  }
+
+  .cus__button--content {
+    width: 100%;
+  }
+}
+
+.max-length-input {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 8px;
+}
+
+.button__class__type-add {
+  color: $btn-add-text-color;
+  background-color: $bg-btn-add;
+  border: $bd-btn-add;
+  &:hover {
+    background-color: $bg-btn-add-hover;
+  }
+}
+
+.button__class__type-edit {
+  color: $btn-edit-text-color;
+  background-color: $bg-btn-edit;
+  border: $bd-btn-edit;
+  &:hover {
+    background-color: $bg-btn-edit-hover;
+  }
+}
+
+.button__class__type-search {
+  color: $btn-search-text-color;
+  background-color: $bg-btn-search;
+  border: $bd-btn-search;
+  &:hover {
+    background-color: $bg-btn-search-hover;
+  }
+}
+
+.button__class__type-save {
+  color: $btn-save-text-color;
+  background-color: $bg-btn-save;
+  border: $bd-btn-save;
+  &:hover {
+    background-color: $bg-btn-save-hover;
+  }
+}
+
+.button__class__type-cancel {
+  color: $btn-cancel-text-color;
+  background-color: $bg-btn-cancel;
+  border: $bd-btn-cancel;
+  &:hover {
+    background-color: $bg-btn-cancel-hover;
+  }
+}
+
+.button__class__type-approve {
+  color: $btn-approve-text-color;
+  background-color: $bg-btn-approve;
+  border: $bd-btn-approve;
+  &:hover {
+    background-color: $bg-btn-approve-hover;
+  }
+}
+
+.button__class__type-reject {
+  color: $btn-reject-text-color;
+  background-color: $bg-btn-reject;
+  border: $bd-btn-reject;
+  &:hover {
+    background-color: $bg-btn-reject-hover;
+  }
+}
+
+.button__class__type-default {
+  color: $btn-default-text-color;
+  background-color: $bg-btn-default;
+  border: $bd-btn-default;
+  &:hover {
+    background-color: $bg-btn-default-hover;
+  }
+}
+
+.button__class__type-gray {
+  color: $bg-btn-approve;
+  background-color: $neutral-300;
+  border: $btn-default-text-color;
+  &:hover {
+    background-color: $neutral-400;
+  }
+}
+
+::ng-deep .ant-btn[disabled]:hover {
+  color: $btn-save-text-color;
+}

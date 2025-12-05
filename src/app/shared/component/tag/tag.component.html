@@ -1,0 +1,19 @@
+<div class="tag-list">
+  <nz-tag
+    *ngFor="let tag of tags; let i = index"
+    (nzOnClose)="handleClose(tag)"
+    [nzColor]="'geekblue'"
+    nz-tooltip [nzTooltipTitle]="tag[showValue]"
+  >
+    <div class="tag-item">
+      <div>
+        {{ sliceTagName(tag) }}
+      </div>
+      <div class="icon">
+        <em nz-icon nzType="close-circle" nzTheme="fill" (click)="handleClose(tag)" *ngIf="remove"></em>
+      </div>
+    </div>
+
+  </nz-tag>
+
+</div>

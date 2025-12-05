@@ -1,0 +1,74 @@
+<div [class]="inputGroupClass">
+  <div *ngIf="config?.labelText != null" class="input__label">
+    {{config?.labelText}} <span *ngIf="required" class='label__required'> *</span>
+  </div>
+
+  <div *ngIf="config?.labelText == null && config?.showFlexEnd" class="input__group--no-label"></div>
+  <nz-upload *ngIf="typeUpload === 'drag'"
+             nzType="drag"
+             remove-directive
+             nz-col nzXs='24' nzLg='24'
+             [class]="inputTextClass"
+             [ngClass]="{'ant-upload-disabled': config?.disable}"
+             [nzDisabled]="config?.disable"
+             [nzMultiple]="config?.multiple"
+             [(nzFileList)]="fileList"
+             [nzBeforeUpload]="beforeUpload"
+             [nzDownload]="downloadFile"
+             [nzRemove]="removeFile"
+             nzAccept='{{getListAccept()}}'
+  >
+    <p class="ant-upload-drag-icon">
+      <em nz-icon nzType="{{icon}}"></em>
+    </p>
+    <p class="ant-upload-text">{{config?.description ? config?.description : 'common.upload.upload'|translate }}</p>
+    <p class="ant-upload-hint" *ngIf="!config?.viewDetail" [ngClass]='{"file-available": showContentAlert}'>
+      {{getTypeFileAvailable()}}
+    </p>
+    <p class="ant-upload-hint" *ngIf="config?.viewDetail" [ngClass]='{"file-available": showContentAlert}'>
+      {{config?.viewDetailStr | translate}}
+    </p>
+  </nz-upload>
+  <nz-upload *ngIf="typeUpload === 'upload'"
+             nzType="select"
+             remove-directive
+             (click)="txtInput.blur()"
+             [ngClass]="{'ant-upload-disabled': config?.disable}"
+             [nzDisabled]="config?.disable"
+             [nzMultiple]="config?.multiple"
+             [(nzFileList)]="fileList"
+             [nzBeforeUpload]="beforeUpload"
+             [nzDownload]="downloadFile"
+             [nzRemove]="removeFile"
+             nzAccept='{{getListAccept()}}'
+  >
+    <nz-input-group [class]="inputTextClass" class="input__group--upload" [ngClass]="{'ant-upload-disabled': config?.disable}"
+                    [nzSuffix]="suffixTemplate">
+      <input type="text" nz-input [disabled]="config?.disable" #txtInput
+             placeholder="{{getTypeFileAvailable()|translate}}" />
+    </nz-input-group>
+    <ng-template #suffixTemplate>
+      <hbt-button class="btn-upload" [isDisable]="config?.disable" prefixIcon="upload" buttonText="{{'common.upload.choose'|translate}}"
+                  buttonAvailableStyle="GRAY">
+      </hbt-button></ng-template>
+  </nz-upload>
+  <nz-upload *ngIf="typeUpload === 'icon'"
+             nzType="select"
+             [ngClass]="{'ant-upload-disabled': config?.disable}"
+             [nzDisabled]="config?.disable"
+             [nzMultiple]="config?.multiple"
+             [(nzFileList)]="fileList"
+             [nzBeforeUpload]="beforeUpload"
+             [nzDownload]="downloadFile"
+             [nzRemove]="removeFile"
+             nzAccept='{{getListAccept()}}'
+  >
+    <span style="font-size: 20px; cursor: pointer" nz-icon nzType="paper-clip" nzTheme="outline"></span>
+  </nz-upload>
+  <div *ngIf="config?.textMessageValue != null && (config?.showError || isShowError)" [class]="inputMessageClass"
+       [class.input__message--error]='isShowError || config?.showError'>
+    <em *ngIf="config?.showIcon" nz-icon nzType="{{iconType != null && !isShowError ? iconType : classIcon.error}}" nzTheme="outline"></em>
+    <span class="text__message">{{config?.textMessageValue}}</span>
+  </div>
+
+</div>

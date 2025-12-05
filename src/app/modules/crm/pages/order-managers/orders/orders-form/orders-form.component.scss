@@ -1,0 +1,71 @@
+@import "src/app/core/global-style/variable";
+.save-form-crm__title {
+  font-family: avertaB, sans-serif;
+  font-size: 18px;
+}
+
+.menu__item--btn {
+  font-size: 16px;
+  padding: 3px;
+  color: $error-500;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.menu__item--btn1 {
+  font-size: 16px;
+  padding: 3px;
+  color: $bg-default;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.label__required {
+  color: $error-default-color;
+}
+
+::ng-deep .order-detail {
+  .ant-table-footer {
+    padding: 0 !important;
+  }
+}
+
+.order-footer {
+  display: flex;
+  flex-direction: column;
+  &__row {
+    display: flex;
+    align-items: center;
+    border: 1px solid #f0f0f0;
+    div {
+      padding: 8px;
+    }
+    &__label {
+      font-family: avertaB, sans-serif;
+      text-align: center;
+    }
+    &__value {
+      text-align: right;
+      width: 35%;
+    }
+  }
+}
+
+
+.payments-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

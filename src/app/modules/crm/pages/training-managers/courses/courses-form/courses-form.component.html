@@ -1,0 +1,242 @@
+<div class='courses-form'>
+  <form nz-form [formGroup]="form">
+    <div nz-row [nzGutter]="[20,15]">
+      <div nz-col nzXs="24" nzLg="12">
+        <hbt-select formControlName="trainingProgramId"
+                    [urlLoadData]="urlLoadData"
+                    [serviceName]="serviceName"
+                    keyValue="trainingProgramId"
+                    keyLabel="title"
+                    [type]="isSubmitted && form.controls['trainingProgramId'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['trainingProgramId'].errors !== null"
+                    [errors]="form.controls['trainingProgramId'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.courses.label.trainingProgramId' | translate }}]"
+                    labelText="{{'crm.courses.label.trainingProgramId' | translate}} <span class='label__required'>*</span>"
+                    placeholder="{{'crm.courses.label.trainingProgramId' | translate}}"
+        >
+        </hbt-select>
+      </div>
+      <div nz-col [nzXs]="24" [nzLg]="12">
+        <hbt-input-text formControlName="name" [maxLength]="255"
+                        [disable]="mode == modeConst.VIEW"
+                        [type]="isSubmitted && form.controls['name'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['name'].errors != null"
+                        [errors]="form.controls['name'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.courses.table.courseName' | translate }}]"
+                        placeholderText="{{'crm.courses.table.courseName' | translate}}"
+                        labelText="{{'crm.courses.table.courseName' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <div nz-col [nzXs]="24" [nzLg]="12">
+        <hbt-date-picker
+          labelText="{{'crm.courses.label.fromDate' | translate}} <span class='label__required'>*</span>"
+          placeholderText="{{'crm.courses.label.fromDate' | translate}}"
+          formControlName="startDate"
+          [type]="isSubmitted && form.controls['startDate'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['startDate'].errors!== null"
+          [errors]="form.controls['startDate'].errors"
+          [errorDefs]="[
+      { errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param':'crm.courses.label.fromDate' | translate }},
+    ]"
+        ></hbt-date-picker>
+
+      </div>
+
+      <div nz-col [nzXs]="24" [nzLg]="12">
+        <hbt-date-picker
+          labelText="{{'crm.courses.label.toDate' | translate}} <span class='label__required'>*</span>"
+          placeholderText="{{'crm.courses.label.toDate' | translate}}"
+          formControlName="endDate"
+          [type]="((isSubmitted && form.controls['endDate'].errors) || form.errors?.rangeDateError) ? 'error' : 'default'"
+          [showError]="((isSubmitted && form.controls['endDate'].errors) || form.errors?.rangeDateError) !== null"
+          [errors]="form.errors?.rangeDateError ? form.errors : form.controls['endDate'].errors"
+          [errorDefs]="[
+      { errorName: 'rangeDateError', errorDescription: 'hrm.validate.rangeDate.pareDate' | translate: {'fromDate': 'crm.courses.label.fromDate' | translate, 'toDate': 'crm.courses.label.toDate' | translate}},
+      { errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param':'crm.courses.label.toDate' | translate }}
+    ]"
+        ></hbt-date-picker>
+      </div>
+
+      <ng-container formArrayName="listAttributes">
+        <ng-container *ngFor="let attributes of attributesFormArray.controls; let idx = index" [formGroupName]="idx">
+          <div nz-col [nzXs]="12" [nzLg]="12">
+            <input-attribute-common
+              [controlName]="getAttributeControl(idx, 'attributeValue')"
+              [dataType]="attributes.get('dataType')?.value"
+              [urlLoadData]="attributes.get('urlLoadData')?.value"
+              [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+              [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+              [errors]="attributes.get('attributeValue')?.errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}]"
+              [placeholderText]="attributes.get('attributeName')?.value"
+              [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+            >
+            </input-attribute-common>
+          </div>
+        </ng-container>
+      </ng-container>
+      <div nz-col [nzXs]='24' [nzLg]='24'>
+        <nz-tabset [nzType]="'card'" [nzSize]="'large'">
+          <nz-tab nzTitle="{{'crm.courses.label.listOfStudents' | translate}}">
+            <div style="display: flex; justify-content: right; margin-bottom: 10px">
+              <span class="import" (click)="doImportData()">{{ 'common.button.uploadFile' | translate }}</span>
+            </div>
+            <div nz-row [nzGutter]="[20,15]" style="max-height: 400px; overflow: auto;">
+              <div nz-col [nzXs]='24' [nzLg]='24'>
+                <nz-table nzBordered [nzData]="[1]" nzSize="small" [nzShowPagination]="false">
+                  <thead>
+                  <tr>
+                    <th nzWidth='10%' class="text-center">STT</th>
+                    <th nzWidth="25%"
+                        class="text-center">{{ 'crm.courses.table.name' | translate }}
+                      <span class='label__required'>*</span>
+                    </th>
+                    <th nzWidth="30%"
+                        class="text-center">{{ 'crm.courses.table.tutor' | translate }}
+                      <span class='label__required'>*</span>
+                    </th>
+                    <th nzWidth="10%" *ngIf="mode !== modeConst.VIEW"></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <ng-container [formArrayName]="FORM_ARRAY_NAME">
+                    <ng-container *ngFor="let item of students.controls; let i = index" [formGroupName]="i">
+                      <tr>
+                        <td style="text-align: center; font-weight: bold; width: 10%">
+                          {{ (i + 1) }}
+                        </td>
+                        <td style="width: 25%;">
+                          <span *ngIf="item.get('traineeName').value">
+                              {{item.get('traineeName').value}}
+                          </span>
+                          <hbt-select *ngIf="!item.get('traineeName').value"
+                                      [isLoadMore]="true"
+                                      [isSearchAfterAction]="true"
+                                      urlLoadData="/customers/pageable"
+                                      [serviceName]="serviceName"
+                                      keyValue="customerId"
+                                      keyLabel="phoneAndName"
+                                      formControlName="traineeId"
+                                      [type]="(isSubmitted || isSubmitted3) && item.get('traineeId')?.errors ? 'error' : 'default'"
+                                      [showError]="(isSubmitted || isSubmitted3) && item.get('traineeId')?.errors !== null"
+                                      [errors]="item.get('traineeId')?.errors"
+                                      [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.courses.table.name' | translate }},
+                                       {errorName: 'duplicate', errorDescription: 'hrm.validate.duplicatePosition' | translate: {'param': 'crm.courses.label.traineeInstructor' | translate}}]"
+                                      placeholder="{{'crm.courses.table.name' | translate}}"
+                                      labelText=""
+                          ></hbt-select>
+                        </td>
+                        <td style="width: 30%;">
+                          <span *ngIf="item.get('instructorName').value">
+                            {{item.get('instructorName').value}}
+                        </span>
+                        <hbt-select *ngIf="!item.get('instructorName').value"
+                                      [isLoadMore]="true"
+                                      [isSearchAfterAction]="true"
+                                      urlLoadData="/customers/pageable"
+                                      [serviceName]="serviceName"
+                                      keyValue="customerId"
+                                      keyLabel="phoneAndName"
+                                      formControlName="instructorId"
+                                      [type]="(isSubmitted || isSubmitted3) && item.get('instructorId')?.errors ? 'error' : 'default'"
+                                      [showError]="(isSubmitted || isSubmitted3) && item.get('instructorId')?.errors !== null"
+                                      [errors]="item.get('instructorId')?.errors"
+                                      [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.courses.table.tutor' | translate }}]"
+                                      placeholder="{{'crm.courses.table.tutor' | translate}}"
+                                      labelText=""
+                          ></hbt-select>
+                        </td>
+                        <td style="width: 10%" class="text-center" *ngIf="mode !== modeConst.VIEW">
+                          <btn-more-action [model]="[{key: i}]" [setting]="actionSchema">
+                          </btn-more-action>
+                        </td>
+                      </tr>
+                    </ng-container>
+                    <ng-container *ngIf="data && data.listCoursesTrainees">
+                    <ng-container *ngFor="let item of data.listCoursesTrainees; let i = index">
+                      <tr>
+                        <td style="text-align: center; font-weight: bold; width: 10%">
+                          {{ (students.controls.length + i + 1) }}
+                        </td>
+                        <td style="width: 25%;">
+                          {{item.traineeName}}
+                        </td>
+                        <td style="width: 30%;">
+                          {{item.instructorName}}
+                        </td>
+                        <td style="width: 10%" class="text-center" *ngIf="mode !== modeConst.VIEW">
+                          <btn-more-action [model]="[{key: students.controls.length + i}]" [setting]="actionSchema">
+                          </btn-more-action>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </ng-container>
+                  </ng-container>
+                  </tbody>
+                </nz-table>
+              </div>
+            </div>
+          </nz-tab>
+          <nz-tab nzTitle="{{'crm.courses.label.courseContent' | translate}}">
+            <div nz-row [nzGutter]='[20,15]'>
+              <div nz-col [nzXs]='24' [nzLg]='24'>
+                <nz-table nzBordered [nzData]="[1]" nzSize="small" [nzShowPagination]="false">
+                  <thead>
+                  <tr>
+                    <th nzWidth='10%' class="text-center">Ngày</th>
+                    <th nzWidth="80%"
+                        class="text-center">{{ 'crm.trainingPrograms.table.content' | translate }}
+                      <span class='label__required'>*</span>
+                    </th>
+                    <th nzWidth="10%" *ngIf="mode !== modeConst.VIEW"></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <ng-container [formArrayName]="FORM_ARRAY_NAME2">
+                    <ng-container *ngFor="let item of courses.controls; let i = index" [formGroupName]="i">
+                      <tr>
+                        <td style="text-align: center; font-weight: bold; width: 10%">
+                          {{ 'Ngày ' + (i + 1) }}
+                        </td>
+                        <td style="width: 80%; text-align: center">
+                          <hbt-input-text formControlName="name" [maxLength]="255"
+                                          placeholderText="{{'crm.trainingPrograms.table.content' | translate}}"
+                                          [isTextAre]="true" [config]="{ rows: 3 }"
+                                          [disable]="mode == modeConst.VIEW"
+                                          [type]="(isSubmitted || isSubmitted2) && item.get('name')?.errors ? 'error' : 'default'"
+                                          [showError]="(isSubmitted || isSubmitted2) && item.get('name')?.errors !== null"
+                                          [errors]="item.get('name')?.errors"
+                                          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.trainingPrograms.table.content' | translate }}]">
+                          </hbt-input-text>
+                        </td>
+                        <td style="width: 10%" class="text-center" *ngIf="mode !== modeConst.VIEW">
+                          <btn-more-action [model]="[{key: i}]" [setting]="actionSchema2">
+                          </btn-more-action>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </ng-container>
+                  </tbody>
+                </nz-table>
+              </div>
+            </div>
+          </nz-tab>
+        </nz-tabset>
+      </div>
+    </div>
+  </form>
+</div>
+
+<ng-container *ngIf="isImportData">
+  <hbt-import-file [showContent]='isImportData'
+                   (onCloseModal)='doCloseImport($event)'
+                   [isGetData]="true"
+                   (getData)="importData($event)"
+                   [importApi]='importApi'
+                   [downLoadTemplateApi]="downLoadTemplateApi"
+                   [fileTemplateName]="fileTemplateName"
+                   [doDownloadFileByNameApi]='doDownloadFileByNameApi'>
+  </hbt-import-file>
+</ng-container>
+

@@ -1,0 +1,43 @@
+@import 'src/app/core/global-style/variable';
+
+.pgs-form .menu__item--btn {
+  font-size: 16px;
+  padding: 3px;
+  color: $error-500;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.pgs-form .menu__item--btn1 {
+  font-size: 16px;
+  padding: 3px;
+  color: $bg-default;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.pgs-form .text-center {
+  text-align: center;
+}
+
+.pgs-form .label__required {
+  color: $error-default-color;
+}
+
+::ng-deep .pgs-form .ant-card-head {
+  margin-top: -40px !important;
+}
+
+::ng-deep .pgs-form .ant-pagination {
+  display: none;
+}
+
+
+.pgs-form .hbt-select {
+  position: relative;
+  z-index: 1;
+}

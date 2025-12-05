@@ -1,0 +1,163 @@
+<div class='save-form-mat' [ngClass]="{'app-card' : isPage}" id="save-form-mat" scrollSpy>
+  <div class="btn__across-no-page" *ngIf="isPage" style="margin-right: 20px">
+    <hbt-button buttonType="NO_BORDER" *ngIf="mode !== modeConst.VIEW" (click)="save()" buttonAvailableStyle="SAVE"
+                buttonText="{{'common.button.save' | translate}}" type='SUBMIT'></hbt-button>
+    <hbt-button
+      buttonAvailableStyle="DEFAULT"
+      buttonText="{{ 'common.button.back' | translate }}"
+      (click)="back()">
+    </hbt-button>
+  </div>
+  <form nz-form [formGroup]="form" style="margin-top: 20px">
+    <div nz-row [nzGutter]="[20,15]">
+      <!--mã kho-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="code" maxLength="50"
+          [type]="isSubmitted && form.controls['code'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['code'].errors != null"
+          [errors]="form.controls['code'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'mat.matWarehouses.table.code' | translate }},
+          { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 50}}]"
+          placeholderText="{{'mat.matWarehouses.table.code' | translate}}"
+          labelText="{{'mat.matWarehouses.table.code' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--tên kho-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="name" maxLength="255"
+          [type]="isSubmitted && form.controls['name'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['name'].errors != null"
+          [errors]="form.controls['name'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'mat.matWarehouses.table.name' | translate }},
+          { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+          placeholderText="{{'mat.matWarehouses.table.name' | translate}}"
+          labelText="{{'mat.matWarehouses.table.name' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--kho tổng-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select
+          urlLoadData="/warehouses"
+          [serviceName]="serviceName"
+          keyValue="warehouseId"
+          keyLabel="name"
+          formControlName="parentId"
+          [inputParam]="{warehouseId: data?.warehouseId}"
+          [isTree]="true"
+          [type]="isSubmitted && form.controls['parentId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['parentId'].errors != null"
+          [errors]="form.controls['parentId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'mat.matWarehouses.table.parentId' | translate }}]"
+          placeholder="{{'mat.matWarehouses.table.parentId' | translate}}"
+          labelText="{{'mat.matWarehouses.table.parentId' | translate}}"
+          [disable]="form.controls['type'].value === 'KHO_TONG'"
+        ></hbt-select>
+      </div>
+
+      <!--địa chỉ-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="address" isTextAre
+          maxLength="500"
+          placeholderText="{{'mat.matWarehouses.table.address' | translate}}"
+          labelText="{{'mat.matWarehouses.table.address' | translate}} <span class='label__required'>*</span>"
+          [type]="isSubmitted && form.controls['address'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['address'].errors != null"
+          [errors]="form.controls['address'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'mat.matWarehouses.table.address' | translate }},
+           { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 500}}]"
+        ></hbt-input-text>
+      </div>
+
+      <!--Loại kho-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select
+          formControlName="type"
+          [urlLoadData]="getUrlCategory(categoryCode.WAREHOUSE_TYPE)"
+          keyLabel="name"
+          placeholder="{{'mat.matWarehouses.table.type' | translate}}"
+          labelText="{{'mat.matWarehouses.table.type' | translate}} <span class='label__required'>*</span>"
+          [type]="isSubmitted && form.controls['type'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['type'].errors != null"
+          [errors]="form.controls['type'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'mat.matWarehouses.table.type' | translate }}]"
+          (ngModelChange)="changeType($event)"
+        >
+        </hbt-select>
+      </div>
+
+      <!--Phòng ban quản lý-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <tree-data-picker
+          [isExpand]="true"
+          placeholder="{{'mat.matWarehouses.table.departmentId' | translate}}"
+          labelText="{{'mat.matWarehouses.table.departmentId' | translate}} <span class='label__required'>*</span>"
+          formControlName="departmentId"
+          [functionCode]="functionCode"
+          [scope]="scope"
+          [type]="isSubmitted && form.controls['departmentId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['departmentId'].errors != null"
+          [errors]="form.controls['departmentId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'mat.matWarehouses.table.departmentId' | translate }}]">
+        </tree-data-picker>
+      </div>
+
+      <!--Phòng ban quản lý-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select
+          [urlLoadData]="getUrlCategory(categoryCode.ACTIVE_STATUS)"
+          keyLabel="name"
+          formControlName="statusId"
+          [type]="isSubmitted && form.controls['statusId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['statusId'].errors != null"
+          [errors]="form.controls['statusId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'mat.matWarehouses.table.statusId' | translate }}]"
+          placeholder="{{'mat.matWarehouses.table.statusId' | translate}}"
+          labelText="{{'mat.matWarehouses.table.statusId' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <!--ghi chú-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="note" isTextAre
+          maxLength="1000"
+          placeholderText="{{'mat.matWarehouses.table.note' | translate}}"
+          labelText="{{'mat.matWarehouses.table.note' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--path id cha-con-->
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <ng-container *ngIf="mode !== modeConst.VIEW; else detailTmpl">
+          <div nz-row [nzGutter]="[20,15]">
+            <div nz-col [nzXs]='24' [nzLg]='12' class="mws-title">
+              {{'mat.matWarehouses.table.listEmployeeIds' | translate}}
+            </div>
+            <div nz-col [nzXs]="24" [nzLg]="12">
+              <employee-data-picker status='WORKING' isMulti="true"
+                                    (selectedChange)="changeEmp($event)"
+                                    formControlName="employeeIds"
+                                    [type]="isSubmitted && form.controls['statusId'].errors ? 'error' : 'default'"
+                                    [showError]="isSubmitted && form.controls['statusId'].errors != null"
+                                    [errors]="form.controls['statusId'].errors"
+                                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'mat.matWarehouses.table.statusId' | translate }}]"
+              >
+              </employee-data-picker>
+            </div>
+            <div nz-col [nzXs]='24'>
+              <app-employee-list [isDetail]="false" (listEmpIdsChange)="listEmpIdsChange($event)"></app-employee-list>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #detailTmpl>
+          <div class="content__item content__item--border bg__content--default remove-margin-collapse">
+            <hbt-scroll-tabs [isShowInfoChange]="true" [sticky]="true" [tabs]="scrollTabs"></hbt-scroll-tabs>
+            <hbt-collapse #collapse [panels]="panels"></hbt-collapse>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </form>
+</div>
+

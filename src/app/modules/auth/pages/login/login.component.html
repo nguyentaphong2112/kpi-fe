@@ -1,0 +1,59 @@
+<loading-page></loading-page>
+<div class="bg__login" style="background-image: url('{{bgLoginPath}}')">
+  <div class="login">
+    <h1 class="login__title">{{ 'common.user.login' | translate }}</h1>
+    <form nz-form [formGroup]="form">
+      <div nz-row [nzGutter]='[15,15]'>
+        <div nz-col [nzXs]="24">
+          <hbt-input-text
+            class="login-input"
+            [defaultInput]="true"
+            (keydown)="preventSpace($event)"
+            placeholderText="{{ 'common.user.accountName' | translate }}" formControlName="loginName"
+            [type]="isSubmitted && f['loginName'].errors ? 'error' : 'default'"
+            [showError]="isSubmitted && f['loginName'].errors !== null"
+            [errors]="f['loginName'].errors"
+            [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'common.user.accountName' | translate }}]"></hbt-input-text>
+        </div>
+        <div nz-col [nzXs]="24">
+          <hbt-input-text
+            class="login-input"
+            [defaultInput]="true"
+            (keydown)="preventSpace($event)"
+            placeholderText="{{ 'common.user.password' | translate }}"
+            [inputType]="isFocus ? 'text':'password'"
+            formControlName="password"
+            [type]="isSubmitted && f['password'].errors ? 'error' : 'default'"
+            [showError]="isSubmitted && f['password'].errors !== null"
+            [errors]="f['password'].errors"
+            [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'common.user.password' | translate }}]">
+          </hbt-input-text>
+          <label class="pass-eye" (click)="onLabelClick()"><i *ngIf="isFocus" class="fa fa-eye"></i><i *ngIf="!isFocus" class="fa fa-eye-slash"></i></label>
+        </div>
+      </div>
+      <div class="login__flex">
+        <div (click)="openChangePassword()">{{ 'common.user.changePassword' | translate }}</div>
+        <div (click)="loginWithGuest()">{{ 'common.user.loginGuest' | translate }}</div>
+      </div>
+      <div>
+        <button class="login__btn" nz-button (click)="submitForm()">
+          <span *ngIf="isLoading" nz-icon nzType="loading"
+                nzTheme="outline" class="loading-btn"></span>{{ 'common.user.login' | translate }}
+          <span nz-icon
+                nzType="arrow-right"
+                nzTheme="outline"></span>
+
+        </button>
+      </div>
+      <!--      <div class="login__text&#45;&#45;center">{{ 'common.user.otherLogin' | translate }}</div>-->
+      <!--      <div class="login__flex&#45;&#45;icon">-->
+      <!--        <div>-->
+      <!--          <span class="login__icon1" nz-icon nzType="google-plus" nzTheme="outline"></span>-->
+      <!--        </div>-->
+      <!--        <div>-->
+      <!--          <span class="login__icon2" nz-icon nzType="qrcode" nzTheme="outline"></span>-->
+      <!--        </div>-->
+      <!--      </div>-->
+    </form>
+  </div>
+</div>

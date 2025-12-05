@@ -1,0 +1,110 @@
+{
+  "internshipSessions": {
+    "table": {
+      "internshipSessionId": "Mã lớp thực tập (?)",
+      "universityId": "Tên trường",
+      "sessionName": "Lớp đào tạo",
+      "startDate": "Từ ngày",
+      "endDate": "Đến ngày",
+      "totalStudents": "Số lượng",
+      "isDeleted": "Trạng thái xóa (Y : đã xóa, N : chưa xóa)",
+      "createdBy": "Người tạo",
+      "createdTime": "Ngày tạo",
+      "modifiedBy": "Người sửa",
+      "modifiedTime": "Ngày sửa",
+      "lastUpdateTime": "Ngày cập nhật cuối cùng (trường tự sinh)",
+      "documentNo": "Số tờ trình/quyết định"
+    },
+    "label": {
+      "universityId": "Trường đào tạo",
+      "orgId": "Khoa/phòng",
+      "majorId": "Chuyên ngành",
+      "totalStudents": "Số lượng",
+      "sessionName": "Lớp đào tạo",
+      "keySearch": "Mã hoặc tên trường"
+    },
+    "validate": {
+      "duplicateMajor": "Khoa/phòng và chuyên ngành không được trùng"
+    },
+    "pageName": "Sinh viên thực tập"
+  },
+  "export-report": {
+    "label": {
+      "internalDetail": "Danh sách chi tiết tham gia đào tạo",
+      "hourTotal": "Báo cáo tổng hợp số giờ tín chỉ",
+      "internalStatistic": "Tổng hợp đào tạo liên tục",
+      "internalStatistic12": "Thống kê số lượng và tỉ lệ cbnv ĐTLT 12 tiết/năm",
+      "internalStatistic24": "Thống kê số lượng và tỉ lệ cbnv ĐTLT 24 tiết/năm",
+      "healthcareStaff": "Danh sách nhân viên y tế",
+      "reportType": "Loại báo cáo",
+      "organization": "Đơn vị",
+      "keySearch": "Mã/Tên nhân viên",
+      "startDate": "Từ năm",
+      "endDate": "Đến năm"
+    }
+  },
+  "trainingProcess": {
+    "table": {
+      "employee": "Nhân viên",
+      "employeeCode": "Mã nhân viên",
+      "employeeName": "Họ và tên",
+      "jobName": "Chức danh",
+      "orgName": "Đơn vị",
+      "majorName": "Nội dung đào tạo",
+      "trainingPlaceName": "Nơi đào tạo",
+      "trainingPlanName": "Kế hoạch đào tạo",
+      "trainingCourseName": "Khóa đào tạo",
+      "date": "Thời gian đào tạo",
+      "startDate": "Từ ngày",
+      "endDate": "Đến ngày",
+      "documentNo": "Số QĐ cử đi học",
+      "documentSignedDate": "Ngày ký QĐ",
+      "totalBudget": "Tổng kinh phí",
+      "totalHours": "Tổng số giờ tín chỉ",
+      "createdBy": "Người tạo",
+      "createdTime": "Ngày tạo",
+      "modifiedBy": "Người sửa",
+      "modifiedTime": "Ngày sửa",
+      "lastUpdateTime": "Ngày cập nhật cuối cùng (trường tự sinh)"
+    },
+    "pageName": "Đào tạo nội viện"
+  },
+  "externalTrainings": {
+    "table": {
+      "typeId": "Đối tượng",
+      "fullName": "Họ và tên",
+      "genderId": "Giới tính",
+      "yearOfBirth": "Năm sinh",
+      "mobileNumber": "Số điện thoại",
+      "personalIdNo": "CCCD",
+      "address": "Địa chỉ",
+      "startDate": "Từ ngày",
+      "endDate": "Đến ngày",
+      "organizationAddress": "Đơn vị công tác",
+      "trainningTypeId": "Hình thức đào tạo",
+      "trainingMajorId": "Chuyên ngành đào tạo",
+      "content": "Nội dung đào tạo",
+      "organizationId": "Khoa/phòng đào tạo",
+      "mentorId": "Người hướng dẫn",
+      "admissionResults": "Kết quả đầu vào",
+      "graduatedResults": "Kết quả đầu ra",
+      "numberOfLessons": "Tổng số tiết đào tạo",
+      "tuitionFeeStatusId": "Tình trạng đóng học phí",
+      "certificateNo": "Số giấy chứng nhận/chứng chỉ",
+      "certificateDate": "Ngày cấp chứng nhận/chứng chỉ",
+      "createdBy": "Người tạo",
+      "createdTime": "Ngày tạo",
+      "modifiedBy": "Người sửa",
+      "modifiedTime": "Ngày sửa",
+      "lastUpdateTime": "Ngày cập nhật cuối cùng (trường tự sinh)"
+    },
+    "label": {
+      "keySearch": "Họ và tên/Địa chỉ"
+    },
+    "pageName": "Đào tạo ngoại viện"
+  },
+  "validate": {
+    "totalBudgetMismatch": "Tổng các trường phải bằng {{field}}",
+    "maxDateNow": "{{param}} không được lớn hơn năm hiện tại"
+  }
+}

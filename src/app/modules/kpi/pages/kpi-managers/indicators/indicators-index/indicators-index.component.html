@@ -1,0 +1,185 @@
+<form nz-form [formGroup]="form" class="indicator">
+  <div class="search__custom-common {{isShowAdvSearch ? 'add__mr__bt-10' : 'remove__mr__bt-40'}}">
+    <div nz-row class="button__action-left">
+      <hbt-button
+        class="staff__research__btn__search"
+        buttonSize="LARGE"
+        style="margin-right: 20px"
+        buttonAvailableStyle="ADD"
+        buttonText="{{'common.button.add' | translate}}"
+        *ngIf="objFunction?.create"
+        (click)="doOpenForm(modeConst.ADD)"
+      ></hbt-button>
+      <hbt-button buttonSize="LARGE"
+                  class="staff__research__btn__search"
+                  buttonText="{{'common.button.uploadFile' | translate}}"
+                  [buttonTextColor]="_variable.$purple_800" (click)="doImportData()" *ngIf="visibleActionsCount < 2 && objFunction?.import"></hbt-button>
+      <hbt-button
+        style="margin-left: 20px"
+        buttonSize="MEDIUM"
+        buttonType="BORDER"
+        (click)="export()"
+        *ngIf="visibleActionsCount < 2">
+        <img src="/assets/icon/staff-manager/export_excel.svg" alt="" />
+      </hbt-button>
+      <btn-more-action *ngIf="visibleActionsCount >= 2" [setting]="actionSchemaHeader" [isBtn]="true">
+      </btn-more-action>
+    </div>
+
+    <div class="search__page-right">
+      <hbt-input-text formControlName='keySearch'
+                      [maxLength]='255'
+                      placeholderText="{{'kpi.indicators.table.name' | translate}}"></hbt-input-text>
+      <hbt-button
+        buttonIconType="AWESOME"
+        [prefixIcon]="isShowAdvSearch ? 'fa fa-angle-double-up' : 'fa fa-angle-double-down'"
+        buttonSize="VERY_LARGE"
+        [buttonTextColor]="_variable.$neutral_100"
+        [buttonBorderColor]="_variable.$purple_800"
+        [buttonBgColor]="_variable.$purple_800"
+        (click)="isShowAdvSearch = !isShowAdvSearch"
+      >
+      </hbt-button>
+    </div>
+  </div>
+
+  <div *ngIf="isShowAdvSearch" class="content__item content__item--border bg__content--default">
+    <div class="form-search">
+      <div nz-row [nzGutter]='[20,15]'>
+
+        <div nz-col [nzXs]="12" [nzLg]="12">
+          <hbt-select [urlLoadData]="getUrlCategory(categoryCode.PHAN_LOAI_KPI)"
+                      [serviceName]="microService.ADMIN"
+                      keyLabel="name"
+                      formControlName="type"
+                      placeholder="{{'kpi.indicators.table.type' | translate}}"
+                      labelText="{{'kpi.indicators.table.type' | translate}}"
+          ></hbt-select>
+        </div>
+
+        <!--đơn vị tính-->
+        <div nz-col [nzXs]="12" [nzLg]="12">
+          <hbt-select [urlLoadData]="getUrlCategory(categoryCode.DON_VI_TINH)"
+                      [serviceName]="microService.ADMIN"
+                      keyLabel="name"
+                      formControlName="unitId"
+                      placeholder="{{'kpi.indicators.table.unitId' | translate}}"
+                      labelText="{{'kpi.indicators.table.unitId' | translate}}"
+          ></hbt-select>
+        </div>
+
+        <!--chu kỳ-->
+        <div nz-col [nzXs]="12" [nzLg]="12">
+          <hbt-select [urlLoadData]="getUrlCategory(categoryCode.CHU_KY)"
+                      [serviceName]="microService.ADMIN"
+                      keyLabel="name"
+                      formControlName="periodType"
+                      placeholder="{{'kpi.indicators.table.periodType' | translate}}"
+                      labelText="{{'kpi.indicators.table.periodType' | translate}}"
+          ></hbt-select>
+        </div>
+
+        <!--nguồn thông tin quản lý-->
+        <div nz-col [nzXs]="12" [nzLg]="12">
+          <hbt-input-text formControlName="systemInfo" maxLength="255"
+                          placeholderText="{{'kpi.indicators.table.systemInfo' | translate}}"
+                          labelText="{{'kpi.indicators.table.systemInfo' | translate}}"
+          ></hbt-input-text>
+        </div>
+
+        <!--ý nghĩa của chỉ số-->
+        <div nz-col [nzXs]="24" [nzLg]="12">
+          <hbt-input-text formControlName="significance"
+                          maxLength="1000"
+                          placeholderText="{{'kpi.indicators.table.significance' | translate}}"
+                          labelText="{{'kpi.indicators.table.significance' | translate}}"
+          ></hbt-input-text>
+        </div>
+
+        <!--cách thức đo-->
+        <div nz-col [nzXs]="24" [nzLg]="12">
+          <hbt-input-text formControlName="measurement" maxLength="255"
+                          placeholderText="{{'kpi.indicators.table.measurement' | translate}}"
+                          labelText="{{'kpi.indicators.table.measurement' | translate}}"
+          ></hbt-input-text>
+        </div>
+        <div nz-col [nzXs]="24" [nzLg]="24" style="text-align: center">
+          <hbt-button
+            class="staff__research__btn__search"
+            buttonAvailableStyle="SEARCH"
+            buttonText="{{'common.button.search' | translate}}"
+            (click)="search()"
+          ></hbt-button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='search__content--group' [ngClass]="{'search__content--group-hidden-header': isShowAdvSearch}">
+    <hbt-table-wrap>
+      <hbt-table
+        (onDblClick)="onClickItem($event)"
+        (changePageNum)="search($event)"
+        [tableConfig]="tableConfig" [dataList]="tableData"></hbt-table>
+    </hbt-table-wrap>
+  </div>
+
+  <ng-template #significanceTpl let-significance='significance'>
+    <ng-container *ngFor="let data of (significance?.split('\n') ?? [])">
+      <div [innerHTML]="strReplaceSpace(data)"></div>
+    </ng-container>
+  </ng-template>
+  <ng-template #measurementTpl let-measurement='measurement'>
+    <ng-container *ngFor="let data of (measurement?.split('\n') ?? [])">
+      <div [innerHTML]="strReplaceSpace(data)"></div>
+    </ng-container>
+  </ng-template>
+  <ng-template #systemInfoTpl let-systemInfo='systemInfo'>
+    <ng-container *ngFor="let data of (systemInfo?.split('\n') ?? [])">
+      <div [innerHTML]="strReplaceSpace(data)"></div>
+    </ng-container>
+  </ng-template>
+  <ng-template #noteTpl let-note='note'>
+    <ng-container *ngFor="let data of (note?.split('\n') ?? [])">
+      <div [innerHTML]="strReplaceSpace(data)"></div>
+    </ng-container>
+  </ng-template>
+
+  <ng-template #relatedNameTpl let-relatedNames='relatedNames'>
+    <ng-container *ngFor="let data of (relatedNames?.split('\n') ?? [])">
+      <div [innerHTML]="strReplaceSpace(data)"></div>
+    </ng-container>
+  </ng-template>
+
+  <ng-template #scopeNameTpl let-scopeNames='scopeNames'>
+    <ng-container *ngFor="let data of (scopeNames?.split('\n') ?? [])">
+      <div [innerHTML]="strReplaceSpace(data)"></div>
+    </ng-container>
+  </ng-template>
+
+  <ng-template #actionTmpl let-data="data">
+    <btn-more-action [model]="[data]" [setting]="actionSchema">
+    </btn-more-action>
+  </ng-template>
+
+  <ng-template #footerTmpl>
+    <hbt-button
+      buttonAvailableStyle="CANCEL"
+      buttonText="{{ 'common.button.cancel' | translate }}"
+      (click)="modalRef.destroy()">
+    </hbt-button>
+    <hbt-button
+      buttonAvailableStyle="SAVE"
+      buttonText="{{ 'common.button.saveS' | translate }}"
+      (click)="modalRef.getContentComponent().save()">
+    </hbt-button>
+  </ng-template>
+
+  <hbt-import-file [showContent]='isImportData'
+                   (onCloseModal)='doCloseImport($event)'
+                   [importApi]='importApi'
+                   [downLoadTemplateApi]="downLoadTemplateApi"
+                   [fileTemplateName]="fileTemplateName"
+                   [doDownloadFileByNameApi]='doDownloadFileByNameApi'>
+  </hbt-import-file>
+</form>
+

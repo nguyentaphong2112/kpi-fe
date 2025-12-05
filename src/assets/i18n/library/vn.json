@@ -1,0 +1,132 @@
+{
+  "books": {
+    "label": {
+      "author": "Tác giả",
+      "translator": "Dịch giả",
+      "genreId": "Danh mục sách",
+      "typeBook": "Phân loại",
+      "language": "Ngôn ngữ",
+      "eBook": "Sách điện tử",
+      "photoBook": "Sách in",
+      "photoBookAndeBook": "Sách in và sách điện tử",
+      "book": "Sách",
+      "genre": "Danh mục",
+      "keySearch": "Từ khóa",
+      "summary": "Nội dung tóm tắt",
+      "tableOfContents": "Phụ lục",
+      "title": "Tiêu đề",
+      "subtitle": "Phụ đề",
+      "originalTitle": "Nguyên tác",
+      "type": "Phân loại",
+      "category": "Danh mục sách",
+      "attachFile": "File ảnh bìa",
+      "tags": "Tags",
+      "informationAboutBooks": "Thông tin các đầu sách",
+      "publisher": "Nhà xuất bản",
+      "publishedYear": "Năm xuất bản",
+      "attachFileBookContent": "File nội dung sách",
+      "bookFormatId": "Khổ sách",
+      "totalPages": "Số trang",
+      "storeId": "Kho sách",
+      "totals": "Số cuốn",
+      "favouriteBook": "Sách yêu thích",
+      "noticeScan" : "Thực hiện kết nối camera để scan mã barcode"
+    }
+  },
+  "details": {
+    "label": {
+      "subtitle": "Phụ đề: ",
+      "originalTitle": "Nguyên tác: ",
+      "author": "Tác giả: ",
+      "translator": "Dịch giả: ",
+      "genreId": "Thể loại: ",
+      "language": "Ngôn ngữ: ",
+      "relatedBooks": "Sách liên quan: ",
+      "tags": "Tags: ",
+      "synopsis": "Tóm tắt nội dung",
+      "listOfBooks": "Danh sách đầu sách",
+      "publisher": "NXB: ",
+      "yearOfPublication": "Năm XB: ",
+      "pageNumber": "Số trang: ",
+      "format": "Khổ sách: ",
+      "status": "Tình trạng: ",
+      "available": "Hiện có ({{number}})",
+      "borrowing": "Đang mượn ({{number}})",
+      "detail": "Chi tiết",
+      "book": " đầu sách",
+      "storeId": "Kho sách",
+      "availableStatus": "Hiện có",
+      "borrowStatus": "Đang mượn",
+      "lostStatus": "Đã mất",
+      "titleList": "Dach sách các cuốn sách",
+      "viewBook": "Xem chi tiết sách",
+      "tableOfContents": "Phụ lục"
+    },
+    "table": {
+      "code": "Mã số",
+      "status": "Trạng thái",
+      "borrower": "Người mượn",
+      "borrowedDate": "Ngày mượn",
+      "note": "Ghi chú"
+    },
+    "actions": {
+      "borrowBooks": "Mượn sách",
+      "favourite": "Yêu thích",
+      "favourited": "Đã yêu thích",
+      "see": "Xem",
+      "download": "Tải"
+    }
+  },
+  "book": {
+    "label": {
+      "author": "Tác giả",
+      "translator": "Dịch giả",
+      "genreBook": "Danh mục sách",
+      "typeBook": "Phân loại",
+      "language": "Ngôn ngữ",
+      "eBook": "Sách điện tử",
+      "photoBook": "Sách in",
+      "photoBookAndeBook": "Sách in và sách điện tử",
+      "book": "Sách",
+      "genre": "Danh mục",
+      "keySearch": "Từ khóa"
+    }
+  },
+  "member": {
+    "label": {
+      "keySearch": "Mã/tên",
+      "code": "Mã",
+      "name": "Tên",
+      "createdTime": "Ngày tạo",
+      "createdBy": "Người tạo",
+      "modifiedTime": "Ngày sửa",
+      "modifiedBy": "Người sửa",
+      "genderId": "Giới tính",
+      "dateOfBirth": "Ngày sinh",
+      "member": "thành viên"
+    }
+  },
+  "bookLoan": {
+    "label": {
+      "bookLoans": "MƯỢN SÁCH",
+      "bookBorrowing": "TRẢ SÁCH",
+      "addNewBook": "NHẬP SÁCH MỚI",
+      "createBookCode": "TẠO MÃ SÁCH",
+      "loan": "mượn sách",
+      "reservation": "trả sách",
+      "add": "sách",
+      "borrower": "Người mượn",
+      "bookTitle": "Tên sách",
+      "bookNo": "Mã số",
+      "borrowedDate": "Ngày mượn",
+      "bookEditionId": "Đầu sách",
+      "returnDate": "Ngày trả",
+      "bookCode": "mã sách",
+      "total": "Số lượng mã sách"
+    }
+  },
+  "validates": {
+    "required": "{{param}} bắt buộc nhập",
+    "maxLength": "Độ dài tối đa {{numberLength}} ký tự"
+  }
+}

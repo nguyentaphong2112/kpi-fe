@@ -1,0 +1,13 @@
+@import "src/app/core/global-style/variable";
+
+.dss-index .menu__item--btn {
+  cursor: pointer;
+  background: $bg-form-default;
+  width: 50px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid $black-500;
+}

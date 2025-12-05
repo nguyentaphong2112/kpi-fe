@@ -1,0 +1,59 @@
+<div class='save-form-crm'>
+  <form nz-form [formGroup]="form" style="margin-top: 20px">
+    <div nz-row [nzGutter]="[20,15]">
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [isLoadMore]="true"
+                    urlLoadData="/customers/pageable"
+                    [serviceName]="serviceName"
+                    keyValue="customerId"
+                    keyLabel="phoneAndName"
+                    formControlName="customerId"
+                    [type]="isSubmitted && form.controls['customerId'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['customerId'].errors != null"
+                    [errors]="form.controls['customerId'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.orders.label.customerId' | translate }}]"
+                    placeholder="{{'crm.orders.label.customerId' | translate}}"
+                    labelText="{{'crm.orders.label.customerId' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <!--chứng chỉ-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [urlLoadData]="getUrlCategory(categoryCode.CRM_CHUNG_CHI)"
+                    [serviceName]="microService.ADMIN"
+                    [type]="isSubmitted && form.controls['certificateId'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['certificateId'].errors !== null"
+                    [errors]="form.controls['certificateId'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.customerCertificates.table.certificateName' | translate }}]"
+                    keyLabel="name"
+                    formControlName="certificateId"
+                    placeholder="{{'crm.customerCertificates.table.certificateName' | translate}}"
+                    labelText="{{'crm.customerCertificates.table.certificateName' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <!--Ngày đạt chứng chỉ-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-date-picker
+          placeholderText="{{'crm.customerCertificates.table.issuedDate' | translate}}"
+          labelText="{{'crm.customerCertificates.table.issuedDate' | translate}} <span class='label__required'>*</span>"
+          formControlName="issuedDate"
+          [type]="isSubmitted && form.controls['certificateId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['certificateId'].errors !== null"
+          [errors]="form.controls['certificateId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.customerCertificates.table.issuedDate' | translate }}]">
+        </hbt-date-picker>
+      </div>
+
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <hbt-input-text formControlName="note" maxLength="1000" isTextAre
+                        [defaultInput]="true"
+                        placeholderText="{{'crm.customerCertificates.table.note' | translate}}"
+                        labelText="{{'crm.customerCertificates.table.note' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+    </div>
+  </form>
+</div>
+

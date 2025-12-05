@@ -1,0 +1,66 @@
+<div class='save-form-med'>
+  <form nz-form [formGroup]="form" style="margin-top: 20px">
+    <div nz-row [nzGutter]='[20,15]'>
+      <!--id đề tài nghiên cứu-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [dataSelects]="[]"
+          formControlName="researchProjectId"
+          [type]="isSubmitted && form.controls['researchProjectId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['researchProjectId'].errors != null"
+          [errors]="form.controls['researchProjectId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'med.researchProjectLifecycles.table.researchProjectId' | translate }}]"
+          placeholder="{{'med.researchProjectLifecycles.table.researchProjectId' | translate}}"
+          labelText="{{'med.researchProjectLifecycles.table.researchProjectId' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <!--Số quyết định-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="documentNo" maxLength="50"
+          [type]="isSubmitted && form.controls['documentNo'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['documentNo'].errors != null"
+          [errors]="form.controls['documentNo'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 50}}]"
+          placeholderText="{{'med.researchProjectLifecycles.table.documentNo' | translate}}"
+          labelText="{{'med.researchProjectLifecycles.table.documentNo' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--Ngày ký quyết định-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-date-picker
+          placeholderText="{{'med.researchProjectLifecycles.table.documentSignedDate' | translate}}"
+          labelText="{{'med.researchProjectLifecycles.table.documentSignedDate' | translate}}"
+          formControlName="documentSignedDate"></hbt-date-picker>
+      </div>
+
+      <!--Loại-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="type" maxLength="20"
+          [type]="isSubmitted && form.controls['type'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['type'].errors != null"
+          [errors]="form.controls['type'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 20}}]"
+          placeholderText="{{'med.researchProjectLifecycles.table.type' | translate}}"
+          labelText="{{'med.researchProjectLifecycles.table.type' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <div nz-col [nzXs]='24' [nzLg]='24' class="input__group">
+        <hbt-upload
+          [(docIdsDelete)]="docIdsDelete"
+          [typeFileAvailable]="['jpeg', 'jpg', 'png', 'pdf', 'doc', 'docx']"
+          [multiple]="true"
+          labelText="{{'common.label.attachFile' | translate}}"
+          [required]="true"
+          (fileListChange)="onFileListChange($event, 'fileList', true)"
+          (docIdsDeleteChange)="removeFile($event, 'fileList')"
+          [serviceName]='serviceName'
+          [showError]="isSubmitted"
+        ></hbt-upload>
+      </div>
+
+    </div>
+  </form>
+</div>
+

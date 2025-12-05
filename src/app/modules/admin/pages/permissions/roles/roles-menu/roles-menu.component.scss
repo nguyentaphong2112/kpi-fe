@@ -1,0 +1,51 @@
+@import "../../../../../../core/global-style/variable";
+
+::ng-deep .ant-modal-body {
+  padding-top: 0;
+}
+
+::ng-deep .ant-tree-list-holder {
+  margin-top: 20px;
+}
+
+::ng-deep .text__search--highlight {
+  color: $error-500 !important;
+}
+
+::ng-deep .menu__modal .ant-modal-close {
+  display: none;
+}
+
+::ng-deep .menu__modal .ant-modal-content .ant-modal-header {
+  display: none;
+}
+
+.header-modal {
+  position: sticky;
+  top: 0;
+  z-index: 920;
+  background: $bg-form-default;
+  padding: 20px 10px 10px 10px;
+
+  .title {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+}
+
+.role-menus .bg__content--default {
+  padding-top: 0 !important;
+}
+
+
+::ng-deep .anticon {
+  margin-right: 5px;
+}

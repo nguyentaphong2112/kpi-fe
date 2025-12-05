@@ -1,0 +1,77 @@
+<nz-header>
+  <div class="header">
+    <div class="header__left">
+      <em *ngIf="!isMobile" class="trigger__icon" style="height: 64px"></em>
+      <em *ngIf="isMobile" class="trigger__icon" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+          (click)="clickEvent()"></em>
+<!--      <employee-data-picker [isSearchAfterAction]="true" [isExpand]="true" *ngIf="objFunction?.view" class="emp-input" [(ngModel)]="empId"-->
+<!--                            [scope]="scope"-->
+<!--                            (ngModelChange)="changeEmp($event)" [functionCode]="functionCode"></employee-data-picker>-->
+    </div>
+    <div class="header__right">
+<!--      <button *ngIf="isMobile" class="header__right__button header__right__button&#45;&#45;search" nz-button-->
+<!--              (click)="showInputSearch('OPEN')"><img src="/assets/icon/header/header_search.png" alt=""></button>-->
+<!--      <button class="header__right__button header__right__button&#45;&#45;manual" nz-button (click)="openManual()">-->
+<!--        <em class="fa fa-question"></em>-->
+<!--      </button>-->
+<!--      <button class="header__right__button header__right__button&#45;&#45;language" nz-button (click)="changeLanguage()">-->
+<!--        <img [src]="langCurrent === 'vn' ? '/assets/icon/header/vi.png' : '/assets/icon/header/en.png'"-->
+<!--             alt="">-->
+<!--      </button>-->
+
+      <!--      <button class="header__right__button header__right__button&#45;&#45;chat" nz-button><img-->
+      <!--        src="/assets/icon/header/header_chat.png" alt=""></button>-->
+      <!--      <button class="header__right__button header__right__button&#45;&#45;notify" nz-button>-->
+      <!--        <img src="/assets/icon/header/header_notify.png" alt="">-->
+      <!--        <span class="notify__number bg__color__error&#45;&#45;default">12</span>-->
+      <!--      </button>-->
+      <button nz-button nz-dropdown nzTrigger="click" [nzDropdownMenu]="user"
+              class="header__right__button header__right__button--avt">
+        <img [src]="avtBase64" *ngIf="isHasAvatar && avtBase64; else el" alt=""></button>
+      <ng-template #el>
+        <img src="../../../../assets/img/default-avatar.png" alt="">
+      </ng-template>
+    </div>
+  </div>
+  <ng-template #prefixTemplateUser><em nz-icon nzType="search"></em></ng-template>
+  <ng-template #suffixTemplateUser><em nz-icon nzType="close" (click)="showInputSearch('CLOSE')"></em></ng-template>
+  <nz-dropdown-menu #user="nzDropdownMenu">
+    <ul nz-menu class="user__sign--menu">
+      <li nz-menu-item class="user__sign--no-flex">
+        <div class="user__sign--as"><span
+          style="font-family: avertaB, sans-serif; width: 75px; display: inline-block">{{ 'common.user.account'|translate }}
+          :</span>{{ userLogin?.loginName }}
+        </div>
+        <div class="user__sign--email"><span
+          style="font-family: avertaB, sans-serif; width: 75px; display: inline-block">{{ 'common.user.fullName'|translate }}
+          :</span>{{ userLogin?.fullName }}
+        </div>
+      </li>
+<!--      <li nz-menu-divider></li>-->
+<!--      <li nz-menu-item *ngIf="StorageService.get(STORAGE_NAME.USER_LOGIN)?.employeeCode" (click)="openPersonalInfo()"><em-->
+<!--        nz-icon nzType="user" nzTheme="outline"></em>-->
+<!--        <a class="user__sign&#45;&#45;item user__sign&#45;&#45;profile">-->
+<!--          {{ 'common.user.info'|translate }}-->
+<!--        </a>-->
+<!--      </li>-->
+<!--      <li (click)="openChangePassword()" nz-menu-item><em nz-icon nzType="safety-certificate" nzTheme="outline"></em>-->
+<!--        <a class="user__sign&#45;&#45;item user__sign&#45;&#45;pass">-->
+<!--          {{ 'common.user.changePassword'|translate }}-->
+<!--        </a>-->
+<!--      </li>-->
+      <li nz-menu-divider></li>
+      <li nz-menu-item (click)="logout()"><em nz-icon nzType="logout" nzTheme="outline"></em>
+        <a class="user__sign--item user__sign--logout">
+          {{ 'common.user.logout'|translate }}
+        </a>
+      </li>
+    </ul>
+  </nz-dropdown-menu>
+</nz-header>
+<div *ngIf="isMobile && showSearch" class="header__search--mobile">
+  <nz-input-group class="input-group input-group--mobile" [nzPrefix]="prefixTemplateUser"
+                  [nzSuffix]="suffixTemplateUser">
+    <input class="input__search input__search--mobile" type="text" nz-input placeholder="Tìm kiếm"
+           [(ngModel)]="searchValue" />
+  </nz-input-group>
+</div>

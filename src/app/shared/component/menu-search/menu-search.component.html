@@ -1,0 +1,12 @@
+<div class="input__group input__group--icon {{isCollapsed ? 'search__collapsed--t': 'search__collapsed--f'}}">
+  <nz-input-group [nzPrefixIcon]="(value?.length > 0 || isCollapsed) ? null : 'search'"
+                  [nzSuffix]="value?.length > 0 ? suffix : null"
+                  class="input__group--group input__group--group--default">
+    <input *ngIf="!isCollapsed" appSpecialInput class="input__text input__text--default" nz-input
+           placeholder="Tìm kiếm" [(ngModel)]="value" (ngModelChange)='onBlur()'/>
+    <em *ngIf='isCollapsed' class="icon__search" nz-icon nzType="search"></em>
+  </nz-input-group>
+</div>
+<ng-template #suffix>
+  <em class="icon__close" nz-icon nzType="close" (click)="clearResult()"></em>
+</ng-template>

@@ -1,0 +1,114 @@
+<h3 *ngIf="data?.reportConfigs" style="font-weight: bold">{{ 'common.button.reportTemplate' | translate }}</h3>
+<nz-table nzBordered [nzData]="[1]" nzSize="small" [nzShowPagination]="false" [nzScroll]="{ x: '100%' }"
+          class="table-file-setting"
+          *ngIf="data?.reportConfigs">
+  <tbody>
+  <tr *ngFor="let item of data?.reportConfigs">
+    <!--    <td>{{ item.code }}</td>-->
+    <td class="text-name">
+      <ng-container *ngFor="let it of item?.attachmentFileList">
+        <span (click)="downloadFile(it)" style="cursor: pointer">{{ it.fileName }}</span>
+        <br>
+      </ng-container>
+    </td>
+    <td style="text-align: center">
+                  <span nz-icon nz-tooltip nzTooltipPlacement="right" (click)="openModalEdit(item)"
+                        nzTooltipTitle=" {{ 'common.button.edit' | translate }}" class="action-edit-shared"
+                        nzType="edit"
+                        nzTheme="outline"></span></td>
+  </tr>
+  </tbody>
+</nz-table>
+<h3 *ngIf="data?.configParameters" style="font-weight: bold; margin-top: 20px">{{ 'common.button.parameter' | translate }}</h3>
+<nz-table nzBordered [nzData]="[1]" nzSize="small" [nzShowPagination]="false" [nzScroll]="{ x: '100%' }"
+          class="table-file-setting"
+          *ngIf="data?.configParameters">
+  <tbody>
+  <tr *ngFor="let item of data?.configParameters">
+    <!--    <td>{{ item.code }}</td>-->
+    <td>
+        <span>{{ item.configGroupName }}</span>
+    </td>
+    <td style="text-align: center">
+                  <span nz-icon nz-tooltip nzTooltipPlacement="right" (click)="openModalParameter(item)"
+                        nzTooltipTitle=" {{ 'common.button.edit' | translate }}" class="action-edit-shared"
+                        nzType="edit"
+                        nzTheme="outline"></span></td>
+  </tr>
+  </tbody>
+</nz-table>
+
+<h3 *ngIf="data?.configObjectAttributes" style="font-weight: bold; margin-top: 20px">{{ 'common.button.attribute' | translate }}</h3>
+<nz-table nzBordered [nzData]="[1]" nzSize="small" [nzShowPagination]="false" [nzScroll]="{ x: '100%' }"
+          class="table-file-setting"
+          *ngIf="data?.configObjectAttributes">  
+  <tbody>
+  <tr *ngFor="let item of data?.configObjectAttributes">
+    <!--    <td>{{ item.code }}</td>-->
+    <td>
+        <span>{{ item.name }}</span>
+    </td>
+    <td style="text-align: center">
+                  <span nz-icon nz-tooltip nzTooltipPlacement="right" (click)="openModalAttribute(item)"
+                        nzTooltipTitle=" {{ 'common.button.edit' | translate }}" class="action-edit-shared"
+                        nzType="edit"
+                        nzTheme="outline"></span></td>
+  </tr>
+  </tbody>
+</nz-table>
+
+
+
+<nz-modal [(nzVisible)]="isVisibleEdit"
+          [nzTitle]="('common.button.editTemplate' | translate)"
+          (nzOnCancel)="handleCancelEdit()" nzWidth="60%"
+          [nzFooter]="footer"
+>
+  <ng-container *nzModalContent>
+    <div class="table-file-setting-edit" nz-row [nzGutter]='[20,15]'>
+      <div nz-col [nzXs]="24" [nzLg]="24" class="label-text">{{ 'common.label.fileCode' | translate }}</div>
+      <div nz-col [nzXs]="24" [nzLg]="24" style="margin-left: 10px">{{ fileData?.code ?? '' }}</div>
+      <div nz-col [nzXs]="24" [nzLg]="24" class="label-text">{{ 'common.label.fileName' | translate }}</div>
+      <div nz-col [nzXs]="24" [nzLg]="24" style="margin-left: 10px">{{ fileData?.name ?? '' }}</div>
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <hbt-upload
+          [fileList]="fileListData"
+          [(docIdsDelete)]="attachmentDeleteIds"
+          [typeFileAvailable]="['doc', 'docx', 'xlsx', 'xls', 'pdf']"
+          [multiple]="true"
+          [maxSize]="20"
+          labelText="{{'common.label.attachFile' | translate}}"
+          (fileListChange)="changeFile($event, true)"
+          (docIdsDeleteChange)="removeFileChild($event)"
+          [serviceName]='serviceName'
+        ></hbt-upload>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #footer>
+    <hbt-button
+      buttonAvailableStyle="CANCEL"
+      buttonText="{{ 'common.button.cancel' | translate }}"
+      (click)="handleCancelEdit()">
+    </hbt-button>
+    <hbt-button
+      buttonAvailableStyle="SAVE"
+      buttonText="{{ 'common.button.confirm' | translate }}"
+      (click)="handleOk()"
+    >
+    </hbt-button>
+  </ng-template>
+</nz-modal>
+
+<ng-template #footerTmpl>
+  <hbt-button
+    buttonAvailableStyle="CANCEL"
+    buttonText="{{ 'common.button.cancel' | translate }}"
+    (click)="modalRef.destroy()">
+  </hbt-button>
+  <hbt-button
+    buttonAvailableStyle="SAVE" *ngIf="addWidth == 0"
+    buttonText="{{ 'common.button.saveS' | translate }}"
+    (click)="modalRef.getContentComponent().save()">
+  </hbt-button>
+</ng-template>

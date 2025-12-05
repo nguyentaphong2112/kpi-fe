@@ -1,0 +1,139 @@
+<form nz-form [formGroup]="form">
+  <div nz-row [nzGutter]='[20,15]'>
+    <!--id nhân viên-->
+    <div nz-col [nzXs]="12" [nzLg]="12" *ngIf="!hiddenEmp">
+      <employee-data-picker [isExpand]="true"
+                            formControlName="employeeId"
+                            [functionCode]="functionCode"
+                            [scope]="scope"
+                            [status]='mode !== modeConst.ADD ? "ALL" : "ACTIVE"'
+                            [formMode]="mode"
+                            [disable]="mode !== modeConst.ADD"
+                            [type]="isSubmitted && f['employeeId'].errors ? 'error' : 'default'"
+                            [showError]="isSubmitted && f['employeeId'].errors != null"
+                            [errors]="f['employeeId'].errors"
+                            [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'common.label.employeeName' | translate }}]"
+                            labelText="{{'common.label.employeeName' | translate}} <span class='label__required'>*</span>"
+      >
+      </employee-data-picker>
+    </div>
+    <!--Loại giấy tờ-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-select
+        [dataSelects]="listIdentityType"
+        keyLabel="name"
+        [type]="isSubmitted && f['identityTypeId'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && f['identityTypeId'].errors !== null"
+        [errors]="f['identityTypeId'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.staffManager.table.documentType' | translate }}]"
+        placeholder="{{'hrm.staffManager.table.documentType' | translate}}"
+        labelText="{{'hrm.staffManager.table.documentType' | translate}} <span class='label__required'>*</span>"
+        formControlName='identityTypeId'
+        (eventEmit)="changeIdentityType($event)"
+      ></hbt-select>
+    </div>
+
+    <!--Số định danh-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-input-text
+        [maxLength]="50"
+        [appNumberInput]="validateIdNo.isDisabledAppNumberInput"
+        formControlName='identityNo'
+        [type]="isSubmitted && f['identityNo'].errors ? 'error' : 'default'"
+        [showError]='isSubmitted && f["identityNo"].errors !== null'
+        [errors]='f["identityNo"].errors'
+        [errorDefs]="[
+          { errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.staffManager.table.identityNumber' | translate }},
+          { errorName: 'maxlength', errorDescription: 'hrm.validate.validateLength' | translate: {'name': validateIdNo.identityTypeName, numberLength: validateIdNo.validateIdNoLength}},
+          { errorName: 'minlength', errorDescription: 'hrm.validate.validateLength' | translate: {'name': validateIdNo.identityTypeName, numberLength: validateIdNo.validateIdNoLength}},
+        ]"
+        placeholderText="{{'hrm.staffManager.table.identityNumber' | translate}}"
+        labelText="{{'hrm.staffManager.table.identityNumber' | translate}} <span class='label__required'>*</span>"
+      ></hbt-input-text>
+    </div>
+
+
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <ng-container
+        *ngIf="f['identityTypeId'].value === constant.PAPERS_CODE.ID_NO || f['identityTypeId'].value === constant.PAPERS_CODE.CITIZEN_ID; else other">
+        <hbt-select
+          [dataSelects]="f['identityTypeId'].value === constant.PAPERS_CODE.ID_NO ? listIdNoPlace : listCitizenPlace"
+          keyLabel="name"
+          keyValue="name"
+          [type]="isSubmitted && f['identityIssuePlace'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && f['identityIssuePlace'].errors !== null"
+          [errors]="f['identityIssuePlace'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'hrm.validate.maxLength' | translate: {'numberLength': 199}},
+          { errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.staffManager.table.placeOfIdentity' | translate }}]"
+          placeholder="{{'hrm.staffManager.table.placeOfIdentity' | translate}}"
+          labelText="{{'hrm.staffManager.table.placeOfIdentity' | translate}} <span class='label__required'>*</span>"
+          formControlName='identityIssuePlace'
+        ></hbt-select>
+      </ng-container>
+
+      <ng-template #other>
+        <hbt-input-text
+          formControlName='identityIssuePlace'
+          [maxLength]='255'
+          [type]="isSubmitted && f['identityIssuePlace'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && f['identityIssuePlace'].errors !== null"
+          [errors]="f['identityIssuePlace'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'hrm.validate.maxLength' | translate: {'numberLength': 199}},
+          { errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.staffManager.table.placeOfIdentity' | translate }}]"
+          placeholderText="{{'hrm.staffManager.table.placeOfIdentity' | translate}}"
+          labelText="{{'hrm.staffManager.table.placeOfIdentity' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </ng-template>
+    </div>
+
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-date-picker
+        formControlName='identityIssueDate'
+        [type]="isSubmitted && (f['identityIssueDate'].errors || form.errors?.rangeDateError) ? 'error' : 'default'"
+        [showError]="isSubmitted && (f['identityIssueDate'].errors || form.errors?.rangeDateError) !== null"
+        [errors]="form.errors?.rangeDateError ? form.errors : f['identityIssueDate'].errors"
+        [errorDefs]="[{ errorName: 'rangeDateError', errorDescription: 'hrm.validate.rangeDate.pareDate' | translate:
+        {'fromDate': 'hrm.staffManager.table.dateOfIdentity' | translate, 'toDate': 'hrm.staffManager.table.identityExpireDate' | translate}},
+        { errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.staffManager.table.dateOfIdentity' | translate }}]"
+        placeholderText="{{'hrm.staffManager.table.dateOfIdentity' | translate}}"
+        labelText="{{'hrm.staffManager.table.dateOfIdentity' | translate}} <span class='label__required'>*</span>"
+      ></hbt-date-picker>
+    </div>
+
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-date-picker
+        formControlName='expiredDate'
+        placeholderText="{{'hrm.staffManager.table.identityExpireDate' | translate}}"
+        labelText="{{'hrm.staffManager.table.identityExpireDate' | translate}}"
+      ></hbt-date-picker>
+    </div>
+
+    <div nz-col [nzXs]="24" [nzLg]="24">
+      <label nz-checkbox formControlName='isMain'>
+        <span class="ant-checkbox-isMain">{{ 'hrm.staffManager.table.documentMain' | translate }}</span>
+      </label>
+
+    </div>
+
+    <ng-container formArrayName="listAttributes">
+      <ng-container *ngFor="let attributes of attributesFormArray.controls; let idx = index" [formGroupName]="idx">
+        <div nz-col [nzXs]="12" [nzLg]="12">
+          <input-attribute-common
+            [controlName]="getAttributeControl(idx, 'attributeValue')"
+            [dataType]="attributes.get('dataType')?.value"
+            [urlLoadData]="attributes.get('urlLoadData')?.value"
+            [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+            [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+            [errors]="attributes.get('attributeValue')?.errors"
+            [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}]"
+            [placeholderText]="attributes.get('attributeName')?.value"
+            [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+          >
+          </input-attribute-common>
+        </div>
+      </ng-container>
+    </ng-container>
+
+  </div>
+</form>
+

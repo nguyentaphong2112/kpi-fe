@@ -1,0 +1,21 @@
+{
+  "organization": {
+    "name": "Tên đơn vị",
+    "search": "Tìm kiếm organization",
+    "org": "Đơn vị",
+    "select": "Lựa chọn đơn vị"
+  },
+  "pageName": {
+    "dashboardManager": "Quản lý dashboard",
+    "generalInfo": "Thông tin chung"
+  },
+  "breadcrumb": {
+    "dashboardManager": "Quản lý dashboard",
+    "generalInfo": "Thông tin chung"
+  },
+  "label": {
+    "stt": "STT",
+    "fileName": "Tên File",
+    "title": "File mẫu biểu"
+  }
+}

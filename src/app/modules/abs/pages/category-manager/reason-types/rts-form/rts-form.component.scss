@@ -1,0 +1,11 @@
+.time_reason_type{
+  margin-top: auto!important;
+}
+::ng-deep .time_reason_type .input__label {
+  visibility: hidden;
+}
+
+::ng-deep .time_reason_type .input__label:before {
+  content: ".";
+  visibility: hidden;
+}

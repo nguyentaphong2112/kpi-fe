@@ -1,0 +1,37 @@
+@import "variable";
+
+.ant-modal-content {
+  border-radius: $border-radius-default;
+
+  .ant-modal-header {
+    border-radius: $border-radius-default $border-radius-default 0 0;
+    border-bottom: none;
+    // background-color: $bg-modal-header;
+
+    .ant-modal-title {
+      // color: $bg-modal-header-title;
+      font-size: 1.1rem;
+      font-family: avertaB, sans-serif;
+    }
+  ;
+  }
+
+  .ant-modal-footer {
+    border-top: none;
+  }
+
+  .ant-card-bordered {
+    border: none;
+    border-radius: 8px;
+  }
+
+  .ant-upload.ant-upload-drag {
+    height: unset !important;
+  }
+}
+
+.delete-popup-container {
+  display: flex;
+  align-items: center;
+  padding-bottom: 321px;
+}

@@ -1,0 +1,33 @@
+<div class="datepicker__group datepicker__group--icon">
+  <div *ngIf="labelText != null" class="input__label" [innerHTML]="labelText"></div>
+  <div [class]="inputGroupGroupClass">
+    <div style='display: flex; gap: 20px;'>
+      <nz-date-picker maskDate nzAllowClear nzBackdrop
+                      [nzAutoFocus]="autofocus" [nzDisabled]="disabled" [nzInputReadOnly]="inputReadOnly"
+                      [nzMode]="mode" [nzPlaceHolder]="placeholderFromdate ?? '---Từ ngày---'"
+                      [nzSuffixIcon]="suffixIcon"
+                      [nzInline]="inline"
+                      [(ngModel)]="value[0]" [nzShowToday]="showToday"
+                      [nzShowTime]="showTime"
+                      [nzDisabledTime]="disabledTime" [nzDateRender]="dateRender"
+                      [nzRenderExtraFooter]="renderExtraFooter"
+                      (nzOnOpenChange)="openChange($event, 'START')" (nzOnOk)="_onOk($event, 'START')"
+                      (ngModelChange)="onInputChange($event, 'START')"></nz-date-picker>
+
+      <nz-date-picker maskDate nzAllowClear nzBackdrop
+                      [nzAutoFocus]="autofocus" [nzDisabled]="disabled" [nzInputReadOnly]="inputReadOnly"
+                      [nzMode]="mode" [nzPlaceHolder]="placeholderTodate ?? '--Đến ngày--'" [nzSuffixIcon]="suffixIcon"
+                      [nzInline]="inline"
+                      [(ngModel)]="value[1]" [nzShowToday]="showToday"
+                      [nzShowTime]="showTime"
+                      [nzDisabledTime]="disabledTime" [nzDateRender]="dateRender"
+                      [nzRenderExtraFooter]="renderExtraFooter"
+                      (nzOnOpenChange)="openChange($event, 'END')" (nzOnOk)="_onOk($event, 'END')"
+                      (ngModelChange)="onInputChange($event, 'END')"></nz-date-picker>
+    </div>
+  </div>
+  <div *ngIf="textMessageValue != null && showError" [class]="inputMessageClass">
+    <em *ngIf="showIconMessage" nz-icon [nzType]="iconType" nzTheme="outline"></em>
+    <span class="text__message">{{textMessageValue}}</span>
+  </div>
+</div>

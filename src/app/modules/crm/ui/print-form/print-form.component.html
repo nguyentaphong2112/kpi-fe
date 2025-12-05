@@ -1,0 +1,149 @@
+<form nz-form [formGroup]='form' style='margin-bottom: 8px'
+      class="content__item content__item--border bg__content--default">
+
+      <div nz-row [nzGutter]='[20,15]'>
+        <div nz-col [nzXs]='12' [nzLg]="7">
+          <hbt-select-check-able [disable]="this.data.objId"
+            [dataSelects]="recipientList?.length ? recipientList : []" keyLabel="nameAndPhone" keyValue="objId"
+            [isLoadMore]="true"
+            [optionHeightPx]="55"
+            formControlName="listRecipient"
+            [type]="isSubmitted && form.controls['recipientList']?.errors ? 'error' : 'default'"
+            [showError]="isSubmitted && form.controls['recipientList']?.errors != null"
+            [errors]="form.controls['listRecipient']?.errors"
+            [errorDefs]="[{ errorName: 'required', errorDescription: 'library.validates.required' | translate: { param: 'crm.print.table.recipientList' | translate } }]"
+            labelText="{{ 'crm.print.table.recipientList' | translate }} <span class='label__required'>*</span>"
+            placeholder="{{ 'crm.print.table.recipientList' | translate }}"
+          >
+          </hbt-select-check-able>
+        </div>
+
+        <div nz-col [nzXs]='12' [nzLg]='7'>
+          <hbt-select
+            formControlName='templateType'
+            [urlLoadData]="getUrlCategory(categoryCode.LOAI_BIEU_MAU)" keyValue="value" keyLabel="name"
+            placeholder="{{'crm.print.sample' | translate}}"
+            labelText="{{'crm.print.sample' | translate}} <span class='label__required'>*</span>"
+            [type]="isSubmitted && form.controls['templateType']?.errors ? 'error' : 'default'"
+            [showError]="isSubmitted && form.controls['templateType']?.errors != null"
+            [errors]="form.controls['templateType']?.errors"
+            [errorDefs]="[{ errorName: 'required', errorDescription: 'library.validates.required' | translate: { param: 'crm.print.sample' | translate } }]"
+          ></hbt-select>
+        </div>
+
+        <div nz-col [nzXs]='12' [nzLg]='7' *ngIf="cardTemplate?.length > 1">
+          <hbt-select
+            formControlName='title'
+            [dataSelects]="cardTemplate?.length ? cardTemplate : []"
+            keyLabel="title" keyValue="cardTemplateId"
+            placeholder="{{'crm.print.title' | translate}}"
+            labelText="{{'crm.print.title' | translate}} <span class='label__required'>*</span>"
+            [type]="isSubmitted && form.controls['title']?.errors ? 'error' : 'default'"
+            [showError]="isSubmitted && form.controls['title']?.errors != null"
+            [errors]="form.controls['title']?.errors"
+            [errorDefs]="[{ errorName: 'required', errorDescription: 'library.validates.required' | translate: { param: 'crm.print.title' | translate } }]"
+          ></hbt-select>
+        </div>
+
+        <div nz-col [nzXs]='12' [nzLg]='3' style="display: flex; align-items: end;">
+          <hbt-button type="SUBMIT" buttonSize='VERY_LARGE' buttonAvailableStyle='APPROVE'
+                      buttonText="{{'crm.print.export' | translate}}" (click)="onSubmit()" [isDisable]="isFormIncomplete">
+          </hbt-button>
+        </div>
+
+      </div>
+
+
+  <div nz-row [nzGutter]='[20,15]'>
+    <div nz-col [nzXs]='24' [nzLg]='24'>
+      <ng-content select='.btn'></ng-content>
+    </div>
+  </div>
+
+<div class='save-form-crm' style="margin-top: 20px">
+    <div nz-row [nzGutter]='[20,15]'>
+      <div nz-col [nzXs]="12" [nzLg]="24">
+        <div *ngIf="displayAttachFileList?.length > 0" class="from-img">
+          <div nz-col [nzXs]="12" [nzLg]="6" *ngFor="let file of displayAttachFileList">
+            <div class="ant-image">
+              <img class="ant-image-img" *ngIf="file.fileData" [src]="file.fileData" alt="Attachment Image" />
+              <div class="ant-image-mask">
+                <div class="ant-image-mask-info" (click)="openPreview(file.fileData)">
+                  <span role="img" aria-label="eye" class="anticon anticon-eye">
+                    <svg focusable="false" data-icon="eye" width="1em" height="1em" fill="currentColor" aria-hidden="true" viewBox="64 64 896 896">
+                      <path d="M942.2 486.2C847.4 286.5 704.1 186 512 186c-192.2 0-335.4 100.5-430.2 300.3a60.3 60.3 0 000 51.5C176.6 737.5 319.9 838 512 838c192.2 0 335.4-100.5 430.2-300.3 7.7-16.2 7.7-35 0-51.5zM512 766c-161.3 0-279.4-81.8-362.7-254C232.6 339.8 350.7 258 512 258c161.3 0 279.4 81.8 362.7 254C791.5 684.2 673.4 766 512 766zm-4-430c-97.2 0-176 78.8-176 176s78.8 176 176 176 176-78.8 176-176-78.8-176-176-176zm0 288c-61.9 0-112-50.1-112-112s50.1-112 112-112 112 50.1 112 112-50.1 112-112 112z"></path>
+                    </svg>
+                  </span>Preview
+                </div>
+              </div>
+              <div class="icon-container" *ngIf="file.fileData">
+                <label class="checkbox">
+                  <input type="checkbox" [checked]="file === selectedImage" (change)="selectImage(file)">
+                  <div class="checkbox-circle">
+                    <svg viewBox="0 0 52 52" class="checkmark">
+                      <circle fill="none" r="25" cy="26" cx="26" class="checkmark-circle"></circle>
+                      <path d="M16 26l9.2 8.4 17.4-21.4" class="checkmark-kick"></path>
+                    </svg>
+                  </div>
+                </label>
+                <span class="cancel-btn" nz-icon nzType="close" nzTheme="outline" (click)="removeImage(file.attachmentId)"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ng-container *ngIf="isEmptyFileTemplate">
+          <nz-empty></nz-empty>
+        </ng-container>
+      </div>
+      <!-- Preview Modal -->
+      <div *ngIf="previewVisible" class="preview-modal" (click)="closePreview()">
+        <div class="preview-content" (click)="$event.stopPropagation()">
+          <!-- Nút đóng preview và các icon điều khiển -->
+          <div class="control-wrapper">
+            <!-- Các icon điều khiển -->
+            <span class="icon" nz-icon nzType="undo" nzTheme="outline" (click)="rotateImage('left')"></span>  <!-- Xoay trái -->
+            <span class="icon" nz-icon nzType="redo" nzTheme="outline" (click)="rotateImage('right')"></span> <!-- Xoay phải -->
+            <span class="icon" nz-icon nzType="plus" nzTheme="outline" (click)="zoomImage('in')"></span>            <!-- Phóng to -->
+            <span class="icon" nz-icon nzType="minus" nzTheme="outline" (click)="zoomImage('out')"></span>           <!-- Thu nhỏ -->
+            <span class="close-btn icon" nz-icon nzType="close" nzTheme="outline" (click)="closePreview()"></span>
+          </div>
+          <!-- Hình ảnh hiển thị -->
+          <img class="preview-image" [src]="previewImage" [style.transform]="transform" alt="Preview Image"
+               (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp()" (mousemove)="onMouseMove($event)" />
+
+        </div>
+      </div>
+    </div>
+    <div>
+      <div nz-col [nzXs]="12" [nzLg]="24">
+        <div nz-row [nzGutter]='[20,15]'>
+          <ng-container *ngFor="let defaultParameter of listDefaultParameter;">
+            <hbt-button type="SUBMIT" buttonSize='MEDIUM' buttonAvailableStyle='SEARCH'
+                        [buttonText]="defaultParameter.name"
+                        (click)="addTextAtCursor(defaultParameter.code)">
+            </hbt-button>
+          </ng-container>
+
+
+          <ng-container formArrayName="listParameter">
+            <ng-container *ngFor="let parameter of listParameter.controls; let idx = index" [formGroupName]="idx">
+              <div nz-col [nzXs]="12" [nzLg]="24">
+                <hbt-input-text
+                  [defaultInput]="true"
+                  formControlName="defaultValue"
+                  (click)="onFocus(idx)"
+                  [placeholderText]="parameter.get('name').value"
+                  [labelText]="parameter.get('name').value"
+                  [isTextAre]="true"
+                >
+                </hbt-input-text>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+
+      </div>
+    </div>
+</div>
+  </form>
+

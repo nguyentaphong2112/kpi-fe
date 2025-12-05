@@ -1,0 +1,23 @@
+@import 'src/app/core/global-style/variable';
+
+div.menu__item {
+  width: 100%;
+  border-bottom: 1px solid $bd-default-disabled;
+  padding: 10px 0;
+}
+
+.menu__item--btn {
+  font-size: 24px;
+
+  &:hover {
+    cursor: pointer;
+    color: $default-hover-color;
+    border: 1px solid $bd-default-disabled;
+    border-radius: 2px;
+  }
+}
+
+.disabled__btn {
+  cursor: not-allowed;
+  color: $btn-disabled-default;
+}

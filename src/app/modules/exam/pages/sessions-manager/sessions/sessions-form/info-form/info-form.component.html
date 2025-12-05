@@ -1,0 +1,148 @@
+<form nz-form [formGroup]="form">
+  <div class="app-row" nz-row [nzGutter]='[20,15]'>
+    <div nz-col nzXs="24" nzLg="8">
+      <hbt-input-text formControlName="code" [maxLength]="50"
+                      [type]="isSubmitted && form.controls['code'].errors ? 'error' : 'default'"
+                      [showError]="isSubmitted && form.controls['code'].errors !== null"
+                      [errors]="form.controls['code'].errors"
+                      [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'exam.sessions.form.code' | translate }}]"
+                      placeholderText="{{'exam.sessions.form.code' | translate}}"
+                      labelText="{{'exam.sessions.form.code' | translate}} <span class='label__required'>*</span>">
+      </hbt-input-text>
+    </div>
+    <div nz-col nzXs="24" nzLg="8">
+      <hbt-input-text formControlName="name" [maxLength]="255"
+                      [type]="isSubmitted && form.controls['name'].errors ? 'error' : 'default'"
+                      [showError]="isSubmitted && form.controls['name'].errors !== null"
+                      [errors]="form.controls['name'].errors"
+                      [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'exam.sessions.form.name' | translate }}]"
+                      placeholderText="{{'exam.sessions.form.name' | translate}}"
+                      labelText="{{'exam.sessions.form.name' | translate}} <span class='label__required'>*</span>">
+      </hbt-input-text>
+    </div>
+    <div nz-col nzXs="24" nzLg="8">
+      <hbt-select [urlLoadData]="getUrlCategory(categoryCode.EXAM_SUBJECT)"
+                  [serviceName]="microService.ADMIN"
+                  [type]="isSubmitted && form.controls['subjectCode'].errors ? 'error' : 'default'"
+                  [showError]="isSubmitted && form.controls['subjectCode'].errors !== null"
+                  [errors]="form.controls['subjectCode'].errors"
+                  [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'exam.sessions.form.subjectCode' | translate }}]"
+                  keyLabel="name"
+                  formControlName="subjectCode"
+                  placeholder="{{'exam.sessions.form.subjectCode' | translate}}"
+                  labelText="{{'exam.sessions.form.subjectCode' | translate}} <span class='label__required'>*</span>"
+      ></hbt-select>
+    </div>
+    <div nz-col nzXs="24" nzLg="8">
+      <hbt-select [urlLoadData]="getUrlCategory(categoryCode.EXAM_TOPIC)"
+                  [serviceName]="microService.ADMIN"
+                  [type]="isSubmitted && form.controls['topicCode'].errors ? 'error' : 'default'"
+                  [showError]="isSubmitted && form.controls['topicCode'].errors !== null"
+                  [errors]="form.controls['topicCode'].errors"
+                  [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'exam.sessions.form.topicCode' | translate }}]"
+                  keyLabel="name"
+                  formControlName="topicCode"
+                  placeholder="{{'exam.sessions.form.topicCode' | translate}}"
+                  labelText="{{'exam.sessions.form.topicCode' | translate}} <span class='label__required'>*</span>"
+      ></hbt-select>
+    </div>
+    <div nz-col nzXs="24" nzLg="8">
+      <hbt-select-check-able [dataSelects]="listExamPaper"
+                             [type]="isSubmitted && form.controls['examPaperIds'].errors ? 'error' : 'default'"
+                             [showError]="isSubmitted && form.controls['examPaperIds'].errors !== null"
+                             [errors]="form.controls['examPaperIds'].errors"
+                             [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'exam.sessions.form.examPaper' | translate }}]"
+                             keyLabel="name"
+                             keyValue="examPaperId"
+                             formControlName="examPaperIds"
+                             placeholder="{{'exam.sessions.form.examPaper' | translate}}"
+                             labelText="{{'exam.sessions.form.examPaper' | translate}} <span class='label__required'>*</span>"
+      ></hbt-select-check-able>
+    </div>
+    <div nz-col nzXs="24" nzLg="8">
+      <hbt-select [urlLoadData]="getUrlCategory(categoryCode.EXAM_SEMESTER)"
+                  [serviceName]="microService.ADMIN"
+                  [type]="isSubmitted && form.controls['semester'].errors ? 'error' : 'default'"
+                  [showError]="isSubmitted && form.controls['semester'].errors !== null"
+                  [errors]="form.controls['semester'].errors"
+                  [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'exam.sessions.form.semester' | translate }}]"
+                  keyLabel="name"
+                  formControlName="semester"
+                  placeholder="{{'exam.sessions.form.semester' | translate}}"
+                  labelText="{{'exam.sessions.form.semester' | translate}} <span class='label__required'>*</span>"
+      ></hbt-select>
+    </div>
+    <div nz-col nzXs="24" nzLg="8">
+      <hbt-input-text formControlName="year" appNumberInput maxLength="4"
+                      [type]="isSubmitted && form.controls['year'].errors ? 'error' : 'default'"
+                      [showError]="isSubmitted && form.controls['year'].errors !== null"
+                      [errors]="form.controls['year'].errors"
+                      [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'exam.sessions.form.year' | translate }}]"
+                      placeholderText="{{'exam.sessions.form.year' | translate}}"
+                      labelText="{{'exam.sessions.form.year' | translate}} <span class='label__required'>*</span>"
+      ></hbt-input-text>
+    </div>
+    <div nz-col nzXs="24" nzLg="8">
+      <hbt-select [urlLoadData]="getUrlCategory(categoryCode.EXAM_TYPE)"
+                  [serviceName]="microService.ADMIN"
+                  [type]="isSubmitted && form.controls['examTypeCode'].errors ? 'error' : 'default'"
+                  [showError]="isSubmitted && form.controls['examTypeCode'].errors !== null"
+                  [errors]="form.controls['examTypeCode'].errors"
+                  [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'exam.sessions.form.examTypeCode' | translate }}]"
+                  keyLabel="name"
+                  formControlName="examTypeCode"
+                  placeholder="{{'exam.sessions.form.examTypeCode' | translate}}"
+                  labelText="{{'exam.sessions.form.examTypeCode' | translate}} <span class='label__required'>*</span>"
+      ></hbt-select>
+    </div>
+    <div nz-col nzXs="24" nzLg="8">
+      <hbt-select [urlLoadData]="getUrlCategory(categoryCode.EXAM_MODE)"
+                  [serviceName]="microService.ADMIN"
+                  [type]="isSubmitted && form.controls['modeCode'].errors ? 'error' : 'default'"
+                  [showError]="isSubmitted && form.controls['modeCode'].errors !== null"
+                  [errors]="form.controls['modeCode'].errors"
+                  [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'exam.sessions.form.modeCode' | translate }}]"
+                  keyLabel="name"
+                  formControlName="modeCode"
+                  placeholder="{{'exam.sessions.form.modeCode' | translate}}"
+                  labelText="{{'exam.sessions.form.modeCode' | translate}} <span class='label__required'>*</span>"
+      ></hbt-select>
+    </div>
+    <div nz-col nzXs="24" nzLg="8">
+      <hbt-input-text formControlName="totalQuestions" [maxLength]="5" appNumberInput
+                      [type]="isSubmitted && form.controls['totalQuestions'].errors ? 'error' : 'default'"
+                      [showError]="isSubmitted && form.controls['totalQuestions'].errors != null"
+                      [errors]="form.controls['totalQuestions'].errors"
+                      [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'exam.sessions.form.totalQuestions' | translate }}]"
+                      placeholderText="{{'exam.sessions.form.totalQuestions' | translate}}"
+                      labelText="{{'exam.sessions.form.totalQuestions' | translate}} <span class='label__required'>*</span>"
+      ></hbt-input-text>
+    </div>
+    <div nz-col nzXs="24" nzLg="8">
+      <hbt-input-text formControlName="totalScore" [num]="4" [decimals]="2" appNumberic
+                      placeholderText="{{'exam.sessions.form.totalScore' | translate}}"
+                      labelText="{{'exam.sessions.form.totalScore' | translate}}"
+      ></hbt-input-text>
+    </div>
+    <div nz-col nzXs="24" nzLg="8">
+      <hbt-select [urlLoadData]="getUrlCategory(categoryCode.EXAM_SESSIONS_STATUS)"
+                  [serviceName]="microService.ADMIN"
+                  [type]="isSubmitted && form.controls['statusCode'].errors ? 'error' : 'default'"
+                  [showError]="isSubmitted && form.controls['statusCode'].errors !== null"
+                  [errors]="form.controls['statusCode'].errors"
+                  [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'exam.sessions.form.statusCode' | translate }}]"
+                  keyLabel="name"
+                  formControlName="statusCode"
+                  placeholder="{{'exam.sessions.form.statusCode' | translate}}"
+                  labelText="{{'exam.sessions.form.statusCode' | translate}} <span class='label__required'>*</span>"
+      ></hbt-select>
+    </div>
+    <div nz-col [nzXs]="24" [nzLg]="24">
+      <hbt-input-text formControlName="description" isTextAre
+                      [config]="{ rows: 3, autoSize: { minRows: 4, maxRows: 4 } }"
+                      placeholderText="{{'exam.sessions.form.description' | translate}}"
+                      labelText="{{'exam.sessions.form.description' | translate}}"
+      ></hbt-input-text>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,79 @@
+<form nz-form [formGroup]="form" class="organization-evaluation">
+  <div class="content__item content__item--border bg__content--default">
+    <div class="form-search">
+      <div nz-row [nzGutter]='[20,15]'>
+        <div nz-col [nzXs]="12" [nzLg]="8">
+          <hbt-select [dataSelects]="listPeriod"
+                      keyValue="evaluationPeriodId"
+                      keyLabel="name"
+                      formControlName="evaluationPeriodId"
+                      [type]="isSubmitted && form.controls['evaluationPeriodId'].errors ? 'error' : 'default'"
+                      [showError]="isSubmitted && form.controls['evaluationPeriodId'].errors !== null"
+                      [errors]="form.controls['evaluationPeriodId'].errors"
+                      [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.organizationAggregateData.label.evaluationPeriodId' | translate }}]"
+                      placeholder="{{'kpi.organizationAggregateData.label.evaluationPeriodId' | translate}}"
+                      labelText="{{'kpi.organizationAggregateData.label.evaluationPeriodId' | translate}} <span class='label__required'>*</span>"
+          ></hbt-select>
+        </div>
+
+        <div nz-col [nzXs]="12" [nzLg]="8">
+          <hbt-select [dataSelects]="groupCodeList"
+                      [showAddCategory]="false"
+                      keyLabel="name"
+                      keyValue="code"
+                      formControlName="groupCode"
+                      [type]="isSubmitted && form.controls['groupCode'].errors ? 'error' : 'default'"
+                      [showError]="isSubmitted && form.controls['groupCode'].errors !== null"
+                      [errors]="form.controls['groupCode'].errors"
+                      [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.organizationAggregateData.label.groupCode' | translate }}]"
+                      placeholder="{{'kpi.organizationAggregateData.label.groupCode' | translate}}"
+                      labelText="{{'kpi.organizationAggregateData.label.groupCode' | translate}} <span class='label__required'>*</span>"
+          ></hbt-select>
+        </div>
+
+        <div nz-col [nzXs]="12" [nzLg]="8">
+          <hbt-select-check-able [dataSelects]="columnListFilter"
+                                 [showAddCategory]="false"
+                                 keyLabel="name"
+                                 formControlName="tableColumns"
+                                 [type]="isSubmitted && form.controls['tableColumns'].errors ? 'error' : 'default'"
+                                 [showError]="isSubmitted && form.controls['tableColumns'].errors !== null"
+                                 [errors]="form.controls['tableColumns'].errors"
+                                 [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.organizationAggregateData.label.tableColumns' | translate }}]"
+                                 placeholder="{{'kpi.organizationAggregateData.label.tableColumns' | translate}}"
+                                 labelText="{{'kpi.organizationAggregateData.label.tableColumns' | translate}} <span class='label__required'>*</span>"
+          ></hbt-select-check-able>
+        </div>
+
+        <div nz-col [nzXs]="24" [nzLg]="24" style="text-align: center">
+          <hbt-button
+            class="staff__research__btn__search"
+            buttonAvailableStyle="SEARCH"
+            buttonText="{{'common.button.aggregate' | translate}}"
+            (click)="search()"
+          ></hbt-button>
+          <hbt-button
+            style="margin-left: 20px"
+            buttonSize="MEDIUM"
+            buttonType="BORDER"
+            (click)="export()">
+            <img src="/assets/icon/staff-manager/export_excel.svg" alt="" />
+          </hbt-button>
+          <!--          <btn-more-action [isExport]="true" width="230px" [setting]="actionSchema"></btn-more-action>-->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class='search__content--group'>
+    <hbt-table-wrap [extra]="false" [tableConfig]="tableConfig">
+      <hbt-table
+        #tableTmpl
+        [showExtra]="false"
+        (changePageNum)="search($event)"
+        [tableConfig]="tableConfig"
+        [dataList]="tableData"></hbt-table>
+    </hbt-table-wrap>
+  </div>
+</form>

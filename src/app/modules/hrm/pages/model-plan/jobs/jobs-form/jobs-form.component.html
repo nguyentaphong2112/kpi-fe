@@ -1,0 +1,92 @@
+<div [ngClass]="{'app-card' : isPage}">
+  <form nz-form [formGroup]="form">
+    <div nz-row [nzGutter]='[20,15]'>
+      <!--Mã-->
+      <div nz-col [nzXs]='12' [nzLg]='12'>
+        <hbt-input-text formControlName='code' [maxLength]='50'
+                        [type]="isSubmitted && form.controls['code'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['code'].errors !== null"
+                        [errors]="form.controls['code'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'common.label.code' | translate }}]"
+                        placeholderText="{{'common.label.code' | translate}}"
+                        labelText="{{'common.label.code' | translate}} <span class='label__required'>*</span>"></hbt-input-text>
+      </div>
+
+      <!--Tên-->
+      <div nz-col [nzXs]='12' [nzLg]='12'>
+        <hbt-input-text formControlName='name' [maxLength]='255'
+                        [type]="isSubmitted && form.controls['name'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['name'].errors !== null"
+                        [errors]="form.controls['name'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'common.label.name' | translate }}]"
+                        placeholderText="{{'common.label.name' | translate}}"
+                        labelText="{{'common.label.name' | translate}} <span class='label__required'>*</span>"></hbt-input-text>
+      </div>
+
+      <!--Loại chức danh-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select
+          [urlLoadData]="getUrlCategory(categoryCode.LOAI_CHUC_DANH)"
+          [serviceName]="microService.ADMIN"
+          keyLabel="name"
+          placeholder="{{'hrm.modelPlan.label.jobType' | translate}}"
+          labelText="{{'hrm.modelPlan.label.jobType' | translate}} <span class='label__required'>*</span>"
+          formControlName="jobType"
+          [type]="isSubmitted && form.controls['jobType'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['jobType'].errors !== null"
+          [errors]="form.controls['jobType'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.modelPlan.label.jobType' | translate }}]"
+        ></hbt-select>
+      </div>
+
+      <!--STT-->
+      <div nz-col [nzXs]='12' [nzLg]='12'>
+        <hbt-input-text formControlName='orderNumber'
+                        appNumberic
+                        [num]="5"
+                        [decimals]="0"
+                        [type]="isSubmitted && form.controls['orderNumber'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['orderNumber'].errors !== null"
+                        [errors]="form.controls['orderNumber'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'common.label.stt' | translate }}]"
+                        placeholderText="{{'common.label.stt' | translate}}"
+                        labelText="{{'common.label.stt' | translate}}"></hbt-input-text>
+      </div>
+
+      <!--Ghi chú-->
+      <div nz-col [nzXs]='24' [nzLg]='24'>
+        <hbt-input-text formControlName='note'
+                        [isTextAre]="true"
+                        [maxLength]="255"
+                        [type]="isSubmitted && form.controls['note'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['note'].errors !== null"
+                        [errors]="form.controls['note'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'common.label.note' | translate }}]"
+                        placeholderText="{{'common.label.note' | translate}}"
+                        labelText="{{'common.label.note' | translate}}"></hbt-input-text>
+      </div>
+
+
+      <ng-container formArrayName="listAttributes">
+        <ng-container *ngFor="let attributes of attributesFormArray.controls; let idx = index" [formGroupName]="idx">
+          <div nz-col [nzXs]="12" [nzLg]="12">
+            <input-attribute-common
+              [controlName]="getAttributeControl(idx, 'attributeValue')"
+              [dataType]="attributes.get('dataType')?.value"
+              [urlLoadData]="attributes.get('urlLoadData')?.value"
+              [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+              [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+              [errors]="attributes.get('attributeValue')?.errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}]"
+              [placeholderText]="attributes.get('attributeName')?.value"
+              [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+            >
+            </input-attribute-common>
+          </div>
+        </ng-container>
+      </ng-container>
+
+    </div>
+  </form>
+
+</div>

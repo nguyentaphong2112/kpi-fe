@@ -1,0 +1,661 @@
+$neutral-100: #F7F8FA !default;
+$neutral-200: #E6E8EE !default;
+$neutral-300: #D1D4E0 !default;
+$neutral-400: #B2B8CC !default;
+$neutral-500: #9AA1BC !default;
+$neutral-600: #6E779C !default;
+$neutral-700: #4F5B89 !default;
+$neutral-800: #34406F !default;
+$neutral-900: #041557 !default;
+
+// primary blue
+
+$primary-100: #F6F8FF !default;
+$primary-150: #E8EAF6 !default;
+$primary-200: #DADDFA !default;
+$primary-300: #BEC2F4 !default;
+$primary-400: #858BE9 !default;
+$primary-500: #141ED2 !default;
+$primary-600: #0E16B4 !default;
+$primary-700: #0A0F97 !default;
+$primary-800: #060A79 !default;
+$primary-900: #030664 !default;
+
+// success green
+
+$success-100: #F0FFF5 !default;
+$success-200: #D1FBE1 !default;
+$success-300: #AAF5C9 !default;
+$success-400: #90F1B9 !default;
+$success-500: #45D39D !default;
+$success-600: #32B590 !default;
+$success-700: #229782 !default;
+$success-800: #167A72 !default;
+$success-900: #0D6365 !default;
+
+// error red
+
+$error-100: #FEDDD4 !default;
+$error-200: #FAC5CB !default;
+$error-300: #F98380 !default;
+$error-400: #F3798B !default;
+$error-500: #EB2D4B !default;
+$error-600: #CA204B !default;
+$error-700: #A91649 !default;
+$error-800: #880E43 !default;
+$error-900: #700840 !default;
+
+// warning yellow
+
+$warning-100: #FFFCF0 !default;
+$warning-200: #FFE9B6 !default;
+$warning-300: #FFD67B !default;
+$warning-400: #FFC340 !default;
+$warning-500: #FFAF05 !default;
+$warning-600: #DB8F03 !default;
+$warning-700: #B77102 !default;
+$warning-800: #935601 !default;
+$warning-900: #7A4300 !default;
+
+// info light-blue
+
+$info-100: #ECF9FF !default;
+$info-200: #D9F2FF !default;
+$info-300: #C6E9FF !default;
+$info-400: #B7E0FF !default;
+$info-500: #A0D2FF !default;
+$info-600: #74A5DB !default;
+$info-700: #216cd2 !default;
+$info-800: #335693 !default;
+$info-900: #1E3B7A !default;
+
+// orange
+
+$orange-100: #FFF8F4 !default;
+$orange-200: #FFF2EA !default;
+$orange-300: #FFCAAB !default;
+$orange-400: #FFA36B !default;
+$orange-500: #FF7B2C !default;
+$orange-600: #D95A1A !default;
+$orange-700: #B33E0C !default;
+$orange-800: #8C2703 !default;
+$orange-900: #661901 !default;
+
+// purple
+
+$purple-100: #F1EDFE !default;
+$purple-200: #E3DBFE !default;
+$purple-300: #D4C9FD !default;
+$purple-400: #C8BBFB !default;
+$purple-500: #B4A5FA !default;
+$purple-600: #8778D7 !default;
+$purple-700: #6053B3 !default;
+$purple-800: #3F3490 !default;
+$purple-900: #281F77 !default;
+
+// Light-green
+
+$light-green-100: #EDFDF0 !default;
+$light-green-200: #DBFCE5 !default;
+$light-green-300: #C7F7DA !default;
+$light-green-400: #B5F0D2 !default;
+$light-green-500: #9BE6C8 !default;
+$light-green-600: #71C5AC !default;
+$light-green-700: #4EA594 !default;
+$light-green-800: #31857C !default;
+$light-green-900: #1D6E6E !default;
+
+// black
+
+$black-10: #FFFFFF23 !default;
+$black-50: #FFFFFF7F !default;
+$black-100: #EFEFEF !default;
+$black-200: #DADADA !default;
+$black-300: #C6C6C6 !default;
+$black-400: #a6a6a6 !default;
+$black-500: #7F7F7F !default;
+$black-600: #5B5B5B !default;
+$black-700: #3B3B3B !default;
+$black-800: #272727 !default;
+$black-900: #000000 !default;
+$black-900-50: #00000080 !default; //Black-900/50%
+
+$colors: (
+  neutral-100: $neutral-100,
+  neutral-200: $neutral-200,
+  neutral-300: $neutral-300,
+  neutral-400: $neutral-400,
+  neutral-500: $neutral-500,
+  neutral-600: $neutral-600,
+  neutral-700: $neutral-700,
+  neutral-800: $neutral-800,
+  neutral-900: $neutral-900,
+  primary-100: $primary-100,
+  primary-150: $primary-150,
+  primary-200: $primary-200,
+  primary-300: $primary-300,
+  primary-400: $primary-400,
+  primary-500: $primary-500,
+  primary-600: $primary-600,
+  primary-700: $primary-700,
+  primary-800: $primary-800,
+  primary-900: $primary-900,
+  success-100: $success-100,
+  success-200: $success-200,
+  success-300: $success-300,
+  success-400: $success-400,
+  success-500: $success-500,
+  success-600: $success-600,
+  success-700: $success-700,
+  success-800: $success-800,
+  success-900: $success-900,
+  error-100: $error-100,
+  error-200: $error-200,
+  error-300: $error-300,
+  error-400: $error-400,
+  error-500: $error-500,
+  error-600: $error-600,
+  error-700: $error-700,
+  error-800: $error-800,
+  error-900: $error-900,
+  warning-100: $warning-100,
+  warning-200: $warning-200,
+  warning-300: $warning-300,
+  warning-400: $warning-400,
+  warning-500: $warning-500,
+  warning-600: $warning-600,
+  warning-700: $warning-700,
+  warning-800: $warning-800,
+  warning-900: $warning-900,
+  info-100: $info-100,
+  info-200: $info-200,
+  info-300: $info-300,
+  info-400: $info-400,
+  info-500: $info-500,
+  info-600: $info-600,
+  info-700: $info-700,
+  info-800: $info-800,
+  info-900: $info-900,
+  orange-100: $orange-100,
+  orange-200: $orange-200,
+  orange-300: $orange-300,
+  orange-400: $orange-400,
+  orange-500: $orange-500,
+  orange-600: $orange-600,
+  orange-700: $orange-700,
+  orange-800: $orange-800,
+  orange-900: $orange-900,
+  purple-100: $purple-100,
+  purple-200: $purple-200,
+  purple-300: $purple-300,
+  purple-400: $purple-400,
+  purple-500: $purple-500,
+  purple-600: $purple-600,
+  purple-700: $purple-700,
+  purple-800: $purple-800,
+  purple-900: $purple-900,
+  light-green-100: $light-green-100,
+  light-green-200: $light-green-200,
+  light-green-300: $light-green-300,
+  light-green-400: $light-green-400,
+  light-green-500: $light-green-500,
+  light-green-600: $light-green-600,
+  light-green-700: $light-green-700,
+  light-green-800: $light-green-800,
+  light-green-900: $light-green-900,
+  black-10: $black-10,
+  black-50: $black-50,
+  black-100: $black-100,
+  black-200: $black-200,
+  black-300: $black-300,
+  black-400: $black-400,
+  black-500: $black-500,
+  black-600: $black-600,
+  black-700: $black-700,
+  black-800: $black-800,
+  black-900: $black-900,
+  black-900-50: $black-900-50,
+);
+
+// Function để lấy màu từ map
+@function get-color($name) {
+  @return map-get($colors, $name);
+}
+
+// Mixin để tạo class color
+@mixin generate-color-classes($property) {
+  @each $name, $color in $colors {
+    .#{$property}-#{$name} {
+      #{$property}: #{$color};
+    }
+  }
+}
+
+@include generate-color-classes(color);
+@include generate-color-classes(background-color);
+
+
+// Định nghĩa các giá trị padding
+$spacing: (
+  0: 0,
+  1: 4px,
+  2: 8px,
+  3: 16px,
+  4: 24px,
+  5: 32px
+);
+
+// Mixin để tạo lớp padding
+@mixin generate-padding-classes {
+  @each $key, $value in $spacing {
+    .p-#{$key} {
+      padding: #{$value};
+    }
+    .pt-#{$key} {
+      padding-top: #{$value};
+    }
+    .pb-#{$key} {
+      padding-bottom: #{$value};
+    }
+    .pl-#{$key} {
+      padding-left: #{$value};
+    }
+    .pr-#{$key} {
+      padding-right: #{$value};
+    }
+    .px-#{$key} {
+      padding-left: #{$value};
+      padding-right: #{$value};
+    }
+    .py-#{$key} {
+      padding-top: #{$value};
+      padding-bottom: #{$value};
+    }
+  }
+}
+
+// Gọi mixin
+@include generate-padding-classes;
+
+@mixin generate-margin-classes {
+  @each $key, $value in $spacing {
+    .m-#{$key} {
+      margin: #{$value};
+    }
+    .mt-#{$key} {
+      margin-top: #{$value};
+    }
+    .mb-#{$key} {
+      margin-bottom: #{$value};
+    }
+    .ml-#{$key} {
+      margin-left: #{$value};
+    }
+    .mr-#{$key} {
+      margin-right: #{$value};
+    }
+    .mx-#{$key} {
+      margin-left: #{$value};
+      margin-right: #{$value};
+    }
+    .my-#{$key} {
+      margin-top: #{$value};
+      margin-bottom: #{$value};
+    }
+  }
+}
+
+@include generate-margin-classes;
+
+// Định nghĩa các giá trị border-radius
+$radius: (
+  0: 0,
+  sm: 4px,
+  md: 8px,
+  lg: 16px,
+  xl: 32px,
+  circle: 50%,
+  pill: 9999px
+);
+
+// Mixin để tạo lớp border-radius
+@mixin generate-border-radius-classes {
+  @each $key, $value in $radius {
+    .br-#{$key} {
+      border-radius: #{$value};
+    }
+    .brt-#{$key} {
+      border-top-left-radius: #{$value};
+      border-top-right-radius: #{$value};
+    }
+    .brb-#{$key} {
+      border-bottom-left-radius: #{$value};
+      border-bottom-right-radius: #{$value};
+    }
+    .brl-#{$key} {
+      border-top-left-radius: #{$value};
+      border-bottom-left-radius: #{$value};
+    }
+    .brr-#{$key} {
+      border-top-right-radius: #{$value};
+      border-bottom-right-radius: #{$value};
+    }
+  }
+}
+
+// Gọi mixin
+@include generate-border-radius-classes;
+
+//$bg-layout: #f3f3f3;
+$bg-layout: $black-50;
+//$bg-content: #F4F6FA;
+$bg-content: $primary-100;
+
+$text-primary: $purple-700;
+
+//Default
+//$default-hover-color: #475daa;
+$default-hover-color: $purple-900;
+//$bg-default: #141ED2;
+$bg-default: $purple-800;
+//$bd-default: #D9DBE9;
+$bd-default: $purple-300;
+//$bd-default-hover: #141ED2;
+$bd-default-hover: $purple-800;
+//$bg-default-disabled: #F5F5F5;
+$bg-default-disabled: $black-100;
+//$bd-default-disabled: #ced4da;
+$bd-default-disabled: $purple-300;
+//$bd-default-disabled-hover: #D9DBE9;
+$bd-default-disabled-hover: $purple-800;
+
+//Warning
+//$bg-warning-default: #F4B740;
+$bg-warning-default: $warning-400;
+//$bd-warning: #FFDE9F;
+$bd-warning: $warning-300;
+//$bd-warning-hover: #F4B740;
+$bd-warning-hover: $warning-400;
+//$bg-warning-disabled: #F5F5F5;
+$bg-warning-disabled: $black-50;
+//$bd-warning-disabled-hover: #FFDE9F;
+$bd-warning-disabled-hover: $warning-300;
+
+//Error
+//$error-default-color: #ED2E7E;
+$error-default-color: $error-500;
+//$bd-error: #FF84B7;
+$bd-error: $error-400;
+//$bd-error-hover: #ED2E7E;
+$bd-error-hover: $error-500;
+//$bg-error-disabled: #F5F5F5;
+$bg-error-disabled: $black-50;
+//$bd-error-disabled-hover: #ff4d4f;
+$bd-error-disabled-hover: $error-500;
+
+//Success
+//$bg-success-default: #00BA88;
+$bg-success-default: $success-600;
+//$bd-success: #34EAB9;
+$bd-success: $success-500;
+//$bd-success-hover: #00BA88;
+$bd-success-hover: $success-600;
+//$bg-success-disabled: #F5F5F5;
+$bg-success-disabled: $black-50;
+//$bd-success-disabled-hover: #34EAB9;
+$bd-success-disabled-hover: $success-400;
+
+//Sidebar
+//$bg-sidebar: #000056;
+$bg-sidebar: $purple_900;
+//$bg-sidebar-menu-active: rgba(255, 255, 255, 0.14);
+$bg-sidebar-menu-active: $black-10;
+$bg-sidebar-text-active: #fff;
+$icon-sidebar: #fff;
+$sidebar-submenu-title-color: #fff;
+//$sidebar-text-search-highlight: #FA0B0B;
+$sidebar-text-search-highlight: $error-500;
+$sidebar-btn-pin-color: #fff;
+
+//breadcrumb-header
+//$bg-breadcrumb-header: #FCFCFC;
+$bg-breadcrumb-header: $black-50;
+//$breadcrumb-box-shadow: #e5e5e5;
+$breadcrumb-box-shadow: $black-200;
+//$breadcrumb-color: #A0A3BD;
+$breadcrumb-color: $neutral-400;
+//$breadcrumb-active-color: #14142B;
+$breadcrumb-active-color: $neutral-900;
+
+//page-header
+//$page-header-title-color: #14142A;
+$page-header-title-color: $neutral-900;
+$page-header-btn-back-color: black;
+
+//table-wrap
+$table-wrap-title: #14142A;
+$table-wrap-title: $neutral-900;
+
+//table
+//$table-hover-row: #e9eaff;
+$table-hover-row: $purple-300;
+//$bg-table-header: #E8EAF6;
+$bg-table-header: $primary-150;
+//$table-text-header: #4E4B66;
+$table-text-header: $neutral-700;
+//$bd-table-default: #F4F6FA;
+$bd-table-default: $purple-300;
+
+//input group
+//$bg-input-gr: rgba(255, 255, 255, 0.14);
+$bg-input-gr: $black-10;
+//$bd-input-gr: rgba(255, 255, 255, 0.14);
+$bd-input-gr: $black-10;
+//$bd-input-gr-hover: rgba(255, 255, 255, 0.14);
+$bd-input-gr-hover: $black-10;
+$input-gr-color: #fff;
+//$input-gr-placeholder-color: rgba(255, 255, 255, 0.5);
+$input-gr-placeholder-color: $black-50;
+
+//input
+//$input-label-color: #6E7191;
+$input-label-color: $neutral-600 !default;
+//$input-body-color: #4E4B66;
+$input-body-color: $neutral-800 !default;
+//$input-placeholder-color: #A0A3BD;
+$input-placeholder-color: $neutral-400 !default;
+
+$label-body-color: $neutral-700 !default;
+
+//button-default
+//$btn-disabled-default: #ced4da;
+$btn-disabled-default: $neutral-300 !default;
+//$bg-btn-default: #f5f5f5;
+$bg-btn-default: $black-50 !default;
+//$bg-btn-default-hover: #e3e2e2;
+$bg-btn-default-hover: $black-50 !default;
+//$btn-default-text-color: #6E7191;
+$btn-default-text-color: $neutral-600 !default;
+//$bd-btn-default: #A0A3BD;
+$bd-btn-default: $neutral-400 !default;
+
+//button-add
+$btn-add-text-color: #fff;
+//$bg-btn-add: #1dc9b7;
+$bg-btn-add: $success-500 !default;
+//$bg-btn-add-hover: #13b7a8;
+$bg-btn-add-hover: $success-600 !default;
+$bd-btn-add: none;
+
+//button-edit
+$btn-edit-text-color: #fff;
+//$bg-btn-edit: #141ED2;
+$bg-btn-edit: $purple-800 !default;
+//$bg-btn-edit-hover: #0812c0;
+$bg-btn-edit-hover: $purple-600 !default;
+$bd-btn-edit: none;
+
+//button-save
+$btn-save-text-color: #fff;
+//$bg-btn-save: #141ED2;
+$bg-btn-save: $purple-800 !default;
+//$bg-btn-save-hover: #0812c0;
+$bg-btn-save-hover: $purple-600 !default;
+$bd-btn-save: none;
+
+//button-cancel
+$btn-cancel-text-color: #fff;
+//$bg-btn-cancel: #f64e86;
+$bg-btn-cancel: $error-500 !default;
+//$bg-btn-cancel-hover: #fd397a;
+$bg-btn-cancel-hover: $error-600 !default;
+$bd-btn-cancel: none;
+
+//button-approve
+$btn-approve-text-color: #fff;
+//$bg-btn-approve: #141ED2;
+$bg-btn-approve: $purple-800 !default;
+//$bg-btn-approve-hover: #0812c0;
+$bg-btn-approve-hover: $purple-600 !default;
+$bd-btn-approve: none;
+
+//button-reject
+$btn-reject-text-color: #fff;
+//$bg-btn-reject: #C30052;
+$bg-btn-reject: $error-600 !default;
+//$bg-btn-reject-hover: #a90248;
+$bg-btn-reject-hover: $error-700 !default;
+$bd-btn-reject: none;
+
+//button-search
+//$btn-search-text-color: #141ED2;
+$btn-search-text-color: $purple-800 !default;
+//$bg-btn-search: rgb(232, 234, 246);
+$bg-btn-search: $purple-300 !default;
+//$bg-btn-search-hover: rgb(223, 227, 248);
+$bg-btn-search-hover: $purple-300 !default;
+$bd-btn-search: none;
+
+//scrollbar
+//$bg-scrollbar-icon: #14142B;
+$bg-scrollbar-icon: $neutral-900 !default;
+//$bg-scrollbar-bg: #E8E8EA;
+$bg-scrollbar-bg: $black-50 !default;
+//$bg-scrollbar-color: #A0A3BD;
+$bg-scrollbar-color: $neutral-500 !default;
+//$bd-scrollbar-active: #00009A;
+$bd-scrollbar-active: $purple-700 !default;
+
+//border-radius
+$border-radius-default: 16px;
+
+//content
+$bg-content-default: #fff;
+$bg-form-default: #FFFFFF;
+
+// Checkbox
+//$bg-checkbox-inner: #141ED2;
+$bg-checkbox-inner: $purple-800 !default;
+
+//tag
+//$tag-color: #D4D7E7;
+$tag-color: $neutral-300 !default;
+
+//Placeholder
+@mixin optional-at-root($sel) {
+  @at-root #{if(not &, $sel, selector-append(&, $sel))} {
+    @content;
+  }
+}
+
+@mixin placeholder {
+  @include optional-at-root('::-webkit-input-placeholder') {
+    @content;
+  }
+
+  @include optional-at-root(':-moz-placeholder') {
+    @content;
+  }
+
+  @include optional-at-root('::-moz-placeholder') {
+    @content;
+  }
+
+  @include optional-at-root(':-ms-input-placeholder') {
+    @content;
+  }
+}
+
+/* width < 480px*/
+$mobile: 30em; // 480px
+/* 480px <= width < 768px*/
+$tablet: 48em; // 768px
+/* 768px <= width < 1024px*/
+$laptop: 64em; // 1024px
+/* 1024px <= width < 1366px*/
+$desktop: 85em; // 1366px
+/* 1366px <= width < 1536px*/
+$large-desktop: 96em; // 1536px
+/* 1536px <= width < 1920px*/
+$xlarge-desktop: 120em; // 1920px
+/* width > 1920px*/
+$xxlarge-desktop: 120em; // 1920px
+
+$breakpoints: (
+  xs: $mobile,
+  sm: $tablet,
+  md: $laptop,
+  lg: $desktop,
+  xl: $large-desktop,
+  xxl: $xlarge-desktop,
+  xxxl: $xxlarge-desktop,
+);
+
+@mixin mobile-down {
+  $breakpoint: map-get($breakpoints, xs);
+  @media screen and (max-width: ($breakpoint - 1)) {
+    @content;
+  }
+}
+
+@mixin tablet-down {
+  $breakpoint: map-get($breakpoints, sm);
+  @media screen and (max-width: ($breakpoint - 1)) {
+    @content;
+  }
+}
+
+@mixin laptop-down {
+  $breakpoint: map-get($breakpoints, md);
+  @media screen and (max-width: ($breakpoint - 1)) {
+    @content;
+  }
+}
+
+@mixin desktop-down {
+  $breakpoint: map-get($breakpoints, lg);
+  @media screen and (max-width: ($breakpoint - 1)) {
+    @content;
+  }
+}
+
+@mixin large-desktop-down {
+  $breakpoint: map-get($breakpoints, xl);
+  @media screen and (max-width: ($breakpoint - 1)) {
+    @content;
+  }
+}
+
+@mixin xlarge-desktop-down {
+  $breakpoint: map-get($breakpoints, xxl);
+  @media screen and (max-width: ($breakpoint - 1)) {
+    @content;
+  }
+}
+
+@mixin xxlarge-desktop-down {
+  $breakpoint: map-get($breakpoints, xxxl);
+  @media screen and (max-width: ($breakpoint - 1)) {
+    @content;
+  }
+}

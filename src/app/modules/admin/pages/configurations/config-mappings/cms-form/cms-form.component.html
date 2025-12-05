@@ -1,0 +1,69 @@
+<div class='save-form-admin'>
+  <form nz-form [formGroup]="form" style="margin-top: 20px">
+    <div nz-row [nzGutter]="[20,15]">
+      <!--Mã-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="code" maxLength="255"
+          [type]="isSubmitted && form.controls['code'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['code'].errors != null"
+          [errors]="form.controls['code'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configurations.configMappings.table.code' | translate }}]"
+          placeholderText="{{'admin.configurations.configMappings.table.code' | translate}}"
+          labelText="{{'admin.configurations.configMappings.table.code' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--Tên-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="name" maxLength="255"
+          [type]="isSubmitted && form.controls['name'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['name'].errors != null"
+          [errors]="form.controls['name'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configurations.configMappings.table.name' | translate }}]"
+          placeholderText="{{'admin.configurations.configMappings.table.name' | translate}}"
+          labelText="{{'admin.configurations.configMappings.table.name' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--tên thuộc tính-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="parameterTitle" maxLength="255"
+          [type]="isSubmitted && form.controls['parameterTitle'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['parameterTitle'].errors != null"
+          [errors]="form.controls['parameterTitle'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configurations.configMappings.table.parameterTitle' | translate }}]"
+          placeholderText="{{'admin.configurations.configMappings.table.parameterTitle' | translate}}"
+          labelText="{{'admin.configurations.configMappings.table.parameterTitle' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--tên giá trị-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="valueTitle" maxLength="255"
+          [type]="isSubmitted && form.controls['valueTitle'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['valueTitle'].errors != null"
+          [errors]="form.controls['valueTitle'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configurations.configMappings.table.valueTitle' | translate }}]"
+          placeholderText="{{'admin.configurations.configMappings.table.valueTitle' | translate}}"
+          labelText="{{'admin.configurations.configMappings.table.valueTitle' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--Kiểu giá trị-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select formControlName="dataType"
+          [dataSelects]="listDataType"
+          [type]="isSubmitted && form.controls['dataType'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['dataType'].errors != null"
+          [errors]="form.controls['dataType'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configurations.configMappings.table.valueTitle' | translate }}]"
+          placeholder="{{'admin.configurations.configMappings.table.dataType' | translate}}"
+          labelText="{{'admin.configurations.configMappings.table.dataType' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+
+    </div>
+  </form>
+</div>
+

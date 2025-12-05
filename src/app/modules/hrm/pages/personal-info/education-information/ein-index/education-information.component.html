@@ -1,0 +1,91 @@
+<div class="education-info">
+  <div nz-row [nzGutter]='[20,15]' *ngIf="showPersonalInfo()">
+    <ng-container *ngFor="let eduInfo of eduInfos">
+      <div nz-col [nzXs]="24" [nzLg]="eduInfo.colsSpan*6">
+        <hbt-text-label [labelText]="eduInfo.label" [labelValue]="eduInfo.value"></hbt-text-label>
+      </div>
+    </ng-container>
+  </div>
+  <div style="margin-top: 20px">
+    <hbt-button (click)="viewDetail()"
+                buttonText="{{isDetail ? ('hrm.staffManager.label.hideDetail' | translate) : ('hrm.staffManager.label.viewDetail' | translate)}}"
+                [suffixIcon]="isDetail ? 'up' : 'down'"></hbt-button>
+  </div>
+
+  <div class='search__content--group' *ngIf="isDetail">
+    <div *ngIf="objFunctionDegree?.view">
+      <div class="title-table">{{ 'hrm.staffManager.staffResearch.pageName.educationDegreesInfo' | translate }}
+        <em *ngIf="objFunctionDegree?.create" nz-button nz-icon nzType="plus-square" nzTheme="outline"
+            nz-tooltip
+            nzTooltipTitle="{{'common.button.add' | translate}}"
+            nzTooltipPlacement="left"
+            class="btn-create"
+            (click)="doOpenFormCustom('degree')"></em></div>
+      <hbt-table-wrap>
+        <hbt-table
+          (changePageNum)="search($event, 'degree')"
+          [tableConfig]="tableConfig" [dataList]="tableDataDegree"></hbt-table>
+      </hbt-table-wrap>
+    </div>
+    <div *ngIf="objFunctionCertificate?.view">
+      <div class="title-table">{{ 'hrm.staffManager.staffResearch.pageName.educationCertificatesInfo' | translate }}
+        <em *ngIf="objFunctionCertificate?.create" nz-button nz-icon nzType="plus-square" nzTheme="outline"
+            nz-tooltip
+            nzTooltipTitle="{{'common.button.add' | translate}}"
+            nzTooltipPlacement="left"
+            class="btn-create"
+            (click)="doOpenFormCustom('certificate')"></em></div>
+      <hbt-table-wrap>
+        <hbt-table
+          (changePageNum)="search($event, 'certificate')"
+          [tableConfig]="tableEducationCertificate" [dataList]="tableDataCertificate"></hbt-table>
+      </hbt-table-wrap>
+    </div>
+    <div *ngIf="objFunctionProcess?.view">
+      <div class="title-table">{{ 'hrm.staffManager.staffResearch.pageName.educationProcessInfo' | translate }}
+        <em *ngIf="objFunctionProcess?.create" nz-button nz-icon nzType="plus-square" nzTheme="outline"
+            nz-tooltip
+            nzTooltipTitle="{{'common.button.add' | translate}}"
+            nzTooltipPlacement="left"
+            class="btn-create"
+            (click)="doOpenFormCustom('process')"></em></div>
+      <hbt-table-wrap>
+        <hbt-table
+          (changePageNum)="search($event, 'process')"
+          [tableConfig]="tableEducationProcess" [dataList]="tableDataProcess"></hbt-table>
+      </hbt-table-wrap>
+    </div>
+    <div *ngIf="objFunctionPromotion?.view">
+      <div class="title-table">{{ 'hrm.staffManager.staffResearch.pageName.educationPromotionInfo' | translate }}
+        <em *ngIf="objFunctionPromotion?.create" nz-button nz-icon nzType="plus-square" nzTheme="outline"
+            nz-tooltip
+            nzTooltipTitle="{{'common.button.add' | translate}}"
+            nzTooltipPlacement="left"
+            class="btn-create"
+            (click)="doOpenFormCustom('promotions')"></em></div>
+      <hbt-table-wrap>
+        <hbt-table
+          (changePageNum)="search($event, 'promotions')"
+          [tableConfig]="tableEducationPromotion" [dataList]="tableDataPromotion"></hbt-table>
+      </hbt-table-wrap>
+    </div>
+  </div>
+</div>
+
+<ng-template #actionTmpl let-data="data">
+  <btn-more-action [model]="[data]" [setting]="actionSchema">
+  </btn-more-action>
+</ng-template>
+
+<ng-template #footerTmpl>
+  <hbt-button
+    buttonAvailableStyle="CANCEL"
+    buttonText="{{ 'common.button.cancel' | translate }}"
+    (click)="modalRef.destroy()">
+  </hbt-button>
+  <hbt-button
+    buttonAvailableStyle="SAVE"
+    buttonText="{{ 'common.button.saveS' | translate }}"
+    (click)="modalRef.getContentComponent().save()">
+  </hbt-button>
+</ng-template>

@@ -1,0 +1,58 @@
+@import "variable";
+
+
+.ant-table-content {
+  table {
+    border-left: 1px solid $bd-table-default;
+    border-right: 1px solid $bd-table-default;
+  }
+
+  .ant-table-thead > tr > th {
+    background: $bg-table-header;
+    color: $table-text-header;
+    font-family: avertaB, sans-serif;
+    // text-transform: uppercase;
+  }
+
+}
+
+.ant-pagination {
+  float: right;
+}
+
+.jd-table {
+  margin-top: 24px;
+  min-width: 100%;
+
+  ::ng-deep {
+    .ant-table-wrapper {
+      border-radius: 8px;
+      overflow: hidden;
+    }
+  }
+
+  &__label {
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 120%;
+    background: rgba(232, 234, 246, 1);
+  }
+
+  &__name {
+    display: flex;
+
+    &--level {
+      padding-left: 10%;
+    }
+  }
+
+  &__action {
+    display: flex;
+    justify-content: space-around;
+
+    &--button {
+      border: none;
+    }
+  }
+}
+

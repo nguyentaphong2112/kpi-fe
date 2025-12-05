@@ -1,0 +1,11 @@
+@import "src/app/core/global-style/variable";
+
+.menu__item--btn1 {
+  font-size: 16px;
+  padding: 3px;
+  color: $bg-default;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

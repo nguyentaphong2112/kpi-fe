@@ -1,0 +1,107 @@
+<div class="ees-form">
+  <div [class]="isNotPageName ? 'btn__across-no-page' : 'btn__across-page'">
+    <hbt-button buttonType="NO_BORDER" *ngIf="!isEvaluateDetail" (click)="save()" buttonAvailableStyle="SAVE"
+                buttonText="{{'common.button.save' | translate}}" type='SUBMIT'></hbt-button>
+    <hbt-button
+      buttonAvailableStyle="DEFAULT"
+      buttonText="{{ 'common.button.back' | translate }}"
+      (click)="back()">
+    </hbt-button>
+  </div>
+
+  <div class='save-form-employee' id="ees-form" scrollSpy>
+    <div class="content__item content__item--border bg__content--default">
+      <div nz-row [nzGutter]='[20,15]'>
+        <!--        <div nz-col [nzXs]='24' [nzLg]='12'>-->
+        <!--          <div class="bold-text">{{ 'kpi.employeeEvaluations.label.employeeCode' | translate }} <span-->
+        <!--            class='label__required'>*</span></div>-->
+        <!--          <span class="ct-text">{{ employeeCode }}</span>-->
+        <!--        </div>-->
+        <!--        <div nz-col [nzXs]='24' [nzLg]='12'>-->
+        <!--          <div class="bold-text">{{ 'kpi.employeeEvaluations.label.employeeName' | translate }} <span-->
+        <!--            class='label__required'>*</span></div>-->
+        <!--          <span class="ct-text">{{ employeeName }}</span>-->
+        <!--        </div>-->
+
+        <div nz-col [nzXs]="24" [nzLg]="16">
+          <div nz-row [nzGutter]='[20,15]' style="padding-bottom: 16px">
+            <div nz-col [nzXs]="24" [nzLg]="24" class="brief__des--item">
+              <span class="title">{{ empInfo?.employeeCode + ' - ' + empInfo?.fullName }}</span><i
+              class="sub-title">{{ empInfo?.email ? ' (' + empInfo?.email + ')' : '' }}</i>
+            </div>
+            <div nz-col [nzXs]="24" [nzLg]="24" class="brief__des--item">
+              <span class="position-title">{{ empInfo?.positionTitle }}</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="content__item content__item--border bg__content--default remove-margin-collapse">
+      <div nz-col [nzXs]='24' [nzLg]='24'>
+        <hbt-scroll-tabs [isShowInfoChange]="true" [sticky]="true" [tabs]="scrollTabs" [isKPI]="true"></hbt-scroll-tabs>
+        <hbt-collapse #collapse [panels]="panels"></hbt-collapse>
+        <!--      <nz-tabset *ngIf="!isDetail" nzType="editable-card" (nzAdd)="openInput()" [nzSize]="'large'">-->
+        <!--        <nz-tab nzTitle="{{'kpi.kpiEvaluations.organizations.label.evaluationCriteria' | translate}}">-->
+        <!--          <emp-evaluation-criteria></emp-evaluation-criteria>-->
+        <!--        </nz-tab>-->
+        <!--        <ng-container *ngFor="let it of tabs; let i = index">-->
+        <!--          <nz-tab [nzTitle]="titleTemplate">-->
+        <!--            <ng-template #titleTemplate>-->
+        <!--              <div class="tab-title">-->
+        <!--                <span>{{ it.name }}</span>-->
+        <!--                <span class="icon-group">-->
+        <!--              <i nz-icon nzType="edit" (click)="onEdit(i)" class="edit-icon"></i>-->
+        <!--              <i nz-icon nzType="delete" (click)="closeTab(i)" class="delete-icon"></i>-->
+        <!--              </span>-->
+        <!--              </div>-->
+        <!--            </ng-template>-->
+        <!--            <emp-work-plan [data]="it" [orderNumber]="i + 1" (onSave)="onSave($event)"></emp-work-plan>-->
+        <!--          </nz-tab>-->
+        <!--        </ng-container>-->
+        <!--      </nz-tabset>-->
+        <!--      <nz-tabset *ngIf="isDetail" nzType="card" [nzSize]="'large'">-->
+        <!--        <nz-tab nzTitle="{{'kpi.kpiEvaluations.organizations.label.evaluationCriteria' | translate}}">-->
+        <!--          <emp-evaluation-criteria></emp-evaluation-criteria>-->
+        <!--        </nz-tab>-->
+        <!--        <ng-container *ngFor="let it of tabs; let i = index">-->
+        <!--          <nz-tab [nzTitle]="titleTemplate">-->
+        <!--            <ng-template #titleTemplate>-->
+        <!--              <span>{{ it.name }}</span>-->
+        <!--            </ng-template>-->
+        <!--            <emp-work-plan [data]="it" [orderNumber]="i + 1" (onSave)="onSave($event)"></emp-work-plan>-->
+        <!--          </nz-tab>-->
+        <!--        </ng-container>-->
+        <!--      </nz-tabset>-->
+      </div>
+    </div>
+    <nz-modal [(nzVisible)]="isVisible" [nzTitle]="title"
+              (nzOnCancel)="handleCancel()">
+      <ng-container *nzModalContent>
+        <div>
+          <hbt-input-text
+            [maxLength]="255"
+            labelText="{{'kpi.employeeEvaluations.label.workPlanName' | translate}} <span class='label__required'>*</span>"
+            placeholderText="{{'kpi.employeeEvaluations.label.workPlanName' | translate}}"
+            [type]="(valueInput == '' && isSubmitted) || isDuplicate ? 'error' : 'default'"
+            [showError]="(isSubmitted && valueInput == '') || isDuplicate"
+            [errors]="{required: true, duplicate: isDuplicate}"
+            [errorDefs]="[{ errorName: 'required', errorDescription: 'kpi.validates.required' | translate: {'param': 'kpi.employeeEvaluations.label.workPlanName' | translate }},
+          { errorName: 'duplicate', errorDescription: 'kpi.validates.duplicate' | translate: {'param': 'kpi.employeeEvaluations.label.workPlanName' | translate }}]"
+            [(ngModel)]="valueInput"
+          ></hbt-input-text>
+        </div>
+      </ng-container>
+      <ng-template [nzModalFooter]>
+        <hbt-button
+          buttonAvailableStyle="CANCEL"
+          buttonText="{{ 'common.button.cancel' | translate }}"
+          (click)="handleCancel()">
+        </hbt-button>
+        <hbt-button
+          buttonAvailableStyle="SAVE"
+          buttonText="{{'common.button.save' | translate}}"
+          (click)="handleOk()">
+        </hbt-button>
+      </ng-template>
+    </nz-modal>
+  </div>
+</div>

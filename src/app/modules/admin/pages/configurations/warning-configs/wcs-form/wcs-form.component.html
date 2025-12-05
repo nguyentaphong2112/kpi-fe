@@ -1,0 +1,156 @@
+<div class='save-form-admin'>
+  <form nz-form [formGroup]="form" style="margin-top: 20px">
+    <div nz-row [nzGutter]='[20,15]'>
+      <!--Mã chức năng hiển thị báo cáo-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="resource" maxLength="255"
+                        [type]="isSubmitted && form.controls['resource'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['resource'].errors != null"
+                        [errors]="form.controls['resource'].errors"
+                        [errorDefs]="[ { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configurations.warningConfigs.table.resource' | translate }},
+                        { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+                        placeholderText="{{'admin.configurations.warningConfigs.table.resource' | translate}}"
+                        labelText="{{'admin.configurations.warningConfigs.table.resource' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+      <!--Tiêu đề cảnh báo-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="title" maxLength="255"
+          [type]="isSubmitted && form.controls['title'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['title'].errors != null"
+          [errors]="form.controls['title'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configurations.warningConfigs.table.resource' | translate }},
+          { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+          placeholderText="{{'admin.configurations.warningConfigs.table.title' | translate}}"
+          labelText="{{'admin.configurations.warningConfigs.table.title' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--icon hiển thị cảnh báo-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="icon" maxLength="255"
+                        [type]="isSubmitted && form.controls['icon'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['icon'].errors != null"
+                        [errors]="form.controls['icon'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configurations.warningConfigs.table.icon' | translate }},
+                        { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+                        placeholderText="{{'admin.configurations.warningConfigs.table.icon' | translate}}"
+                        labelText="{{'admin.configurations.warningConfigs.table.icon' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+      <!--Màu nền cảnh báo-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="backgroundColor" maxLength="255"
+          [type]="isSubmitted && form.controls['backgroundColor'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['backgroundColor'].errors != null"
+          [errors]="form.controls['backgroundColor'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configurations.warningConfigs.table.backgroundColor' | translate }},
+          { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+          placeholderText="{{'admin.configurations.warningConfigs.table.backgroundColor' | translate}}"
+          labelText="{{'admin.configurations.warningConfigs.table.backgroundColor' | translate}} <span class='label__required'>*</span>"
+          [defaultInput]="true"
+        ></hbt-input-text>
+      </div>
+
+      <!--URI lấy dữ liệu cảnh báo-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="apiUri" maxLength="255"
+          [type]="isSubmitted && form.controls['apiUri'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['apiUri'].errors != null"
+          [errors]="form.controls['apiUri'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configurations.warningConfigs.table.resource' | translate }},
+          { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+          placeholderText="{{'admin.configurations.warningConfigs.table.apiUri' | translate}}"
+          labelText="{{'admin.configurations.warningConfigs.table.apiUri' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--URL chức năng view chi tiết-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="urlViewDetail" maxLength="255"
+          [type]="isSubmitted && form.controls['urlViewDetail'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['urlViewDetail'].errors != null"
+          [errors]="form.controls['urlViewDetail'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configurations.warningConfigs.table.resource' | translate }},
+          { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+          placeholderText="{{'admin.configurations.warningConfigs.table.urlViewDetail' | translate}}"
+          labelText="{{'admin.configurations.warningConfigs.table.urlViewDetail' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--Thứ tự sắp xếp-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="orderNumber" [num]="11" appNumberic
+                        [type]="isSubmitted && form.controls['orderNumber'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['orderNumber'].errors != null"
+                        [errors]="form.controls['orderNumber'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configurations.warningConfigs.table.resource' | translate }},
+                        { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 10}}]"
+                        placeholderText="{{'admin.configurations.warningConfigs.table.orderNumber' | translate}}"
+                        labelText="{{'admin.configurations.warningConfigs.table.orderNumber' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+      <!--Chỉ hiển thị nếu là số dương > 0-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select formControlName="isMustPositive" [dataSelects]="chooseYesNo" keyLabel="name"
+                    [type]="isSubmitted && form.controls['isMustPositive'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['isMustPositive'].errors != null"
+                    [errors]="form.controls['isMustPositive'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configurations.warningConfigs.table.resource' | translate }},
+                    { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 1}}]"
+                    placeholder="{{'admin.configurations.warningConfigs.table.isMustPositive' | translate}}"
+                    labelText="{{'admin.configurations.warningConfigs.table.isMustPositive' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <ng-container formArrayName="listAttributes">
+        <ng-container *ngFor="let attributes of attributesFormArray.controls; let idx = index" [formGroupName]="idx">
+          <div nz-col [nzXs]="12" [nzLg]="12">
+            <input-attribute-common
+              [controlName]="getAttributeControl(idx, 'attributeValue')"
+              [dataType]="attributes.get('dataType')?.value"
+              [urlLoadData]="attributes.get('urlLoadData')?.value"
+              [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+              [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+              [errors]="attributes.get('attributeValue')?.errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}]"
+              [placeholderText]="attributes.get('attributeName')?.value"
+              [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+            >
+            </input-attribute-common>
+          </div>
+        </ng-container>
+      </ng-container>
+
+      <!--Câu lệnh query dữ liệu-->
+      <div nz-col [nzXs]="12" [nzLg]="24">
+        <hbt-input-text formControlName="sqlQuery" [maxLength]="4000"
+                        [defaultInput]="true"
+                        [type]="isSubmitted && form.controls['sqlQuery'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['sqlQuery'].errors != null"
+                        [errors]="form.controls['sqlQuery'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configurations.warningConfigs.table.resource' | translate }},
+                        { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 4000}}]"
+                        placeholderText="{{'admin.configurations.warningConfigs.table.sqlQuery' | translate}}"
+                        labelText="{{'admin.configurations.warningConfigs.table.sqlQuery' | translate}} <span class='label__required'>*</span>"
+                        [isTextAre]="true"
+        ></hbt-input-text>
+      </div>
+<!--      <div nz-col [nzXs]='24' [nzLg]='24' class="input__group">-->
+<!--        <hbt-upload-->
+<!--          [(docIdsDelete)]="docIdsDelete"-->
+<!--          [typeFileAvailable]="['jpeg', 'jpg', 'png', 'pdf', 'doc', 'docx']"-->
+<!--          [multiple]="true"-->
+<!--          labelText="{{'common.label.attachFile' | translate}}"-->
+<!--          [required]="true"-->
+<!--          (fileListChange)="onFileListChange($event, 'fileList', true)"-->
+<!--          (docIdsDeleteChange)="removeFile($event, 'fileList')"-->
+<!--          [serviceName]='serviceName'-->
+<!--          [showError]="isSubmitted"-->
+<!--        ></hbt-upload>-->
+<!--      </div>-->
+
+    </div>
+  </form>
+</div>
+

@@ -1,0 +1,55 @@
+<div [class]="isNotPageName ? 'btn__across-no-page' : 'btn__across-page'">
+  <hbt-button
+    buttonAvailableStyle="DEFAULT"
+    buttonText="{{ 'common.button.back' | translate }}"
+    (click)="back()">
+  </hbt-button>
+</div>
+<div class="users-role">
+  <div class="add-role" nz-col [nzXs]="8" [nzLg]="8">
+    <hbt-select [dataSelects]="listAddRole"
+                placeholder="{{'admin.permissions.userRoles.label.addRole' | translate}}"
+                keyLabel="name"
+                keyValue="roleId"
+                [(ngModel)]="role"
+                [disable]="!objFunction?.edit"
+                (ngModelChange)="addRole($event)">
+    </hbt-select>
+  </div>
+  <div class='search__content--group'>
+    <hbt-table-wrap>
+      <hbt-table
+        [tableConfig]="tableConfig" [dataList]="tableData"></hbt-table>
+    </hbt-table-wrap>
+  </div>
+
+  <ng-template #actionTmpl let-id='roleId'>
+    <em class="menu__item--btn" nz-icon nzType="delete" nzTheme="outline"
+        nzTooltipTitle="{{ 'common.title.delete' | translate }}"
+        nzTooltipPlacement="top" nz-button nz-tooltip (click)="deleteRole(id)"></em>
+  </ng-template>
+
+
+  <ng-template #actionScopeTmpl let-id='roleId'>
+    <span class="add-scope"
+          (click)="openScopeModal(id)">{{ 'admin.permissions.userRoles.label.scope' | translate }}</span>
+  </ng-template>
+
+
+  <ng-template #footerTmpl>
+    <hbt-button
+      buttonAvailableStyle="CANCEL"
+      buttonText="{{ 'common.button.cancel' | translate }}"
+      (click)="modalRef.destroy()">
+    </hbt-button>
+    <hbt-button
+      buttonAvailableStyle="SAVE"
+      buttonText="{{ 'common.button.saveS' | translate }}"
+      (click)="modalRef.getContentComponent().save()">
+    </hbt-button>
+  </ng-template>
+
+</div>
+
+
+

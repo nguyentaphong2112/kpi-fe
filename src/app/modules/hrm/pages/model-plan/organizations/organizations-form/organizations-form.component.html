@@ -1,0 +1,154 @@
+<div [ngClass]="{'app-card' : isPage}">
+  <form nz-form [formGroup]="form">
+    <div nz-row [nzGutter]='[20,15]'>
+      <!--Mã đơn vị-->
+      <div nz-col [nzXs]='12' [nzLg]='12'>
+        <hbt-input-text formControlName='code' [maxLength]='50'
+                        [type]="isSubmitted && form.controls['code'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['code'].errors !== null"
+                        [errors]="form.controls['code'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.modelPlan.organizations.orgCode' | translate }}]"
+                        placeholderText="{{'hrm.modelPlan.organizations.orgCode' | translate}}"
+                        labelText="{{'hrm.modelPlan.organizations.orgCode' | translate}} <span class='label__required'>*</span>"></hbt-input-text>
+      </div>
+
+      <!--Tên đơn vị-->
+      <div nz-col [nzXs]='12' [nzLg]='12'>
+        <hbt-input-text formControlName='name' [maxLength]='255'
+                        [type]="isSubmitted && form.controls['name'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['name'].errors !== null"
+                        [errors]="form.controls['name'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.modelPlan.organizations.orgName' | translate }}]"
+                        placeholderText="{{'hrm.modelPlan.organizations.orgName' | translate}}"
+                        labelText="{{'hrm.modelPlan.organizations.orgName' | translate}} <span class='label__required'>*</span>"></hbt-input-text>
+      </div>
+
+      <!--Đơn vị cấp trên-->
+      <div nz-col [nzXs]='12' [nzLg]='12'>
+        <tree-data-picker
+          [isExpand]="true"
+          labelText="{{'hrm.modelPlan.organizations.orgParent' | translate}}"
+          placeholder="{{'hrm.modelPlan.organizations.orgParent' | translate}}"
+          formControlName="parentId"
+          [functionCode]="functionCode"
+          [scope]="scope"
+        >
+        </tree-data-picker>
+      </div>
+
+      <!--Loại hình đơn vị-->
+      <div nz-col [nzXs]='12' [nzLg]='12'>
+        <hbt-select formControlName="orgTypeId"
+                    [urlLoadData]="getUrlCategory(constant.CATALOGS.LOAI_HINH_DON_VI)"
+                    [serviceName]="serviceNameAdmin"
+                    [keyValueStringType]="true"
+                    [keyLabel]="'name'"
+                    [keyValue]="'value'"
+                    [type]="isSubmitted && form.controls['orgTypeId'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['orgTypeId'].errors !== null"
+                    [errors]="form.controls['orgTypeId'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.modelPlan.organizations.orgType' | translate }}]"
+                    labelText="{{'hrm.modelPlan.organizations.orgType' | translate}}"
+                    placeholder="{{'hrm.modelPlan.organizations.orgType' | translate}}"
+        ></hbt-select>
+      </div>
+
+
+      <!--Hình thức thành lập-->
+      <div nz-col [nzXs]='12' [nzLg]='12'>
+        <hbt-select formControlName="establishmentReasonId"
+                    [urlLoadData]="getUrlCategory(constant.CATALOGS.HINH_THUC_THANH_LAP)"
+                    [serviceName]="serviceNameAdmin"
+                    [keyLabel]="'name'"
+                    [type]="isSubmitted && form.controls['establishmentReasonId'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['establishmentReasonId'].errors !== null"
+                    [errors]="form.controls['establishmentReasonId'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.modelPlan.organizations.establishType' | translate }}]"
+                    labelText="{{'hrm.modelPlan.organizations.establishType' | translate}}"
+                    placeholder="{{'hrm.modelPlan.organizations.establishType' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <!--Đơn vị liên quan-->
+      <div nz-col [nzXs]='12' [nzLg]='12'>
+        <tree-data-picker
+          [isExpand]="true"
+          labelText="{{'hrm.modelPlan.organizations.relatedOrg' | translate}}"
+          placeholder="{{'hrm.modelPlan.organizations.relatedOrg' | translate}}"
+          formControlName="listConstraintOrgIds"
+          [functionCode]="functionCode"
+          [scope]="scope"
+          [isMultiSelect]="true"
+        >
+        </tree-data-picker>
+      </div>
+
+      <!--Hiệu lực từ ngày-->
+      <div nz-col [nzXs]='12' [nzLg]='12'>
+        <hbt-date-picker
+          formControlName="startDate"
+          labelText="{{'hrm.modelPlan.organizations.fromDate' | translate}} <span class='label__required'>*</span>"
+          placeholderText="{{'hrm.modelPlan.organizations.fromDate' | translate}}"
+          [type]="isSubmitted && form.controls['startDate'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['startDate'].errors !== null"
+          [errors]="form.controls['startDate'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.modelPlan.organizations.fromDate' | translate }}]"
+        ></hbt-date-picker>
+      </div>
+
+      <!--Hiệu lực đến ngày-->
+      <div nz-col [nzXs]='12' [nzLg]='12'>
+        <hbt-date-picker
+          formControlName="endDate"
+          labelText="{{'hrm.modelPlan.organizations.toDate' | translate}}"
+          placeholderText="{{'hrm.modelPlan.organizations.toDate' | translate}}"
+          [type]="(form.controls['endDate'].errors || form.errors?.rangeDateError) ? 'error' : 'default'"
+          [showError]="(form.controls['endDate'].errors || form.errors?.rangeDateError) !== null"
+          [errors]="form.errors?.rangeDateError ? form.errors : form.controls['endDate'].errors"
+          [errorDefs]="[
+            { errorName: 'rangeDateError', errorDescription: 'hrm.validate.rangeDate.pareDateMore' | translate:{'fromDate': 'hrm.modelPlan.organizations.fromDate' | translate, 'toDate': 'hrm.modelPlan.organizations.toDate' | translate}}
+          ]"
+        ></hbt-date-picker>
+      </div>
+      <div nz-col [nzXs]='12' [nzLg]='12'>
+        <hbt-input-text formControlName='orderNumber'
+                        appNumberic
+                        [num]="5"
+                        [decimals]="0"
+                        [type]="isSubmitted && form.controls['orderNumber'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['orderNumber'].errors !== null"
+                        [errors]="form.controls['orderNumber'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'modelPlan.validate.required' | translate: {'param': 'common.label.stt' | translate }}]"
+                        placeholderText="{{'common.label.stt' | translate}}"
+                        labelText="{{'common.label.stt' | translate}}"></hbt-input-text>
+      </div>
+
+      <ng-container formArrayName="listAttributes">
+        <ng-container *ngFor="let attributes of attributesFormArray.controls; let idx = index" [formGroupName]="idx">
+          <div nz-col [nzXs]="12" [nzLg]="12">
+            <input-attribute-common
+              [controlName]="getAttributeControl(idx, 'attributeValue')"
+              [dataType]="attributes.get('dataType')?.value"
+              [urlLoadData]="attributes.get('urlLoadData')?.value"
+              [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+              [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+              [errors]="attributes.get('attributeValue')?.errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}]"
+              [placeholderText]="attributes.get('attributeName')?.value"
+              [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+            >
+            </input-attribute-common>
+          </div>
+        </ng-container>
+      </ng-container>
+
+      <div nz-col [nzXs]="24" [nzLg]="24" [ngStyle]="{'text-align': 'right'}">
+        <hbt-button buttonSize='SMALL' buttonAvailableStyle='PRIMARY'
+                    (click)="save()"
+                    *ngIf="nodeId"
+                    buttonText="{{'common.button.save' | translate}}"></hbt-button>
+      </div>
+    </div>
+  </form>
+
+</div>

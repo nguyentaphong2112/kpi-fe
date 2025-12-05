@@ -1,0 +1,21 @@
+@import "src/app/core/global-style/variable";
+
+.numberic-range-input {
+  div.input__label {
+    color: $input-label-color;
+    font-size: 14px;
+    font-family: avertaB, sans-serif;
+    margin-bottom: 4px;
+
+    ::ng-deep .label__required {
+      color: $error-default-color;
+    }
+  }
+
+  span.text__message {
+    color: $error-default-color !important;
+    font-family: avertaL, sans-serif;
+    font-size: 12px;
+  }
+
+}

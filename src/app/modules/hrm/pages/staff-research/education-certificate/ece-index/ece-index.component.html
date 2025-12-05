@@ -1,0 +1,27 @@
+<app-src-index
+  [moduleName]="moduleName"
+  [functionCode]="functionCode"
+  [fileExportName]="fileExportName"
+  [urlSearchApi]="urlConstant.SEARCH_FORM.EDUCATION_CERTIFICATES"
+  [urlImportTemplateApi]="urlConstant.EDU_CERTIFICATES.DOWNLOAD_TEMPLATE"
+  [urlImportApi]="urlConstant.EDU_CERTIFICATES.IMPORT"
+  [tableHeaders]="tableHeaders"
+  [formConfig]="formConfig"
+  [formImport]="formImport"
+  [isShowBtnImport]="true"
+  [isShowInput]="true"
+  [isForce]="false"
+  [key]="'educationCertificateId'"
+>
+  <ng-template #formHrm>
+    <div nz-col [nzXs]='24' [nzLg]='24' style="padding: 7.5px 10px;">
+      <hbt-select
+        [urlLoadData]="getUrlCategory(categoryCode.LOAI_CHUNG_CHI)"
+        keyLabel="name"
+        placeholder="{{'hrm.staffManager.educationCertificates.table.certificateTypeId' | translate}}"
+        labelText="{{'hrm.staffManager.educationCertificates.table.certificateTypeId' | translate}}"
+        [formControl]='formImport.controls["certificateTypeId"]'
+      ></hbt-select>
+    </div>
+  </ng-template>
+</app-src-index>

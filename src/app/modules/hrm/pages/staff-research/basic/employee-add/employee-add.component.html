@@ -1,0 +1,108 @@
+<form nz-form [formGroup]="form">
+  <div nz-row [nzGutter]='[20,15]'>
+    <!--  Mã nhân viên  -->
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-input-text
+        [maxLength]="20"
+        formControlName="employeeCode"
+        [type]="isSubmitted && form.controls['employeeCode'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['employeeCode'].errors !== null"
+        [errors]="form.controls['employeeCode'].errors"
+        placeholderText="{{'hrm.staffManager.label.employeeCode' | translate}}"
+        labelText="{{'hrm.staffManager.label.employeeCode' | translate}}">
+      </hbt-input-text>
+    </div>
+
+    <!--  Họ và tên  -->
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-input-text
+        [maxLength]="255"
+        formControlName="fullName"
+        [type]="isSubmitted && form.controls['fullName'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['fullName'].errors !== null"
+        [errors]="form.controls['fullName'].errors"
+        [errorDefs]="[
+            {errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.staffManager.label.employeeName' | translate }}
+          ]"
+        placeholderText="{{'hrm.staffManager.label.employeeName' | translate}}"
+        labelText="{{'hrm.staffManager.label.employeeName' | translate}} <span class='label__required'>*</span>"></hbt-input-text>
+    </div>
+
+    <!--  Ngày sinh  -->
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-date-picker
+        formControlName="dateOfBirth"
+        [type]="isSubmitted && form.controls['dateOfBirth'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['dateOfBirth'].errors !== null"
+        [errors]="form.controls['dateOfBirth'].errors"
+        [errorDefs]="[
+            {errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.staffManager.label.dateOfBirth' | translate }}
+          ]"
+        placeholderText="{{'hrm.staffManager.label.dateOfBirth' | translate}}"
+        labelText="{{'hrm.staffManager.label.dateOfBirth' | translate}} <span class='label__required'>*</span>"></hbt-date-picker>
+    </div>
+
+    <!--  Giới tính  -->
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-select
+        [urlLoadData]="getUrlCategory(categoryCode.GIOI_TINH)"
+        keyLabel="name"
+        formControlName="genderId"
+        [type]="isSubmitted && form.controls['genderId'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['genderId'].errors !== null"
+        [errors]="form.controls['genderId'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.staffManager.label.genderName' | translate }}]"
+        placeholder="{{'hrm.staffManager.label.genderName' | translate}}"
+        labelText="{{'hrm.staffManager.label.genderName' | translate}} <span class='label__required'>*</span>"
+      ></hbt-select>
+    </div>
+
+    <!--  Email  -->
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-input-text
+        formControlName="email"
+        [maxLength]="255"
+        [type]="isSubmitted && form.controls['email'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['email'].errors !== null"
+        [errors]="form.controls['email'].errors"
+        [errorDefs]="[{errorName: 'email', errorDescription: 'hrm.validate.invalidEmail' | translate }]"
+        placeholderText="{{'hrm.staffManager.label.email' | translate}}"
+        labelText="{{'hrm.staffManager.label.email' | translate}}"></hbt-input-text>
+    </div>
+
+    <!-- Đơn vị đang công tác   -->
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <tree-data-picker
+          [isExpand]="true"
+        [functionCode]="functionCode"
+        [scope]="scope"
+        formControlName="organizationId"
+        labelText="{{'hrm.staffManager.label.orgWorkingName' | translate}} <span class='label__required'>*</span>"
+        placeholder="{{'hrm.staffManager.label.orgWorkingName' | translate}}"
+        [type]="isSubmitted && form.controls['organizationId']?.errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['organizationId']?.errors !== null"
+        [errors]="form.controls['organizationId']?.errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.staffManager.label.orgWorkingName' | translate}}]"
+      ></tree-data-picker>
+    </div>
+
+    <!-- Chức danh -->
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-select
+        [dataSelects]="listPosition"
+        keyLabel="name"
+        keyValue="positionId"
+        formControlName="positionId"
+        labelText="{{'hrm.staffManager.workProcess.label.attributes.position' | translate}} <span class='label__required'>*</span>"
+        placeholder="{{'hrm.staffManager.workProcess.label.attributes.position' | translate}}"
+        [type]="isSubmitted && form.controls['positionId']?.errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['positionId']?.errors !== null"
+        [errors]="form.controls['positionId']?.errors"
+        [errorDefs]="[{errorName: 'required', errorDescription: 'hrm.validate.required' | translate:{'param': 'hrm.staffManager.workProcess.label.attributes.position' | translate} }]"
+        (eventEmit)="changePosition($event)"
+      ></hbt-select>
+    </div>
+
+
+  </div>
+</form>

@@ -1,0 +1,27 @@
+<nz-modal
+  [(nzVisible)]="isReject"
+  nzTitle="{{'hrm.staffManager.table.action.isNotApprove' | translate}}"
+  (nzOnCancel)="doClose()"
+  nzCancelText="{{'hrm.staffManager.table.action.cancel' | translate}}"
+  nzOkType="primary"
+  nzOkText="{{'hrm.staffManager.table.action.yes' | translate}}"
+  (nzOnOk)="doReject()"
+>
+  <form nz-form [formGroup]="form" *nzModalContent>
+    <div nz-row>
+      <div nz-col nzXs="24" nzLg="24">
+        <hbt-input-text
+          [isTextAre]="true"
+          maxLength="500" minLength="0"
+          [type]="isSubmitted && form.controls['rejectReason'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['rejectReason'].errors != null"
+          [errors]="form.controls['rejectReason'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.staffManager.label.rejectReason' | translate }}]"
+          labelText="{{'hrm.staffManager.label.rejectReason' | translate}} <span class='label__required'>*</span>"
+          formControlName="rejectReason"
+        >
+        </hbt-input-text>
+      </div>
+    </div>
+  </form>
+</nz-modal>

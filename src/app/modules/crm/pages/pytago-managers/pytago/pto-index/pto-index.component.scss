@@ -1,0 +1,651 @@
+@import "src/app/core/global-style/variable";
+.pytago {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 15% 0;
+    max-height: 20vh;
+    min-height: 130px;
+    &__action {
+      button {
+        cursor: pointer;
+        color: $black-400;
+        font-weight: 700;
+        font-size: 35px;
+        background-color: white;
+        border-radius: 8px;
+        width: 250px;
+        height: 65px;
+      }
+      button:hover {
+        color: #ffffff;
+        background-color: #15133b;
+        border-color: #15133b;
+      }
+    }
+  }
+  &__form {
+    padding: 50px 15% 0;
+    justify-content: center;
+    &__left {
+      //padding: 15px 5%;
+      max-width: 600px;
+      &__title {
+        width: 100%;
+        text-align: center;
+        font-size: 45px;
+        color: red;
+        font-weight: 900;
+        font-family: SVN-Gotham-Ultra, sans-serif;
+      }
+      &__content {
+        width: 100%;
+        text-align: center;
+        padding: 15px;
+        &__input {
+          padding-bottom: 15px;
+          width: 100%;
+          height: 65px;
+          text-align: center;
+          ::ng-deep .ant-picker {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            box-shadow: none;
+            padding: 0;
+            .anticon-calendar {
+              display: none;
+            }
+            .ant-picker-input input {
+              font-size: 30px;
+              color: $input-body-color;
+              outline: none;
+              box-shadow: none;
+
+              @include placeholder {
+                color: $input-placeholder-color;
+                font-size: 30px;
+              }
+
+              &:active, &:focus {
+                &:enabled {
+                  @include placeholder {
+                    color: $bd-default;
+                    font-size: 30px;
+                  }
+                }
+              }
+            }
+          }
+          ::ng-deep .ant-select {
+            .ant-select-selector {
+              height: 100%;
+              align-items: center;
+              font-size: 30px;
+              border-radius: 10px;
+              border-color: black;
+            }
+            height: 100%;
+            width: 100%;
+          }
+          ::ng-deep .ant-input-affix-wrapper {
+            .ant-input-prefix {
+              margin-right: 10px;
+            }
+            height: 100%;
+            font-size: 30px;
+            border-radius: 10px;
+            border-color: black;
+            .ant-input {
+              font-size: 30px;
+              @include placeholder {
+                color: $input-placeholder-color;
+                align-self: center;
+                font-size: 30px;
+              }
+              &:placeholder-shown {
+                font-size: unset;
+              }
+            }
+          }
+        }
+      }
+      &__action {
+        width: 100%;
+        text-align: center;
+        button {
+          cursor: pointer;
+          margin: 0 10px 15px;
+          color: white;
+          font-weight: 700;
+          font-size: 30px;
+          background-color: white;
+          border-radius: 8px;
+          border-color: #ee3f35;
+          width: 250px;
+          height: 65px;
+          background: linear-gradient(to bottom, #ee3f35, #f7a61c);
+        }
+        .disable-export {
+          cursor: not-allowed;
+          background: linear-gradient(to bottom, #21212d, #a6a6b3);
+          border-color: #15133b;
+        }
+      }
+    }
+    &__right {
+      max-width: 500px;
+      display: flex;
+      justify-content: center;
+      div {
+        width: 100%;
+        max-height: 95vh;
+        img {
+          max-height: 100%;
+          max-width: 100%;
+        }
+      }
+    }
+  }
+  &__result-header {
+    background: linear-gradient(to bottom, #ee3f35, #f7a61c);
+    border: none;
+    margin-top: 50px;
+    padding: 0 15%;
+    &__title {
+      padding: 20px 0;
+      text-align: center;
+      font-size: 65px;
+      color: white;
+      font-weight: 900;
+      font-family: SVN-Gotham-Ultra, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      p {
+        margin: 0;
+      }
+    }
+    &__data-detail {
+      font-size: 30px;
+      font-weight: 700;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      span {
+        margin: 10px;
+      }
+    }
+  }
+  &__table {
+    padding: 30px 12.5%;
+    &__result {
+      width: 100%;
+      color: #141339;
+      font-size: 32px;
+      font-family: SVN-Gotham-Regular, sans-serif;
+      td {
+        padding: 17px;
+      }
+      tr {
+        border-bottom: 3px solid $error-500;
+        border-top: 3px solid $error-500;
+      }
+      td:nth-child(2) {
+        border-right: 4px solid $error-500;
+      }
+      td:nth-child(2n) {
+        text-align: right;
+        color: $error-500;
+        width: 250px;
+      }
+    }
+  }
+
+  &__chart {
+    padding: 30px 15%;
+    display: flex;
+    &__birth {
+      .triangle {
+        display: flex;
+      }
+      .img-square {
+        width: 600px;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    }
+    &__name {
+      padding-left: 8px;
+      margin-top: 60px;
+      display: flex;
+      .img-name {
+        width: 400px;
+        position: absolute;
+        top: 0;
+      }
+    }
+    .square-text {
+      top: 0;
+      left: 0;
+      position: absolute; font-size: 30px;
+      font-weight: 600;
+      color:#ffffff;
+      text-align:center;
+      width: 116px;
+    }
+  }
+
+  &__triangle {
+    margin-top: 100px;
+    padding: 0 15% ;
+    display: flex;
+    &__text {
+      position: absolute;
+      font-size: 2vw;
+      font-weight: 600;
+      color:#ffffff;
+      text-align:center;
+      width: 8vw;
+    }
+  }
+
+  &__helper {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    &__title {
+      font-family: SVN-Gotham-Ultra, sans-serif;
+      font-size: 50pt;
+      color: #f04722;
+      text-align: center;
+      margin-bottom: 0;
+    }
+    &__video-box {
+      box-shadow: 0 0 9pt 2pt #D3D3D3;
+      border: 2px solid #141339;
+      border-radius: 10px;
+      padding: 15px;
+      position: relative;
+      margin-top: 20px;
+      img {
+        width: 50px
+      }
+      span:nth-child(even) {
+        color:#141339;
+        font-family: SVN-Gotham-Regular, sans-serif;
+        margin-left: 10px;
+        font-size: 1.5rem;
+        vertical-align: middle;
+      }
+      span:nth-child(odd) {
+        font-size: 1.5rem;
+        font-family: avertaRI, sans-serif;
+        position: absolute;
+        right: 0;
+        margin-right: 10px;
+        color: #0f0fb4;
+        margin-top: 7px;
+      }
+      a {
+        color: #16379D;
+      }
+    }
+  }
+  &__contract {
+    padding: 50px 0;
+    display: flex;
+    justify-content: center;
+    .title {
+      text-align: center;
+      font-family: SVN-Gotham-Ultra, sans-serif;
+      font-size: 32pt;
+      color: #141339;
+    }
+    .info-footer {
+      padding-left: 30px;
+      margin-top: 20px;
+      img {
+        margin-right: 10px;
+      }
+      h2 {
+        margin-top: 10px;
+        color: #15133b;
+      }
+    }
+  }
+
+}
+@media screen and (max-width: 1356px), (max-height: 800px) {
+  .pytago {
+    &__header {
+      height: 130px;
+      &__action {
+        button {
+          font-size: 25px;
+          width: 205px;
+          height: 50px;
+        }
+      }
+    }
+    &__result-header {
+      &__title {
+        padding: 0 30px;
+        font-size: 40px;
+      }
+      &__data-detail {
+        font-size: 25px;
+      }
+    }
+    &__form {
+      padding: 50px 10% 0;
+      &__left {
+        //padding: 15px 5%;
+        &__title {
+          font-size: 35px;
+          font-weight: 700;
+        }
+        &__content {
+          &__input {
+            padding-bottom: 10px;
+            height: 50px;
+            ::ng-deep .ant-picker {
+              .ant-picker-input input {
+                font-size: 25px;
+                @include placeholder {
+                  color: $input-placeholder-color;
+                  font-size: 25px;
+                }
+
+                &:active, &:focus {
+                  &:enabled {
+                    @include placeholder {
+                      color: $bd-default;
+                      font-size: 25px;
+                    }
+                  }
+                }
+              }
+            }
+            ::ng-deep .ant-select {
+              .ant-select-selector {
+                font-size: 25px;
+              }
+            }
+            ::ng-deep .ant-input-affix-wrapper {
+              font-size: 25px;
+              .ant-input {
+                font-size: 25px;
+                @include placeholder {
+                  color: $input-placeholder-color;
+                  font-size: 25px;
+                }
+              }
+            }
+          }
+        }
+        &__action {
+          button {
+            margin: 0 7px 10px;
+            color: white;
+            font-weight: 600;
+            font-size: 25px;
+            width: 200px;
+            height: 50px;
+          }
+        }
+      }
+      &__right {
+        display: flex;
+        justify-content: center;
+        div {
+          width: 100%;
+          max-height: 650px;
+          img {
+            max-height: 100%;
+            max-width: 100%;
+          }
+        }
+      }
+    }
+    &__table {
+      &__result {
+        font-size: 25px;
+        font-family: SVN-Gotham-Regular, sans-serif;
+        td {
+          padding: 12px;
+        }
+        td:nth-child(2n) {
+          width: 220px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .pytago {
+    &__header {
+      &__action {
+        button {
+          cursor: pointer;
+          color: $black-500;
+          font-weight: 600;
+          font-size: 20px;
+          width: 135px;
+          height: 45px;
+        }
+      }
+    }
+
+    &__form {
+      &__left {
+        &__title {
+          width: 100%;
+          font-size: 35px;
+          font-weight: 600;
+        }
+
+        &__content {
+          &__input {
+            height: 45px;
+            ::ng-deep .ant-picker {
+              .ant-picker-input input {
+                font-size: 18px;
+                @include placeholder {
+                  font-size: 18px;
+                }
+
+                &:active, &:focus {
+                  &:enabled {
+                    @include placeholder {
+                      font-size: 18px;
+                    }
+                  }
+                }
+              }
+            }
+            ::ng-deep .ant-select {
+              .ant-select-selector {
+                font-size: 18px;
+                border-radius: 8px;
+              }
+            }
+
+            ::ng-deep .ant-input-affix-wrapper {
+              font-size: 18px;
+              border-radius: 8px;
+
+              .ant-input {
+                font-size: 18px;
+                @include placeholder {
+                  font-size: 18px;
+                }
+
+                &:placeholder-shown {
+                  font-size: unset;
+                }
+              }
+            }
+          }
+        }
+
+        &__action {
+          button {
+            font-weight: 600;
+            font-size: 20px;
+            width: 130px;
+            height: 45px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .pytago {
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      &__action {
+        button {
+          cursor: pointer;
+          color: $black-500;
+          font-weight: 600;
+          font-size: 18px;
+          width: 135px;
+          height: 45px;
+        }
+      }
+    }
+    &__form {
+      &__left {
+        &__title {
+          width: 100%;
+          font-size: 35px;
+          font-weight: 600;
+        }
+        &__content {
+          &__input {
+            height: 45px;
+            ::ng-deep .ant-picker {
+              .ant-picker-input input {
+                font-size: 18px;
+                @include placeholder {
+                  font-size: 18px;
+                }
+
+                &:active, &:focus {
+                  &:enabled {
+                    @include placeholder {
+                      font-size: 18px;
+                    }
+                  }
+                }
+              }
+            }
+            ::ng-deep .ant-select {
+              .ant-select-selector {
+                font-size: 18px;
+                border-radius: 8px;
+              }
+            }
+            ::ng-deep .ant-input-affix-wrapper {
+              font-size: 18px;
+              border-radius: 8px;
+              .ant-input {
+                font-size: 18px;
+                @include placeholder {
+                  font-size: 18px;
+                }
+                &:placeholder-shown {
+                  font-size: unset;
+                }
+              }
+            }
+          }
+        }
+        &__action {
+          button {
+            font-weight: 600;
+            font-size: 20px;
+            width: 130px;
+            height: 45px;
+          }
+        }
+      }
+    }
+    &__result-header {
+      &__title {
+        padding: 0 30px;
+        text-align: center;
+        font-size: 35px;
+        font-weight: 700;
+      }
+      &__data-detail {
+        font-size: 20px;
+        font-weight: 600;
+      }
+    }
+    &__table {
+      padding: 10px 0;
+      &__result {
+        font-size: 22px;
+        td {
+          padding: 7px;
+        }
+        tr {
+          border-bottom: 1px solid $error-500;
+          border-top: 1px solid $error-500;
+        }
+        td:nth-child(2) {
+          border-right: 2px solid $error-500;
+        }
+        td:nth-child(2n) {
+          text-align: right;
+          color: $error-500;
+          width: 250px;
+        }
+      }
+    }
+
+    &__helper {
+      &__title {
+        font-size: 30pt;
+      }
+      &__video-box {
+        padding: 8px;
+        margin-top: 10px;
+        img {
+          width: 35px
+        }
+        span:nth-child(even) {
+          font-size: 1rem;
+        }
+        span:nth-child(odd) {
+          font-size: 1rem;
+        }
+      }
+    }
+    &__contract {
+      padding: 50px 0;
+      display: flex;
+      justify-content: center;
+      .title {
+        font-size: 25pt;
+      }
+      .info-footer {
+        img {
+          margin-right: 10px;
+        }
+        h2 {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}

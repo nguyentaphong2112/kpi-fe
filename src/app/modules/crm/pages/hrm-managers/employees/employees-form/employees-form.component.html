@@ -1,0 +1,364 @@
+<div class='save-form-crm'>
+  <form nz-form [formGroup]="form" style="margin-top: 20px">
+    <div nz-row [nzGutter]='[20,15]'>
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <div class="save-form-crm__title">{{ 'crm.employees.label.userInfo' | translate }}</div>
+        <div nz-menu-divider></div>
+      </div>
+
+      <!--tên nhân viên-->
+      <div nz-col [nzXs]="12" [nzLg]="6">
+        <hbt-input-text formControlName="fullName" maxLength="255"
+                        [type]="isSubmitted && form.controls['fullName'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['fullName'].errors != null"
+                        [errors]="form.controls['fullName'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.employees.label.fullName' | translate }},
+          { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+                        placeholderText="{{'crm.employees.label.fullName' | translate}}"
+                        labelText="{{'crm.employees.label.fullName' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+      <!--số điện thoại-->
+      <div nz-col [nzXs]="12" [nzLg]="6">
+        <hbt-input-text formControlName="mobileNumber" [maxLength]="10" appNumberInput
+                        (ngModelChange)="mode === modeConst.ADD ? form.controls['loginName'].setValue(form.controls['mobileNumber'].value) : null"
+                        [type]="isSubmitted && form.controls['mobileNumber'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['mobileNumber'].errors != null"
+                        [errors]="form.controls['mobileNumber'].errors"
+                        [errorDefs]="[
+                          { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.employees.label.mobileNumber' | translate }},
+                          { errorName: 'phoneMobile', errorDescription: 'common.validate.phoneMobile' | translate},
+                        ]"
+                        placeholderText="{{'crm.employees.label.mobileNumber' | translate}}"
+                        labelText="{{'crm.employees.label.mobileNumber' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+      <!--Tài khoản đăng nhập-->
+      <div nz-col [nzXs]="12" [nzLg]="6">
+        <hbt-input-text formControlName="loginName" maxLength="255" [disable]="true"
+                        [type]="isSubmitted && form.controls['loginName'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['loginName'].errors != null"
+                        [errors]="form.controls['loginName'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.employees.label.loginName' | translate }},
+                        { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+                        placeholderText="{{'crm.employees.label.loginName' | translate}}"
+                        labelText="{{'crm.employees.label.loginName' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+      <!--Mật khẩu-->
+      <div nz-col [nzXs]="12" [nzLg]="6">
+        <hbt-input-text formControlName="password" maxLength="255"
+                        [disable]="isDisabledValue"
+                        [type]="isSubmitted && form.controls['password']?.errors ? 'error' : 'default'"
+                        inputType="password"
+                        [defaultInput]="true"
+                        [inputType]="isFocus ? 'text':'password'"
+                        [showError]="isSubmitted && form.controls['password']?.errors != null"
+                        [errors]="form.controls['password']?.errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+                        placeholderText="{{'crm.customers.table.password' | translate}}"
+                        labelText="{{'crm.customers.table.password' | translate}} <span class='label__required'>*</span>"
+                        [labelText]="getLabelText('crm.customers.table.password', !isDisabledValue)"
+        ></hbt-input-text>
+        <label class="pass-eye" (click)="onLabelClick()"><i *ngIf="isFocus" class="fa fa-eye"></i><i *ngIf="!isFocus" class="fa fa-eye-slash"></i></label>
+      </div>
+
+      <!--Giới tính-->
+      <div nz-col [nzXs]="12" [nzLg]="6">
+        <hbt-select [urlLoadData]="getUrlCategory(categoryCode.GIOI_TINH)" keyLabel="name"
+                    formControlName="genderId"
+                    [type]="isSubmitted && form.controls['genderId']?.errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['genderId']?.errors != null"
+                    [errors]="form.controls['genderId']?.errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.employees.label.genderId' | translate }}]"
+                    placeholder="{{'crm.employees.label.genderId' | translate}}"
+                    labelText="{{'crm.employees.label.genderId' | translate}}  <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <!--ngày sinh-->
+      <div nz-col [nzXs]="12" [nzLg]="6">
+        <hbt-date-picker
+          [type]="isSubmitted && form.controls['dateOfBirth'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['dateOfBirth'].errors != null"
+          [errors]="form.controls['dateOfBirth'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.employees.label.dateOfBirth' | translate }}]"
+          placeholderText="{{'crm.employees.label.dateOfBirth' | translate}}"
+          labelText="{{'crm.employees.label.dateOfBirth' | translate}} <span class='label__required'>*</span>"
+          formControlName="dateOfBirth"></hbt-date-picker>
+      </div>
+      <!--Email-->
+      <div nz-col [nzXs]="12" [nzLg]="6">
+        <hbt-input-text formControlName="email" maxLength="255"
+                        [type]="isSubmitted && form.controls['email'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['email'].errors != null"
+                        [errors]="form.controls['email'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.employees.label.email' | translate }},
+                        { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+                        placeholderText="{{'crm.employees.label.email' | translate}}"
+                        labelText="{{'crm.employees.label.email' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+      <!--Tài khoản zalo-->
+      <div nz-col [nzXs]="12" [nzLg]="6">
+        <hbt-input-text formControlName="zaloAccount" maxLength="255"
+                        [type]="isSubmitted && form.controls['zaloAccount'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['zaloAccount'].errors != null"
+                        [errors]="form.controls['zaloAccount'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.employees.label.zaloAccount' | translate }},
+                        { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+                        placeholderText="{{'crm.employees.label.zaloAccount' | translate}}"
+                        labelText="{{'crm.employees.label.zaloAccount' | translate}} <span class='label__required'>*</span>"
+        ></hbt-input-text>
+      </div>
+
+      <!--chức vụ-->
+      <div nz-col [nzXs]="12" [nzLg]="6">
+        <hbt-select [urlLoadData]="getUrlCategory(categoryCode.CRM_CHUC_VU)" keyLabel="name"
+                    formControlName="positionTitleId"
+                    [type]="isSubmitted && form.controls['positionTitleId'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['positionTitleId'].errors != null"
+                    [errors]="form.controls['positionTitleId'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.employees.label.positionTitleId' | translate }}]"
+                    placeholder="{{'crm.employees.label.positionTitleId' | translate}}"
+                    labelText="{{'crm.employees.label.positionTitleId' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <!--đơn vị-->
+      <div nz-col [nzXs]="12" [nzLg]="6">
+        <hbt-select [urlLoadData]="getUrlCategory(categoryCode.CRM_DON_VI)" keyLabel="name"
+                    formControlName="departmentId"
+                    [type]="isSubmitted && form.controls['departmentId'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['departmentId'].errors != null"
+                    [errors]="form.controls['departmentId'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.employees.label.departmentId' | translate }}]"
+                    placeholder="{{'crm.employees.label.departmentId' | translate}}"
+                    labelText="{{'crm.employees.label.departmentId' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <!--Quản lý trực tiếp-->
+      <div nz-col [nzXs]="12" [nzLg]="6">
+        <hbt-select [serviceName]="serviceName" urlLoadData="/employees/list?keySearch=" keyLabel="fullName"
+                    keyValue="employeeId"
+                    formControlName="managerId"
+                    [type]="isSubmitted && form.controls['managerId'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['managerId'].errors != null"
+                    [errors]="form.controls['managerId'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.employees.label.managerId' | translate }}]"
+                    placeholder="{{'crm.employees.label.managerId' | translate}}"
+                    labelText="{{'crm.employees.label.managerId' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <!--Cấp bậc-->
+      <div nz-col [nzXs]="12" [nzLg]="6">
+        <hbt-select [urlLoadData]="getUrlCategory(categoryCode.CRM_VAI_TRO)" keyLabel="name"
+                    formControlName="jobRankId"
+                    [type]="isSubmitted && form.controls['jobRankId'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['jobRankId'].errors != null"
+                    [errors]="form.controls['jobRankId'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.employees.label.jobRankId' | translate }}]"
+                    placeholder="{{'crm.employees.label.jobRankId' | translate}}"
+                    labelText="{{'crm.employees.label.jobRankId' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <!--tài khoản ngân hàng-->
+      <div nz-col [nzXs]="12" [nzLg]="6">
+        <hbt-input-text formControlName="bankAccount" maxLength="255"
+                        [type]="isSubmitted && form.controls['bankAccount'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['bankAccount'].errors != null"
+                        [errors]="form.controls['bankAccount'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+                        placeholderText="{{'crm.employees.label.bankAccount' | translate}}"
+                        labelText="{{'crm.employees.label.bankAccount' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--Tên ngân hàng-->
+      <div nz-col [nzXs]="12" [nzLg]="6">
+        <hbt-input-text formControlName="bankName" maxLength="255"
+                        [type]="isSubmitted && form.controls['bankName'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['bankName'].errors != null"
+                        [errors]="form.controls['bankName'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+                        placeholderText="{{'crm.employees.label.bankName' | translate}}"
+                        labelText="{{'crm.employees.label.bankName' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--chi nhánh-->
+      <div nz-col [nzXs]="12" [nzLg]="6">
+        <hbt-input-text formControlName="bankBranch" maxLength="255"
+                        [type]="isSubmitted && form.controls['bankBranch'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['bankBranch'].errors != null"
+                        [errors]="form.controls['bankBranch'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+                        placeholderText="{{'crm.employees.label.bankBranch' | translate}}"
+                        labelText="{{'crm.employees.label.bankBranch' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--xã-->
+      <div nz-col [nzXs]="12" [nzLg]="6">
+        <hbt-select [urlLoadData]="getUrlCategory(categoryCode.HR_TRANG_THAI_NHAN_VIEN)" keyLabel="name"
+                    formControlName="status"
+                    [type]="isSubmitted && form.controls['status'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['status'].errors != null"
+                    [errors]="form.controls['status'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.employees.label.status' | translate }}]"
+                    placeholder="{{'crm.employees.label.status' | translate}}"
+                    labelText="{{'crm.employees.label.status' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <!--CCCD-->
+      <div nz-col [nzXs]="12" [nzLg]="6">
+        <hbt-input-text formControlName="personalIdNo" maxLength="20"
+                        [type]="isSubmitted && form.controls['personalIdNo'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['personalIdNo'].errors != null"
+                        [errors]="form.controls['personalIdNo'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 20}}]"
+                        placeholderText="{{'crm.employees.label.personalIdNo' | translate}}"
+                        labelText="{{'crm.employees.label.personalIdNo' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--mã số thuế-->
+      <div nz-col [nzXs]="12" [nzLg]="6">
+        <hbt-input-text formControlName="taxNo" maxLength="20"
+                        [type]="isSubmitted && form.controls['taxNo'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['taxNo'].errors != null"
+                        [errors]="form.controls['taxNo'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 20}}]"
+                        placeholderText="{{'crm.employees.label.taxNo' | translate}}"
+                        labelText="{{'crm.employees.label.taxNo' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--mã số bhxh-->
+      <div nz-col [nzXs]="12" [nzLg]="6">
+        <hbt-input-text formControlName="insuranceNo" maxLength="20"
+                        [type]="isSubmitted && form.controls['insuranceNo'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['insuranceNo'].errors != null"
+                        [errors]="form.controls['insuranceNo'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 20}}]"
+                        placeholderText="{{'crm.employees.label.insuranceNo' | translate}}"
+                        labelText="{{'crm.employees.label.insuranceNo' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <div nz-row [nzGutter]='[20,15]'>
+          <ng-container formArrayName="listAttributes">
+            <ng-container *ngFor="let attributes of attributesFormArray.controls; let idx = index" [formGroupName]="idx">
+              <div nz-col [nzXs]="attributes.get('nzXs')?.value ? attributes.get('nzXs')?.value : 12" 
+          [nzLg]="attributes.get('nzLg')?.value ? attributes.get('nzLg')?.value : 6">
+                <input-attribute-common
+                  [controlName]="getAttributeControl(idx, 'attributeValue')"
+                  [dataType]="attributes.get('dataType')?.value"
+                  [urlLoadData]="attributes.get('urlLoadData')?.value"
+                  [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+                  [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+                  [errors]="attributes.get('attributeValue')?.errors"
+                  [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}]"
+                  [placeholderText]="attributes.get('attributeName')?.value"
+                  [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+                >
+                </input-attribute-common>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <diV class="relationship-title">
+          <div class="save-form-crm__title">{{ 'crm.employees.familyRelationship.title' | translate }}</div>
+          <hbt-button
+            buttonType="NO_BORDER"
+            buttonSize="MEDIUM"
+            (click)="doOpenForm(modeConst.ADD)"
+            buttonText="{{ 'common.button.add' | translate }}"
+            buttonAvailableStyle="ADD">
+          </hbt-button>
+        </diV>
+        <div nz-menu-divider></div>
+      </div>
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <div nz-row [nzGutter]='[20,15]'>
+          <ng-container *ngFor="let familyRelationship of familyRelationships; let idx = index">
+            <div nz-col [nzXs]="24" [nzLg]="8">
+              <div  class="relationship-card">
+                <div class="relationship-card__content">
+                  {{familyRelationship.relationTypeName}}: {{familyRelationship.fullName}}
+                </div>
+                <div class="relationship-card__action">
+                  <em class="menu__item--btn1" nz-icon nzType="edit" nzTheme="outline"
+                      nzTooltipTitle="{{'common.title.edit' | translate}}" (click)="doOpenForm(modeConst.EDIT, idx)"
+                      nzTooltipPlacement="left" nz-button nz-tooltip></em>
+                  <em class="menu__item--btn" nz-icon nzType="delete" nzTheme="outline"
+                      nzTooltipTitle="{{'common.title.delete' | translate}}"
+                      nzTooltipPlacement="right" nz-button nz-tooltip (click)="onDelete(idx)"></em>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <diV class="relationship-title">
+          <div class="save-form-crm__title">{{ 'crm.employees.label.attachments' | translate }}</div>
+          <hbt-button
+            buttonType="NO_BORDER"
+            buttonSize="MEDIUM"
+            (click)="doOpenFormAttachment(modeConst.ADD)"
+            buttonText="{{ 'common.button.add' | translate }}"
+            buttonAvailableStyle="ADD">
+          </hbt-button>
+        </diV>
+        <div nz-menu-divider></div>
+      </div>
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <div nz-row [nzGutter]='[20,15]'>
+          <ng-container *ngFor="let attachment of profileAttachments; let idx = index">
+            <div nz-col [nzXs]="24" [nzLg]="12" *ngIf="attachment.attachFileList && attachment.attachFileList.length > 0">
+              <div  class="attachment-card">
+                <div class="attachment-card__title">
+                  {{attachment.attachmentTypeName}}
+                </div>
+                <div class="attachment-card__content">
+                  <ng-container *ngFor="let file of attachment.attachFileList; let idx = index">
+                    <div class="attachment-card__content__file">
+                      <div class="attachment-card__content__file__name" (click)="downloadFile(file)">{{file.name}}</div>
+                      <div class="attachment-card__content__file__action">
+                        <em class="menu__item--btn" nz-icon nzType="delete" nzTheme="outline"
+                            nzTooltipTitle="{{'common.title.delete' | translate}}"
+                            nzTooltipPlacement="right" nz-button nz-tooltip (click)="onDeleteAttachment(idx, attachment)"></em>
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<ng-template #footerTmpl>
+  <hbt-button
+    buttonAvailableStyle="CANCEL"
+    buttonText="{{ 'common.button.cancel' | translate }}"
+    (click)="modalRef.destroy()">
+  </hbt-button>
+  <hbt-button
+    buttonAvailableStyle="SAVE"
+    buttonText="{{ 'common.button.saveS' | translate }}"
+    (click)="modalRef.getContentComponent().save()">
+  </hbt-button>
+</ng-template>

@@ -1,0 +1,197 @@
+<div [ngClass]="{'app-card' : isPage}" class="dynamic-form">
+  <div class="content" *ngIf="isPage">
+    <hbt-button buttonType="NO_BORDER" (click)="save()" buttonAvailableStyle="SAVE"
+                buttonText="{{'common.button.save' | translate}}" type='SUBMIT'></hbt-button>
+  </div>
+  <form nz-form [formGroup]="form">
+    <div class="app-row" nz-row [nzGutter]='[20,15]'>
+      <div nz-col nzXs="24" nzLg="12">
+        <hbt-input-text formControlName="code" [maxLength]="50"
+                        [type]="isSubmitted && form.controls['code'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['code'].errors !== null"
+                        [errors]="form.controls['code'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': '50' }},
+           { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configurations.dynamicReports.table.code' | translate }}]"
+                        placeholderText="{{'admin.configurations.dynamicReports.table.code' | translate}}"
+                        labelText="{{'admin.configurations.dynamicReports.table.code' | translate}} <span class='label__required'>*</span>"
+                        uppercase>
+        </hbt-input-text>
+      </div>
+      <div nz-col nzXs="24" nzLg="12">
+        <hbt-input-text formControlName="name" [maxLength]="255"
+                        [type]="isSubmitted && form.controls['name'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['name'].errors !== null"
+                        [errors]="form.controls['name'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': '255' }},
+           { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configurations.dynamicReports.table.name' | translate }}]"
+                        placeholderText="{{'admin.configurations.dynamicReports.table.name' | translate}}"
+                        labelText="{{'admin.configurations.dynamicReports.table.name' | translate}} <span class='label__required'>*</span>">
+        </hbt-input-text>
+      </div>
+      <div nz-col nzXs="24" nzLg="12">
+        <hbt-select formControlName="reportType"
+                    [dataSelects]="listReportType"
+                    [type]="isSubmitted && form.controls['reportType'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['reportType'].errors !== null"
+                    [errors]="form.controls['reportType'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configurations.dynamicReports.table.reportType' | translate }}]"
+                    labelText="{{'admin.configurations.dynamicReports.table.reportType' | translate}} <span class='label__required'>*</span>"
+                    placeholder="{{'admin.configurations.dynamicReports.table.reportType' | translate}}"
+                    (ngModelChange)="getFileType($event)"
+        >
+        </hbt-select>
+      </div>
+      <div nz-col nzXs="24" nzLg="12">
+        <label class="input__label">{{ 'admin.configurations.dynamicReports.label.fileList' | translate }}<span
+          class='label__required'>*</span></label>
+        <hbt-upload
+          [required]="true"
+          [showError]="isSubmitted"
+          (fileListChange)="onFileListChange($event)"
+          [fileList]="fileList"
+          [typeFileAvailable]="fileType"
+          [multiple]="false"
+          maxFile="1"
+          (docIdsDeleteChange)='removeFile($event)'
+          [serviceName]='serviceName'
+          [isDownloadFileWithNoSecurity]="true"
+          [url]="urlDownload"
+        >
+        </hbt-upload>
+      </div>
+      <div nz-col nzXs="24" nzLg="24">
+        <nz-table
+          nzBordered
+          [nzData]="[1]"
+          [nzShowPagination]="false"
+        >
+          <thead>
+          <tr>
+            <th nzWidth='5%' class="text-center">{{ 'admin.configurations.dynamicReports.label.stt' | translate }}</th>
+            <th nzWidth='12%' class="text-center">{{ 'admin.configurations.dynamicReports.label.name' | translate }}<span
+              class='label__required'>*</span></th>
+            <th nzWidth='12%' class="text-center">{{ 'admin.configurations.dynamicReports.label.title' | translate }}<span
+              class='label__required'>*</span></th>
+            <th nzWidth='9%' class="text-center">{{ 'admin.configurations.dynamicReports.label.isRequired' | translate }}</th>
+            <th nzWidth='12%' class="text-center">{{ 'admin.configurations.dynamicReports.label.dataType' | translate }}<span
+              class='label__required'>*</span></th>
+            <th nzWidth='15%' class="text-center">{{ 'admin.configurations.dynamicReports.label.urlApi' | translate }}</th>
+            <th nzWidth='30%' class="text-center">{{ 'admin.configurations.dynamicReports.label.additionalCondition' | translate }}</th>
+            <th nzWidth='5%' class="text-center"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container [formArrayName]="FORM_ARRAY_NAME">
+            <ng-container *ngFor="let attribute of reportParameterList.controls; let i = index" [formGroupName]="i">
+              <tr>
+                <td style="text-align: center">
+                  {{ i + 1 }}
+                </td>
+                <td>
+                  <hbt-input-text formControlName="name" [maxLength]="255"
+                                  [type]="isSubmitted && (attribute.get('name')?.errors || form.errors?.space) ? 'error' : 'default'"
+                                  [showError]="isSubmitted && (attribute.get('name')?.errors|| form.errors?.space) !== null"
+                                  [errors]="form.errors?.space ? form.errors : attribute.get('name')?.errors"
+                                  [errorDefs]="[{ errorName: 'space', errorDescription: 'hrm.validate.noSpace' | translate:{'param': 'admin.configurations.dynamicReports.label.name' | translate}},
+           { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configurations.dynamicReports.label.name' | translate }}]"
+                                  placeholderText="{{'admin.configurations.dynamicReports.label.name' | translate}}"
+                                  [defaultInput]="true">
+                  </hbt-input-text>
+                </td>
+                <td>
+                  <hbt-input-text formControlName="title" [maxLength]="255"
+                                  [type]="isSubmitted && (attribute.get('title')?.errors || form.errors?.space) ? 'error' : 'default'"
+                                  [showError]="isSubmitted && (attribute.get('title')?.errors|| form.errors?.space) !== null"
+                                  [errors]="form.errors?.space ? form.errors : attribute.get('title')?.errors"
+                                  [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configurations.dynamicReports.label.title' | translate }}]"
+                                  placeholderText="{{'admin.configurations.dynamicReports.label.title' | translate}}"
+                                  [defaultInput]="true">
+                  </hbt-input-text>
+                </td>
+                <td style="text-align: center">
+                  <label nz-checkbox
+                         formControlName='isRequired'></label>
+                </td>
+                <td>
+                  <hbt-select formControlName="dataType"
+                              [dataSelects]="listDataType"
+                              [type]="isSubmitted && attribute.get('dataType')?.errors ? 'error' : 'default'"
+                              [showError]="isSubmitted && attribute.get('dataType')?.errors !== null"
+                              [errors]="attribute.get('dataType')?.errors"
+                              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configurations.dynamicReports.label.dataType' | translate }}]"
+                              placeholder="{{'admin.configurations.dynamicReports.label.dataType' | translate}}"
+                  >
+                  </hbt-select>
+                </td>
+                <td>
+                  <hbt-input-text formControlName="urlApi" [maxLength]="255"
+                                  [type]="isSubmitted && attribute.get('urlApi')?.errors ? 'error' : 'default'"
+                                  [showError]="isSubmitted && attribute.get('urlApi')?.errors !== null"
+                                  [errors]="attribute.get('urlApi')?.errors"
+                                  [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': '255' }}]"
+                                  placeholderText="{{'admin.configurations.dynamicReports.label.urlApi' | translate}}">
+                  </hbt-input-text>
+                </td>
+                <td>
+                  <hbt-input-text formControlName="appendQuery" [maxLength]="4000"
+                                  [defaultInput]="true"
+                                  [type]="isSubmitted && attribute.get('appendQuery')?.errors ? 'error' : 'default'"
+                                  [showError]="isSubmitted && attribute.get('appendQuery')?.errors !== null"
+                                  [errors]="attribute.get('appendQuery')?.errors"
+                                  [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': '4000' }}]"
+                                  placeholderText="{{'admin.configurations.dynamicReports.label.additionalCondition' | translate}}"
+                                  [isTextAre]="true"
+                  >
+                  </hbt-input-text>
+                </td>
+                <td class="text-center">
+                  <em class="menu__item--btn1" nz-icon nzType="plus-circle" nzTheme="outline"
+                      nzTooltipTitle="{{'common.title.add' | translate}}" (click)="addNewParameter()"
+                      nzTooltipPlacement="left" nz-button nz-tooltip></em>
+                  <em class="menu__item--btn" nz-icon nzType="delete" nzTheme="outline"
+                      nzTooltipTitle="{{'common.title.delete' | translate}}"
+                      nzTooltipPlacement="right" nz-button nz-tooltip (click)="onDeleteParameterClick(i)"></em></td>
+              </tr>
+            </ng-container>
+          </ng-container>
+          </tbody>
+        </nz-table>
+      </div>
+      <div nz-col nzXs="24" nzLg="24">
+        <div nz-row [nzGutter]='[20,15]'>
+          <div nz-col [nzXs]="24" [nzLg]="24" class="input__group">
+            <label class="input__label">{{ 'admin.configurations.dynamicReports.label.query' | translate }}</label>
+          </div>
+          <ng-container formArrayName="reportQueryList">
+            <ng-container *ngFor="let reportQuery of reportQueryList.controls; let i = index" [formGroupName]="i">
+              <div nz-col [nzXs]="22" [nzLg]="22">
+                <hbt-input-text
+                  [maxLength]="40000"
+                  [isTextAre]="true"
+                  [defaultInput]="true"
+                  [type]="isSubmitted && reportQuery.get('sqlQuery')?.errors ? 'error' : 'default'"
+                  [showError]="isSubmitted && reportQuery.get('sqlQuery')?.errors !== null"
+                  [errors]="reportQuery.get('sqlQuery')?.errors"
+                  [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': '4000' }},
+                { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'admin.configurations.dynamicReports.label.query' | translate }}]"
+                  placeholderText="{{'admin.configurations.dynamicReports.label.query' | translate}}"
+                  formControlName="sqlQuery"></hbt-input-text>
+              </div>
+              <div nz-col [nzXs]="2" [nzLg]="2" style="margin: auto">
+                <hbt-button *ngIf="i === f['reportQueryList'].value.length - 1" buttonIconType="AWESOME"
+                            prefixIcon="far fa-plus-circle" buttonSize="LARGE"
+                            [buttonTextColor]="_variable.$neutral_100" buttonType="NO_BORDER" (click)="addQuery(i)"
+                            [buttonBgColor]="_variable.$success_500"></hbt-button>
+                <hbt-button *ngIf="i < f['reportQueryList'].value.length - 1" buttonIconType="AWESOME"
+                            prefixIcon="far fa-trash-alt"
+                            buttonSize="LARGE"
+                            [buttonTextColor]="_variable.$neutral_100" buttonType="NO_BORDER" (click)="removeQuery(i)"
+                            [buttonBgColor]="_variable.$error_500"></hbt-button>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

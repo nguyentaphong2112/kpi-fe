@@ -1,0 +1,159 @@
+/* You can add global styles to this file, and also import other style files */
+/* Importing Bootstrap SCSS file. */
+//@import '~bootstrap/scss/bootstrap';
+@import '../node_modules/ng-zorro-antd/resizable/style/index.min.css';
+
+
+@import 'app/core/global-style/ngx-toastr';
+@import 'app/core/global-style/color';
+@import 'app/core/global-style/font';
+@import 'app/core/global-style/scrollbar';
+@import 'app/core/global-style/scroll-tabs';
+@import 'app/core/global-style/button';
+@import 'app/core/global-style/modal';
+@import 'app/core/global-style/date-picker';
+@import 'app/core/global-style/collapse';
+
+@import "app/core/global-style/table";
+@import "app/core/global-style/pagination";
+@import 'app/core/global-style/checkbox';
+@import 'app/core/global-style/card-item';
+
+
+//@font-face {
+//  font-family: lato;
+//  src: url(assets/fonts/Lato-Regular_2.ttf) format('opentype');
+//}
+//
+//* {
+//  font-family: 'lato';
+//}
+//
+//body {
+//  background: #f4f6fa;
+//  overflow: hidden;
+//}
+
+html, body {
+  font-family: avertaR, sans-serif;
+}
+
+.content__item {
+  padding: 16px;
+}
+
+.content__item--border {
+  border-radius: 8px;
+}
+
+.cus__figure {
+  margin: 0;
+}
+
+.full_width {
+  width: 100%;
+}
+
+.data-table {
+
+  overflow-x: auto;
+
+  th, td {
+    padding: 5px;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .text-nowrap {
+    white-space: nowrap;
+  }
+
+  .text-right {
+    text-align: right;
+  }
+}
+
+.bs-datepicker-body table td.week span {
+  color: #000056 !important;
+}
+
+.bs-datepicker-head {
+  background-color: #000056 !important;
+}
+
+.bs-datepicker-body table td span.selected {
+  background-color: #000056 !important;
+}
+
+.block-center-between {
+  display: flex;
+  justify-content: space-between;
+  padding: 24px 18px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.d-block {
+  display: block;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.app-row > div {
+  margin-bottom: 0.7rem;
+  line-height: 1rem;
+}
+
+.app-list {
+  margin-top: 1rem;
+  background-color: $bg-content-default;
+  padding: 0.2rem;
+  border-radius: 0.5rem;
+}
+
+.app-card {
+  background: $bg-content-default;
+  padding: 24px;
+  border-radius: 8px;
+}
+
+.td-date{
+    text-align: center!important;
+    width: 100px;
+}
+
+.data-select-pane-custom {
+  width: 400px !important;
+}
+
+.search__content--group-hidden-header .table-wrap{
+  .ant-card-head {
+    min-height: 10px !important;
+  }
+  .ant-card-extra {
+    top: 0 !important;
+  }
+}
+
+.remove-margin-collapse {
+  .ant-collapse-header {
+    margin-bottom: 0 !important;
+  }
+  .ant-collapse-content-box {
+    padding: 0 !important;
+  }
+}
+
+.text-center {
+  text-align: center;
+}

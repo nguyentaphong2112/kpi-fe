@@ -1,0 +1,14 @@
+@import "src/app/core/global-style/variable";
+
+.ets-form .flex{
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
+.ets-form .text-date {
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  color: $neutral-700;
+}

@@ -1,0 +1,17 @@
+.mb__button--content--imp {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .content__left img {
+    margin-right: 5px;
+  }
+  ::ng-deep .mb__button--w100 .button__class {
+    width: 100%;
+  }
+  ::ng-deep .mb__button--no-margin .button__class {
+    margin-left: 0;
+  }
+  ::ng-deep .ant-upload-list-item-card-actions-btn {
+    opacity: 1 !important;
+  }

@@ -1,0 +1,280 @@
+<form nz-form [formGroup]="form">
+  <div nz-row [nzGutter]="[15, 30]">
+    <!--  Nhân viên  -->
+    <div nz-col [nzXs]="12" [nzLg]="12" *ngIf="!hiddenEmp">
+      <employee-data-picker [isExpand]="true"
+        [functionCode]="functionCode"
+        [scope]="scope"
+        [status]='mode !== modeConst.ADD ? "ALL" : "ACTIVE"'
+        [formMode]="mode"
+        [disable]="mode !== modeConst.ADD"
+        formControlName="employeeId"
+        [type]="isSubmitted && form.controls['employeeId'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['employeeId'].errors != null"
+        [errors]="form.controls['employeeId'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'common.label.employeeName' | translate }}]"
+        labelText="{{'hrm.staffManager.workedHistories.employeeId' | translate}} <span class='label__required'>*</span>"
+      >
+      </employee-data-picker>
+    </div>
+
+    <!-- Từ ngày -->
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-date-picker
+        labelText="{{'hrm.staffManager.workProcess.label.attributes.fromDate' | translate}}  <span class='label__required'>*</span>"
+        placeholderText="{{'hrm.staffManager.workProcess.label.attributes.fromDate' | translate}}"
+        formControlName="startDate"
+        [type]="(isSubmitted && form.controls['startDate'].errors || form.errors?.rangeDateError1) ? 'error' : 'default'"
+        [showError]="(isSubmitted && form.controls['startDate'].errors || form.errors?.rangeDateError1) !== null"
+        [errors]="form.errors?.rangeDateError1 ? form.errors : form.controls['startDate'].errors"
+        [errorDefs]="[
+          { errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param':'hrm.staffManager.workProcess.label.attributes.fromDate' | translate }},
+          { errorName: 'rangeDateError1', errorDescription: 'hrm.validate.rangeDate.pareDate' | translate:
+      {'fromDate': 'hrm.staffManager.workProcess.label.attributes.fromDate' | translate, 'toDate': 'hrm.staffManager.workProcess.label.attributes.toDate' | translate}}
+        ]"
+        (ngModelChange)="changeStartDate($event)"
+      ></hbt-date-picker>
+    </div>
+
+    <!-- Nhập theo danh mục -->
+    <div nz-col [nzXs]="24" [nzLg]="24" *ngIf="showSwitchType" class="switch__category">
+      <nz-switch
+        formControlName="isCategoryRequest"
+        (ngModelChange)="changeCategoryRequest($event)"
+      ></nz-switch>
+      <span class="title__switch">{{'hrm.staffManager.workProcess.label.attributes.isCategoryInput' | translate}}</span>
+    </div>
+
+    <ng-container *ngIf="f['isCategoryRequest'].value; else typeText">
+      <!-- Hình thức -->
+      <div nz-col [nzXs]="24" [nzLg]="12">
+        <hbt-select
+          [dataSelects]="listDocumentType"
+          keyLabel="name"
+          keyValue="documentTypeId"
+          formControlName="documentTypeId"
+          labelText="{{'hrm.staffManager.workProcess.label.attributes.documentType' | translate}} <span class='label__required'>*</span>"
+          placeholder="{{'hrm.staffManager.workProcess.label.attributes.documentType' | translate}}"
+          [type]="isSubmitted && form.controls['documentTypeId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['documentTypeId'].errors !== null"
+          [errors]="form.controls['documentTypeId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param':'hrm.staffManager.workProcess.label.attributes.documentType' | translate }}]"
+        ></hbt-select>
+      </div>
+
+      <div nz-col [nzXs]="24" [nzLg]="12" *ngIf="!hiddenEmp || (f['isCategoryRequest'].value && showSwitchType)"></div>
+
+      <ng-container formArrayName="positions">
+        <ng-container *ngFor="let positionInfo of listPositions?.controls; let i = index; let first = first" [formGroupName]="i">
+          <!-- ID Đơn vị -->
+          <div nz-col [nzXs]="12" [nzLg]="8" *ngIf="!isHideWhenTypeOut">
+            <tree-data-picker
+              [isExpand]="true"
+              [disable]="mode === modeConst.VIEW"
+              [functionCode]="functionCode"
+              [scope]="scope"
+              formControlName="organizationId"
+              [labelText]="getLabelText('hrm.staffManager.workProcess.label.attributes.organization', positionInfo.controls['isRequired'].value || mapValidateRequired.get(i))"
+              placeholder="{{'hrm.staffManager.workProcess.label.attributes.organization' | translate}}"
+              [type]="isSubmitted && positionInfo.controls['organizationId']?.errors ? 'error' : 'default'"
+              [showError]="isSubmitted && positionInfo.controls['organizationId']?.errors !== null"
+              [errors]="positionInfo.controls['organizationId']?.errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.staffManager.workProcess.label.attributes.organization' | translate}}]"
+              (ngModelChange)="changePositionInfo(i, true)"
+            ></tree-data-picker>
+          </div>
+
+          <!-- Chức vụ quản lý -->
+          <div nz-col [nzXs]="12" [nzLg]="5" *ngIf="!isHideWhenTypeOut">
+            <hbt-select
+              [disable]="mode === modeConst.VIEW || !positionInfo.controls['organizationId'].value"
+              [dataSelects]="positionInfo.controls['listPosition'].value"
+              keyLabel="name"
+              keyValue="positionId"
+              formControlName="positionId"
+              [labelText]="getLabelText(positionInfo.controls['labelPositionText'].value, positionInfo.controls['isRequired'].value || mapValidateRequired.get(i))"
+              placeholder="{{positionInfo.controls['labelPositionText'].value | translate}}"
+              [type]="isSubmitted && positionInfo.controls['positionId']?.errors ? 'error' : 'default'"
+              [showError]="isSubmitted && positionInfo.controls['positionId']?.errors !== null"
+              [errors]="positionInfo.controls['positionId']?.errors"
+              [errorDefs]="[
+                {errorName: 'required', errorDescription: 'hrm.validate.required' | translate:{'param': positionInfo.controls['labelPositionText'].value | translate} },
+                {errorName: 'duplicate', errorDescription: 'hrm.validate.duplicatePosition' | translate: {'param': positionInfo.controls['labelPositionText'].value | translate}},
+              ]"
+              (ngModelChange)="changePositionInfo(i)"
+            ></hbt-select>
+          </div>
+
+          <!--   Tỷ lệ   -->
+          <div nz-col [nzXs]="12" [nzLg]="3" *ngIf="!isHideWhenTypeOut">
+            <hbt-select
+              [dataSelects]="listPercent"
+              keyLabel="name"
+              formControlName="percentageId"
+              [labelText]="getLabelText('hrm.staffManager.workProcess.label.attributes.percentage', positionInfo.controls['isRequired'].value || mapValidateRequired.get(i))"
+              placeholder="{{'hrm.staffManager.workProcess.label.attributes.percentage' | translate}}"
+              [type]="isSubmitted && positionInfo.controls['percentageId']?.errors ? 'error' : 'default'"
+              [showError]="isSubmitted && positionInfo.controls['percentageId']?.errors !== null"
+              [errors]="positionInfo.controls['percentageId']?.errors"
+              [errorDefs]="[{errorName: 'required', errorDescription: 'hrm.validate.required' | translate:{'param': 'hrm.staffManager.workProcess.label.attributes.percentage' | translate} }]"
+              (ngModelChange)="changePositionInfo(i)"
+            ></hbt-select>
+          </div>
+
+          <!--    Số quyết định    -->
+          <div nz-col [nzXs]="12" [nzLg]="3" *ngIf="!isHideWhenTypeOut">
+            <hbt-input-text
+              formControlName="documentNo"
+              [maxLength]="50"
+              labelText="{{'hrm.staffManager.workProcess.label.attributes.documentNo' | translate}}"
+              placeholderText="{{'hrm.staffManager.workProcess.label.attributes.documentNo' | translate}}"
+              [type]="isSubmitted && positionInfo.controls['documentNo']?.errors ? 'error' : 'default'"
+              [showError]="isSubmitted && positionInfo.controls['documentNo']?.errors !== null"
+              [errors]="positionInfo.controls['documentNo']?.errors"
+              [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'hrm.validate.maxLength' | translate: {'numberLength': '50' }}]"
+            ></hbt-input-text>
+          </div>
+
+          <!-- Ngày ký QĐ -->
+          <div nz-col [nzXs]="8" [nzLg]="3" *ngIf="!isHideWhenTypeOut">
+            <hbt-date-picker
+              formControlName="documentSignedDate"
+              labelText="{{'hrm.staffManager.workProcess.label.attributes.signedDate' | translate}}"
+              placeholderText="{{'hrm.staffManager.workProcess.label.attributes.signedDate' | translate}}"
+              [type]="isSubmitted && positionInfo.controls['documentSignedDate']?.errors ? 'error' : 'default'"
+              [showError]="isSubmitted && positionInfo.controls['documentSignedDate']?.errors !== null"
+              [errors]="positionInfo.controls['documentSignedDate']?.errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required'}]"
+            ></hbt-date-picker>
+          </div>
+
+          <div nz-col [nzXs]="4" [nzLg]="2" class="btn__action-position" *ngIf="i > 0 && !isHideWhenTypeOut && mode !== modeConst.VIEW">
+            <hbt-button
+              *ngIf="i === (listPositions?.length - 1)"
+              (click)="addPositionProcess(i)"
+              buttonIconType="AWESOME" prefixIcon="far fa-plus-circle"
+              buttonSize="SMALL"
+              [buttonBgColor]="_variable.$purple_800" buttonType="NO_BORDER"></hbt-button>
+
+            <hbt-button
+              *ngIf="i > 2"
+              (click)="removePositionProcess(i)"
+              buttonIconType="AWESOME" prefixIcon="far fa-trash-alt"
+              buttonSize="SMALL"
+              buttonTextColor="#FA0B0B" buttonType="NO_BORDER"></hbt-button>
+          </div>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+
+    <ng-template #typeText>
+      <!-- Chức danh -->
+      <div nz-col [nzXs]="24" [nzLg]="12" *ngIf="!isHideWhenTypeOut">
+        <hbt-input-text
+          formControlName="jobTitle"
+          [maxLength]="255"
+          labelText="{{'hrm.staffManager.workProcess.label.attributes.position' | translate}} <span class='label__required'>*</span>"
+          placeholderText="{{'hrm.staffManager.workProcess.label.attributes.position' | translate}}"
+          [type]="isSubmitted && form.controls['jobTitle']?.errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['jobTitle']?.errors !== null"
+          [errors]="form.controls['jobTitle']?.errors"
+          [errorDefs]="[{errorName: 'required', errorDescription: 'hrm.validate.required' | translate:{'param': 'hrm.staffManager.workProcess.label.attributes.position' | translate} }]"
+        ></hbt-input-text>
+      </div>
+
+      <!-- ID Đơn vị -->
+      <div nz-col [nzXs]="24" [nzLg]="12" *ngIf="!isHideWhenTypeOut">
+        <hbt-input-text
+          formControlName="departmentName"
+          [maxLength]="255"
+          labelText="{{'hrm.staffManager.workProcess.label.attributes.organization' | translate}} <span class='label__required'>*</span>"
+          placeholderText="{{'hrm.staffManager.workProcess.label.attributes.organization' | translate}}"
+          [type]="isSubmitted && form.controls['departmentName']?.errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['departmentName']?.errors !== null"
+          [errors]="form.controls['departmentName']?.errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.staffManager.workProcess.label.attributes.organization' | translate}}]"
+        ></hbt-input-text>
+      </div>
+
+      <div nz-col [nzXs]="24" [nzLg]="12">
+        <hbt-select
+          [dataSelects]="listDocumentType"
+          keyLabel="name"
+          keyValue="documentTypeId"
+          formControlName="documentTypeId"
+          labelText="{{'hrm.staffManager.workProcess.label.attributes.documentType' | translate}} <span class='label__required'>*</span>"
+          placeholder="{{'hrm.staffManager.workProcess.label.attributes.documentType' | translate}}"
+          [type]="isSubmitted && form.controls['documentTypeId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['documentTypeId'].errors !== null"
+          [errors]="form.controls['documentTypeId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param':'hrm.staffManager.workProcess.label.attributes.documentType' | translate }}]"
+        ></hbt-select>
+      </div>
+    </ng-template>
+
+    <ng-container *ngIf="isHideWhenTypeOut || !f['isCategoryRequest'].value">
+      <!-- Số quyết định -->
+      <div nz-col [nzXs]="24" [nzLg]="12">
+        <hbt-input-text
+          formControlName="documentNo"
+          [maxLength]="50"
+          labelText="{{'hrm.staffManager.workProcess.label.attributes.documentNo' | translate}}"
+          placeholderText="{{'hrm.staffManager.workProcess.label.attributes.documentNo' | translate}}"
+          [type]="isSubmitted && form.controls['documentNo'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['documentNo'].errors !== null"
+          [errors]="form.controls['documentNo'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'hrm.validate.maxLength' | translate: {'numberLength': '50' }}]"
+        ></hbt-input-text>
+      </div>
+
+      <!-- Ngày ký QĐ -->
+      <div nz-col [nzXs]="24" [nzLg]="12">
+        <hbt-date-picker
+          formControlName="documentSignedDate"
+          labelText="{{'hrm.staffManager.workProcess.label.attributes.signedDate' | translate}}"
+          placeholderText="{{'hrm.staffManager.workProcess.label.attributes.signedDate' | translate}}"
+          [type]="isSubmitted && form.controls['documentSignedDate'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['documentSignedDate'].errors !== null"
+          [errors]="form.controls['documentSignedDate'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required'}]"
+        ></hbt-date-picker>
+      </div>
+    </ng-container>
+
+    <ng-container formArrayName="listAttributes">
+      <ng-container *ngFor="let attributes of attributesFormArray.controls; let idx = index" [formGroupName]="idx">
+        <div nz-col [nzXs]="12" [nzLg]="12">
+          <input-attribute-common
+            [controlName]="getAttributeControl(idx, 'attributeValue')"
+            [dataType]="attributes.get('dataType')?.value"
+            [urlLoadData]="attributes.get('urlLoadData')?.value"
+            [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+            [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+            [errors]="attributes.get('attributeValue')?.errors"
+            [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}]"
+            [placeholderText]="attributes.get('attributeName')?.value"
+            [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+          >
+          </input-attribute-common>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <!-- File đính kèm -->
+    <div nz-col [nzXs]='24' [nzLg]='24' class="input__group">
+      <hbt-upload
+        [fileList]="f['files'].value"
+        [(docIdsDelete)]="docIdsDelete"
+        [typeFileAvailable]="['jpeg', 'jpg', 'png', 'pdf', 'doc', 'docx']"
+        [multiple]="true"
+        labelText="{{'common.label.attachFile' | translate}}"
+        (fileListChange)="onFileListChange($event, 'files', true)"
+        (docIdsDeleteChange)="removeFile($event, 'files')"
+        [serviceName]='microService.HRM'
+        [showError]="isSubmitted"
+        [maxSize]="3"
+        [disable]="mode === modeConst.VIEW"
+      ></hbt-upload>
+    </div>
+  </div>
+</form>

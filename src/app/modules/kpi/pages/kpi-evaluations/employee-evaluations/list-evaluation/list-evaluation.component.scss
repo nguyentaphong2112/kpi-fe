@@ -1,0 +1,14 @@
+@import "src/app/modules/kpi/data-access/style/style";
+@import "src/app/core/global-style/variable";
+
+::ng-deep .list-evaluation nz-table-inner-scroll {
+  th {
+    background: $bg-table-header;
+    color: $table-text-header;
+    font-family: avertaB, sans-serif;
+  }
+}
+
+.text-center {
+  text-align: center;
+}

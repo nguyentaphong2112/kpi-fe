@@ -1,0 +1,35 @@
+@import "app/core/global-style/variable";
+
+::ng-deep em.custom__icon-add {
+  position: absolute;
+  right: 8px;
+  cursor: pointer;
+  z-index: 1;
+  color: $info-600;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  padding-top: 2px;
+  background-color: #fff;
+
+  &:hover {
+    background-color: $black-100;
+    border-radius: 20px;
+  }
+}
+
+::ng-deep .custom__add-category {
+  .ant-select-arrow, .ant-select-clear {
+    margin-right: 20px;
+  }
+}
+::ng-deep .ant-select-item-option-grouped {
+  margin-left: 15px;
+}
+
+::ng-deep .ant-select-item-group {
+  font-size: 14px;
+  color: black;
+  cursor: pointer;
+}

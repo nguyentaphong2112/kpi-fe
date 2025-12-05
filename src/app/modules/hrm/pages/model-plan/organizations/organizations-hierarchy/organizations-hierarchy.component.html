@@ -1,0 +1,21 @@
+<div nz-col [nzXs]="24" [nzLg]="24" class="hierarch__page">
+  <div class="content__item content__item--border bg__content--default">
+    <ng-container *ngFor="let item of hierarchyData; let idx = index">
+      <div class="hierarch__title">
+        <span>{{idx + 1 + ". "}}</span>
+        <span>{{item?.hierarchyName}}</span>
+        <span>{{" (" + item?.details?.length + ")"}}</span>
+      </div>
+      <ng-container *ngFor="let detail of item?.details">
+        <div class="hierarch__detail">
+          <span class="hierarch__detail-title" (click)="viewDetail(item?.employee, detail)">{{"- " + detail?.name?.trim() }}</span>
+        </div>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="hierarchyData && hierarchyData?.length === 0">
+      <nz-empty></nz-empty>
+    </ng-container>
+  </div>
+</div>
+
+<ng-template #footerTmpl></ng-template>

@@ -1,0 +1,79 @@
+<form nz-form [formGroup]="form" class="mts-index">
+
+    <div class="content__item content__item--border bg__content--default">
+        <div class="form-search">
+            <div nz-row [nzGutter]='[20,15]'>
+                <!--Loại báo cáo-->
+                <div nz-col [nzXs]='12' [nzLg]='6'>
+                    <hbt-select
+                            [showAddCategory]="false"
+                            placeholder="{{'pit.pitIncomeReport.table.reportType' | translate}}"
+                            [urlLoadData]="getUrlCategory(categoryCode.INCOME_REPORT_TYPE)"
+                            [serviceName]="microService.ADMIN"
+                            keyLabel="name"
+                            [type]="isSubmitted && form.controls['reportType']?.errors ? 'error' : 'default'"
+                            [showError]="isSubmitted && form.controls['reportType']?.errors != null"
+                            [errors]="form.controls['reportType']?.errors"
+                            [errorDefs]="[
+                              { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'pit.pitIncomeReport.table.reportType' | translate }}]"
+                            labelText="{{'pit.pitIncomeReport.table.reportType' | translate}}  <span class='label__required'>*</span>"
+                            formControlName='reportType'></hbt-select>
+                </div>
+
+                <!--Đơn vị-->
+                <div nz-col [nzXs]='12' [nzLg]='6'>
+                    <tree-data-picker
+                            [isExpand]="true"
+                            [functionCode]="functionCode"
+                            [scope]="scope"
+                            labelText="{{'common.organization.org' | translate}}"
+                            placeholder="{{'common.organization.org' | translate}}"
+                            formControlName='orgIds'
+                    >
+                    </tree-data-picker>
+                </div>
+
+                <!--Từ kỳ-->
+                <div nz-col [nzXs]='12' [nzLg]='6'>
+                    <hbt-date-picker
+                            mode="month"
+                            formControlName="startDate"
+                            [type]="isSubmitted && form.controls['startDate']?.errors ? 'error' : 'default'"
+                            [showError]="isSubmitted && form.controls['startDate']?.errors != null"
+                            [errors]="form.controls['startDate']?.errors"
+                            [errorDefs]="[
+                              { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'pit.pitIncomeReport.table.startDate' | translate }}]"
+                            labelText="{{ 'pit.pitIncomeReport.table.startDate' | translate }} <span class='label__required'>*</span>"
+                            placeholderText="{{ 'pit.pitIncomeReport.table.startDate' | translate }}"
+                    ></hbt-date-picker>
+                </div>
+
+                <!--Đến kỳ-->
+                <div nz-col [nzXs]='12' [nzLg]='6'>
+                    <hbt-date-picker
+                            mode="month"
+                            formControlName="endDate"
+                            [type]="isSubmitted && (form.controls['endDate']?.errors || form.errors?.rangeDateError) ? 'error' : 'default'"
+                            [showError]="isSubmitted && (form.controls['endDate']?.errors || form.errors?.rangeDateError) !== null"
+                            [errors]="form.errors?.rangeDateError ? form.errors : form.controls['endDate']?.errors"
+                            [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'pit.pitIncomeReport.table.endDate' | translate }},
+              { errorName: 'rangeDateError', errorDescription: 'hrm.validate.rangeDate.pareDateMore' | translate:{'fromDate': 'pit.pitIncomeReport.table.startDate' | translate, 'toDate': 'pit.pitIncomeReport.table.endDate' | translate}}]"
+                            labelText="{{ 'pit.pitIncomeReport.table.endDate' | translate }} <span class='label__required'>*</span>"
+                            placeholderText="{{ 'pit.pitIncomeReport.table.endDate' | translate }}"
+                    ></hbt-date-picker>
+                </div>
+
+                <div nz-col [nzXs]="24" [nzLg]="24" style="text-align: center">
+                    <hbt-button
+                            class="staff__research__btn__search"
+                            buttonSize="LARGE"
+                            buttonAvailableStyle="SEARCH"
+                            buttonText="{{'common.button.export' | translate}}"
+                            (click)="export()"
+                    ></hbt-button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>

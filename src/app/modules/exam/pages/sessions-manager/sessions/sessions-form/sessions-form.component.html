@@ -1,0 +1,54 @@
+<div [ngClass]="{'app-card' : isPage}">
+  <div *ngIf="isPage && form.valid" [class]="isNotPageName ? 'btn__across-no-page' : 'btn__across-page'">
+    <hbt-button buttonType="NO_BORDER" (click)="save()" buttonAvailableStyle="SAVE"
+                buttonText="{{'common.button.save' | translate}}" type='SUBMIT'></hbt-button>
+  </div>
+  <div [nzGutter]="[20, 20]" class="register__inno-ideas" nz-row>
+    <div nz-col nzLg="24" nzSm="24">
+      <hbt-steps [stepConfig]="{ currentStep: currentStep, steps: steps }"></hbt-steps>
+    </div>
+  </div>
+  <form *ngIf="form && isShow" nz-form [formGroup]="form">
+    <div class="app-row" nz-row [nzGutter]='[20,15]'>
+      <div nz-col [nzXs]="24" [nzLg]="24" *ngIf="currentStep === CONSTANT.STEP_1">
+        <app-info-form [form]="info" [isSubmitted]="isSubmitted"></app-info-form>
+      </div>
+      <div nz-col [nzXs]="24" [nzLg]="24" *ngIf="currentStep === CONSTANT.STEP_2">
+        <app-time-form [form]="time" [isSubmitted]="isSubmitted"></app-time-form>
+      </div>
+      <div nz-col [nzXs]="24" [nzLg]="24" *ngIf="currentStep === CONSTANT.STEP_3">
+        <app-participant-form [form]="participants" [isSubmitted]="isSubmitted"></app-participant-form>
+      </div>
+      <div nz-col [nzXs]="24" [nzLg]="24" *ngIf="currentStep === CONSTANT.STEP_4">
+        <app-rule-form [form]="rules" [isSubmitted]="isSubmitted"></app-rule-form>
+      </div>
+      <div nz-col [nzXs]="24" [nzLg]="24" *ngIf="currentStep === CONSTANT.STEP_5">
+        <app-after-submit-form [form]="afterSubmit" [isSubmitted]="isSubmitted"></app-after-submit-form>
+      </div>
+
+      <div nz-col [nzXs]="24" [nzLg]="24" style="display: flex; justify-content: end; margin-top: 20px">
+        <hbt-button
+          (click)="back()"
+          *ngIf="currentStep === CONSTANT.STEP_1"
+          buttonAvailableStyle="CANCEL"
+          buttonText="{{ 'common.button.cancel' | translate }}"
+        >
+        </hbt-button>
+        <hbt-button
+          (click)="toBack()"
+          *ngIf="currentStep !== CONSTANT.STEP_1"
+          buttonAvailableStyle="CANCEL"
+          buttonText="{{ 'exam.sessions.action.back' | translate }}">
+        </hbt-button>
+
+        <hbt-button
+          (click)="continual()"
+          *ngIf="currentStep !== CONSTANT.STEP_5"
+          buttonAvailableStyle="SAVE"
+          buttonText="{{ 'exam.sessions.action.continual' | translate }}">
+        </hbt-button>
+      </div>
+    </div>
+  </form>
+
+</div>

@@ -1,0 +1,15 @@
+@import "src/app/core/global-style/_scroll-tabs.scss";
+
+li:last-child::after {
+  display: none !important;
+}
+
+.tab--wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btnInfoChange {
+  margin-right: 12px;
+}

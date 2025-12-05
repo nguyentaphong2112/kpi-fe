@@ -1,0 +1,247 @@
+<form nz-form [formGroup]="form">
+  <div nz-row [nzGutter]='[20,15]'>
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-select
+        [urlLoadData]="getUrlCategory(categoryCode.DAN_TOC)"
+        [serviceName]="microService.ADMIN"
+        keyLabel="name"
+        [type]="isSubmitted && form.controls['ethnicId'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['ethnicId'].errors !== null"
+        [errors]="form.controls['ethnicId'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.staffManager.label.folk' | translate }}]"
+        placeholder="{{'hrm.staffManager.label.folk' | translate}}"
+        labelText="{{'hrm.staffManager.label.folk' | translate}} <span class='label__required'>*</span>"
+        formControlName="ethnicId"></hbt-select>
+    </div>
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-select
+        [urlLoadData]="getUrlCategory(categoryCode.TON_GIAO)"
+        [serviceName]="microService.ADMIN"
+        keyLabel="name"
+        [type]="isSubmitted && form.controls['religionId'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['religionId'].errors !== null"
+        [errors]="form.controls['religionId'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.staffManager.label.religion' | translate }}]"
+        placeholder="{{'hrm.staffManager.label.religion' | translate}}"
+        labelText="{{'hrm.staffManager.label.religion' | translate}} <span class='label__required'>*</span>"
+        formControlName="religionId"></hbt-select>
+    </div>
+
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-select
+        [urlLoadData]="getUrlCategory(categoryCode.TRINH_DO_VAN_HOA)"
+        [serviceName]="microService.ADMIN"
+        keyLabel="name"
+        [type]="isSubmitted && form.controls['educationLevelId'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['educationLevelId'].errors !== null"
+        [errors]="form.controls['educationLevelId'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.staffManager.label.educationLevelName' | translate }}]"
+        placeholder="{{'hrm.staffManager.label.educationLevelName' | translate}}"
+        labelText="{{'hrm.staffManager.label.educationLevelName' | translate}} <span class='label__required'>*</span>"
+        formControlName="educationLevelId"></hbt-select>
+    </div>
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-date-picker
+        [type]="isSubmitted && form.controls['dateOfBirth'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['dateOfBirth'].errors != null"
+        [errors]="form.controls['dateOfBirth'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.label.dateOfBirth' | translate }}]"
+        placeholderText="{{'hrm.staffManager.label.dateOfBirth' | translate}}"
+        formControlName="dateOfBirth"
+        labelText="{{'hrm.staffManager.label.dateOfBirth' | translate}} <span class='label__required'>*</span>"
+      >
+      </hbt-date-picker>
+    </div>
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-input-text
+        formControlName="email"
+        [maxLength]="255"
+        [type]="isSubmitted && form.controls['email'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['email'].errors !== null"
+        [errors]="form.controls['email'].errors"
+        [errorDefs]="[{errorName: 'email', errorDescription: 'hrm.validate.invalidEmail' | translate }]"
+        placeholderText="{{'hrm.staffManager.label.email' | translate}}"
+        labelText="{{'hrm.staffManager.label.email' | translate}}"></hbt-input-text>
+    </div>
+
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-input-text
+        formControlName="mobileNumber"
+        [maxLength]="10"
+        appNumberInput
+        [type]="isSubmitted && form.controls['mobileNumber'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['mobileNumber'].errors !== null"
+        [errors]="form.controls['mobileNumber'].errors"
+        [errorDefs]="[
+          {errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.staffManager.label.phoneNumber' | translate }}
+        ]"
+        placeholderText="{{'hrm.staffManager.label.phoneNumber' | translate}}"
+        labelText="{{'hrm.staffManager.label.phoneNumber' | translate}} <span class='label__required'>*</span>"></hbt-input-text>
+    </div>
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-select
+        [urlLoadData]="getUrlCategory(categoryCode.TINH_TRANG_HON_NHAN)"
+        [serviceName]="microService.ADMIN"
+        keyLabel="name"
+        [type]="isSubmitted && form.controls['maritalStatusId'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['maritalStatusId'].errors !== null"
+        [errors]="form.controls['maritalStatusId'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.staffManager.label.maritalStatus' | translate }}]"
+        placeholder="{{'hrm.staffManager.label.maritalStatus' | translate}}"
+        labelText="{{'hrm.staffManager.label.maritalStatus' | translate}} <span class='label__required'>*</span>"
+        formControlName="maritalStatusId"></hbt-select>
+    </div>
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-input-text
+        formControlName="insuranceNo" [maxLength]="10"
+        [type]="isSubmitted && form.controls['insuranceNo'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['insuranceNo'].errors !== null"
+        [errors]="form.controls['insuranceNo'].errors"
+        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'hrm.validate.maxLength' | translate: {'numberLength': 10}}]"
+        placeholderText="{{'hrm.staffManager.label.insuranceNumber' | translate}}"
+        labelText="{{'hrm.staffManager.label.insuranceNumber' | translate}}"></hbt-input-text>
+    </div>
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-input-text
+        formControlName="taxNo" appNumberInput [maxLength]="10"
+        [type]="isSubmitted && form.controls['taxNo'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['taxNo'].errors !== null"
+        [errors]="form.controls['taxNo'].errors"
+        [errorDefs]="[
+           { errorName: 'maxlength', errorDescription: 'hrm.validate.validateTaxNo' | translate},
+           { errorName: 'minlength', errorDescription: 'hrm.validate.validateTaxNo' | translate},
+           {errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.staffManager.label.taxCode' | translate }}
+
+        ]"
+        placeholderText="{{'hrm.staffManager.label.taxCode' | translate}}"
+        [labelText]="('hrm.staffManager.label.taxCode' | translate) + (isRequiredTaxNo ? requiredLabel : '')"></hbt-input-text>
+    </div>
+
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-input-text
+        formControlName="placeOfBirth"
+        [maxLength]="500"
+        [type]="isSubmitted && form.controls['placeOfBirth'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['placeOfBirth'].errors !== null"
+        [errors]="form.controls['placeOfBirth'].errors"
+        [errorDefs]="[
+          {errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.staffManager.label.placeOfBirth' | translate }}
+        ]"
+        placeholderText="{{'hrm.staffManager.label.placeOfBirth' | translate}}"
+        labelText="{{'hrm.staffManager.label.placeOfBirth' | translate}}"></hbt-input-text>
+    </div>
+
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-input-text
+        formControlName="originalAddress"
+        [maxLength]="255"
+        [type]="isSubmitted && form.controls['originalAddress'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['originalAddress'].errors !== null"
+        [errors]="form.controls['originalAddress'].errors"
+        [errorDefs]="[
+          {errorName: 'required', errorDescription: 'hrm.validate.required' | translate: {'param': 'hrm.staffManager.label.originalAddress' | translate }}
+        ]"
+        placeholderText="{{'hrm.staffManager.label.originalAddress' | translate}}"
+        labelText="{{'hrm.staffManager.label.originalAddress' | translate}}"></hbt-input-text>
+    </div>
+
+    <div nz-col [nzXs]="24" [nzLg]="24">
+      <div class="address__title">{{ 'hrm.staffManager.label.household' | translate }}</div>
+      <div nz-menu-divider></div>
+    </div>
+
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-select
+        [dataSelects]="listProvinces"
+        keyLabel="name"
+        placeholder="{{'hrm.staffManager.label.province' | translate}}"
+        labelText="{{'hrm.staffManager.label.province' | translate}}"
+        formControlName="provinceId"></hbt-select>
+    </div>
+<!--    <div nz-col [nzXs]="24" [nzLg]="12">-->
+<!--      <hbt-select-->
+<!--        [dataSelects]="listDistricts"-->
+<!--        keyLabel="name"-->
+<!--        placeholder="{{'hrm.staffManager.label.district' | translate}}"-->
+<!--        labelText="{{'hrm.staffManager.label.district' | translate}}"-->
+<!--        formControlName="districtId"></hbt-select>-->
+<!--    </div>-->
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-select
+        [dataSelects]="listWards"
+        keyLabel="name"
+        placeholder="{{'hrm.staffManager.label.ward' | translate}}"
+        labelText="{{'hrm.staffManager.label.ward' | translate}}"
+        formControlName="wardId"></hbt-select>
+    </div>
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-input-text
+        formControlName="villageAddress"
+        [maxLength]="255"
+        [type]="isSubmitted && form.controls['villageAddress'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['villageAddress'].errors !== null"
+        [errors]="form.controls['villageAddress'].errors"
+        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'hrm.validate.maxLength' | translate: {'numberLength': 200}}]"
+        placeholderText="{{'hrm.staffManager.label.contactDetail' | translate}}"
+        labelText="{{'hrm.staffManager.label.contactDetail' | translate}}"></hbt-input-text>
+    </div>
+    <div nz-col [nzXs]="24" [nzLg]="24">
+      <div class="address__title">{{ 'hrm.staffManager.label.currentResidence' | translate }}</div>
+      <div nz-menu-divider></div>
+    </div>
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-select
+        [dataSelects]="listProvinces"
+        keyLabel="name"
+        placeholder="{{'hrm.staffManager.label.province' | translate}}"
+        labelText="{{'hrm.staffManager.label.province' | translate}}"
+        formControlName="currentProvinceId"></hbt-select>
+    </div>
+<!--    <div nz-col [nzXs]="24" [nzLg]="12">-->
+<!--      <hbt-select-->
+<!--        [dataSelects]="listCurrentDistricts"-->
+<!--        keyLabel="name"-->
+<!--        placeholder="{{'hrm.staffManager.label.district' | translate}}"-->
+<!--        labelText="{{'hrm.staffManager.label.district' | translate}}"-->
+<!--        formControlName="currentDistrictId"></hbt-select>-->
+<!--    </div>-->
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-select
+        [dataSelects]="listCurrentWards"
+        keyLabel="name"
+        placeholder="{{'hrm.staffManager.label.ward' | translate}}"
+        labelText="{{'hrm.staffManager.label.ward' | translate}}"
+        formControlName="currentWardId"></hbt-select>
+    </div>
+    <div nz-col [nzXs]="24" [nzLg]="12">
+      <hbt-input-text
+        formControlName="currentVillageAddress"
+        [maxLength]="255"
+        [type]="isSubmitted && form.controls['currentVillageAddress'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['currentVillageAddress'].errors !== null"
+        [errors]="form.controls['currentVillageAddress'].errors"
+        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'hrm.validate.maxLength' | translate: {'numberLength': 200}}]"
+        placeholderText="{{'hrm.staffManager.label.contactDetail' | translate}}"
+        labelText="{{'hrm.staffManager.label.contactDetail' | translate}}"></hbt-input-text>
+    </div>
+
+    <ng-container formArrayName="listAttributes">
+      <ng-container *ngFor="let attributes of attributesFormArray.controls; let idx = index" [formGroupName]="idx">
+        <div nz-col [nzXs]="12" [nzLg]="12">
+          <input-attribute-common
+            [controlName]="getAttributeControl(idx, 'attributeValue')"
+            [dataType]="attributes.get('dataType')?.value"
+            [urlLoadData]="attributes.get('urlLoadData')?.value"
+            [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+            [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+            [errors]="attributes.get('attributeValue')?.errors"
+            [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}]"
+            [placeholderText]="attributes.get('attributeName')?.value"
+            [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+          >
+          </input-attribute-common>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</form>

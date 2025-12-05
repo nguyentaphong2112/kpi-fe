@@ -1,0 +1,37 @@
+
+.editable-tag {
+  background: rgb(255, 255, 255);
+  border-style: dashed;
+}
+
+.tag-item {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.ant-tag {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  height: 30px;
+  border-radius: 8px;
+}
+
+.icon {
+  color: rgb(146, 142, 142);
+  display: flex;
+  align-items: center;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 10px;
+}
+
+.ant-tag-geekblue {
+  background: rgba(232, 234, 246, 1);
+  color: rgba(20, 20, 43, 1);
+  border: none;
+}

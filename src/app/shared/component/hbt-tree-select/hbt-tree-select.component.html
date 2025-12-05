@@ -1,0 +1,39 @@
+<div class="select__group select__group--icon select__custom {{checkAble ? 'tree__select-able' : 'tree__select'}} {{customIconSearch ? 'custom__search-icon' : ''}}">
+  <div *ngIf="labelText != null" class="input__label" [innerHTML]="labelText">
+    <span *ngIf="required" style="color: #ED2E7E"> *</span>
+  </div>
+  <div [class]="inputGroupGroupClass">
+    <ng-container *ngTemplateOutlet="customIconSearch"></ng-container>
+    <nz-tree-select
+      class="select__select select__select--one"
+      style="width: 100%"
+      nzShowSearch
+      [nzNodes]="dataSelects"
+      [nzPlaceHolder]="placeholder"
+      [(ngModel)]="itemSelectedValue"
+      (ngModelChange)="selectItem($event)"
+      [nzCheckable]="checkAble"
+      [nzAsyncData]="asyncData"
+      nzVirtualHeight="200px"
+      nzHideUnMatched="true"
+      (nzExpandChange)="onExpandChange($event)"
+      [nzHideUnMatched]="true"
+      [nzCheckStrictly]="checkStrictly"
+      (nzTreeCheckBoxChange)="checkBoxChange($event)"
+      [nzDisabled]="disable"
+      [nzExpandedIcon]="multiExpandedIconTpl"
+    ></nz-tree-select>
+  </div>
+  <div *ngIf="textMessageValue !== null && showError" [class]="inputMessageClass">
+    <em *ngIf="showIconMessage" nz-icon [nzType]="iconType" nzTheme="outline"></em>
+    <span class="text__message">{{textMessageValue}}</span>
+  </div>
+</div>
+<ng-template #multiExpandedIconTpl let-node let-origin="origin">
+        <span
+          *ngIf="!origin.isLeaf"
+          nz-icon
+          [nzType]="node.isExpanded || origin.totalChildren == 0 ? 'minus' : 'plus'"
+          class="ant-tree-switcher-line-icon"
+        ></span>
+</ng-template>

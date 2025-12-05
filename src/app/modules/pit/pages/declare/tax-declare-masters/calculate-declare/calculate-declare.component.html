@@ -1,0 +1,20 @@
+<div class='save-form-pit'>
+  <form nz-form [formGroup]="form" style="margin-top: 20px">
+    <div nz-row [nzGutter]="[30,30]">
+      <!--Kỳ kê khai-->
+      <div nz-col [nzXs]='24' [nzLg]='24'>
+        <hbt-date-picker
+          mode="month"
+          formControlName="taxPeriodDate"
+          [type]="isSubmitted && form.controls['taxPeriodDate']?.errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['taxPeriodDate']?.errors != null"
+          [errors]="form.controls['taxPeriodDate']?.errors"
+          [errorDefs]="[
+            { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'pit.incomeItemMasters.table.taxPeriodDate' | translate }}]"
+          labelText="{{ 'pit.incomeItemMasters.table.taxPeriodDate' | translate }} <span class='label__required'>*</span>"
+          placeholderText="{{ 'pit.incomeItemMasters.table.taxPeriodDate' | translate }}"
+        ></hbt-date-picker>
+      </div>
+    </div>
+  </form>
+</div>

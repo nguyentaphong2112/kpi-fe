@@ -1,0 +1,428 @@
+<div class='save-form-crm'>
+  <form nz-form [formGroup]="form" style="margin-top: 20px">
+    <div nz-row [nzGutter]='[20,15]'>
+      <!--ngày đặt hàng-->
+      <div nz-col [nzXs]="12" [nzLg]="8">
+        <hbt-date-picker
+          [type]="isSubmitted && form.controls['orderDate'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['orderDate'].errors != null"
+          [errors]="form.controls['orderDate'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.orders.label.orderDate' | translate }}]"
+          placeholderText="{{'crm.orders.label.orderDate' | translate}}"
+          labelText="{{'crm.orders.label.orderDate' | translate}} <span class='label__required'>*</span>"
+          formControlName="orderDate"></hbt-date-picker>
+      </div>
+      <!--id khách hàng-->
+      <div nz-col [nzXs]="12" [nzLg]="8">
+        <hbt-select [dataSelects]="employeeInfo?.length ? employeeInfo : []"
+                    keyValue="employeeId"
+                    keyLabel="fullName"
+                    formControlName="saleStaffId"
+                    [type]="isSubmitted && form.controls['saleStaffId'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['saleStaffId'].errors != null"
+                    [errors]="form.controls['saleStaffId'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.orders.label.employeeId' | translate }}]"
+                    placeholder="{{'crm.orders.label.employeeId' | translate}}"
+                    labelText="{{'crm.orders.label.employeeId' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+      <!--mã giảm giá-->
+      <div nz-col [nzXs]="12" [nzLg]="8">
+        <hbt-input-text formControlName="discountCode" maxLength="20"
+                        [type]="isSubmitted && form.controls['discountCode'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['discountCode'].errors != null"
+                        [errors]="form.controls['discountCode'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 20}}]"
+                        placeholderText="{{'crm.orders.label.discountCode' | translate}}"
+                        labelText="{{'crm.orders.label.discountCode' | translate}}"
+        ></hbt-input-text>
+      </div>
+      <!--id khách hàng-->
+      <div nz-col [nzXs]="12" [nzLg]="8">
+        <hbt-select [isLoadMore]="true"
+                    (select)="changeCustomer($event)"
+                    urlLoadData="/customers/pageable"
+                    [serviceName]="serviceName"
+                    keyValue="customerId"
+                    keyLabel="phoneAndName"
+                    formControlName="customerId"
+                    [type]="isSubmitted && form.controls['customerId'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['customerId'].errors != null"
+                    [errors]="form.controls['customerId'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.orders.label.customerId' | translate }}]"
+                    placeholder="{{'crm.orders.label.customerId' | translate}}"
+                    labelText="{{'crm.orders.label.customerId' | translate}} <span class='label__required'>*</span>"
+        ></hbt-select>
+      </div>
+
+      <!--Số điện thoại-->
+      <div nz-col [nzXs]="12" [nzLg]="8">
+        <hbt-input-text formControlName="mobileNumber" maxLength="10"
+                        [disable]="isDisabledValue"
+                        [type]="isSubmitted && form.controls['mobileNumber'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['mobileNumber'].errors != null"
+                        [errors]="form.controls['mobileNumber'].errors"
+                        [errorDefs]="[{ errorName: 'phoneMobile', errorDescription: 'crm.validate.mobileNumber' | translate}]"
+                        placeholderText="{{'crm.orders.label.mobileNumber' | translate}}"
+                        labelText="{{'crm.orders.label.mobileNumber' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--Email-->
+      <div nz-col [nzXs]="12" [nzLg]="8">
+        <hbt-input-text formControlName="email" maxLength="255" [disable]="isDisabledValue"
+                        [type]="isSubmitted && form.controls['email'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['email'].errors != null"
+                        [errors]="form.controls['email'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 20}}]"
+                        placeholderText="{{'crm.orders.label.email' | translate}}"
+                        labelText="{{'crm.orders.label.email' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <div nz-col [nzXs]="12" [nzLg]="8">
+        <hbt-select [isLoadMore]="true"
+                    urlLoadData="/customers/pageable"
+                    [serviceName]="serviceName"
+                    keyValue="customerId"
+                    keyLabel="phoneAndName"
+                    formControlName="introducerId"
+                    [type]="isSubmitted && form.controls['introducerId'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['introducerId'].errors != null"
+                    [errors]="form.controls['introducerId'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.orders.label.introducerId' | translate }}]"
+                    placeholder="{{'crm.orders.label.introducerId' | translate}}"
+                    labelText="{{'crm.orders.label.introducerId' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <div nz-col [nzXs]="12" [nzLg]="8">
+        <hbt-select [isLoadMore]="true"
+                    urlLoadData="/customers/pageable"
+                    [serviceName]="serviceName"
+                    keyValue="customerId"
+                    keyLabel="phoneAndName"
+                    formControlName="caregiverId"
+                    [type]="isSubmitted && form.controls['caregiverId'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['caregiverId'].errors != null"
+                    [errors]="form.controls['caregiverId'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.orders.label.caregiverId' | translate }}]"
+                    placeholder="{{'crm.orders.label.caregiverId' | translate}}"
+                    labelText="{{'crm.orders.label.caregiverId' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <div class="save-form-crm__title">{{ 'crm.orders.label.addressTitle' | translate }}</div>
+        <div nz-menu-divider></div>
+      </div>
+      <!--Tỉnh-->
+      <div nz-col [nzXs]="12" [nzLg]="6">
+        <hbt-select [dataSelects]="listProvinces"
+                    (ngModelChange)="changeProvinceId($event, null, true)"
+                    formControlName="provinceId" keyLabel="name"
+                    [type]="isSubmitted && form.controls['provinceId'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['provinceId'].errors != null"
+                    [errors]="form.controls['provinceId'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.orders.label.provinceId' | translate }}]"
+                    placeholder="{{'crm.orders.label.provinceId' | translate}}"
+                    labelText="{{'crm.orders.label.provinceId' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <!--huyện-->
+      <div nz-col [nzXs]="12" [nzLg]="6">
+        <hbt-select [dataSelects]="listDistricts"
+                    (ngModelChange)="changeDistrictId($event, null, true)"
+                    formControlName="districtId" keyLabel="name"
+                    [type]="isSubmitted && form.controls['districtId'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['districtId'].errors != null"
+                    [errors]="form.controls['districtId'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.orders.label.districtId' | translate }}]"
+                    placeholder="{{'crm.orders.label.districtId' | translate}}"
+                    labelText="{{'crm.orders.label.districtId' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <!--xã-->
+      <div nz-col [nzXs]="12" [nzLg]="6">
+        <hbt-select [dataSelects]="listWards"
+                    formControlName="wardId" keyLabel="name"
+                    [type]="isSubmitted && form.controls['wardId'].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls['wardId'].errors != null"
+                    [errors]="form.controls['wardId'].errors"
+                    [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.orders.label.wardId' | translate }}]"
+                    placeholder="{{'crm.orders.label.wardId' | translate}}"
+                    labelText="{{'crm.orders.label.wardId' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <!--thôn/xóm-->
+      <div nz-col [nzXs]="12" [nzLg]="6">
+        <hbt-input-text formControlName="villageAddress" maxLength="255"
+                        [type]="isSubmitted && form.controls['villageAddress'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['villageAddress'].errors != null"
+                        [errors]="form.controls['villageAddress'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.orders.label.villageAddress' | translate }},
+          { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}}]"
+                        placeholderText="{{'crm.orders.label.villageAddress' | translate}}"
+                        labelText="{{'crm.orders.label.villageAddress' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <div nz-col [nzXs]='24' [nzLg]='24'>
+        <nz-table class="order-detail" nzBordered [nzData]="[1]" nzSize="small" [nzShowPagination]="false" nzTableLayout="fixed" [nzFooter]="footer">
+          <thead>
+          <tr>
+            <th nzWidth='5%' class="text-center">STT</th>
+            <th nzWidth="20%"
+                class="text-center">{{ 'crm.orders.label.productId' | translate }} <span class='label__required'>*</span>
+            </th>
+            <th nzWidth="10%"
+                class="text-center">{{ 'crm.orders.label.unitId' | translate }}
+            </th>
+            <th nzWidth="7%"
+                class="text-center">{{ 'crm.orders.label.unitPrice' | translate }}
+            </th>
+            <th nzWidth="10%"
+                class="text-center">{{ 'crm.orders.label.quantity' | translate }} <span class='label__required'>*</span>
+            </th>
+            <th nzWidth="15%"
+                class="text-center">{{ 'crm.orders.label.discountType' | translate }}
+            </th>
+            <th nzWidth="10%"
+                class="text-center">{{ 'crm.orders.label.discount' | translate }}
+            </th>
+            <th nzWidth="{{mode !== modeConst.VIEW ? '13' : '23'}}%"
+                class="text-center">{{ 'crm.orders.label.totalPrice' | translate }}
+            </th>
+            <th nzWidth="10%" *ngIf="mode !== modeConst.VIEW"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container [formArrayName]="FORM_ARRAY_NAME">
+            <ng-container *ngFor="let item of orderDetails.controls; let i = index" [formGroupName]="i">
+              <tr>
+                <td style="text-align: center; font-weight: bold; max-width: 5%">
+                  {{ (i + 1) }}
+                </td>
+                <td style="max-width: 20%;">
+                  <hbt-select formControlName="productId"
+                              (eventEmit)="changeProduct($event, item); calculate(item)"
+                              [isLoadMore]="true"
+                              urlLoadData="/products"
+                              [serviceName]="serviceName"
+                              keyValue="productId"
+                              keyLabel="name"
+                              [type]="isSubmitted && item.get('productId')?.errors ? 'error' : 'default'"
+                              [showError]="isSubmitted && item.get('productId')?.errors !== null"
+                              [errors]="item.get('productId')?.errors"
+                              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.orders.label.productId' | translate }}]"
+                              placeholder="{{'crm.orders.label.productId' | translate}}"
+                  >
+                  </hbt-select>
+                </td>
+                <td style="max-width: 10%; text-align: center">
+                  {{ item.get('unitName').value ?? '-' }}
+                </td>
+                <td style="max-width: 7%; text-align: right">
+                  {{ item.get('unitPrice').value?.toLocaleString('en-US') ?? '-' }}
+                </td>
+                <td style="max-width: 10%; text-align: center">
+                  <hbt-input-text formControlName="quantity" maxLength="4" appNumberInput
+                                  (ngModelChange)="calculate(item)"
+                                  [type]="isSubmitted && item.get('quantity').errors ? 'error' : 'default'"
+                                  [showError]="isSubmitted && item.get('quantity').errors != null"
+                                  [errors]="item.get('quantity').errors"
+                                  [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.orders.label.quantity' | translate }},
+                                  { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 20}}]"
+                                  placeholderText="{{'crm.orders.label.quantity' | translate}}"
+                  ></hbt-input-text>
+                </td>
+                <td style="max-width: 15%;">
+                  <hbt-select formControlName="discountType" [showClear]="false"
+                              [dataSelects]="discountType"
+                              (ngModelChange)="calculate(item)"
+                              [type]="isSubmitted && item.get('discountType')?.errors ? 'error' : 'default'"
+                              [showError]="isSubmitted && item.get('discountType')?.errors !== null"
+                              [errors]="item.get('discountType')?.errors"
+                              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.orders.label.discountType' | translate }}]"
+                              placeholder="{{'crm.orders.label.discountType' | translate}}"
+                  >
+                  </hbt-select>
+                </td>
+                <td style="max-width: 10%; text-align: center">
+                  <hbt-input-text formControlName="discount" appNumberic [num]="17"
+                                  (ngModelChange)="calculate(item)"
+                                  [type]="isSubmitted && item.get('discount').errors ? 'error' : 'default'"
+                                  [showError]="isSubmitted && item.get('discount').errors != null"
+                                  [errors]="item.get('discount').errors"
+                                  [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 3}},
+                                  { errorName: 'max', errorDescription: 'common.validate.maxValue' | translate:
+                                  {'maxValue': item.get('discountType')?.value === 'PHAN_TRAM' ? 100 : item.get('quantity')?.value * item.get('unitPrice')?.value} }]"
+                                  placeholderText="{{'crm.orders.label.discount' | translate}}"
+                  ></hbt-input-text>
+                </td>
+                <td style="max-width: {{mode !== modeConst.VIEW ? '13' : '23'}}%; text-align: right">
+                  {{ item.get('totalPrice').value?.toLocaleString('en-US') ?? '-' }}
+                </td>
+                <td style="max-width: 10%" class="text-center" *ngIf="mode !== modeConst.VIEW">
+                  <em class="menu__item--btn1" nz-icon nzType="plus-circle" nzTheme="outline"
+                      nzTooltipTitle="{{'common.title.add' | translate}}" (click)="add()"
+                      nzTooltipPlacement="left" nz-button nz-tooltip></em>
+                  <em class="menu__item--btn" nz-icon nzType="delete" nzTheme="outline" nzTooltipTitle="{{'common.title.delete' | translate}}"
+                      nzTooltipPlacement="right" nz-button nz-tooltip (click)="onDelete(i, item)"></em>
+                </td>
+              </tr>
+            </ng-container>
+          </ng-container>
+          </tbody>
+        </nz-table>
+        <ng-template #footer>
+          <div class="order-footer">
+            <div class="order-footer__row">
+              <div style="width: 5%" class="order-footer__row__label">A</div>
+              <div style="width: 20%" class="order-footer__row__label">TỔNG CỘNG (trước thuế)</div>
+              <div style="width: 10%" class="order-footer__row__label">VND</div>
+              <div style="width: 17%;"></div>
+              <div style="width: {{mode !== modeConst.VIEW ? '38' : '48'}}%" class="order-footer__row__value">{{ finalAmount?.toLocaleString('en-US')}}</div>
+            </div>
+            <div class="order-footer__row row-input">
+              <div style="width: 5%" class="order-footer__row__label">B</div>
+              <div style="width: 20%" class="order-footer__row__label">Thuế suất GTGT (VAT)</div>
+              <div style="width: 10%" class="order-footer__row__label">
+                <hbt-input-text formControlName="taxRate" appNumberic
+                                (ngModelChange)="calculateTotal()"
+                                [type]="isSubmitted && form.controls['taxRate'].errors ? 'error' : 'default'"
+                                [showError]="isSubmitted && form.controls['taxRate'].errors != null"
+                                [errors]="form.controls['taxRate'].errors"
+                                [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 20}},
+                                  { errorName: 'max', errorDescription: 'common.validate.maxValue' | translate: { 'maxValue': 100} }]"
+                ></hbt-input-text>
+              </div>
+              <div style="width: 17%;"  ></div>
+              <div style="width: {{mode !== modeConst.VIEW ? '38' : '48'}}%" class="order-footer__row__value">{{ taxAmount?.toLocaleString('en-US')}}</div>
+            </div>
+            <div class="order-footer__row">
+              <div style="width: 5%" class="order-footer__row__label">C</div>
+              <div style="width: 20%" class="order-footer__row__label">Tổng thực nhận (sau thuế)</div>
+              <div style="width: 10%" class="order-footer__row__label">VND</div>
+              <div style="width: 17%;"></div>
+              <div style="width: {{mode !== modeConst.VIEW ? '38' : '48'}}%" class="order-footer__row__value">{{ (finalAmount - taxAmount)?.toLocaleString('en-US')}}</div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <div nz-row [nzGutter]='[20,15]'>
+          <ng-container formArrayName="listAttributes">
+            <ng-container *ngFor="let attributes of attributesFormArray.controls; let idx = index"
+                          [formGroupName]="idx">
+              <div nz-col [nzXs]="12" [nzLg]="8">
+                <input-attribute-common
+                  [controlName]="getAttributeControl(idx, 'attributeValue')"
+                  [dataType]="attributes.get('dataType')?.value"
+                  [urlLoadData]="attributes.get('urlLoadData')?.value"
+                  [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+                  [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+                  [errors]="attributes.get('attributeValue')?.errors"
+                  [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}]"
+                  [placeholderText]="attributes.get('attributeName')?.value"
+                  [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+                >
+                </input-attribute-common>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+      <div nz-col [nzXs]="24" [nzLg]="24" *ngIf="mode === modeConst.EDIT || (mode === modeConst.VIEW && payments && payments.length > 0)">
+        <diV class="payments-header">
+          <div class="save-form-crm__title">{{ 'crm.orders.payments.title' | translate }}</div>
+          <hbt-button *ngIf="mode === modeConst.EDIT"
+            buttonType="NO_BORDER"
+            buttonSize="MEDIUM"
+            (click)="doOpenForm(modeConst.ADD)"
+            buttonText="{{ 'common.button.add' | translate }}"
+            buttonAvailableStyle="ADD">
+          </hbt-button>
+        </diV>
+        <div nz-menu-divider></div>
+      </div>
+      <div nz-col [nzXs]="24" [nzLg]="24" *ngIf="mode !== modeConst.ADD && payments && payments.length > 0">
+        <nz-table class="order-detail" nzBordered [nzData]="[1]" nzSize="small" [nzShowPagination]="false" nzTableLayout="fixed">
+          <thead>
+          <tr>
+            <th nzWidth='5%' class="text-center">STT</th>
+            <th nzWidth="10%"
+                class="text-center">{{ 'crm.orders.payments.table.paymentDate' | translate }}
+            </th>
+            <th nzWidth="15%"
+                class="text-center">{{ 'crm.orders.payments.table.paymentType' | translate }}
+            </th>
+            <th nzWidth="10%"
+                class="text-center">{{ 'crm.orders.payments.table.paymentMethod' | translate }}
+            </th>
+            <th nzWidth="15%"
+                class="text-center">{{ 'crm.orders.payments.table.amount' | translate }}
+            </th>
+            <th nzWidth="10%"
+                class="text-center">{{ 'crm.orders.payments.label.customer' | translate }}
+            </th>
+            <th nzWidth="15%"
+                class="text-center">{{ 'crm.orders.payments.table.employeeId' | translate }}
+            </th>
+            <th nzWidth="15%"
+                class="text-center">{{ 'crm.orders.payments.label.welfareRecipientId' | translate }}
+            </th>
+            <th nzWidth="10%"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container *ngFor="let item of payments; let i = index">
+            <tr>
+              <td style="text-align: center; font-weight: bold; max-width: 5%">
+                {{ (i + 1) }}
+              </td>
+              <td style="max-width: 10%; text-align: center">
+                {{ (item.paymentDate | dateFormat) ?? '-' }}
+              </td>
+              <td style="max-width: 15%;">
+                {{ item.paymentTypeName ?? '-' }}
+              </td>
+              <td style="max-width: 10%;">
+                {{ item.paymentMethodName ?? '-' }}
+              </td>
+              <td style="max-width: 15%; text-align: right">
+                {{ item.amount?.toLocaleString('en-US') ?? '-' }}
+              </td>
+              <td style="max-width: 10%;">
+                {{ item.introducerName ?? '-' }}
+              </td>              
+              <td style="max-width: 15%;">
+                {{ item.caregiverName ?? '-' }}
+              </td>
+              <td style="max-width: 15%;">
+                {{ item.welfareRecipientName ?? '-' }}
+              </td>
+              <td style="max-width: 10%" class="text-center">
+                <em class="menu__item--btn1" nz-icon nzType="eye" nzTheme="outline"
+                    nzTooltipTitle="{{'common.title.view' | translate}}" (click)="doOpenForm(modeConst.VIEW, i)"
+                    nzTooltipPlacement="left" nz-button nz-tooltip></em>
+                <ng-container *ngIf="mode !== modeConst.VIEW">
+                  <em class="menu__item--btn1" nz-icon nzType="edit" nzTheme="outline"
+                      nzTooltipTitle="{{'common.title.edit' | translate}}" (click)="doOpenForm(modeConst.EDIT, i)"
+                      nzTooltipPlacement="left" nz-button nz-tooltip></em>
+                  <em class="menu__item--btn" nz-icon nzType="delete" nzTheme="outline"
+                      nzTooltipTitle="{{'common.title.delete' | translate}}"
+                      nzTooltipPlacement="right" nz-button nz-tooltip (click)="onDeletePayment(i)"></em>
+                </ng-container>
+              </td>
+            </tr>
+          </ng-container>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </form>
+</div>

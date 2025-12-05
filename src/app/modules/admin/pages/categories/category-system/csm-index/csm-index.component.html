@@ -1,0 +1,129 @@
+<div [class]="isNotPageName ? 'btn__across-no-page' : 'btn__across-page'">
+  <hbt-button
+    class="staff__research__btn__search"
+    buttonAvailableStyle="ADD"
+    buttonText="{{'common.button.add' | translate}}"
+    (click)="doOpenForm(modeConst.ADD, {categoryTypeSelect: categoryTypeSelect})"
+    *ngIf="objFunction?.create"
+  ></hbt-button>
+</div>
+
+<div nz-row [nzGutter]="[30, 5]">
+  <div *ngIf="!isMenu" nz-col [nzMd]='24' [nzLg]='6' class="item__home--left csm-index">
+    <div class="content__item content__item--border bg__content--default">
+
+      <div>
+        <hbt-input-text [(ngModel)]="keySearchCategory"
+                        [maxLength]='255'
+                        placeholderText="{{'admin.categories.label.categoryType' | translate}}"
+                        (ngModelChange)="changeKeySearch($event)"
+        >
+        </hbt-input-text>
+      </div>
+      <div style="margin-top: 10px">
+        <nz-table #basicTable
+                  [nzData]="listCategoryType"
+                  [nzShowPagination]="false"
+                  nzBordered
+                  [nzPageSize]="10000"
+        >
+          <thead>
+          <tr>
+            <th nzWidth="40px" [ngClass]="['text-center']">{{ 'admin.common.stt' | translate }}</th>
+            <th>
+              {{ 'admin.categories.label.categoryType' | translate }}
+              <em class="category__type-btn" nz-icon nzType="plus" nzTheme="outline"
+                  nzTooltipTitle="{{'admin.categoryTypes.add' | translate}}"
+                  nzTooltipPlacement="bottom" nz-button nz-tooltip
+                  *ngIf="objFunctionCategoryType?.create"
+                  (click)="doAddCategoryType(modeConst.ADD, {groupType: groupType})"
+              ></em>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let data of basicTable.data; let i = index"
+              [ngClass]="{'tr__active': this.categoryTypeSelect?.['categoryTypeId'] === data['categoryTypeId']}"
+              (click)="selectCategoryType(data)">
+            <td>{{ i + 1 }}</td>
+            <td class="config__title">
+              {{ data.name }}
+              <em class="category__type-btn" nz-icon nzType="edit" nzTheme="outline"
+                  *ngIf="objFunctionCategoryType?.edit && this.categoryTypeSelect?.['categoryTypeId'] === data['categoryTypeId']"
+                  nzTooltipTitle="{{'admin.categoryTypes.edit' | translate}}"
+                  nzTooltipPlacement="bottom" nz-button nz-tooltip (click)="doAddCategoryType(modeConst.EDIT, data)"></em>
+            </td>
+          </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+
+  </div>
+  <div nz-col [nzMd]='24' [nzLg]='!isMenu ? 18 : 24'>
+    <div class="content__item content__item--border bg__content--default">
+      <div class="form-search">
+        <form nz-form [formGroup]="form" (keyup.enter)="search()">
+          <div nz-row [nzGutter]='[20,15]'>
+            <!--   Mã/Tên chức năng   -->
+            <div nz-col [nzXs]='12' [nzLg]='12'>
+              <hbt-input-text formControlName='keySearch'
+                              [maxLength]='255'
+                              placeholderText="{{'admin.categories.label.keySearch' | translate}}"
+                              labelText="{{'admin.categories.label.keySearch' | translate}}"></hbt-input-text>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div nz-row class="btn__row-search">
+        <div nz-col nzSpan="24">
+          <div style="text-align: center">
+            <hbt-button
+              class="staff__research__btn__search"
+              buttonAvailableStyle="SEARCH"
+              buttonText="{{'common.button.search' | translate}}"
+              (click)="search()"
+            ></hbt-button>
+            <hbt-button
+              buttonSize="MEDIUM"
+              buttonType="BORDER"
+              (click)="export()">
+              <img src="/assets/icon/staff-manager/export_excel.svg" alt="" />
+            </hbt-button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="search__content--group search__content--group-hidden-header">
+      <hbt-table-wrap>
+        <hbt-table
+          (changePageNum)="search($event)"
+          [tableConfig]="tableConfig"
+          [dataList]="tableData"
+        ></hbt-table>
+      </hbt-table-wrap>
+    </div>
+
+    <ng-template #actionTmpl let-data="data">
+      <btn-more-action [model]="[data, {categoryTypeSelect}]" [setting]="actionSchema">
+      </btn-more-action>
+    </ng-template>
+
+    <ng-template #footerTmpl>
+      <hbt-button
+        buttonAvailableStyle="CANCEL"
+        buttonText="{{ 'common.button.cancel' | translate }}"
+        (click)="modalRef.destroy()">
+      </hbt-button>
+      <hbt-button
+        buttonAvailableStyle="SAVE"
+        buttonText="{{ 'common.button.save' | translate }}"
+        (click)="modalRef.getContentComponent().save()">
+      </hbt-button>
+    </ng-template>
+  </div>
+</div>
+
+
+

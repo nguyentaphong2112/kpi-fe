@@ -1,0 +1,25 @@
+@import "../../../../../core/global-style/variable";
+
+::ng-deep .book-detail-form .ant-card-head {
+  display: none;
+}
+
+.book-detail-form .search__content--group {
+  margin-top: 20px;
+}
+
+.book-detail-form .title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.menu__item--btn {
+  font-size: 16px;
+  padding: 3px;
+  color: $bg-default;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

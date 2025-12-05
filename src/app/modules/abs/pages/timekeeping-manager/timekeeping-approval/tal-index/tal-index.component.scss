@@ -1,0 +1,29 @@
+@import "../../../../../../core/global-style/variable";
+
+.menu__item--btn {
+  font-size: 18px;
+  padding: 3px;
+  color: $neutral-700;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.menu__item--btn--warning {
+  font-size: 18px;
+  padding: 3px;
+  color: $error-500;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.text-red{
+  color: $error-500!important;
+}
+
+.text-normal{
+  color: $neutral_700!important;
+}

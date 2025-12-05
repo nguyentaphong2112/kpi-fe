@@ -1,0 +1,29 @@
+  <div class='search__content--group'>
+    <hbt-table-wrap>
+      <hbt-table-tree
+        (changePageNum)="search($event)"
+        [(objFilter)]="objFilter"
+        (objFilterChange)="search()"
+        idKeyName="resourceId"
+        [tableConfig]="tableConfig" [dataList]="tableData"></hbt-table-tree>
+    </hbt-table-wrap>
+  </div>
+
+        {
+          title: 'hrm.salaryManager.salaryReviews.label.periodId',
+          field: 'periodName',
+          width: 150,
+          rowspan: 2,
+          thClassList: ['text-center'],
+          isExpand:true
+        },
+        {
+          title: 'hrm.salaryManager.salaryReviews.label.employeeCode',
+          field: 'employeeCode',
+          width: 120,
+          rowspan: 2,
+          tdClassList: ['text-center'],
+          thClassList: ['text-center'],
+          thFilter: true,
+          filterType: 'text',
+        },

@@ -1,0 +1,172 @@
+{
+  "pageName": {
+    "annualLeaves": "Thông tin phép năm",
+    "posAnnualLeaves": "Cấu hình ngày phép bổ sung theo nhóm chức danh",
+    "workdayType": "Danh mục ký hiệu chấm công",
+    "timekeeping": "Tra cứu bảng công nhân viên"
+  },
+  "add": "Thêm mới",
+  "label": {
+    "search": "Tìm kiếm",
+    "staffCode": "Mã nhân viên",
+    "employeeName": "Họ và tên",
+    "action": "Hành động",
+    "file": "File đính kèm",
+    "operation": "Thao tác",
+    "employeeType": "Đối tượng",
+    "positionName": "Chức danh",
+    "organization": "Đơn vị",
+    "year": "Năm",
+    "time": "Giờ",
+    "yearAnnualLeave": "Năm tính phép",
+    "code": "Mã",
+    "name": "Tên",
+    "groupName": "Phân loại ngày công",
+    "factor": "Hệ số",
+    "fromDate": "Từ ngày",
+    "toDate": "Đến ngày",
+    "dateOfBirth": "Ngày sinh",
+    "listMonth": "Ngày trong tháng",
+    "fullName": "Họ và tên",
+    "stt": "STT",
+    "timekeeping": "Danh sách chấm công",
+    "positionGroup": "Nhóm chức danh",
+    "insert": "Thêm mới",
+    "addedDays": "Số ngày phép bổ sung",
+    "pgrId": "Nhóm chức danh",
+    "downloadData": "Tải dữ liệu",
+    "timekeepingAuto": "Tổng hợp công",
+    "timekeepingAutoConfirm": "Bạn có chắc chắn muốn thực hiện tổng hợp công không?"
+  },
+  "validate": {
+    "required": "{{param}} bắt buộc nhập",
+    "onlyNumber": "{{param}} phải là số",
+    "positiveInteger": "{{param}} phải là số nguyên dương",
+    "maxLength": "Độ dài tối đa {{numberLength}} ký tự",
+    "minLength": "Độ dài tối thiểu {{numberLength}} ký tự",
+    "format": "{{param}} không đúng định dạng",
+    "fileType": "Loại file không hợp lệ. Định dạng hỗ trợ {{fileType}}",
+    "rangeDate": {
+      "pareDate": "{{startDate}} phải nhỏ hơn hoặc bằng {{endDate}}",
+      "pareDateMore": "{{endDate}} phải lớn hơn hoặc bằng {{startDate}}"
+    },
+    "maxDateNow": "{{param}} không được lớn hơn ngày hiện tại",
+    "duplicate": "{{param}} không được trùng",
+    "dublicate": "Không được trùng",
+    "dublicateProcess": "Thời gian đăng ký đã tồn tại bản ghi khác",
+    "exportNotData": "Điều kiện export không có dữ liệu",
+    "rangeDateEqualError": "Thời gian đến phải lớn hơn hoặc bằng thời gian từ  "
+  },
+  "table": {
+    "action": {
+      "edit": "Sửa",
+      "delete": "Xóa",
+      "cancel": "Hủy",
+      "yes": "Xác nhận",
+      "isDelete": "Bạn có chắc chắn muốn xóa bản ghi không?"
+    }
+  },
+  "breadcrumb": {
+  },
+  "mentoringTrainees": {
+    "validate.invalidDefaultDate": "{{param}} không hợp lệ",
+    "pageName": "Chỉ đạo tuyến trên",
+    "update": "Cập nhật chỉ đạo tuyến trên",
+    "add": "Thêm chỉ đạo tuyến trên",
+    "name": "Chỉ đạo tuyến trên",
+    "label": {
+      "employee": "Cán bộ",
+      "startDate": "Từ ngày",
+      "endDate": "Đến ngày"
+    },
+    "table": {
+      "employeeCode": "Mã nhân viên",
+      "employeeName": "Tên nhân viên",
+      "projectName": "Chương trình đào tạo",
+      "hospitalName": "Địa điểm đào tạo",
+      "totalLessons": "Số tiết học",
+      "content": "Nội dung đào tạo",
+      "startDate": "Từ ngày",
+      "endDate": "Đến ngày",
+      "isDeleted": "Trạng thái xóa (Y : đã xóa, N : chưa xóa)",
+      "createdBy": "Người tạo",
+      "createdTime": "Ngày tạo",
+      "modifiedBy": "Người sửa",
+      "modifiedTime": "Ngày sửa",
+      "lastUpdateTime": "Ngày cập nhật cuối cùng (trường tự sinh)",
+      "documentNo": "Số tờ trình/quyết định"
+    }
+  },
+  "mentoringTrainers": {
+    "validate.invalidDefaultDate": "{{param}} không hợp lệ",
+    "validate.duplicateEmployeeRole": "Vai trò của nhân viên ",
+    "pageName": "Chỉ đạo tuyến dưới",
+    "update": "Cập nhật chỉ đạo tuyến dưới",
+    "add": "Thêm chỉ đạo tuyến dưới",
+    "name": "Chỉ đạo tuyến dưới",
+    "table": {
+      "employeeCode": "Mã nhân viên",
+      "employeeName": "Nhân viên",
+      "orgName": "Đơn vị",
+      "majorName": "Chuyên môn",
+      "hospitalName": "Bệnh viện",
+      "content": "Kỹ thuật chuyển giao",
+      "className": "Tên lớp",
+      "totalLessons": "Số tiết học",
+      "totalClasses": "Số lớp",
+      "totalStudents": "Số học viên",
+      "totalExaminations": "Số lượt khám và điều trị",
+      "totalSurgeries": "Số ca phẫu thuật",
+      "totalTests": "Số lượt xét nghiệm & thăm dò chức năng",
+      "roleName": "Vai trò",
+      "startDate": "Từ ngày",
+      "endDate": "Đến ngày",
+      "isDeleted": "Trạng thái xóa (Y : đã xóa, N : chưa xóa)",
+      "createdBy": "Người tạo",
+      "createdTime": "Ngày tạo",
+      "modifiedBy": "Người sửa",
+      "modifiedTime": "Ngày sửa",
+      "lastUpdateTime": "Ngày cập nhật cuối cùng (trường tự sinh)"
+    }
+  },
+  "researchProjects": {
+    "pageName": " nghiên cứu khoa học",
+    "table": {
+      "title": "Tên đề tài",
+      "status": "Trạng thái",
+      "target": "Mục tiêu",
+      "projectManager": "Chủ nhiệm đề tài",
+      "member": "Thành viên",
+      "organization": "Khoa phòng",
+      "createdBy": "Người tạo",
+      "createdTime": "Ngày tạo",
+      "modifiedBy": "Người sửa",
+      "modifiedTime": "Ngày sửa",
+      "content": "Nội dung đề tài",
+      "projectType": "Phân loại",
+      "researchLevel": "Cấp nghiên cứu",
+      "researchTopic": "Hệ nghiên cứu",
+      "duration": "Thời gian thực hiện (tháng)",
+      "estimatedBudget": "Kinh phí dự kiến",
+      "role": "Vai trò",
+      "note": "Ghi chú",
+      "employee": "Thành viên",
+      "employeeTitle": "Thành viên tham gia",
+      "documentNo": "Số QĐ",
+      "documentSignedDate": "Ngày ký QĐ",
+      "boardEmployee": "Thành viên hội đồng",
+      "employeeRole": "Thành viên và vai trò"
+    }
+  },
+  "notification": {
+    "upload": {
+      "success": "Upload file thành công",
+      "error": "Upload file không thành công"
+    }
+  }
+}
+
+
+
+
+

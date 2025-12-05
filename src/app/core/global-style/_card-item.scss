@@ -1,0 +1,80 @@
+@import "variable";
+
+.card__item {
+  display: inline-block;
+
+  > a {
+    display: inline-block;
+    padding: 20px 10px;
+    background: #fff;
+    text-align: center;
+    min-width: 198px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px $neutral-300;
+  }
+
+  .card__item--title {
+    color: $breadcrumb-active-color;
+    margin-top: 12px;
+    font-family: avertaB, sans-serif;
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 1756px) {
+  .card__item {
+    display: inline-block;
+
+    > a {
+      padding: 15px 0;
+      width: 169px;
+      min-width: 8.6rem;
+    }
+
+  }
+}
+
+@media screen and (max-width: 1656px) {
+  .card__item {
+    display: inline-block;
+
+    > a {
+      padding: 15px 0;
+      width: 159px;
+      min-width: 8.6rem;
+    }
+
+  }
+}
+
+@media screen and (max-width: 1556px) {
+  .card__item {
+    display: inline-block;
+
+    > a {
+      padding: 15px 0;
+      width: 149px;
+      min-width: 8.6rem;
+    }
+
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .card__item {
+    display: inline-block;
+
+    > a {
+      padding: 15px 0;
+      width: 129px;
+      min-width: 129px;
+    }
+
+    .card__item--title {
+      color: $breadcrumb-active-color;
+      margin-top: 12px;
+      font-family: avertaB, sans-serif;
+      font-size: 14px;
+    }
+  }
+}

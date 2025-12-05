@@ -1,0 +1,24 @@
+<button [type]="type.toLowerCase()" *ngIf="buttonType != 'ONLY_ICON'" nz-button [disabled]="isDisable"
+        [class]="ref.children.length ? buttonClass + ' button__class--content' : buttonClass + ' abc'" [style]="style"
+        [nzLoading]="buttonIsLoading">
+  <em *ngIf="prefixIcon != null && buttonIconType == 'ZORRO'" class="prefix__icon" nz-icon [nzType]="prefixIcon"
+      nzTheme="outline"></em>
+  <em *ngIf="prefixIcon != null && buttonIconType == 'AWESOME'" class="prefix__icon + {{' '}} + {{prefixIcon}}"></em>
+  {{buttonText}}
+  <div *ngIf="buttonShowVerticalDash" class="button__class--dash-vertical" [style]="styleDash"></div>
+  <em *ngIf="suffixIcon != null && buttonIconType == 'ZORRO'" class="suffix__icon" nz-icon [nzType]="suffixIcon"
+      nzTheme="outline"></em>
+  <em *ngIf="suffixIcon != null && buttonIconType == 'AWESOME'" class="prefix__icon + {{' '}} + {{suffixIcon}}"></em>
+  <div #ref class='__button--content'>
+    <ng-content></ng-content>
+  </div>
+</button>
+
+<span *ngIf="buttonType == 'ONLY_ICON'" class="button__class button__class--only-icon">
+  <em *ngIf="prefixIcon != null && buttonIconType == 'ZORRO'" class="prefix__icon" nz-icon [nzType]="prefixIcon"
+      nzTheme="outline"></em>
+  <em *ngIf="prefixIcon != null && buttonIconType == 'AWESOME'" class="prefix__icon + {{' '}} + {{prefixIcon}}"></em>
+  <em *ngIf="suffixIcon != null && buttonIconType == 'ZORRO'" class="suffix__icon" nz-icon [nzType]="suffixIcon"
+      nzTheme="outline"></em>
+  <em *ngIf="suffixIcon != null && buttonIconType == 'AWESOME'" class="prefix__icon + {{' '}} + {{suffixIcon}}"></em>
+</span>

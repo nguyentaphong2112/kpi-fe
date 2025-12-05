@@ -1,0 +1,56 @@
+@import "src/app/core/global-style/variable";
+.user-manual-header {
+  height: 50px;
+  background-color: $neutral-200;
+  border-radius: 5px 5px 0 0;
+  display: flex;
+  align-items: center;
+  em {
+    margin-left: 10px;
+    font-size: 1.2rem;
+  }
+  &-title {
+    margin-left: 10px;
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+}
+.user-manual {
+  padding: 10px 15px;
+  overflow-y: auto;
+  &-item {
+    cursor: pointer;
+    padding: 10px 5px;
+    display: flex;
+    border-bottom: 1px solid $black-300;
+    &-order {
+      text-align: center;
+      align-content: center;
+      border: 1px solid $primary-500;
+      border-radius: 50%;
+      min-width: 33px;
+      min-height: 33px;
+      color: $primary-500;
+      margin-right: 10px;
+    }
+    &-content {
+      align-content: center;
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: $neutral-600;
+      &:hover {
+        color: $primary-500;
+        cursor: pointer;
+      }
+    }
+  }
+}
+.user-manual-action {
+  text-align: center;
+  width: 100%;
+  background: white;
+  height: 50px;
+  padding-top: 15px;
+  cursor: pointer;
+  color: $neutral-600;
+}

@@ -1,0 +1,67 @@
+<div class="ert-index">
+  <div class="content__item content__item--border bg__content--default">
+    <div class="form-search">
+      <form nz-form [formGroup]="form">
+        <div class="app-row" nz-row [nzGutter]='[20,15]'>
+          <div nz-col nzXs="24" nzLg="12">
+            <hbt-select formControlName="dynamicReportId"
+                        [dataSelects]="listReportType"
+                        [type]="isSubmitted && form.controls['dynamicReportId'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['dynamicReportId'].errors !== null"
+                        [errors]="form.controls['dynamicReportId'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.export-report.label.reportType' | translate }}]"
+                        labelText="{{'crm.export-report.label.reportType' | translate}} <span class='label__required'>*</span>"
+                        placeholder="{{'crm.export-report.label.reportType' | translate}}"
+            >
+            </hbt-select>
+          </div>
+          <div nz-col nzXs="24" nzLg="12">
+            <hbt-select formControlName='customerId'
+                        [isLoadMore]="true"
+                        urlLoadData="/customers/pageable"
+                        [serviceName]="serviceName"
+                        keyValue="customerId"
+                        keyLabel="fullName"
+                        placeholder="{{'crm.export-report.label.customer' | translate }}"
+                        labelText="{{'crm.export-report.label.customer' | translate}}">
+            </hbt-select>
+          </div>
+          <div nz-col nzXs="24" nzLg="12">
+            <hbt-date-picker
+              formControlName="startDate"
+              [type]="isSubmitted && form.controls['startDate'].errors ? 'error' : 'default'"
+              [showError]="isSubmitted && form.controls['startDate'].errors !== null"
+              [errors]="form.controls['startDate'].errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.export-report.label.startDate' | translate }}]"
+              labelText="{{ 'crm.export-report.label.startDate' | translate }} <span class='label__required'>*</span>"
+              placeholderText="{{ 'crm.export-report.label.startDate' | translate }}"
+            ></hbt-date-picker>
+          </div>
+          <div nz-col nzXs="24" nzLg="12" >
+            <hbt-date-picker
+              formControlName="endDate"
+              [type]="isSubmitted && (form.controls['endDate'].errors || form.errors?.rangeDateError) ? 'error' : 'default'"
+              [showError]="isSubmitted && (form.controls['endDate'].errors || form.errors?.rangeDateError) !== null"
+              [errors]="form.errors?.rangeDateError ? form.errors : form.controls['endDate'].errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'crm.export-report.label.endDate' | translate }},
+              { errorName: 'rangeDateError', errorDescription: 'hrm.validate.rangeDate.pareDateMore' | translate:{'fromDate': 'crm.export-report.label.startDate' | translate, 'toDate': 'crm.export-report.label.endDate' | translate}}]"
+              labelText="{{ 'crm.export-report.label.endDate' | translate }} <span class='label__required'>*</span>"
+              placeholderText="{{ 'crm.export-report.label.endDate' | translate }}"
+            ></hbt-date-picker>
+          </div>
+          <div nz-col nzXs="24" nzLg="24">
+            <div style="text-align: center">
+              <hbt-button
+                class="staff__research__btn__search"
+                buttonSize="MEDIUM"
+                buttonAvailableStyle="SEARCH"
+                buttonText="{{'common.button.export' | translate}}"
+                (click)="export()"
+              ></hbt-button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

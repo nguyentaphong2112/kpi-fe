@@ -1,0 +1,33 @@
+<div class='save-form-pit'>
+  <form nz-form [formGroup]="form" style="margin-top: 20px">
+    <div nz-row [nzGutter]="[30,30]">
+      <!--Kỳ kê khai-->
+      <div nz-col [nzXs]='24' [nzLg]='24'>
+        <hbt-date-picker
+          mode="year"
+          formControlName="taxPeriodYear"
+          [type]="isSubmitted && form.controls['taxPeriodYear']?.errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['taxPeriodYear']?.errors != null"
+          [errors]="form.controls['taxPeriodYear']?.errors"
+          [errorDefs]="[
+            { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'pit.taxSettlement.table.synthetic.taxPeriodYear' | translate }}]"
+          labelText="{{ 'pit.taxSettlement.table.synthetic.taxPeriodYear' | translate }} <span class='label__required'>*</span>"
+          placeholderText="{{ 'pit.taxSettlement.table.synthetic.taxPeriodYear' | translate }}"
+        ></hbt-date-picker>
+      </div>
+
+      <ng-container *ngIf="months.controls.length > 0" formArrayName="months">
+          <ng-container *ngFor="let monthGroup of months.controls; let i = index" [formGroupName]="i">
+            <div nz-col [nzXs]='24' [nzLg]='8'>
+              <hbt-select
+                [dataSelects]="listInputType" keyLabel="name" keyValue="id"
+                formControlName="inputType"
+                [placeholder]="'pit.taxSettlement.table.synthetic.inputType' | translate"
+                labelText="{{ 'pit.taxSettlement.table.synthetic.month' | translate }} {{ monthGroup.value.month }}"
+              ></hbt-select>
+            </div>
+          </ng-container>
+      </ng-container>
+    </div>
+  </form>
+</div>

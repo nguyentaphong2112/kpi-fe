@@ -1,0 +1,24 @@
+@import 'src/app/core/global-style/variable';
+
+.hierarch__title {
+  font-family: 'avertaB', sans-serif;
+  font-size: 18px;
+  padding: 5px 0;
+}
+
+.hierarch__detail {
+  font-size: 18px;
+  padding: 5px 10px;
+}
+
+.hierarch__detail-title {
+  cursor: pointer;
+  &:hover {
+    color: $bd-default-hover;
+  }
+}
+
+.hierarch__page {
+  max-height: 100vh;
+  overflow-y: auto;
+}

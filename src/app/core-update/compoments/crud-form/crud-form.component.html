@@ -1,0 +1,31 @@
+<div class="app-card">
+  <form *ngIf="isInitFormSuccess" [formGroup]="form" #formElement autocomplete="off" autocorrect="off" spellcheck="false">
+    <div class="app-row" nz-row [nzGutter]='[20,15]'>
+      <ng-container *ngFor="let control of setting.schema">
+        <ng-container *ngTemplateOutlet="customControl; context: {
+                    control: control, data: _modelData, parentPath: '', path: control.field, showLabel: control.showLabel,
+                    rowSpan: control.rowSpan
+                }">
+        </ng-container>
+      </ng-container>
+    </div>
+  </form>
+</div>
+
+<ng-template #customControl
+             let-data="data" let-control="control" let-showLabel="showLabel"
+             let-rowSpan="rowSpan" let-rowIndex="index" let-path="path" let-parentPath="parentPath"
+             let-tablePath="tablePath"
+             let-groupKey="groupKey">
+  <div nz-col [nzXs]="control.xsWidth" [nzMd]="control.mdWidth" [nzXl]="control.xlWidth" [nzXXl]="control.xxlWidth">
+    <hbt-input-text *ngIf="control.type" [formControl]="f[control.field]"
+                    [maxLength]="control.maxLength"
+                    [disable]="control.disabled"
+                    [type]="isSubmitted && form.controls[control.field].errors ? 'error' : 'default'"
+                    [showError]="isSubmitted && form.controls[control.field].errors !== null"
+                    placeholderText="{{control.label | translate}}"
+                    labelText="{{control.label | translate}} {{control.required ? '<span class=\'label__required\'>*</span>' : ''}}">
+    </hbt-input-text>
+    <app-control-messages [control]="f[control.field]"></app-control-messages>
+  </div>
+</ng-template>

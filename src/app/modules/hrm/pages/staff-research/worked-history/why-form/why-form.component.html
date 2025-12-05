@@ -1,0 +1,106 @@
+<form nz-form [formGroup]="form">
+  <div nz-row [nzGutter]='[20,15]'>
+    <!--id nhân viên-->
+    <div nz-col [nzXs]="12" [nzLg]="12" *ngIf="!hiddenEmp">
+      <employee-data-picker [isExpand]="true"
+        [functionCode]="functionCode"
+        [scope]="scope"
+        [status]='mode !== modeConst.ADD ? "ALL" : "ACTIVE"'
+`        [formMode]="mode"
+        [disable]="mode !== modeConst.ADD"
+        formControlName="employeeId"
+        [type]="isSubmitted && form.controls['employeeId'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['employeeId'].errors != null"
+        [errors]="form.controls['employeeId'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'common.label.employeeName' | translate }}]"
+        labelText="{{'hrm.staffManager.workedHistories.employeeId' | translate}} <span class='label__required'>*</span>"
+      >
+      </employee-data-picker>
+    </div>
+
+    <!--Từ tháng-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-date-picker
+        mode="month"
+        [format]="'MM/YYYY'"
+        placeholderText="{{'hrm.staffManager.workedHistories.startDate' | translate}}"
+        labelText="{{'hrm.staffManager.workedHistories.startDate' | translate}} <span class='label__required'>*</span>"
+        [type]="isSubmitted && form.controls['startDate'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['startDate'].errors != null"
+        [errors]="form.controls['startDate'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.workedHistories.startDate' | translate }}]"
+        formControlName="startDate"></hbt-date-picker>
+    </div>
+
+    <!--Đến tháng-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-date-picker
+        mode="month"
+        [format]="'MM/YYYY'"
+        placeholderText="{{'hrm.staffManager.workedHistories.endDate' | translate}}"
+        labelText="{{'hrm.staffManager.workedHistories.endDate' | translate}} <span class='label__required'>*</span>"
+        [type]="((isSubmitted && form.controls['endDate'].errors) || form.errors?.rangeDateError) ? 'error' : 'default'"
+        [showError]="((isSubmitted && form.controls['endDate'].errors) || form.errors?.rangeDateError) !== null"
+        [errors]="form.errors?.rangeDateError ? form.errors : form.controls['endDate'].errors"
+        [errorDefs]="[{ errorName: 'rangeDateError', errorDescription: 'hrm.validate.rangeDate.pareDate' | translate:
+      {'fromDate': 'hrm.staffManager.workedHistories.startDate' | translate, 'toDate': 'hrm.staffManager.workedHistories.endDate' | translate}},
+           { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.workedHistories.endDate' | translate }}
+        ]"
+        formControlName="endDate"
+      ></hbt-date-picker>
+    </div>
+
+    <!--Đơn vị-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-input-text
+        formControlName="companyName" maxLength="255"
+        [type]="isSubmitted && form.controls['companyName'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['companyName'].errors != null"
+        [errors]="form.controls['companyName'].errors"
+        [errorDefs]="[
+          { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}},
+          { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.workedHistories.companyName' | translate }}
+        ]"
+        placeholderText="{{'hrm.staffManager.workedHistories.companyName' | translate}}"
+        labelText="{{'hrm.staffManager.workedHistories.companyName' | translate}} <span class='label__required'>*</span>"
+      ></hbt-input-text>
+    </div>
+
+    <!--Chức danh-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-input-text
+        formControlName="job" maxLength="255"
+        [type]="isSubmitted && form.controls['job'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['job'].errors != null"
+        [errors]="form.controls['job'].errors"
+        [errorDefs]="[
+          { errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 255}},
+          { errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.workedHistories.job' | translate }}
+        ]"
+        placeholderText="{{'hrm.staffManager.workedHistories.job' | translate}}"
+        labelText="{{'hrm.staffManager.workedHistories.job' | translate}} <span class='label__required'>*</span>"
+      ></hbt-input-text>
+    </div>
+
+    <ng-container formArrayName="listAttributes">
+      <ng-container *ngFor="let attributes of attributesFormArray.controls; let idx = index" [formGroupName]="idx">
+        <div nz-col [nzXs]="12" [nzLg]="12">
+          <input-attribute-common
+            [controlName]="getAttributeControl(idx, 'attributeValue')"
+            [dataType]="attributes.get('dataType')?.value"
+            [urlLoadData]="attributes.get('urlLoadData')?.value"
+            [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+            [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+            [errors]="attributes.get('attributeValue')?.errors"
+            [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}]"
+            [placeholderText]="attributes.get('attributeName')?.value"
+            [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+          >
+          </input-attribute-common>
+        </div>
+      </ng-container>
+    </ng-container>
+
+  </div>
+</form>
+

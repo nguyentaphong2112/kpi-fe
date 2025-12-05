@@ -1,0 +1,134 @@
+<div class="work-info">
+
+  <div nz-row [nzGutter]='[20,15]' *ngIf="showWorkInfo()">
+    <ng-container *ngFor="let workInfo of workInfos">
+      <div nz-col [nzXs]="24" [nzLg]="workInfo.colsSpan*6">
+        <hbt-text-label [isInnerHTML]="true" [labelText]="workInfo.label" [labelValue]="workInfo.value" ></hbt-text-label>
+      </div>
+    </ng-container>
+  </div>
+
+  <div style="margin-top: 20px">
+    <hbt-button (click)="viewDetail()"
+                buttonText="{{ (isDetail ? 'hrm.staffManager.label.hideDetail' : 'hrm.staffManager.label.viewDetail') | translate }}"
+                [suffixIcon]="isDetail ? 'up' : 'down'"></hbt-button>
+  </div>
+
+  <div class='search__content--group' *ngIf="isDetail">
+    <div *ngIf="objFunctionWorkProcess?.view">
+      <div class="title-table">{{ 'hrm.staffManager.staffResearch.pageName.workProcessInfo' | translate }}
+        <em *ngIf="objFunctionWorkProcess?.create"
+            nz-button nz-icon nzType="plus-square" nzTheme="outline"
+            nz-tooltip
+            nzTooltipTitle="{{'common.button.add' | translate}}"
+            nzTooltipPlacement="left"
+            class="btn-create"  (click)="doOpenFormCustom('workProcess')">
+        </em>
+      </div>
+      <hbt-table-wrap>
+        <hbt-table
+          (changePageNum)="search($event, 'workProcess')"
+          [tableConfig]="tableConfig" [dataList]="tableDataWorkProcess"></hbt-table>
+      </hbt-table-wrap>
+    </div>
+    <div *ngIf="objFunctionConcurrentProcess?.view">
+      <div class="title-table">{{ 'hrm.staffManager.staffResearch.pageName.concurrentProcessInfo' | translate }}
+        <em *ngIf="objFunctionConcurrentProcess?.create" nz-button nz-icon nzType="plus-square" nzTheme="outline"
+            nz-tooltip
+            nzTooltipTitle="{{'common.button.add' | translate}}"
+            nzTooltipPlacement="left"
+            class="btn-create" (click)="doOpenFormCustom('concurrentProcess')"></em></div>
+      <hbt-table-wrap>
+        <hbt-table
+          (changePageNum)="search($event, 'concurrentProcess')"
+          [tableConfig]="tableConfigConcurentProcess" [dataList]="tableDataConcurrentProcess"></hbt-table>
+      </hbt-table-wrap>
+    </div>
+    <div *ngIf="objFunctionContactProcess?.view">
+      <div class="title-table">{{ 'hrm.staffManager.staffResearch.pageName.contractProcessInfo' | translate }}
+        <em *ngIf="objFunctionContactProcess?.create" nz-button nz-icon nzType="plus-square" nzTheme="outline"
+            nz-tooltip
+            nzTooltipTitle="{{'common.button.add' | translate}}"
+            nzTooltipPlacement="left"
+            class="btn-create" (click)="doOpenFormCustom('contactProcess')"></em></div>
+      <hbt-table-wrap>
+        <hbt-table
+          (changePageNum)="search($event, 'contactProcess')"
+          [tableConfig]="tableConfigContractProcessInfo" [dataList]="tableDataContractProcess"></hbt-table>
+      </hbt-table-wrap>
+    </div>
+    <div *ngIf="objFunctionSalaryProgress?.view">
+      <div class="title-table">{{ 'hrm.staffManager.staffResearch.pageName.insuranceSalaryInfo' | translate }}
+        <em *ngIf="objFunctionSalaryProgress?.create" nz-button nz-icon nzType="plus-square" nzTheme="outline"
+            nz-tooltip
+            nzTooltipTitle="{{'common.button.add' | translate}}"
+            nzTooltipPlacement="left"
+            class="btn-create" (click)="doOpenFormCustom('salaryProgress')"></em></div>
+      <hbt-table-wrap>
+        <hbt-table
+          (changePageNum)="search($event, 'salaryProgress')"
+          [tableConfig]="tableConfigInsuranceSalaryProcess" [dataList]="tableDataInsuranceSalary"></hbt-table>
+      </hbt-table-wrap>
+    </div>
+    <div *ngIf="objFunctionPositionSalary?.view">
+      <div class="title-table">{{ 'hrm.staffManager.staffResearch.pageName.positionSalaryInfo' | translate }}
+        <em *ngIf="objFunctionPositionSalary?.create" nz-button nz-icon nzType="plus-square" nzTheme="outline"
+            nz-tooltip
+            nzTooltipTitle="{{'common.button.add' | translate}}"
+            nzTooltipPlacement="left"
+            class="btn-create"
+            (click)="doOpenFormCustom('positionSalary')"></em></div>
+      <hbt-table-wrap>
+        <hbt-table
+          (changePageNum)="search($event, 'positionSalary')"
+          [tableConfig]="tableConfigPositionSalary" [dataList]="tableDataPositionSalary"></hbt-table>
+      </hbt-table-wrap>
+    </div>
+    <div *ngIf="objFunctionAllowanceProcess?.view">
+      <div class="title-table">{{ 'hrm.staffManager.staffResearch.pageName.allowanceProcessInfo' | translate }}
+        <em *ngIf="objFunctionAllowanceProcess?.create" nz-button nz-icon nzType="plus-square" nzTheme="outline"
+            nz-tooltip
+            nzTooltipTitle="{{'common.button.add' | translate}}"
+            nzTooltipPlacement="left"
+            class="btn-create"
+            (click)="doOpenFormCustom('allowanceProcess')"></em></div>
+      <hbt-table-wrap>
+        <hbt-table
+          (changePageNum)="search($event, 'allowanceProcess')"
+          [tableConfig]="tableConfigAllowanceProcess" [dataList]="tableDataAllowanceProcess"></hbt-table>
+      </hbt-table-wrap>
+    </div>
+    <div *ngIf="objFunctionPlanningAssignment?.view">
+      <div class="title-table">{{ 'hrm.staffManager.staffResearch.pageName.planningAssignmentInfo' | translate }}
+        <em *ngIf="objFunctionPlanningAssignment?.create" nz-button nz-icon nzType="plus-square" nzTheme="outline"
+            nz-tooltip
+            nzTooltipTitle="{{'common.button.add' | translate}}"
+            nzTooltipPlacement="left"
+            class="btn-create"
+            (click)="doOpenFormCustom('planningAssignment')"></em></div>
+      <hbt-table-wrap>
+        <hbt-table
+          (changePageNum)="search($event, 'planningAssignment')"
+          [tableConfig]="tableConfigPlanningAssignment" [dataList]="tableDataPlanningAssignment"></hbt-table>
+      </hbt-table-wrap>
+    </div>
+  </div>
+</div>
+
+<ng-template #actionTmpl let-data="data">
+  <btn-more-action [model]="[data]" [setting]="actionSchema">
+  </btn-more-action>
+</ng-template>
+
+<ng-template #footerTmpl>
+  <hbt-button
+    buttonAvailableStyle="CANCEL"
+    buttonText="{{ 'common.button.cancel' | translate }}"
+    (click)="modalRef.destroy()">
+  </hbt-button>
+  <hbt-button
+    buttonAvailableStyle="SAVE"
+    buttonText="{{ 'common.button.saveS' | translate }}"
+    (click)="modalRef.getContentComponent().save()">
+  </hbt-button>
+</ng-template>

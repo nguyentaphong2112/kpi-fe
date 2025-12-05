@@ -1,0 +1,79 @@
+
+<form nz-form [formGroup]="form" class="mts-index">
+  <div class='kpi'>
+    <div class="search__custom-common remove__mr__bt-40 ">
+      <div nz-row class="button__action-left">
+        <hbt-button
+          class="staff__research__btn__search"
+          buttonSize="LARGE"
+          buttonAvailableStyle="ADD"
+          style="margin-right: 20px"
+          buttonText="{{'common.button.add' | translate}}"
+          *ngIf="objFunction?.create"
+          (click)="doOpenForm(modeConst.ADD)"
+        ></hbt-button>
+      </div>
+
+      <div class="search__page-right">
+        <hbt-date-picker
+          mode="year"
+          format="yyyy"
+          formControlName="year"
+          placeholderText="{{ 'kpi.orgConfigs.label.year' | translate }}"
+        ></hbt-date-picker>
+
+      </div>
+    </div>
+
+    <div class='search__content--group'>
+      <hbt-table-wrap  [tableConfig]="tableConfig">
+        <hbt-table
+          (changePageNum)="search($event)"
+          [tableConfig]="tableConfig" [dataList]="tableData"></hbt-table>
+      </hbt-table-wrap>
+    </div>
+
+    <ng-template #actionTmpl let-data="data">
+      <btn-more-action [model]="[data]" [setting]="actionSchema">
+      </btn-more-action>
+    </ng-template>
+
+    <ng-template #footerTmpl>
+      <hbt-button
+        buttonAvailableStyle="CANCEL"
+        buttonText="{{ 'common.button.cancel' | translate }}"
+        (click)="modalRef.destroy()">
+      </hbt-button>
+      <hbt-button
+        buttonAvailableStyle="SAVE"
+        buttonText="{{ 'common.button.save' | translate }}"
+        (click)="modalRef.getContentComponent().save()">
+      </hbt-button>
+    </ng-template>
+
+    <hbt-import-file [showContent]='isImportData'
+                     (onCloseModal)='doCloseImport($event)'
+                     [importApi]='importApi'
+                     [downLoadTemplateApi]="downLoadTemplateApi"
+                     [fileTemplateName]="fileTemplateName"
+                     [doDownloadFileByNameApi]='doDownloadFileByNameApi'>
+    </hbt-import-file>
+
+    <reject-common-template
+      [isReject]="isReject"
+      [listRejectId]="listId"
+      [rejectId]='rejectId'
+      [rejectByListApi]='rejectByListApi'
+      (onCloseModal)="doCloseReject($event)">
+    </reject-common-template>
+
+    <ng-template #attachFileTmpl let-attachFileList='attachFileList'>
+      <div *ngFor="let file of attachFileList">
+        <a class="attach-file" (click)="doDownLoadFile(file); $event.stopPropagation();">{{file.fileName}}</a>
+      </div>
+    </ng-template>
+
+  </div>
+</form>
+
+

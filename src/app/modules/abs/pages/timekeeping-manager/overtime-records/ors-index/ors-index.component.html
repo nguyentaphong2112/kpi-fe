@@ -1,0 +1,100 @@
+<form nz-form [formGroup]="form" class="mts-index">
+  <div class='abs'>
+    <div class="search__custom-common remove__mr__bt-40 ">
+      <div nz-row class="button__action-left">
+        <hbt-button
+          class="staff__research__btn__search"
+          buttonSize="LARGE"
+          buttonAvailableStyle="ADD"
+          buttonText="{{'common.button.add' | translate}}"
+          style="margin-right: 20px"
+          *ngIf="objFunction?.create"
+          (click)="doOpenForm(modeConst.ADD)"
+        ></hbt-button>
+
+        <hbt-button buttonSize="LARGE"
+                    class="staff__research__btn__search"
+                    style="margin-left: 20px"
+                    *ngIf="objFunction?.import"
+                    buttonText="{{'common.button.uploadFile' | translate}}"
+                    [buttonTextColor]="_variable.$purple_800" (click)="doImportData()"></hbt-button>
+      </div>
+
+      <div class="search__page-right">
+        <!--Từ ngày-->
+        <hbt-date-picker
+          style="margin-right: 20px"
+          mode="date"
+          formControlName="startTime"
+          placeholderText="{{ 'abs.overtimeRecords.label.startTime' | translate }}"
+        ></hbt-date-picker>
+
+
+        <!--Đến ngày-->
+        <hbt-date-picker
+          style="margin-right: 20px"
+          mode="date"
+          formControlName="endTime"
+          placeholderText="{{ 'abs.overtimeRecords.label.endTime' | translate }}"
+        ></hbt-date-picker>
+
+
+        <hbt-input-text formControlName='keySearch'
+                        [maxLength]='255'
+                        placeholderText="{{'abs.overtimeRecords.label.keySearch' | translate}}"></hbt-input-text>
+      </div>
+    </div>
+
+
+
+    <div class='search__content--group'>
+      <hbt-table-wrap>
+        <div>
+          <p *ngIf="listId.length > 0" style="margin: 0">{{'common.label.selected' | translate}}
+            : {{listId.length}}</p>
+        </div>
+        <hbt-table
+          (changePageNum)='search($event)'
+          [tableConfig]='tableConfig' [dataList]="tableData" (amountSelectedRowsChange)="listId = $event"
+        ></hbt-table>
+      </hbt-table-wrap>
+    </div>
+
+
+    <ng-template #actionTmpl let-data="data">
+      <btn-action-by-id
+        [showApprove]="false"
+        [showViewDetail]="false"
+        (doEdit)="doOpenFormEdit(data)"
+        (doDelete)="deleteItem(data)"
+      >
+      </btn-action-by-id>
+    </ng-template>
+
+
+    <ng-template #footerTmpl>
+      <hbt-button
+        buttonAvailableStyle="CANCEL"
+        buttonText="{{ 'common.button.cancel' | translate }}"
+        (click)="modalRef.destroy()">
+      </hbt-button>
+      <hbt-button
+        buttonAvailableStyle="SAVE"
+        buttonText="{{ 'common.button.save' | translate }}"
+        (click)="modalRef.getContentComponent().save()">
+      </hbt-button>
+    </ng-template>
+
+    <hbt-import-file [showContent]='isImportData'
+                     (onCloseModal)='doCloseImport($event)'
+                     [importApi]='importApi'
+                     [downLoadTemplateApi]="downLoadTemplateApi"
+                     [fileTemplateName]="fileTemplateName"
+                     [doDownloadFileByNameApi]='doDownloadFileByNameApi'>
+    </hbt-import-file>
+
+  </div>
+</form>
+
+
+

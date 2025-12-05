@@ -1,0 +1,90 @@
+@import "src/app/core/global-style/variable";
+
+::ng-deep .general__statistics {
+  .chart__tag {
+    margin-right: 5px;
+    border: 0.6px solid $primary-200;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: $bg-content-default;
+    cursor: pointer;
+    &:hover {
+      color: $primary-500;
+    }
+  }
+
+  .active--button {
+    background: $info-800;
+    color: $neutral-100;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    &:hover {
+      color: $btn-save-text-color;
+    }
+  }
+
+  ::ng-deep .ant-card-head-title {
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 48px;
+  }
+
+  ::ng-deep .pie-label {
+    font-size: 14px !important;
+    font-weight: 300;
+  }
+
+  #chart-gauge, #chart-pie, #chart-column, #chart-bar {
+    display: block;
+    min-width: 350px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  ::ng-deep .highcharts-container {
+    width: 100% !important;
+    svg {
+      width: 100% !important;
+    }
+  }
+  ::ng-deep .ant-card-body {
+    padding: 10px 0 !important;
+  }
+
+  nz-card {
+    height: 550px;
+    overflow-y: auto;
+    align-items: center;
+
+    ::ng-deep .ant-card-body {
+      margin-top: 10px;
+    }
+  }
+
+  ::ng-deep .highcharts-subtitle {
+    top: 325px !important;
+    padding: 3px;
+    background-color: $error-200;
+    border-radius: 4px;
+  }
+
+  ::ng-deep .highcharts-axis-labels .percent {
+    display: none;
+  }
+
+  ::ng-deep #chart-bar3 {
+    cursor: pointer !important;
+  }
+
+  @media screen and (max-width: 1560px) and (min-width: 1200px), (max-width: 760px) {
+    ::ng-deep .chart__left .ant-card-head-wrapper {
+      display: inline-grid !important;
+
+      .ant-card-extra {
+        padding-top: 0;
+        margin-top: -10px;
+      }
+    }
+  }
+}

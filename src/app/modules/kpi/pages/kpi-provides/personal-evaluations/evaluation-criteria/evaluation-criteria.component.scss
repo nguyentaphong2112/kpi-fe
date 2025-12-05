@@ -1,0 +1,52 @@
+@import "src/app/modules/kpi/data-access/style/style";
+
+.evaluation-criteria {
+  .flex {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+
+    .text {
+      font-size: 18px;
+      color: $primary-500;
+      cursor: pointer;
+      text-decoration: underline;
+      margin-right: 10px;
+    }
+  }
+
+  .click-text {
+    color: $primary-400;
+    cursor: pointer;
+  }
+}
+
+
+.text-center {
+  text-align: center;
+}
+
+::ng-deep .evaluation-criteria nz-table-inner-scroll {
+  th {
+    background: $bg-table-header;
+    color: $table-text-header;
+    font-family: avertaB, sans-serif;
+  }
+}
+
+
+::ng-deep.evaluation-criteria .eca-input {
+  input, .ant-select-selector, textarea {
+    border-top: 0 !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    min-height: 31px !important;
+    text-align: right !important;
+  }
+
+  .ant-select-selector {
+    height: 31px !important;
+  }
+}

@@ -1,0 +1,45 @@
+<em nz-icon
+    *ngIf="!isExport"
+    [class]="isBtn ? 'menu__item--btn2' :'menu__item--btn'"
+    nz-button
+    nzType="more"
+    nzTheme="outline"
+    nzTrigger="click"
+    nz-dropdown
+    [nzDisabled]='disabledAll'
+    [ngClass]="{'disable__btn' : disabledAll}"
+    [nzDropdownMenu]="menu"
+></em>
+
+<hbt-button
+  nzTrigger="click"
+  nz-dropdown
+  [nzDisabled]='disabledAll'
+  [ngClass]="{'disable__btn' : disabledAll}"
+  [nzDropdownMenu]="menu"
+  *ngIf="isExport"
+  buttonSize="MEDIUM"
+  buttonType="BORDER">
+  <img src="/assets/icon/staff-manager/export_excel.svg" alt="" />
+</hbt-button>
+
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu [style]="{width: width, padding: 0}">
+    <ng-container *ngFor="let data of setting.arrAction">
+      <li
+        nz-button
+        nz-menu-item
+        style="padding: 0 20px"
+        [nzDisabled]="checkDisable(data.disabled)"
+        (click)='checkDisable(data.disabled) ? $event.stopPropagation() : data.function(_model)'
+        *ngIf='data.isShowFn(_model) && data.isShow'
+      >
+        <div class="menu__item">
+          <em *ngIf="data?.icon" nz-icon [nzType]="data?.icon" nzTheme="outline" style="margin-right: 10px"></em>
+          <span>{{ data.label | translate }}</span>
+        </div>
+      </li>
+    </ng-container>
+  </ul>
+</nz-dropdown-menu>

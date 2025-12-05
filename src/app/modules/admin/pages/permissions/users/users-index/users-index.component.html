@@ -1,0 +1,137 @@
+<form nz-form [formGroup]="form" class="resource-index">
+  <div class="search__custom-common {{isShowAdvSearch ? 'add__mr__bt-10' : 'remove__mr__bt-40'}}">
+    <div nz-row class="button__action-left">
+      <hbt-button
+        class="staff__research__btn__search"
+        buttonSize="LARGE"
+        buttonAvailableStyle="ADD"
+        buttonText="{{'common.button.add' | translate}}"
+        *ngIf="objFunction?.create"
+        (click)="doOpenForm(modeConst.ADD)"
+      ></hbt-button>
+    </div>
+    <div class="search__page-right">
+      <hbt-input-text formControlName='keySearch'
+                      [maxLength]='255'
+                      placeholderText="{{'admin.permissions.users.label.keySearch' | translate}}"></hbt-input-text>
+      <!--      <hbt-button-->
+      <!--        buttonIconType="AWESOME"-->
+      <!--        [prefixIcon]="isShowAdvSearch ? 'fa fa-angle-double-up' : 'fa fa-angle-double-down'"-->
+      <!--        buttonSize="VERY_LARGE"-->
+      <!--        [buttonTextColor]="_variable.$neutral_100"-->
+      <!--        [buttonBorderColor]="_variable.$purple_800"-->
+      <!--        [buttonBgColor]="_variable.$purple_800"-->
+      <!--        (click)="isShowAdvSearch = !isShowAdvSearch"-->
+      <!--      >-->
+      <!--      </hbt-button>-->
+    </div>
+  </div>
+  <!--  <div *ngIf="isShowAdvSearch" class="content__item content__item&#45;&#45;border bg__content&#45;&#45;default">-->
+  <!--    <div class="form-search">-->
+  <!--        <div nz-row [nzGutter]='[20,15]'>-->
+  <!--          <div nz-col [nzXs]="24" [nzLg]="12">-->
+  <!--            <hbt-input-text formControlName="loginName"-->
+  <!--                            placeholderText="{{'admin.permissions.users.label.loginName' | translate}}"-->
+  <!--                            labelText="{{'admin.permissions.users.label.loginName' | translate}}"></hbt-input-text>-->
+  <!--          </div>-->
+  <!--          <div nz-col [nzXs]="24" [nzLg]="12">-->
+  <!--            <hbt-input-text formControlName="fullName"-->
+  <!--                            placeholderText="{{'admin.permissions.users.label.fullName' | translate}}"-->
+  <!--                            labelText="{{'admin.permissions.users.label.fullName' | translate}}"></hbt-input-text>-->
+  <!--          </div>-->
+  <!--        </div>-->
+
+  <!--      <div nz-row class="btn__row-search">-->
+  <!--        <div nz-col nzSpan="8"></div>-->
+  <!--        <div nz-col nzSpan="8">-->
+  <!--          <div style="text-align: center">-->
+  <!--            <hbt-button-->
+  <!--              class="staff__research__btn__search"-->
+  <!--              buttonSize="MEDIUM"-->
+  <!--              buttonAvailableStyle="SEARCH"-->
+  <!--              buttonText="{{'common.button.search' | translate}}"-->
+  <!--              (click)="search()"-->
+  <!--            ></hbt-button>-->
+  <!--          </div>-->
+  <!--        </div>-->
+  <!--        <div nz-col nzSpan="8"></div>-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--  </div>-->
+
+  <div class='search__content--group'>
+    <hbt-table-wrap>
+      <hbt-table
+        (changePageNum)="search($event)"
+        [tableConfig]="tableConfig" [dataList]="tableData"></hbt-table>
+    </hbt-table-wrap>
+  </div>
+</form>
+
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="title"
+          (nzOnCancel)="handleCancel()">
+  <ng-container *nzModalContent>
+    <div>
+      <hbt-input-text
+        [maxLength]="50"
+        [defaultInput]="true"
+        labelText="{{'common.user.newPassword' | translate}} <span class='label__required'>*</span>"
+        placeholderText="{{'common.user.newPassword' | translate}}"
+        (keydown)="preventSpace($event)"
+        [type]="(valueInput == '' && isSubmitted) ? 'error' : 'default'"
+        [showError]="(isSubmitted && valueInput == '')"
+        [errors]="{required: true}"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'common.user.newPassword' | translate }}]"
+        [(ngModel)]="valueInput"
+      ></hbt-input-text>
+    </div>
+  </ng-container>
+  <ng-template [nzModalFooter]>
+    <hbt-button
+      buttonAvailableStyle="CANCEL"
+      buttonText="{{ 'common.button.cancel' | translate }}"
+      (click)="handleCancel()">
+    </hbt-button>
+    <hbt-button
+      buttonAvailableStyle="SAVE"
+      buttonText="{{'common.button.save' | translate}}"
+      (click)="resetPassword()">
+    </hbt-button>
+  </ng-template>
+</nz-modal>
+
+
+<ng-template #flagStatusTpl let-status='status'>
+  <ng-container>
+    <nz-tag class="tag__status" nzColor="#DAF9EC" [ngStyle]="{'color': '#06A561','width': '80px'}"
+            *ngIf="status === 'ACTIVE'">{{ 'admin.permissions.users.label.active' | translate }}
+    </nz-tag>
+  </ng-container>
+  <ng-container>
+    <nz-tag style="margin-top: 5px" class="tag__status" nzColor="#FDE7EA"
+            [ngStyle]="{'color': '#FA0B0B','width': '80px'}"
+            *ngIf="status !== 'ACTIVE'">
+      {{ ('admin.permissions.users.label.notActive' | translate) }}
+    </nz-tag>
+  </ng-container>
+</ng-template>
+
+
+<ng-template #actionTmpl let-data="data">
+  <btn-more-action [model]="[data]" [setting]="actionSchema">
+  </btn-more-action>
+</ng-template>
+
+
+<ng-template #footerTmpl>
+  <hbt-button
+    buttonAvailableStyle="CANCEL"
+    buttonText="{{ 'common.button.cancel' | translate }}"
+    (click)="modalRef.destroy()">
+  </hbt-button>
+  <hbt-button
+    buttonAvailableStyle="SAVE"
+    buttonText="{{ 'common.button.saveS' | translate }}"
+    (click)="modalRef.getContentComponent().save()">
+  </hbt-button>
+</ng-template>

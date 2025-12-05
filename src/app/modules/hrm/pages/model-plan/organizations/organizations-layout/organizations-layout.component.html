@@ -1,0 +1,95 @@
+<div nz-row [nzGutter]='[20,15]' class="content__home org__layout">
+  <div nz-col [nzXs]="5" [nzLg]="5" class="item__home item__home--left">
+    <div>
+      <hbt-input-text
+        type="default"
+        [defaultInput]="true"
+        [showFlexEnd]="false"
+        placeholderText="{{ 'common.organization.org' | translate}}"
+        [(ngModel)]="searchValue"
+      >
+      </hbt-input-text>
+    </div>
+    <div>
+      <hbt-tree-view
+        #orgTreeView
+        (onClickNode)="selectNode($event)"
+        (initRoodNode)="initRoodNode($event)"
+        [searchValue]="searchValue"
+        [functionCode]="functionCode"
+        [isExpand]="true"
+        [isClickExpand]="true"
+        [scope]="scope"
+        [urlLoadDataNode]="urlLoadNodeOrg"
+        [urlLoadByParentNode]="urlLoadChildren"
+        [serviceName]="serviceName"
+        [dataConfig]="{asyncData: true}"
+        [selectedKeys]="orgInfoSelect ? [orgInfoSelect.id] : []"
+        [unSelected]="false"
+        keyValue="nodeId"
+        keyLabel="name"
+      ></hbt-tree-view>
+    </div>
+  </div>
+  <div nz-col [nzXs]="19" [nzLg]="19">
+    <div *ngIf="orgInfoSelect?.name"
+         class="content__item content__item--border bg__content--default"
+         style="margin-bottom: 10px; display: flex; justify-content: space-between"
+    >
+      <span class="org__name">{{ orgInfoSelect?.name }}</span>
+      <div>
+        <hbt-button
+          class="staff__research__btn__search"
+          buttonAvailableStyle="ADD"
+          (click)='doOpenForm(modeConst.ADD, {organizationId: orgInfoSelect?.id, listJobType: positionIndex?.listJobType})'
+          buttonText="{{'hrm.action.addNew' | translate}}"
+          *ngIf="!positionIndex?.isHasChildOrg && objFunction?.create"
+        ></hbt-button>
+        <hbt-button
+          *ngIf="indexTab !== 1 && objFunction?.edit"
+          class="staff__research__btn__search"
+          buttonAvailableStyle="EDIT"
+          (click)='doOpenForm(modeConst.EDIT, {organizationId: orgInfoSelect.id})'
+          buttonText="{{'hrm.action.edit' | translate}}"
+        ></hbt-button>
+      </div>
+    </div>
+    <div>
+      <nz-tabset [nzType]="'card'" [nzSize]="'large'" (nzSelectedIndexChange)="selectedIndexChange($event)">
+<!--        <nz-tab nzTitle="{{'hrm.modelPlan.label.generalStatistics' | translate}}">-->
+<!--          <app-general-statistics-->
+<!--            *ngIf="indexTab === 0"-->
+<!--            [organizationId]="orgInfoSelect?.id"-->
+<!--          ></app-general-statistics>-->
+<!--        </nz-tab>-->
+        <nz-tab nzTitle="{{'hrm.modelPlan.label.hierarchy' | translate}}">
+          <app-organizations-hierarchy
+            *ngIf="indexTab === 0"
+            [organizationId]="orgInfoSelect?.id"
+            (changeSelectOrg)="selectNode($event)"
+          ></app-organizations-hierarchy>
+        </nz-tab>
+<!--        <nz-tab nzTitle="{{'hrm.modelPlan.label.positionInfo' | translate}}">-->
+<!--          <app-position-index-->
+<!--            #positionIndex-->
+<!--            *ngIf="indexTab === 1"-->
+<!--            [organizationId]="orgInfoSelect?.id"-->
+<!--          ></app-position-index>-->
+<!--        </nz-tab>-->
+      </nz-tabset>
+    </div>
+  </div>
+</div>
+
+<ng-template #footerTmpl>
+  <hbt-button
+    buttonAvailableStyle="CANCEL"
+    buttonText="{{ 'common.button.cancel' | translate }}"
+    (click)="modalRef.destroy()">
+  </hbt-button>
+  <hbt-button
+    buttonAvailableStyle="SAVE"
+    buttonText="{{ 'common.button.save' | translate }}"
+    (click)="modalRef.getContentComponent().save()">
+  </hbt-button>
+</ng-template>

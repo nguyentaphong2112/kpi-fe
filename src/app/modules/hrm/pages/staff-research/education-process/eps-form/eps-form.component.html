@@ -1,0 +1,117 @@
+<form nz-form [formGroup]="form">
+  <div nz-row [nzGutter]='[20,15]'>
+    <!--id nhân viên-->
+    <div nz-col [nzXs]="12" [nzLg]="12" *ngIf="!hiddenEmp">
+      <employee-data-picker [isExpand]="true"
+        [functionCode]="functionCode"
+        [scope]="scope"
+        [status]='mode !== modeConst.ADD ? "ALL" : "ACTIVE"'
+        formControlName="employeeId"
+        [formMode]="mode"
+        [disable]="mode !== modeConst.ADD"
+        [type]="isSubmitted && form.controls['employeeId'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['employeeId'].errors != null"
+        [errors]="form.controls['employeeId'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'common.label.employeeName' | translate }}]"
+        labelText="{{'hrm.staffManager.educationProcess.table.employeeId' | translate}} <span class='label__required'>*</span>"
+      >
+      </employee-data-picker>
+    </div>
+
+    <!--Từ tháng-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-date-picker
+        mode="month"
+        format="MM/YYYY"
+        placeholderText="{{'hrm.staffManager.educationProcess.table.startDate' | translate}}"
+        labelText="{{'hrm.staffManager.educationProcess.table.startDate' | translate}} <span class='label__required'>*</span>"
+        [type]="isSubmitted && form.controls['startDate'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['startDate'].errors  != null"
+        [errors]="form.controls['startDate'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.educationProcess.table.startDate' | translate }}]"
+        formControlName="startDate"></hbt-date-picker>
+    </div>
+
+    <!--Đến tháng-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-date-picker
+        mode="month"
+        format="MM/YYYY"
+        [type]="(form.controls['endDate'].errors || form.errors?.rangeDateError) ? 'error' : 'default'"
+        [showError]="(form.controls['endDate'].errors || form.errors?.rangeDateError) !== null"
+        [errors]="form.errors?.rangeDateError ? form.errors : form.controls['endDate'].errors"
+        [errorDefs]="[{ errorName: 'rangeDateError', errorDescription: 'hrm.validate.rangeDate.pareDate' | translate:
+      {'fromDate': 'hrm.staffManager.educationProcess.table.startDate' | translate, 'toDate': 'hrm.staffManager.educationProcess.table.endDate' | translate}},]"
+        placeholderText="{{'hrm.staffManager.educationProcess.table.endDate' | translate}}"
+        labelText="{{'hrm.staffManager.educationProcess.table.endDate' | translate}}"
+        formControlName="endDate"></hbt-date-picker>
+    </div>
+
+    <!--tên khóa học-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-input-text
+        formControlName="courseName" maxLength="255"
+        [type]="isSubmitted && form.controls['courseName'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['courseName'].errors != null"
+        [errors]="form.controls['courseName'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.educationProcess.table.courseName' | translate }}]"
+        placeholderText="{{'hrm.staffManager.educationProcess.table.courseName' | translate}}"
+        labelText="{{'hrm.staffManager.educationProcess.table.courseName' | translate}} <span class='label__required'>*</span>"
+      ></hbt-input-text>
+    </div>
+
+    <!--Hình thức đào tạo-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-select
+        [urlLoadData]="getUrlCategory(categoryCode.HINH_THUC_DAO_TAO)"
+        [serviceName]="microService.ADMIN"
+        keyLabel="name"
+        formControlName="trainingMethodId"
+        [type]="isSubmitted && form.controls['trainingMethodId'].errors ? 'error' : 'default'"
+        [showError]="isSubmitted && form.controls['trainingMethodId'].errors != null"
+        [errors]="form.controls['trainingMethodId'].errors"
+        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'hrm.staffManager.educationProcess.table.trainingMethodId' | translate }}]"
+        placeholder="{{'hrm.staffManager.educationProcess.table.trainingMethodId' | translate}}"
+        labelText="{{'hrm.staffManager.educationProcess.table.trainingMethodId' | translate}}"
+      ></hbt-select>
+    </div>
+
+    <!--kết quả đào tạo-->
+    <div nz-col [nzXs]="12" [nzLg]="12">
+      <hbt-input-text
+        formControlName="trainingMethodPlace" [maxLength]="500"
+        placeholderText="{{'hrm.staffManager.educationProcess.table.trainingMethodPlace' | translate}}"
+        labelText="{{'hrm.staffManager.educationProcess.table.trainingMethodPlace' | translate}}"
+      ></hbt-input-text>
+    </div>
+
+    <!--Nội dung đào tạo-->
+    <div nz-col [nzXs]="24" [nzLg]="24">
+      <hbt-input-text
+        formControlName="courseContent" isTextAre
+        maxLength="500"
+        placeholderText="{{'hrm.staffManager.educationProcess.table.courseContent' | translate}}"
+        labelText="{{'hrm.staffManager.educationProcess.table.courseContent' | translate}}"
+      ></hbt-input-text>
+    </div>
+
+    <ng-container formArrayName="listAttributes">
+      <ng-container *ngFor="let attributes of attributesFormArray.controls; let idx = index" [formGroupName]="idx">
+        <div nz-col [nzXs]="12" [nzLg]="12">
+          <input-attribute-common
+            [controlName]="getAttributeControl(idx, 'attributeValue')"
+            [dataType]="attributes.get('dataType')?.value"
+            [urlLoadData]="attributes.get('urlLoadData')?.value"
+            [type]="isSubmitted && attributes.get('attributeValue')?.errors ? 'error' : 'default'"
+            [showError]="isSubmitted && attributes.get('attributeValue')?.errors != null"
+            [errors]="attributes.get('attributeValue')?.errors"
+            [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': attributes.get('attributeName')?.value | translate }}]"
+            [placeholderText]="attributes.get('attributeName')?.value"
+            [labelText]="getLabelText(attributes.get('attributeName')?.value, attributes.get('isRequired')?.value)"
+          >
+          </input-attribute-common>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</form>

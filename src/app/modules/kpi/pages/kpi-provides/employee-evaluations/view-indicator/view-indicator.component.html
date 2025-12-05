@@ -1,0 +1,42 @@
+<div class='view-indicator'>
+  <form nz-form [formGroup]="form">
+    <div nz-row [nzGutter]='[20,15]'>
+      <!--tên chỉ số-->
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <label class="label-text">{{ 'kpi.indicators.table.name' | translate }}</label>
+        <div class="text">{{ form.get('indicatorName')?.value }}</div>
+      </div>
+
+      <div nz-col [nzXs]="12" [nzLg]="8">
+        <label class="label-text">{{ 'kpi.indicators.table.type' | translate }}</label>
+        <div class="text">{{ form.get('typeName')?.value }}</div>
+      </div>
+
+      <div nz-col [nzXs]="12" [nzLg]="8">
+        <label class="label-text">{{ 'kpi.indicators.table.unitId' | translate }}</label>
+        <div class="text">{{ form.get('measureUnit')?.value }}</div>
+      </div>
+
+      <div nz-col [nzXs]="12" [nzLg]="8">
+        <label class="label-text">{{ 'kpi.indicators.table.periodType' | translate }}</label>
+        <div class="text">{{ form.get('periodTypeName')?.value }}</div>
+      </div>
+
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <label class="label-text">{{ 'kpi.indicators.table.significance' | translate }}</label>
+        <div class="text">{{ form.get('significance')?.value }}</div>
+      </div>
+
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <label class="label-text">{{ 'kpi.indicators.table.measurement' | translate }}</label>
+        <div class="text">{{ form.get('measurement')?.value }}</div>
+      </div>
+
+      <div nz-col [nzXs]="24" [nzLg]="24">
+        <label class="label-text">{{ 'kpi.indicators.table.systemInfo' | translate }}</label>
+        <div class="text">{{ form.get('systemInfo')?.value }}</div>
+      </div>
+
+    </div>
+  </form>
+</div>

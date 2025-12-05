@@ -1,0 +1,39 @@
+@import "src/app/core/global-style/variable";
+
+.ics-add .title-table {
+  margin: 20px 0 0 0;
+  font-size: 20px;
+  display: flex;
+  align-items: end;
+}
+
+.ics-add .btn-group {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.label__required {
+  color: $error-500;
+}
+
+.ics-add .bold-text {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.ics-add .ct-text {
+  font-size: 16px;
+}
+
+::ng-deep .ics-add .ant-card-head {
+  min-height: 0 !important;
+  height: 20px !important;
+}
+
+:host ::ng-deep.search__content--group .table-wrap{
+  .ant-card-extra {
+    top: 10px !important;
+  }
+}

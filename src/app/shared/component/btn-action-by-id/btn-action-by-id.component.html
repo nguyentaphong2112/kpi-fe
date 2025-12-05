@@ -1,0 +1,144 @@
+<i nz-icon
+   class="menu__item--btn"
+   nz-button
+   nzType="more"
+   nzTheme="outline"
+   nzTrigger="click"
+   nz-dropdown
+   [nzDisabled]='disabledAll'
+   [ngClass]="{'disabled__btn' : disabledAll}"
+   [nzDropdownMenu]="menu"
+></i>
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu style="width: 150px; padding: 0">
+    <li
+      nz-button
+      nz-menu-item
+      style="padding: 0 20px"
+      (click)='openViewDetail()'
+      *ngIf='showViewDetail'
+    >
+      <div class="menu__item">
+        <i nz-icon nzType="eye" nzTheme="outline" style="margin-right: 10px"></i>
+        <span>{{ 'common.button.detail' | translate }}</span>
+      </div>
+    </li>
+    <li
+      nz-button
+      nz-menu-item
+      style="padding: 0 20px"
+      [nzDisabled]="disabledEdit"
+      (click)='openEdit()'
+      *ngIf='showEdit'
+    >
+      <div class="menu__item">
+        <i nz-icon nzType="edit" nzTheme="outline" style="margin-right: 10px"></i>
+        <span>{{ 'common.button.edit' | translate }}</span>
+      </div>
+    </li>
+    <li
+      nz-button
+      nz-menu-item
+      style="padding: 0 20px"
+      [nzDisabled]="disabledLock"
+      (click)='openlock()'
+      *ngIf='showLock'
+    >
+      <div class="menu__item">
+        <i nz-icon nzType="lock" nzTheme="outline" style="margin-right: 10px"></i>
+        <span>{{ 'common.button.lock' | translate }}</span>
+      </div>
+    </li>
+    <li
+      nz-button
+      nz-menu-item
+      style="padding: 0 20px"
+      [nzDisabled]="disabledUnlock"
+      (click)='openUnlock()'
+      *ngIf='showUnlock'
+    >
+      <div class="menu__item">
+        <i nz-icon nzType="unlock" nzTheme="outline" style="margin-right: 10px"></i>
+        <span>{{ 'common.button.unlock' | translate }}</span>
+      </div>
+    </li>
+    <li
+      nz-button
+      nz-menu-item
+      style="padding: 0 20px"
+      [nzDisabled]="disabledApprove"
+      (click)='approveById()'
+      *ngIf='showApprove'
+    >
+      <div class="menu__item">
+        <i nz-icon nzType="check" nzTheme="outline" style="margin-right: 10px"></i>
+        <span>{{ 'common.button.approve' | translate }}</span>
+      </div>
+    </li>
+    <li
+      nz-menu-item
+      nz-button
+      [nzDisabled]="disabledReject"
+      style="padding: 0 20px"
+      (click)="openRejectById()"
+      *ngIf='showApprove'
+    >
+      <div class="menu__item">
+        <i nz-icon nzType="close" nzTheme="outline" style="margin-right: 10px"></i>
+        <span>{{ 'common.button.reject' | translate }}</span>
+      </div>
+    </li>
+    <li
+      nz-button
+      nz-menu-item
+      style="padding: 0 20px"
+      [nzDisabled]="disabledDelete"
+      (click)='deleteById()'
+      *ngIf='showDelete'
+    >
+      <div class="menu__item">
+        <i nz-icon nzType="delete" nzTheme="outline" style="margin-right: 10px"></i>
+        <span>{{ 'common.button.delete' | translate }}</span>
+      </div>
+    </li>
+    <li
+      nz-button
+      nz-menu-item
+      style="padding: 0 20px"
+      [nzDisabled]="disableReset"
+      (click)="openReset()"
+      *ngIf="showReset"
+    >
+      <div class="menu__item">
+        <em nz-icon nzType="redo" nzTheme="outline" style="margin-right: 10px"></em>
+        <span>{{ 'common.button.reset' | translate }}</span>
+      </div>
+    </li>
+    <li
+      nz-button
+      nz-menu-item
+      style="padding: 0 20px"
+      [nzDisabled]="disableMenuModal"
+      (click)="openMenuModal()"
+      *ngIf="showMenuModal"
+    >
+      <div class="menu__item">
+        <em nz-icon nzType="bars" nzTheme="outline" style="margin-right: 10px"></em>
+        <span>{{ 'common.button.authorized' | translate }}</span>
+      </div>
+    </li>
+    <li
+      nz-button
+      nz-menu-item
+      style="padding: 0 20px"
+      [nzDisabled]="disableAssignRole"
+      (click)="openAssignRole()"
+      *ngIf="showAssignRole"
+    >
+      <div class="menu__item">
+        <em nz-icon nzType="apartment" nzTheme="outline" style="margin-right: 10px"></em>
+        <span>{{ 'common.button.assignRole' | translate }}</span>
+      </div>
+    </li>
+  </ul>
+</nz-dropdown-menu>

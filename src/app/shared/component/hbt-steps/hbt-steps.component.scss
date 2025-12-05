@@ -1,0 +1,150 @@
+@import "app/core/global-style/variable";
+
+::ng-deep.step-card {
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
+  margin-bottom: 20px;
+
+  .ant-steps-item.ant-steps-item-active::before {
+    display: none;
+  }
+
+  .ant-steps-item-container {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding-left: 24px;
+  }
+
+  .ant-card-body {
+    padding: 0;
+  }
+
+  &__header {
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    display: flex;
+
+    div {
+      width: 6px;
+      height: 24px;
+      background: #B9DCFF;
+      border-radius: 2px;
+      margin-right: 8px;
+    }
+  }
+
+  &__description {
+    color: $neutral-600;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 8px 0;
+  }
+
+  .ant-steps-item-finish > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title,
+  .ant-steps-item-wait > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title {
+    font-weight: 600;
+    color: $label-body-color;
+    line-height: 20px;
+    font-size: 14px;
+    padding: 4px 0 4px 5px;
+    display: flex;
+
+    .ant-steps-item-subtitle {
+      color: $neutral-600;
+      display: unset;
+      margin: 0;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 16px;
+      text-align: end;
+    }
+  }
+
+  .ant-steps-item-icon {
+    display: flex;
+    align-items: center;
+  }
+
+  .ant-steps-vertical > .ant-steps-item .ant-steps-item-icon {
+    margin-right: 8px;
+  }
+
+  .ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title {
+    font-weight: 600;
+    line-height: 20px;
+    font-size: 14px;
+    padding: 4px 0 4px 5px;
+    display: flex;
+
+    .ant-steps-item-subtitle {
+      color: $neutral-600;
+      font-weight: 400;
+      display: unset;
+      margin: 0;
+      font-size: 12px;
+      line-height: 16px;
+      text-align: end;
+    }
+  }
+
+  .ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title {
+    font-weight: 600;
+    line-height: 20px;
+    font-size: 14px;
+    padding: 4px 0 4px 5px;
+  }
+
+  .ant-steps-item-finish > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-description,
+  .ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-description,
+  .ant-steps-item-wait > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-description {
+    color: $neutral-600;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  ::ng-deep.ant-steps-vertical > .ant-steps-item:not(:last-child) > .ant-steps-item-container > .ant-steps-item-tail {
+    left: 15.5px;
+    padding: 30px 0 6px;
+
+    &:after {
+      height: calc(100% + 17px);
+      background-color: $black-200;
+    }
+  }
+
+  ::ng-deep .ant-steps-item::after {
+    top: 52%;
+    width: 14px;
+    height: 14px;
+  }
+
+  .ant-steps-item-tail::after {
+    display: inline-block;
+    width: calc(100% + 17px);
+    height: 1px;
+    background: $black-200;
+    border-radius: 1px;
+    transition: background .3s;
+    content: '';
+  }
+
+  .step-index-process {
+    color: $error-600;
+    position: absolute;
+    font-size: 24px;
+    left: 12px;
+    top: 4px;
+  }
+
+  .step-index-ellipse {
+    color: $black-200;
+    position: absolute;
+    font-size: 24px;
+    left: 12px;
+    top: 4px;
+  }
+}

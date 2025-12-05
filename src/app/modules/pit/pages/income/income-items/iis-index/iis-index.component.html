@@ -1,0 +1,138 @@
+<form nz-form [formGroup]="form" class="mts-index">
+  <div class="search__custom-common {{isShowAdvSearch ? 'add__mr__bt-10' : 'remove__mr__bt-40'}}">
+    <div nz-row class="button__action-left">
+      <hbt-button
+        class="staff__research__btn__search"
+        buttonSize="LARGE"
+        style="margin-right: 20px"
+        [buttonTextColor]="_variable.$neutral_100"
+        [buttonBorderColor]="_variable.$purple_800"
+        [buttonBgColor]="_variable.$purple_800"
+        buttonText="{{'common.button.add' | translate}}"
+        (click)="doOpenForm(modeConst.ADD)"
+      ></hbt-button>
+
+      <hbt-button
+        buttonSize="VERY_LARGE"
+        buttonType="BORDER"
+        (click)="export()"
+        *ngIf="visibleActionsCount < 2">
+        <img src="/assets/icon/staff-manager/export_excel.svg" alt="" />
+      </hbt-button>
+    </div>
+
+    <div class="search__page-right">
+<!--      <hbt-input-text formControlName='keySearch'-->
+<!--                      [maxLength]='255'-->
+<!--                      placeholderText="{{'common.label.keySearchEmpCodeAndName' | translate}}"></hbt-input-text>-->
+      <hbt-button
+        buttonIconType="AWESOME"
+        [prefixIcon]="isShowAdvSearch ? 'fa fa-angle-double-up' : 'fa fa-angle-double-down'"
+        buttonSize="VERY_LARGE"
+        [buttonTextColor]="_variable.$neutral_100"
+        [buttonBorderColor]="_variable.$purple_800"
+        [buttonBgColor]="_variable.$purple_800"
+        (click)="isShowAdvSearch = !isShowAdvSearch"
+      >
+      </hbt-button>
+    </div>
+  </div>
+  <div *ngIf="isShowAdvSearch" class="content__item content__item--border bg__content--default">
+    <div class="form-search">
+      <div nz-row [nzGutter]='[20,15]'>
+        <!--Loại thu nhập-->
+        <div nz-col [nzXs]='12' [nzLg]='6'>
+          <hbt-select-check-able
+            [showAddCategory]="false"
+            [urlLoadData]="getUrlCategory(categoryCode.THUE_LOAI_THU_NHAP)"
+            [serviceName]="microService.ADMIN" keyLabel="name"
+            placeholder="{{'pit.items.table.type' | translate}}"
+            labelText="{{'pit.items.table.type' | translate}}"
+            formControlName='listType'
+          ></hbt-select-check-able>
+        </div>
+        <!--Kỳ lương-->
+        <div nz-col [nzXs]='12' [nzLg]='6'>
+          <hbt-date-picker
+            mode="month"
+            formControlName="salaryPeriodDate"
+            labelText="{{ 'pit.items.table.salaryPeriodDate' | translate }}"
+            placeholderText="{{ 'pit.items.table.salaryPeriodDate' | translate }}"
+          ></hbt-date-picker>
+        </div>
+        <!--Khoản thu nhập-->
+        <div nz-col [nzXs]='12' [nzLg]='6'>
+          <hbt-input-text formControlName='name' maxLength='50'
+                          placeholderText="{{'pit.items.table.incomeItem' | translate}}"
+                          labelText="{{'pit.items.table.incomeItem' | translate}}"></hbt-input-text>
+        </div>
+        <!--Trạng thái-->
+        <div nz-col [nzXs]='12' [nzLg]='6'>
+          <hbt-select
+            [showAddCategory]="false"
+            placeholder="{{'pit.items.table.status' | translate}}"
+            [urlLoadData]="getUrlCategory(categoryCode.INCOME_ITEM_STATUS)"
+            [serviceName]="microService.ADMIN"
+            keyLabel="name"
+            labelText="{{'pit.items.table.status' | translate}}"
+            formControlName='status'></hbt-select>
+        </div>
+        <div nz-col [nzXs]="24" [nzLg]="24" style="text-align: center">
+          <hbt-button
+            class="staff__research__btn__search"
+            buttonSize="LARGE"
+            buttonAvailableStyle="SEARCH"
+            buttonText="{{'common.button.search' | translate}}"
+            (click)="search()"
+          ></hbt-button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class='search__content--group'>
+    <hbt-table-wrap>
+      <hbt-table
+        (changePageNum)="search($event)"
+        [tableConfig]="tableConfig" [dataList]="tableData"></hbt-table>
+    </hbt-table-wrap>
+  </div>
+
+  <ng-template #actionTmpl let-data="data">
+    <btn-more-action [model]="[data]" [setting]="actionSchema">
+    </btn-more-action>
+  </ng-template>
+
+  <hbt-import-file [showContent]='isImportData'
+                   (onCloseModal)='doCloseImport($event)'
+                   [importApi]='importApi'
+                   [downLoadTemplateApi]="downLoadTemplateApi"
+                   [fileTemplateName]="fileTemplateName"
+                   [doDownloadFileByNameApi]='doDownloadFileByNameApi'>
+  </hbt-import-file>
+  <ng-template #attachFileTmpl let-attachFileList='attachFileList'>
+    <div *ngFor="let file of attachFileList">
+      <a class="attach-file" (click)="doDownLoadFile(file); $event.stopPropagation();">{{ file.fileName }}</a>
+    </div>
+  </ng-template>
+
+  <ng-template #footerTmpl>
+    <hbt-button
+      buttonAvailableStyle="CANCEL"
+      buttonText="{{ 'common.button.cancel' | translate }}"
+      (click)="modalRef.destroy()">
+    </hbt-button>
+    <hbt-button
+      buttonAvailableStyle="SAVE"
+      buttonText="{{ 'common.button.save' | translate }}"
+      (click)="modalRef.getContentComponent().save()">
+    </hbt-button>
+  </ng-template>
+
+</form>
+
+<ng-template #statusTmpl let-statusCode='status'>
+  <ng-container *ngFor='let item of statusCodeList'>
+    <nz-tag [nzColor]="item.bgColor" [ngStyle]="{'color': item.color, width: '130px', 'text-align': 'center'}" *ngIf='statusCode == item.code'>{{item.name}}</nz-tag>
+  </ng-container>
+</ng-template>

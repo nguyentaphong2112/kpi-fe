@@ -1,0 +1,85 @@
+{
+  "application": {
+    "appName": "HRM - Công ty TNHH phần mềm HBT-Plus",
+    "developBy": "Developed by"
+  },
+  "common": {
+    "label": {
+      "detailInfo": "Detail information"
+    },
+    "user": {
+      "account": "Account",
+      "fullName": "Full name",
+      "info": "Account information",
+      "changePassword": "Change password",
+      "logout": "Logout"
+    },
+    "employee": {
+    },
+    "organization": {
+      "treeOrg": "Organization",
+      "name": "Organization name",
+      "search": "Search organization",
+      "org": "Organization",
+      "select": "Select organization",
+      "code": "Organization code",
+      "address": "Address",
+      "phoneNumber": "Phone number",
+      "representative": "Representative",
+      "position": "Position",
+      "fax": "Fax",
+      "approveDate": "Approve date",
+      "expireDate": "Expire date",
+      "attachment": "Attachment"
+    },
+    "button": {
+      "add": "Add",
+      "addS": "Add",
+      "edit": "Edit",
+      "editS": "Edit",
+      "delete": "Delete",
+      "search": "Search",
+      "select": "Select",
+      "close": "Close",
+      "open": "Open",
+      "export": "Export",
+      "advance": "Advance",
+      "save": "Save",
+      "cancel": "Cancel",
+      "dowloadTemplate": "Dowload Template"
+    },
+    "paging": {
+      "total": "All",
+      "from": "From",
+      "to": "To"
+    },
+    "upload": {
+      "upload": "Upload",
+      "description": "Click to select file attachment",
+      "supportExcel": "Support for excel type. File size over 5MB",
+      "onlySupportExcel": "Only support for excel type. File size over 3MB",
+      "supportAll": "Support for file PDF, Word, Excel, JPEG, PNG. File size over 5MB"
+    },
+    "table": {
+      "column": "Column",
+      "row": "Row"
+    },
+    "error": {
+      "list": "Error list",
+      "code": "Error code",
+      "description": "Description",
+      "errorCode400": "Bad request",
+      "errorCode401": "Không có quyền truy cập hệ thống",
+      "errorCode405": "Method không hợp lệ",
+      "errorCode403": "Không có quyền truy cập chức năng",
+      "errorCode500": "Server gặp sự cố"
+    },
+    "breadcrumb": {
+      "home": "Home",
+      "dashboard": "Dashboard"
+    },
+    "pageName": {
+      "home": "Home"
+    }
+  }
+}

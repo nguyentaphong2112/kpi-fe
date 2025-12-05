@@ -1,0 +1,32 @@
+@import "../../../../../../core/global-style/variable";
+
+.scope__modal {
+  margin-top: 0;
+}
+
+.menu__item--btn {
+  font-size: 16px;
+  padding: 3px;
+  color: $error-600;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.menu__item--btn1 {
+  font-size: 16px;
+  padding: 3px;
+  color: $bg-default;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+
+
+

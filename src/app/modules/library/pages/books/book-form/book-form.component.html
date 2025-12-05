@@ -1,0 +1,324 @@
+<div [ngClass]="{'app-card' : isPage}">
+  <div class="content" *ngIf="isPage">
+    <hbt-button buttonType="NO_BORDER" (click)="save()" buttonAvailableStyle="SAVE"
+                buttonText="{{'common.button.save' | translate}}" type='SUBMIT'></hbt-button>
+    <hbt-button buttonType="NO_BORDER" (click)="back()" buttonAvailableStyle="DEFAULT"
+                buttonText="{{'common.button.cancel' | translate}}" type='SUBMIT'></hbt-button>
+  </div>
+  <form nz-form [formGroup]="form">
+    <!-- Tiêu đề -->
+    <div class="app-row" nz-row [nzGutter]='[20,15]'>
+      <div nz-col nzXs="24" nzLg="24">
+        <hbt-input-text formControlName="title"
+                        [type]="isSubmitted && form.controls['title'].errors ? 'error' : 'default'"
+                        [maxLength]="500"
+                        [showError]="isSubmitted && form.controls['title'].errors != null"
+                        [errors]="form.controls['title'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'book.validate.maxLength' | translate: {'numberLength': '500' }},
+            { errorName: 'required', errorDescription: 'library.validates.required' | translate: {'param': 'library.books.label.title' | translate }}]"
+                        placeholderText="{{'library.books.label.title' | translate}}"
+                        labelText="{{'library.books.label.title' | translate}} <span class='label__required'>*</span>">
+        </hbt-input-text>
+      </div>
+      <!-- Phụ đề -->
+      <div nz-col nzXs="24" nzLg="12">
+        <hbt-input-text formControlName="subtitle" [maxLength]="500" (blur)="blur('code')"
+                        [type]="isSubmitted && form.controls['subtitle'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['subtitle'].errors !== null"
+                        [errors]="form.controls['subtitle'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'library.validates.maxLength' | translate: {'numberLength': '500' }},
+           { errorName: 'code', errorDescription: 'library.validates.subtitle' | translate },
+           { errorName: 'required', errorDescription: 'library.validates.required' | translate: {'param': 'library.books.label.subtitle' | translate }}]"
+                        placeholderText="{{'library.books.label.subtitle' | translate}}"
+                        labelText="{{'library.books.label.subtitle' | translate}} ">
+        </hbt-input-text>
+      </div>
+      <!-- Nguyên tác -->
+      <div nz-col nzXs="24" nzLg="12">
+        <hbt-input-text formControlName="originalTitle"
+                        [type]="isSubmitted && form.controls['originalTitle'].errors ? 'error' : 'default'"
+                        [maxLength]="500"
+                        [showError]="isSubmitted && form.controls['originalTitle'].errors != null"
+                        [errors]="form.controls['originalTitle'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'library.validates.maxLength' | translate: {'numberLength': '500' }},
+            { errorName: 'required', errorDescription: 'library.validates.required' | translate: {'param': 'library.books.label.originalTitle' | translate }}]"
+                        placeholderText="{{'library.books.label.originalTitle' | translate}}"
+                        labelText="{{'library.books.label.originalTitle' | translate}} ">
+        </hbt-input-text>
+      </div>
+      <!-- Phân loại -->
+      <div nz-col nzSm='24' nzLg="12">
+        <hbt-select
+          [dataSelects]="typeList"
+          keyLabel="label"
+          keyValue="value"
+          labelText="{{ 'library.books.label.type' | translate }} <span class='label__required'>*</span>"
+          placeholder="{{ 'library.books.label.type' | translate }}"
+          [optionHeightPx]="55"
+          formControlName="type"
+          [type]="isSubmitted && form.controls['type'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['type'].errors != null"
+          [errors]="form.controls['type'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'library.validates.required' | translate: { param: 'library.books.label.type' | translate } }]"
+          (ngModelChange)="onTypeChange($event)"
+        ></hbt-select>
+      </div>
+      <!-- Danh mục -->
+      <div nz-col nzSm='24' nzLg="12">
+        <hbt-tree-select
+          [urlLoadData]="urlLoadGenre"
+          [asyncData]="false"
+          [serviceName]="serviceLibrary"
+          [type]="isSubmitted && form.controls['genreId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['genreId'].errors != null"
+          [errors]="form.controls['genreId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'library.books.label.genreId' | translate }}]"
+          formControlName="genreId"
+          placeholder="{{ 'library.books.label.genreId' | translate }}"
+          labelText="{{ 'library.books.label.genreId' | translate }} <span class='label__required'>*</span>"
+          keyValue="nodeId"
+          keyLabel="name"
+        >
+        </hbt-tree-select>
+      </div>
+      <!-- Tác giả -->
+      <div nz-col nzSm='24' nzLg="12">
+        <hbt-select
+          [urlLoadData]="urlLoadAuthor"
+          [serviceName]="serviceAdmin"
+          [isLoadMore]="true"
+          keyLabel="name"
+          keyValue="value"
+          labelText="{{ 'library.books.label.author' | translate }} <span class='label__required'>*</span>"
+          placeholder="{{ 'library.books.label.author' | translate }}"
+          [optionHeightPx]="55"
+          formControlName="authorId"
+          [type]="isSubmitted && form.controls['authorId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['authorId'].errors != null"
+          [errors]="form.controls['authorId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'library.validates.required' | translate: { param: 'library.books.label.author' | translate } }]"
+        ></hbt-select>
+      </div>
+      <!-- Dịch giả -->
+      <div nz-col nzSm='24' nzLg="12">
+        <hbt-select-check-able
+          [urlLoadData]="urlLoadTranslator"
+          [serviceName]="serviceAdmin"
+          [isLoadMore]="true"
+          keyLabel="name"
+          keyValue="value"
+          labelText="{{ 'library.books.label.translator' | translate }}"
+          placeholder="{{ 'library.books.label.translator' | translate }}"
+          [optionHeightPx]="55"
+          formControlName="translatorIds"
+          [type]="isSubmitted && form.controls['translatorIds'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['translatorIds'].errors != null"
+          [errors]="form.controls['translatorIds'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'library.validates.required' | translate: { param: 'library.books.label.translator' | translate } }]"
+        ></hbt-select-check-able>
+      </div>
+      <!-- Ngôn ngữ -->
+      <div nz-col nzSm='24' nzLg="12">
+        <hbt-select
+          [urlLoadData]="urlLoadLanguage"
+          [serviceName]="serviceAdmin"
+          [isLoadMore]="true"
+          keyLabel="name"
+          keyValue="value"
+          labelText="{{ 'library.books.label.language' | translate }} <span class='label__required'>*</span>"
+          placeholder="{{ 'library.books.label.language' | translate }}"
+          [optionHeightPx]="55"
+          formControlName="languageId"
+          [type]="isSubmitted && form.controls['languageId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['languageId'].errors != null"
+          [errors]="form.controls['languageId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'library.validates.required' | translate: { param: 'library.books.label.language' | translate } }]"
+        ></hbt-select>
+      </div>
+
+      <!-- File upload cho "sách in" -->
+      <div nz-col nzSm='24' nzLg="12" *ngIf="isSachIn">
+        <label class="input__label">{{ 'library.books.label.attachFile' | translate }}</label>
+        <hbt-upload
+          formControlName="fileAvatar"
+          (fileListChange)="onFileListChange($event)"
+          [fileList]="fileList"
+          [maxSize]="3"
+          [typeFileAvailable]="['jpeg', 'jpg', 'png', 'jpeg']"
+          (docIdsDeleteChange)='removeFileCustom($event)'
+          [serviceName]='serviceLibrary'
+          [isDownloadFileWithNoSecurity]="true"
+          [url]="urlDownload"
+        >
+        </hbt-upload>
+      </div>
+      <!-- Tags -->
+      <div nz-col nzSm='24' nzLg="24">
+        <hbt-input-tag
+          class="input__form-tags"
+          labelText="{{'library.books.label.tags' | translate}} "
+          placeholderText="{{ 'library.books.label.tags' | translate }}"
+          formControlName="tags"
+          newTagLabel="{{'' | translate }}"
+          [type]="isSubmitted && form.controls['tags'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['tags'].errors !== null"
+          [errors]="form.controls['tags'].errors"
+          [errorDefs]="[
+            { errorName: 'required', errorDescription: 'library.validates.required' | translate : {'param': 'library.books.label.tags' | translate }},
+          ]"
+        >
+        </hbt-input-tag>
+      </div>
+      <!-- Nhà xuất bản -->
+      <div nz-col nzXs="24" nzLg="12" *ngIf="isSachDienTu">
+        <hbt-select
+          [urlLoadData]="urlLoadPublisher"
+          [serviceName]="serviceAdmin"
+          keyLabel="name"
+          keyValue="value"
+          labelText="{{ 'library.books.label.publisher' | translate }} <span class='label__required'>*</span>"
+          placeholder="{{ 'library.books.label.publisher' | translate }}"
+          [optionHeightPx]="55"
+          formControlName="publisherId"
+          (eventEmit)="changeValue($event, 'publisherName')"
+          [type]="isSubmitted && form.controls['publisherId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['publisherId'].errors != null"
+          [errors]="form.controls['publisherId'].errors"
+          [errorDefs]="[
+            { errorName: 'required', errorDescription: 'library.validates.required' | translate : {param: 'library.books.label.publisher' | translate }},
+          ]"
+        ></hbt-select>
+      </div>
+      <!-- Năm xuất bản -->
+      <div nz-col nzXs="24" nzLg="12" *ngIf="isSachDienTu">
+        <hbt-date-picker
+          mode="year"
+          (ngModelChange)="changeIssueYear($event)"
+          formControlName="publishedYear"
+          labelText="{{'library.books.label.publishedYear' | translate}} <span class='label__required'>*</span>"
+          placeholderText="{{'library.books.label.publishedYear' | translate}}"
+          [type]="isSubmitted && (form.controls['publishedYear'].errors || form.errors?.yearGreaterThanCurrentYear) ? 'error' : 'default'"
+          [showError]="isSubmitted && (form.controls['publishedYear'].errors || form.errors?.yearGreaterThanCurrentYear) !== null"
+          [errors]="isSubmitted && form.errors?.yearGreaterThanCurrentYear ? form.errors : form.controls['publishedYear']?.errors"
+          [errorDefs]="[
+            { errorName: 'required', errorDescription: 'library.validates.required' | translate : {'param': 'library.books.label.publishedYear' | translate }},
+            { errorName: 'yearGreaterThanCurrentYear', errorDescription: 'hrm.validate.maxYearNow' | translate:{'param': 'library.books.label.publishedYear'  | translate}}
+          ]"
+        ></hbt-date-picker>
+      </div>
+      <!-- File upload cho "sách điện tử" -->
+      <div nz-col nzSm='24' nzLg="12" *ngIf="isSachDienTu || isInVaDienTu">
+        <label class="input__label">{{ 'library.books.label.attachFile' | translate }}</label>
+        <hbt-upload
+          formControlName="fileAvatar"
+          (fileListChange)="onFileListChange($event)"
+          [fileList]="fileList"
+          [typeFileAvailable]="['jpeg', 'jpg', 'png', 'jpeg']"
+          [maxSize]="3"
+          (docIdsDeleteChange)='removeFileCustom($event)'
+          [serviceName]='serviceLibrary'
+          [isDownloadFileWithNoSecurity]="true"
+          [url]="urlDownload"
+        >
+        </hbt-upload>
+      </div>
+      <div nz-col nzSm='24' nzLg="12" *ngIf="isSachDienTu || isInVaDienTu">
+        <label class="input__label">{{ 'library.books.label.attachFileBookContent' | translate }}</label>
+        <hbt-upload
+          formControlName="fileContent"
+          (fileListChange)="onDigitalFileListChange($event)"
+          [fileList]="digitalFileList"
+          [typeFileAvailable]="['pdf', 'epub', 'mobi']"
+          [multiple]="true"
+          [maxSize]="10"
+          (docIdsDeleteChange)='removeDigitalFile($event)'
+          [serviceName]='serviceLibrary'
+          [isDownloadFileWithNoSecurity]="true"
+          [url]="urlDownload"
+        >
+        </hbt-upload>
+      </div>
+      <!-- Nội dung tóm tắt -->
+      <div nz-col nzXs="24" nzLg="24">
+        <hbt-input-text formControlName="summary" [isTextAre]='true' [config]="{ rows: 3, autoSize: true }"
+                        [maxLength]="2000"
+                        [type]="isSubmitted && form.controls['summary'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['summary'].errors !== null"
+                        [errors]="form.controls['summary'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'library.validates.maxLength' | translate: {'numberLength': '2000' }}]"
+                        placeholderText="{{'library.books.label.summary' | translate}}"
+                        labelText="{{'library.books.label.summary' | translate}}">
+        </hbt-input-text>
+      </div>
+      <!-- Phụ lục -->
+      <div nz-col nzXs="24" nzLg="24">
+        <hbt-input-text formControlName="tableOfContents" [isTextAre]='true' [config]="{ rows: 3, autoSize: true }"
+                        [maxLength]="4000"
+                        [type]="isSubmitted && form.controls['tableOfContents'].errors ? 'error' : 'default'"
+                        [showError]="isSubmitted && form.controls['tableOfContents'].errors !== null"
+                        [errors]="form.controls['tableOfContents'].errors"
+                        [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'library.validates.maxLength' | translate: {'numberLength': '4000' }}]"
+                        placeholderText="{{'library.books.label.tableOfContents' | translate}}"
+                        labelText="{{'library.books.label.tableOfContents' | translate}}">
+        </hbt-input-text>
+      </div>
+      <div nz-col nzXs="24" nzLg="24" *ngIf="isSachIn || isInVaDienTu">
+        <label class="input__label">
+          <span nz-icon nzType="plus"
+                nzTheme="outline"></span> {{ 'library.books.label.informationAboutBooks' | translate }}
+        </label>
+        <span class="book-edition-add" (click)="doOpenFormEdit()">{{ 'common.button.add' | translate }}</span>
+
+        <!-- Table content -->
+        <div class="book-info" *ngFor="let edition of bookEditionData; let i = index ">
+          <div nz-row [nzGutter]='[20,15]' class="list-book">
+            <div nz-col [nzXs]='5' [nzLg]='5'>
+              <span>{{ 'library.details.label.publisher' | translate }}</span> {{ edition.publisherName }}
+            </div>
+            <div nz-col [nzXs]='5' [nzLg]='5'>
+              <span>{{ 'library.details.label.yearOfPublication' | translate }}</span> {{ edition.publishedYear }}
+            </div>
+            <div nz-col [nzXs]='5' [nzLg]='5'>
+              <span>{{ 'library.details.label.pageNumber' | translate }}</span> {{ edition.totalPages }}
+            </div>
+            <div nz-col [nzXs]='5' [nzLg]='5'>
+              <span>{{ 'library.details.label.format' | translate }}</span> {{ edition.bookFormatName }}
+            </div>
+            <div nz-col [nzXs]='4' [nzLg]='4'>
+              <em (click)="doOpenFormEdit( Mode.EDIT , i)" nz-button nz-icon
+                  nzType="edit" class="btn-edit"
+                  nzTheme="outline"></em>
+            </div>
+            <div nz-col [nzXs]='5' [nzLg]='5'>
+              <span>{{ 'library.details.label.status' | translate }}</span>
+              <span
+                class="available">{{ 'library.details.label.available' | translate: { 'number': edition?.availableNumber ?? 0 } }}</span>
+            </div>
+            <div nz-col [nzXs]='5' [nzLg]='5'>
+              <span
+                class="borrowing">{{ 'library.details.label.borrowing' | translate: { 'number': edition?.borrowNumber ?? 0 } }}</span>
+            </div>
+            <div nz-col [nzXs]='5' [nzLg]='5'>
+            <span class="detail" (click)="doOpenForm(Mode.EDIT , i, edition.bookEditionId)"
+            >{{ 'library.details.label.detail' | translate }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<ng-template #footerTmpl>
+  <hbt-button
+    buttonAvailableStyle="CANCEL"
+    buttonText="{{ 'common.button.cancel' | translate }}"
+    (click)="modalRef.destroy()">
+  </hbt-button>
+  <hbt-button
+    buttonAvailableStyle="SAVE"
+    buttonText="{{ 'common.button.saveS' | translate }}"
+    (click)="modalRef.getContentComponent().save()">
+  </hbt-button>
+</ng-template>

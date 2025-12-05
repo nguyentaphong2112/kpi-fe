@@ -1,0 +1,227 @@
+<form nz-form [formGroup]="form" class="ics-index">
+  <div class="search__custom-common {{isShowAdvSearch ? 'add__mr__bt-10' : 'remove__mr__bt-40'}}">
+    <div nz-row class="button__action-left">
+      <hbt-button buttonSize="MEDIUM"
+                  class="staff__research__btn__search" style="margin-right: 20px"
+                  *ngIf="objFunction.import"
+                  buttonText="{{'common.button.uploadFile' | translate}}"
+                  [buttonTextColor]="_variable.$purple_800" (click)="doImportData()"></hbt-button>
+      <hbt-button
+        buttonSize="MEDIUM"
+        buttonType="BORDER"
+        *ngIf="visibleActionsCount < 2"
+        (click)="export()">
+        <img src="/assets/icon/staff-manager/export_excel.svg" alt="" />
+      </hbt-button>
+      <btn-more-action *ngIf="visibleActionsCount >= 2" [setting]="actionSchemaHeader" [isBtn]="true">
+      </btn-more-action>
+    </div>
+
+    <div class="search__page-right">
+      <hbt-select formControlName="level"
+                  [urlLoadData]="getUrlCategory(categoryCode.KPI_LEVEL)"
+                  [serviceName]="microService.ADMIN"
+                  keyLabel="name"
+                  placeholder="{{'kpi.indicatorConversions.table.level' | translate}}"
+                  (ngModelChange)="search(1)"
+      >
+      </hbt-select>
+      <hbt-input-text formControlName='keySearch'
+                      [maxLength]='255'
+                      placeholderText="{{'kpi.indicatorConversions.label.keySearch' | translate}}"></hbt-input-text>
+      <hbt-button
+        buttonIconType="AWESOME"
+        [prefixIcon]="isShowAdvSearch ? 'fa fa-angle-double-up' : 'fa fa-angle-double-down'"
+        buttonSize="VERY_LARGE"
+        [buttonTextColor]="_variable.$neutral_100"
+        [buttonBorderColor]="_variable.$purple_800"
+        [buttonBgColor]="_variable.$purple_800"
+        (click)="isShowAdvSearch = !isShowAdvSearch"
+      >
+      </hbt-button>
+    </div>
+  </div>
+
+  <div *ngIf="isShowAdvSearch" class="content__item content__item--border bg__content--default">
+    <div class="form-search">
+      <div nz-row [nzGutter]='[20,15]'>
+        <div nz-col [nzXs]="12" [nzLg]="8">
+          <tree-data-picker
+            [isExpand]="true"
+            labelText="{{'kpi.kpiEvaluations.organizations.label.org' | translate}}"
+            placeholder="{{'kpi.kpiEvaluations.organizations.label.org' | translate}}"
+            formControlName="organizationId"
+            [functionCode]="functionCode"
+            [scope]="scope">
+          </tree-data-picker>
+        </div>
+        <div nz-col [nzXs]="12" [nzLg]="8">
+          <hbt-select formControlName="orgTypeId"
+                      [urlLoadData]="getUrlCategory(categoryCode.LOAI_HINH_DON_VI)"
+                      [serviceName]="microService.ADMIN"
+                      keyLabel="name"
+                      labelText="{{'kpi.indicatorConversions.table.unitGroup' | translate}}"
+                      placeholder="{{'kpi.indicatorConversions.table.unitGroup' | translate}}"
+          >
+          </hbt-select>
+        </div>
+        <div nz-col [nzXs]="12" [nzLg]="8">
+          <hbt-select formControlName="jobId"
+                      [urlLoadData]="urlLoadData"
+                      [serviceName]="serviceName"
+                      keyLabel="name"
+                      keyValue="jobId"
+                      labelText="{{'kpi.indicatorConversions.table.jobPosition' | translate}}"
+                      placeholder="{{'kpi.indicatorConversions.table.jobPosition' | translate}}"
+          >
+          </hbt-select>
+        </div>
+        <div nz-col [nzXs]="24" class="text-center">
+          <hbt-button
+            buttonSize="MEDIUM"
+            buttonAvailableStyle="SEARCH"
+            buttonText="{{'common.button.search' | translate}}"
+            (click)="search()"
+          ></hbt-button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='search__content--group' [ngClass]="{'search__content--group-hidden-header': isShowAdvSearch}">
+    <hbt-table-wrap>
+      <hbt-table
+        (changePageNum)="search($event)"
+        [tableConfig]="tableConfig" [dataList]="tableData"></hbt-table>
+    </hbt-table-wrap>
+  </div>
+
+  <hbt-import-file [showContent]='isImportData'
+                   (onCloseModal)='doCloseImport($event)'
+                   [importApi]='importApi'
+                   [formImport]="formImport"
+                   [nzWidth]="nzWidth"
+                   [downLoadTemplateApi]="downLoadTemplateApi"
+                   [fileTemplateName]="fileTemplateName"
+                   [doDownloadFileByNameApi]='doDownloadFileByNameApi'
+                   (isSubmittedImport)="changeSubmittedImport($event)">
+    <div class="formImport" style="margin-bottom: 30px;">
+      <form nz-form [formGroup]="formImport">
+        <div nz-row [nzGutter]='[20,15]'>
+          <div nz-col [nzXs]="24" [nzLg]="12">
+            <hbt-select
+              formControlName="type"
+              labelText="{{'kpi.indicatorConversions.label.type' | translate}} <span class='label__required'>*</span>"
+              placeholder="{{'kpi.indicatorConversions.label.type' | translate}}"
+              [dataSelects]="listConversionValue"
+              [type]="isSubmittedImport && formImport.controls['type'].errors ? 'error' : 'default'"
+              [showError]="isSubmittedImport && formImport.controls['type'].errors != null"
+              [errors]="formImport.controls['type'].errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.indicatorConversions.label.type' | translate }}]"
+              (ngModelChange)="changeInput($event)">
+            </hbt-select>
+          </div>
+          <div nz-col [nzXs]="24" [nzLg]="12">
+          </div>
+          <div nz-col [nzXs]="24" [nzLg]="12">
+            <tree-data-picker
+              disable="true"
+              [isExpand]="true"
+              labelText="{{'kpi.kpiEvaluations.organizations.label.orgManage' | translate}} <span class='label__required'>*</span>"
+              placeholder="{{'kpi.kpiEvaluations.organizations.label.orgManage' | translate}}"
+              [type]="isSubmittedImport && formImport.controls['orgManageId'].errors ? 'error' : 'default'"
+              [showError]="isSubmittedImport && formImport.controls['orgManageId'].errors !== null"
+              [errors]="formImport.controls['orgManageId'].errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.kpiEvaluations.organizations.label.orgManage' | translate }}]"
+              formControlName="orgManageId"
+              [scope]="scope">
+            </tree-data-picker>
+          </div>
+          <div nz-col [nzXs]="24" [nzLg]="12">
+            <tree-data-picker
+              [isExpand]="true"
+              labelText="{{'kpi.kpiEvaluations.organizations.label.orgScope' | translate}} <span class='label__required'>*</span>"
+              placeholder="{{'kpi.kpiEvaluations.organizations.label.orgScope' | translate}}"
+              [type]="isSubmittedImport && formImport.controls['organizationId'].errors ? 'error' : 'default'"
+              [showError]="isSubmittedImport && formImport.controls['organizationId'].errors !== null"
+              [errors]="formImport.controls['organizationId'].errors"
+              [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.kpiEvaluations.organizations.label.orgScope' | translate }}]"
+              formControlName="organizationId"
+              [functionCode]="functionCode"
+              [scope]="scope">
+            </tree-data-picker>
+          </div>
+<!--          <div nz-col [nzXs]="24" [nzLg]="12">-->
+<!--            <hbt-select formControlName="orgTypeId"-->
+<!--                        [urlLoadData]="getUrlCategory(categoryCode.LOAI_HINH_DON_VI)"-->
+<!--                        [serviceName]="microService.ADMIN"-->
+<!--                        keyLabel="name"-->
+<!--                        [type]="isSubmittedImport && formImport.controls['orgTypeId'].errors ? 'error' : 'default'"-->
+<!--                        [showError]="isSubmittedImport && formImport.controls['orgTypeId'].errors !== null"-->
+<!--                        [errors]="formImport.controls['orgTypeId'].errors"-->
+<!--                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.indicatorConversions.table.unitGroup' | translate }}]"-->
+<!--                        labelText="{{'kpi.indicatorConversions.table.unitGroup' | translate}}"-->
+<!--                        placeholder="{{'kpi.indicatorConversions.table.unitGroup' | translate}}"-->
+<!--            >-->
+<!--            </hbt-select>-->
+<!--          </div>-->
+          <div nz-col [nzXs]="24" [nzLg]="12">
+            <hbt-select formControlName="jobId"
+                        [urlLoadData]="urlLoadData"
+                        [serviceName]="serviceName"
+                        *ngIf="!isValueSelected"
+                        keyLabel="name"
+                        keyValue="jobId"
+                        labelText="{{'kpi.indicatorConversions.table.jobPosition' | translate}} <span class='label__required'>*</span>"
+                        placeholder="{{'kpi.indicatorConversions.table.jobPosition' | translate}}"
+                        [type]="isSubmittedImport && formImport.controls['jobId'].errors ? 'error' : 'default'"
+                        [showError]="isSubmittedImport && formImport.controls['jobId'].errors !== null"
+                        [errors]="formImport.controls['jobId'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.indicatorConversions.table.jobPosition' | translate }}]"
+            >
+            </hbt-select>
+            <hbt-select formControlName="managerJobId"
+                        [urlLoadData]="urlLoadData"
+                        [serviceName]="serviceName"
+                        [type]="isSubmittedImport && formImport.controls['managerJobId'].errors ? 'error' : 'default'"
+                        [showError]="isSubmittedImport && formImport.controls['managerJobId'].errors !== null"
+                        [errors]="formImport.controls['managerJobId'].errors"
+                        [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'kpi.indicatorConversions.table.managerJob' | translate }}]"
+                        *ngIf="isValueSelected"
+                        keyLabel="name"
+                        keyValue="jobId"
+                        labelText="{{'kpi.indicatorConversions.table.managerJob' | translate}} <span class='label__required'>*</span>"
+                        placeholder="{{'kpi.indicatorConversions.table.managerJob' | translate}}"
+            >
+            </hbt-select>
+          </div>
+        </div>
+      </form>
+    </div>
+  </hbt-import-file>
+
+  <ng-template #statusTmpl let-statusCode='status'>
+    <ng-container *ngFor='let item of statusCodeList'>
+      <nz-tag [nzColor]="item.bgColor" [ngStyle]="{'color': item.color, width: '180px', 'text-align': 'center'}"
+              *ngIf='statusCode === item.code'>{{ item.name }}
+      </nz-tag>
+    </ng-container>
+  </ng-template>
+
+  <ng-template #actionTmpl let-data="data">
+    <btn-more-action [model]="[data]" [setting]="actionSchema">
+    </btn-more-action>
+  </ng-template>
+
+  <ng-template #footerTmpl>
+    <hbt-button
+      buttonAvailableStyle="CANCEL"
+      buttonText="{{ 'common.button.cancel' | translate }}"
+      (click)="modalRef.destroy()">
+    </hbt-button>
+    <hbt-button
+      buttonAvailableStyle="SAVE"
+      buttonText="{{ 'common.button.select' | translate }}"
+      (click)="modalRef.getContentComponent().save()">
+    </hbt-button>
+  </ng-template>
+</form>

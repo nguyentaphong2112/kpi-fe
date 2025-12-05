@@ -1,0 +1,198 @@
+<div class='save-form-pit'>
+  <form nz-form [formGroup]="form" style="margin-top: 20px">
+    <div nz-row [nzGutter]="[30,30]">
+      <!--id khoản thu nhập-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-select [dataSelects]="[]"
+          formControlName="incomeItemId"
+          [type]="isSubmitted && form.controls['incomeItemId'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['incomeItemId'].errors != null"
+          [errors]="form.controls['incomeItemId'].errors"
+          [errorDefs]="[{ errorName: 'required', errorDescription: 'common.validate.required' | translate: {'param': 'pit.incomeItemMasters.table.incomeItemId' | translate }}]"
+          placeholder="{{'pit.incomeItemMasters.table.incomeItemId' | translate}}"
+          labelText="{{'pit.incomeItemMasters.table.incomeItemId' | translate}}"
+        ></hbt-select>
+      </div>
+
+      <!--kỳ kê khai thuế-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-date-picker
+          placeholderText="{{'pit.incomeItemMasters.table.taxPeriodDate' | translate}}"
+          labelText="{{'pit.incomeItemMasters.table.taxPeriodDate' | translate}}"
+          formControlName="taxPeriodDate"></hbt-date-picker>
+      </div>
+
+      <!--đã tính thuế bên ngoài-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="isTaxCalculated" [maxLength]="10"
+          [type]="isSubmitted && form.controls['isTaxCalculated'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['isTaxCalculated'].errors != null"
+          [errors]="form.controls['isTaxCalculated'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 10}}]"
+          placeholderText="{{'pit.incomeItemMasters.table.isTaxCalculated' | translate}}"
+          labelText="{{'pit.incomeItemMasters.table.isTaxCalculated' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--lần nhập liệu-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="inputTimes" [maxLength]="10"
+          [type]="isSubmitted && form.controls['inputTimes'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['inputTimes'].errors != null"
+          [errors]="form.controls['inputTimes'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 10}}]"
+          placeholderText="{{'pit.incomeItemMasters.table.inputTimes' | translate}}"
+          labelText="{{'pit.incomeItemMasters.table.inputTimes' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--Tổng thu nhập-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="totalIncome" [maxLength]="20"
+          [type]="isSubmitted && form.controls['totalIncome'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['totalIncome'].errors != null"
+          [errors]="form.controls['totalIncome'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 20}}]"
+          placeholderText="{{'pit.incomeItemMasters.table.totalIncome' | translate}}"
+          labelText="{{'pit.incomeItemMasters.table.totalIncome' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--Khấu trừ BHXH-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="totalInsuranceDeduction" [maxLength]="20"
+          [type]="isSubmitted && form.controls['totalInsuranceDeduction'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['totalInsuranceDeduction'].errors != null"
+          [errors]="form.controls['totalInsuranceDeduction'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 20}}]"
+          placeholderText="{{'pit.incomeItemMasters.table.totalInsuranceDeduction' | translate}}"
+          labelText="{{'pit.incomeItemMasters.table.totalInsuranceDeduction' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--tổng khấu trừ thu nhập chịu thuế khác-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="totalOtherDeduction" [maxLength]="20"
+          [type]="isSubmitted && form.controls['totalOtherDeduction'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['totalOtherDeduction'].errors != null"
+          [errors]="form.controls['totalOtherDeduction'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 20}}]"
+          placeholderText="{{'pit.incomeItemMasters.table.totalOtherDeduction' | translate}}"
+          labelText="{{'pit.incomeItemMasters.table.totalOtherDeduction' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--Tổng thu nhập chịu thuế-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="totalIncomeTaxable" [maxLength]="20"
+          [type]="isSubmitted && form.controls['totalIncomeTaxable'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['totalIncomeTaxable'].errors != null"
+          [errors]="form.controls['totalIncomeTaxable'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 20}}]"
+          placeholderText="{{'pit.incomeItemMasters.table.totalIncomeTaxable' | translate}}"
+          labelText="{{'pit.incomeItemMasters.table.totalIncomeTaxable' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--Tổng thu nhập miễn thuế-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="totalIncomeFreeTax" [maxLength]="20"
+          [type]="isSubmitted && form.controls['totalIncomeFreeTax'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['totalIncomeFreeTax'].errors != null"
+          [errors]="form.controls['totalIncomeFreeTax'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 20}}]"
+          placeholderText="{{'pit.incomeItemMasters.table.totalIncomeFreeTax' | translate}}"
+          labelText="{{'pit.incomeItemMasters.table.totalIncomeFreeTax' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--Tổng thuế-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="totalIncomeTax" [maxLength]="20"
+          [type]="isSubmitted && form.controls['totalIncomeTax'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['totalIncomeTax'].errors != null"
+          [errors]="form.controls['totalIncomeTax'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 20}}]"
+          placeholderText="{{'pit.incomeItemMasters.table.totalIncomeTax' | translate}}"
+          labelText="{{'pit.incomeItemMasters.table.totalIncomeTax' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--tổng thuế truy thu tháng trước-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="totalMonthRetroTax" [maxLength]="20"
+          [type]="isSubmitted && form.controls['totalMonthRetroTax'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['totalMonthRetroTax'].errors != null"
+          [errors]="form.controls['totalMonthRetroTax'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 20}}]"
+          placeholderText="{{'pit.incomeItemMasters.table.totalMonthRetroTax' | translate}}"
+          labelText="{{'pit.incomeItemMasters.table.totalMonthRetroTax' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--tổng thuế truy thu năm trước-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="totalYearRetroTax" [maxLength]="20"
+          [type]="isSubmitted && form.controls['totalYearRetroTax'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['totalYearRetroTax'].errors != null"
+          [errors]="form.controls['totalYearRetroTax'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 20}}]"
+          placeholderText="{{'pit.incomeItemMasters.table.totalYearRetroTax' | translate}}"
+          labelText="{{'pit.incomeItemMasters.table.totalYearRetroTax' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--Tổng thực nhận-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="totalReceived" [maxLength]="20"
+          [type]="isSubmitted && form.controls['totalReceived'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['totalReceived'].errors != null"
+          [errors]="form.controls['totalReceived'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 20}}]"
+          placeholderText="{{'pit.incomeItemMasters.table.totalReceived' | translate}}"
+          labelText="{{'pit.incomeItemMasters.table.totalReceived' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--người tính thuế-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="taxCalBy" [maxLength]="50"
+          [type]="isSubmitted && form.controls['taxCalBy'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['taxCalBy'].errors != null"
+          [errors]="form.controls['taxCalBy'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 50}}]"
+          placeholderText="{{'pit.incomeItemMasters.table.taxCalBy' | translate}}"
+          labelText="{{'pit.incomeItemMasters.table.taxCalBy' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <!--ngày tính thuế-->
+      <div nz-col [nzXs]="12" [nzLg]="12">
+        <hbt-input-text formControlName="taxDate" [maxLength]="10"
+          [type]="isSubmitted && form.controls['taxDate'].errors ? 'error' : 'default'"
+          [showError]="isSubmitted && form.controls['taxDate'].errors != null"
+          [errors]="form.controls['taxDate'].errors"
+          [errorDefs]="[{ errorName: 'maxlength', errorDescription: 'common.validate.maxLength' | translate: {'numberLength': 10}}]"
+          placeholderText="{{'pit.incomeItemMasters.table.taxDate' | translate}}"
+          labelText="{{'pit.incomeItemMasters.table.taxDate' | translate}}"
+        ></hbt-input-text>
+      </div>
+
+      <div nz-col [nzXs]='24' [nzLg]='24' class="input__group">
+        <hbt-upload
+          [(docIdsDelete)]="docIdsDelete"
+          [typeFileAvailable]="['jpg', 'png', 'pdf', 'doc', 'docx']"
+          [multiple]="true"
+          labelText="{{'common.label.attachFile' | translate}}"
+          [required]="true"
+          (fileListChange)="onFileListChange($event, 'fileList', true)"
+          (docIdsDeleteChange)="removeFile($event, 'fileList')"
+          [serviceName]='serviceName'
+          [showError]="isSubmitted"
+        ></hbt-upload>
+      </div>
+
+    </div>
+  </form>
+</div>
+

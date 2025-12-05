@@ -1,0 +1,105 @@
+.search__content-mrb-3 {
+  margin-top: 50px;
+  max-height: 70vh !important;
+}
+
+.search__content--group {
+  max-height: 65vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 10px;
+}
+
+.card__content {
+  .card__item {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+
+    ::ng-deep .ant-card {
+      background-color: #ececfd;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: #e2e2f6;
+      }
+    }
+
+    .card__title {
+      display: block;
+      white-space: normal;
+      word-break: break-word;
+
+      .card__title-emp {
+        font-size: 16px;
+        margin-bottom: 0;
+        opacity: 0.7;
+      }
+
+      .card__title-job {
+        margin-bottom: 5px;
+        font-size: 14px;
+        opacity: 0.7;
+      }
+
+      .card__title-time {
+        font-size: 14px;
+        margin-bottom: 0;
+      }
+
+      .color__primary {
+        color: #0b52d6;
+      }
+
+      .color__yellow {
+        color: #F99600;
+      }
+
+      .color__green {
+        color: #06A561;
+      }
+
+    }
+
+    .card__item-content {
+      font-weight: 500;
+      text-align: justify;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 10;
+      line-height: 22px;
+      max-height: calc(22px * 10);
+    }
+  }
+
+  .full-height-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  ::ng-deep .ant-card-extra {
+    position: absolute;
+    right: 0;
+    top: -10px;
+  }
+
+  ::ng-deep .ant-card-body {
+    padding: 0 10px;
+  }
+
+  ::ng-deep .ant-card-head {
+    padding: 0 10px;
+    border-bottom: none;
+  }
+
+  ::ng-deep .ant-card-head-title {
+    padding-top: 5px;
+  }
+
+  ::ng-deep .menu__item--btn {
+    font-size: 20px;
+  }
+}
