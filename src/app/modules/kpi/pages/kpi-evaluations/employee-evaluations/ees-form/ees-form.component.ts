@@ -23,7 +23,6 @@ import { firstValueFrom } from 'rxjs';
 import { ScrollSpyDirective } from '@shared/directive/scroll-spy.directive';
 import { MbCollapseComponent } from '@shared/component/hbt-collapse/hbt-collapse.component';
 import { FunctionCode } from '@shared/enums/enums-constant';
-import { EmployeesService } from '@app/modules/hrm/data-access/services/staff-info/employees.service';
 
 @Component({
   selector: 'pes-form',
@@ -62,7 +61,6 @@ export class EesFormComponent extends BaseFormComponent<NzSafeAny> implements On
   constructor(
     private readonly service: EmployeeEvaluationsService,
     private cdr: ChangeDetectorRef,
-    private employeeService: EmployeesService,
     private readonly empWorkPlanningService: EmployeeWorkPlanningsService,
     injector: Injector
   ) {
@@ -102,10 +100,6 @@ export class EesFormComponent extends BaseFormComponent<NzSafeAny> implements On
     } catch (error) {
       console.error('Error while validating:', error);
     }
-  }
-
-  export() {
-    this.employeeService.export({}, UrlConstant.EMPLOYEES.EXPORT + '/' + this.employeeId, false).toPromise();
   }
 
   getPanels() {

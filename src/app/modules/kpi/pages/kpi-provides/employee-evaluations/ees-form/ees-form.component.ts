@@ -36,7 +36,6 @@ import { FunctionCode } from '@shared/enums/enums-constant';
 import { MbCollapseComponent } from '@shared/component/hbt-collapse/hbt-collapse.component';
 import { ScrollSpyDirective } from '@shared/directive/scroll-spy.directive';
 import { Constant } from '@app/modules/kpi/data-access/constants/constants';
-import { EmployeesService } from '@app/modules/hrm/data-access/services/staff-info/employees.service';
 import { DataService } from '@shared/services/data.service';
 import { FormArray } from '@angular/forms';
 
@@ -86,7 +85,6 @@ export class EesFormComponent extends BaseFormComponent<NzSafeAny> implements On
     private cdr: ChangeDetectorRef,
     private readonly empWorkPlanningService: EmployeeWorkPlanningsService,
     private readonly workPlanningTemplatesService: WorkPlanningTemplatesService,
-    private employeeService: EmployeesService,
     private dataService: DataService,
     private renderer: Renderer2,
     injector: Injector
@@ -152,10 +150,6 @@ export class EesFormComponent extends BaseFormComponent<NzSafeAny> implements On
     } catch (error) {
       console.error('Error while getDataEmp:', error);
     }
-  }
-
-  export() {
-    this.employeeService.export({}, UrlConstant.EMPLOYEES.EXPORT + '/' + this.employeeId, false).toPromise();
   }
 
   updateApprove(type: string) {

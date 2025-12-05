@@ -16,15 +16,11 @@ import {
 import {
   EvaluationCriteriaComponent
 } from '@app/modules/kpi/pages/kpi-evaluations/personal-evaluations/evaluation-criteria/evaluation-criteria.component';
-import {
-  WorkPlanComponent
-} from '@app/modules/kpi/pages/kpi-evaluations/personal-evaluations/work-plan/work-plan.component';
 import { BaseResponse } from '@core/models/base-response';
 import _ from 'lodash';
 import { FunctionCode } from '@shared/enums/enums-constant';
 import { MbCollapseComponent } from '@shared/component/hbt-collapse/hbt-collapse.component';
 import { ScrollSpyDirective } from '@shared/directive/scroll-spy.directive';
-import { EmployeesService } from '@app/modules/hrm/data-access/services/staff-info/employees.service';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
@@ -64,7 +60,6 @@ export class PesFormComponent extends BaseFormComponent<NzSafeAny> implements On
   constructor(
     private readonly service: PersonalEvaluationsService,
     private cdr: ChangeDetectorRef,
-    private employeeService: EmployeesService,
     private readonly empWorkPlanningService: EmployeeWorkPlanningsService,
     injector: Injector
   ) {
@@ -103,10 +98,6 @@ export class PesFormComponent extends BaseFormComponent<NzSafeAny> implements On
     } catch (error) {
       console.error('Error while validating:', error);
     }
-  }
-
-  export() {
-    this.employeeService.export({}, UrlConstant.EMPLOYEES.EXPORT + '/' + this.employeeId, false).toPromise();
   }
 
 

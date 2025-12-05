@@ -44,7 +44,9 @@ import { TableFiledPipe } from './pipes/table-filed.pipe';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { SwitchCasesDirective } from './directive/switch-case.directive';
 import { HbtRangDatePickerComponent } from './component/hbt-rang-date-picker/hbt-rang-date-picker.component';
-import { HbtNumbericRangeInputComponent } from './component/hbt-numberic-range-input/hbt-numberic-range-input.component';
+import {
+  HbtNumbericRangeInputComponent
+} from './component/hbt-numberic-range-input/hbt-numberic-range-input.component';
 import { AlphabeticInputDirective } from './directive/alphabetic-input.directive';
 import { HbtDateTimeWorkComponent } from './component/hbt-date-time-work/hbt-date-time-work.component';
 import { NumberFilterPipe } from './pipes/number-filter.pipe';
@@ -63,7 +65,9 @@ import { PopupService } from '@shared/component/popup/popup.service';
 import { BtnMoreActionComponent } from '@shared/component/btn-more-action/btn-more-action.component';
 import { HbtTreeViewComponent } from './component/hbt-tree-view/hbt-tree-view.component';
 import { HbtInputTagComponent } from '@shared/component/hbt-input-tag/hbt-input-tag.component';
-import { InputAttributeCommonComponent } from '@shared/component/input-attribute-common/input-attribute-common.component';
+import {
+  InputAttributeCommonComponent
+} from '@shared/component/input-attribute-common/input-attribute-common.component';
 import { ViewPdfModalComponent } from './component/view-pdf-modal/view-pdf-modal.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { HbtOrgTreeComponent } from './component/hbt-org-tree/hbt-org-tree.component';
@@ -85,8 +89,8 @@ import { LoadingPageComponent } from '@shared/component/loading-page/loading-pag
 import { AsyncCustomPipe } from '@shared/pipes/async-custom.pipe';
 import { ExpressionDirective } from '@shared/directive/expression-input.directive';
 import { HbtTableTreeComponent } from '@shared/component/hbt-table-tree/hbt-table-tree.component';
-import {ConfirmComponent} from '@shared/component/popup/confirm-popup-component';
-import {BtnMoreActionChildComponent} from '@shared/component/btn-more-action-child/btn-more-action-child.component';
+import { ConfirmComponent } from '@shared/component/popup/confirm-popup-component';
+import { BtnMoreActionChildComponent } from '@shared/component/btn-more-action-child/btn-more-action-child.component';
 import { HbtStepsComponent } from '@shared/component/hbt-steps/hbt-steps.component';
 
 const PIPES = [
