@@ -1,0 +1,28 @@
+<!--<div class='content__app'>-->
+<!--  <div class='app__title'>-->
+<!--    <div class='app__title&#45;&#45;value'>Ứng dụng</div>-->
+<!--    <div class='app__title&#45;&#45;border'>-->
+<!--      <hr>-->
+<!--    </div>-->
+<!--    <div class='app__title&#45;&#45;action'>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="app__cnt&#45;&#45;block">-->
+<!--    <div class='app_item app_item&#45;&#45;card' *ngIf="apps && apps.length > 0">-->
+<!--      <swiper #swiperComponent [config]='swiperConfig' [slidesPerView]='slidesPerView' [loop]='false' [spaceBetween]='wSpace' [virtual]='true' (slideChange)='slideChangeEvent()'>-->
+<!--        <ng-template swiperSlide *ngFor='let app of apps; index as i'>-->
+<!--          <div class='card__item card__item&#45;&#45;default'>-->
+<!--            <a [ngStyle]="{'opacity': app.disabled ? 0.5 : null }">-->
+<!--              <img alt='' class='card__item&#45;&#45;icon' [src]='app.iconPath'>-->
+<!--              <div class='card__item&#45;&#45;title'>{{app.title}}</div>-->
+<!--            </a>-->
+<!--          </div>-->
+<!--        </ng-template>-->
+<!--      </swiper>-->
+<!--    </div>-->
+<!--    <div class="group__prev__next">-->
+<!--      <span *ngIf='activeIndex != 0' (click)='swipePrev()' class='icon__sw icon__sw&#45;&#45;prev'><em class='far fa-angle-left'></em></span>-->
+<!--      <span *ngIf='activeIndex != (apps.length - slidesPerView - 1)' (click)='swipeNext()' class='icon__sw icon__sw&#45;&#45;next'><em class='far fa-angle-right'></em></span>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->

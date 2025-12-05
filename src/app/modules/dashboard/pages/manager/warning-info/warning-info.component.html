@@ -1,0 +1,81 @@
+<div nz-row class="warning">
+  <div class="warning-list">
+    <ng-container *ngFor="let item of arrWarning">
+      <div nz-col *ngIf="item.isMustPositive == 'N' || (data$[item.resource] | asyncCustom) > 0"
+           class="warning-item" (click)="openPopUp(item)">
+        <div class="warning-item-content">
+          <div class="warning-item-content-icon" [ngStyle]="{'background-color': item.backgroundColor}">
+            <em class="{{item.icon}}"></em>
+          </div>
+          <div class="warning-item-content-text">
+            <div class="warning-item-content-text-count">
+              {{ data$[item.resource] | asyncCustom }}
+            </div>
+            <div class="warning-item-content-text-title">
+              {{ item.title }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <!--  <div class="app__cnt&#45;&#45;block">-->
+  <!--    <div class='app_item app_item&#45;&#45;card' *ngIf="arrWarning && arrWarning.length > 0">-->
+  <!--      <swiper #swiperComponent [config]='swiperConfig' [slidesPerView]='slidesPerView' [loop]='false'-->
+  <!--              [spaceBetween]='wSpace' [virtual]='true' (slideChange)='slideChangeEvent()'>-->
+  <!--        <ng-template swiperSlide *ngFor='let item of arrWarning'>-->
+  <!--          <div nz-col *ngIf="item.isMustPositive == 'N' || (data$[item.resource] | asyncCustom) > 0"-->
+  <!--               class="warning-item" (click)="openPopUp(item)">-->
+  <!--            <div class="warning-item-content">-->
+  <!--              <div class="warning-item-content-icon" [ngStyle]="{'background-color': item.backgroundColor}">-->
+  <!--                <em class="{{item.icon}}"></em>-->
+  <!--              </div>-->
+  <!--              <div class="warning-item-content-text">-->
+  <!--                <div class="warning-item-content-text-count">-->
+  <!--                  {{ data$[item.resource] | asyncCustom }}-->
+  <!--                </div>-->
+  <!--                <div class="warning-item-content-text-title">-->
+  <!--                  {{ item.title }}-->
+  <!--                </div>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </ng-template>-->
+  <!--      </swiper>-->
+  <!--    </div>-->
+  <!--    <div class="group__prev__next">-->
+  <!--      <span *ngIf='activeIndex != 0' (click)='swipePrev()' class='icon__sw icon__sw&#45;&#45;prev'><em-->
+  <!--        class='far fa-angle-left'></em></span>-->
+  <!--      <span *ngIf='activeIndex != (arrWarning.length - slidesPerView - 1)' (click)='swipeNext()'-->
+  <!--            class='icon__sw icon__sw&#45;&#45;next'><em class='far fa-angle-right'></em></span>-->
+  <!--    </div>-->
+  <!--  </div>-->
+</div>
+
+<nz-modal [(nzVisible)]="isVisible" [nzTitle]="title"
+          (nzOnCancel)="handleCancel()" nzWidth="1200px">
+  <ng-container *nzModalContent>
+    <div class='search__content--group'>
+      <hbt-table-wrap [extra]="false" [tableConfig]="tableConfig">
+        <hbt-table
+          #tableTmpl
+          [showExtra]="false"
+          (changePageNum)="search($event)"
+          [tableConfig]="tableConfig"
+          [dataList]="tableData"></hbt-table>
+      </hbt-table-wrap>
+    </div>
+  </ng-container>
+  <ng-template [nzModalFooter]>
+    <hbt-button *ngIf="id"
+                buttonAvailableStyle="SAVE"
+                buttonText="{{ 'common.button.export' | translate }}"
+                (click)="export()">
+    </hbt-button>
+    <hbt-button
+      buttonAvailableStyle="CANCEL"
+      buttonText="{{ 'common.button.cancel' | translate }}"
+      (click)="handleCancel()">
+    </hbt-button>
+  </ng-template>
+</nz-modal>

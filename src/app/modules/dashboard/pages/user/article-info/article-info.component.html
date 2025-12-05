@@ -1,0 +1,31 @@
+<div class='content__article' *ngIf='arts?.length>0'>
+  <div class='art__title'>
+  </div>
+  <div class='art__items'>
+    <div class='art__items--left'>
+      <div #elementHeight class='art__item'>
+        <figure class='figure__content figure__content--art'>
+          <img src='{{arts[0].imgLargeData}}' alt='{{arts[0].title}}'>
+        </figure>
+        <div class='art__content'>
+          <div class='art__content--title'>{{arts[0].title}}</div>
+          <div class='art__content--date'>{{arts[0]['createDate']}}</div>
+        </div>
+      </div>
+    </div>
+    <div #elementArtItems [style.height.px]='elementHeight.offsetHeight' class='art__items--right'>
+      <ng-container *ngFor='let art of arts; index as i'>
+        <div #elementSubHeight *ngIf='i != 0' class='art__item'>
+          <figure [style.height.px]="elementArtContent.offsetHeight" class='figure__content figure__content--art'>
+            <img src='{{art.imgLargeData}}' alt='{{art.title}}'>
+          </figure>
+          <div #elementArtContent class='art__content'>
+            <div class='art__content--title'>{{art.title}}</div>
+            <div class='art__content--date'>{{art.createDate}}</div>
+            <div class='art__content--date'></div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

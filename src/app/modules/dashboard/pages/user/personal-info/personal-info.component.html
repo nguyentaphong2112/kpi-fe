@@ -1,0 +1,23 @@
+<div class='content__personal'>
+  <div class='personal__info'>
+    <div class='per__group--avt'>
+      <nz-spin nzSimple [nzIndicator]='indicatorTemplate'>
+        <ng-template #indicatorTemplate>
+          <figure class='mb__figure figure__avt'>
+            <em *ngIf="avtIsLoading" class="icon__loading--avt" nz-icon nzType="loading"></em>
+            <img src="../../../../assets/img/default-avatar.png" *ngIf="!isHasAvatar && !avtIsLoading" alt="">
+            <img [src]="avtBase64" *ngIf="isHasAvatar && !avtIsLoading" alt="">
+          </figure>
+        </ng-template>
+      </nz-spin>
+    </div>
+    <div class='per__group--info'>
+      <div class='per__info--name'>{{ fullName }}</div>
+      <div class='per__info--position'>{{ basicInfo?.jobName }}</div>
+    </div>
+  </div>
+  <div class='personal__action' *ngIf="StorageService.get(STORAGE_NAME.USER_LOGIN)?.employeeCode">
+    <hbt-button (click)="openPersonalInfo()" buttonBgColor='#fff' buttonTextColor='#141ED2'
+                buttonText="{{ 'common.user.info'|translate }}" buttonSize='LARGE'></hbt-button>
+  </div>
+</div>

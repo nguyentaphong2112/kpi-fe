@@ -19,6 +19,7 @@ export class AuthGuard implements CanActivate {
       this.authService.startRefreshTokenTimer();
       return true;
     } else {
+      console.log('abc');
       this.authService.logout();
       return false;
     }

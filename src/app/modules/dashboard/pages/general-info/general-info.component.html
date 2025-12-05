@@ -1,0 +1,87 @@
+<div class="slide" *ngIf="isShowSlide">
+  <em nz-icon nzType="left" nzTheme="outline" (click)="change(-1)"></em>
+  <p (click)="change(1)">{{name}}</p>
+  <em nz-icon nzType="right" nzTheme="outline" (click)="change(1)"></em>
+</div>
+<ng-container [ngSwitch]="code" *ngIf="listSlide.length > 0">
+  <app-dmr-index *ngSwitchCase="'TCCB'"></app-dmr-index>
+  <ng-container *ngSwitchCase="'CBNV'">
+    <ng-container *ngTemplateOutlet="tmpl"></ng-container>
+  </ng-container>
+</ng-container>
+
+<ng-template #tmpl>
+  <div class='group__dashboard'>
+    <div class='group__dashboard--left'>
+      <div class='group__left--grid'>
+        <!--      <div class='banner__area'>-->
+        <!--        <app-banner-info></app-banner-info>-->
+        <!--      </div>-->
+        <!--      <div class='article__area'>-->
+        <!--        <app-article-info></app-article-info>-->
+        <!--      </div>-->
+        <div class="notification__area bg__content--default">
+          <div class="notification__area-title">
+            <h1>THÔNG BÁO</h1>
+          </div>
+          <div class="notification__area-body">
+            <p style="font-size: 20px; font-weight: 550; margin-bottom: 10px">
+              Thực hiện kế hoạch triển khai phần mềm Quản trị nhân sự (E-HCM),
+              đề nghị viên chức, người lao động thực hiện cập nhật đầy thông tin
+              hồ sơ nhân sự của bản thân và xác nhận hoàn thiện hồ sơ trên hệ thống.
+            </p>
+            <h3>Thời gian cập nhật: <span>30/08/2024 đến 06/09/2024</span></h3>
+            <h3>Đầu mối hỗ trợ:</h3>
+            <ul>
+              <li>
+                <p>Hỗ trợ tài khoản đăng nhập: <span>Đầu mối CNTT của trường</span></p>
+              </li>
+              <li>
+                <p>Hỗ trợ hướng dẫn nhập liệu:</p>
+                <ul>
+                  <li>
+                    <p>Nguyễn Minh Đức (Chuyên viên Phòng tổ chức nhân sự)</p>
+                    <ul>
+                      <li>SĐT: 0989.707.413</li>
+                      <li>Email: <a>nmduc201099&#64;gmail.com</a></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <p>Hoàng Chi Hiếu (Trưởng phòng kỹ thuật - HBT-Plus)</p>
+                    <ul>
+                      <li>SĐT: 0965.211.909</li>
+                      <li>Email: <a>hieuhc&#64;hbtplus.vn</a></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <p>Đỗ Thị Hoài (Nhân viên công ty HBT-Plus)</p>
+                    <ul>
+                      <li>SĐT: 0359.427.389</li>
+                      <li>Email: <a>hoaidt&#64;hbtplus.vn</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+        <!--      <div class='app__area' style="height: 160px !important;">-->
+        <!--        <app-application-info></app-application-info>-->
+        <!--      </div>-->
+      </div>
+    </div>
+    <div class='group__dashboard--right'>
+      <div class='group__right--grid'>
+        <div class='personal__area'>
+          <app-personal-info></app-personal-info>
+        </div>
+        <div class='calendar__area'>
+          <app-calendar-info></app-calendar-info>
+        </div>
+        <div class='maxim__area'>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
