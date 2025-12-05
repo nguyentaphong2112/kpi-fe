@@ -51,5 +51,3 @@ Thumbs.db
 .angular/*
 /.scannerwork/
 /.scannerwork/
-src/environments/environment.ts
-src/environments/environment.dev.ts
