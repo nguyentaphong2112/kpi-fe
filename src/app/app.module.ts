@@ -29,21 +29,9 @@ export function ModuleHttpLoaderFactory(http: HttpClient) {
     modules: [
       { baseTranslateUrl },
       { baseTranslateUrl, moduleName: 'dashboard', namespace: 'dashboard' },
-      { baseTranslateUrl, moduleName: 'abs', namespace: 'abs' },
-      { baseTranslateUrl, moduleName: 'personal-tax', namespace: 'personalTax' },
-      { baseTranslateUrl, moduleName: 'partnership', namespace: 'partnership' },
       { baseTranslateUrl, moduleName: 'admin', namespace: 'admin' },
-      { baseTranslateUrl, moduleName: 'library', namespace: 'library' },
       { baseTranslateUrl, moduleName: 'hrm', namespace: 'hrm' },
       { baseTranslateUrl, moduleName: 'kpi', namespace: 'kpi' },
-      { baseTranslateUrl, moduleName: 'crm', namespace: 'crm' },
-      { baseTranslateUrl, moduleName: 'med', namespace: 'med' },
-      { baseTranslateUrl, moduleName: 'lms', namespace: 'lms' },
-      { baseTranslateUrl, moduleName: 'pit', namespace: 'pit' },
-      { baseTranslateUrl, moduleName: 'icn', namespace: 'icn' },
-      { baseTranslateUrl, moduleName: 'ptx', namespace: 'ptx' },
-      { baseTranslateUrl, moduleName: 'mat', namespace: 'mat' },
-      { baseTranslateUrl, moduleName: 'exam', namespace: 'exam' }
     ]
   };
   return new ModuleTranslateLoader(http, options);
